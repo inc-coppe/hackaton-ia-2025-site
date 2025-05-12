@@ -1,0 +1,81 @@
+import styled from "styled-components";
+
+// Função auxiliar para usar rem
+const pxToRem = (size) => `${size / 16}rem`;
+
+export const CarouselContainer = styled.div``;
+
+export const CardsWrapper = styled.div`
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding-bottom: ${pxToRem(16)};
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+`;
+
+export const CardItem = styled.div`
+  min-width: ${pxToRem(600)};
+  height: ${pxToRem(572)};
+  background-color: #0f0f21;
+  border-radius: ${pxToRem(8)};
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: ${pxToRem(18)};
+  flex-shrink: 0;
+  margin-right: ${pxToRem(32)};
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a imagem cobrir todo o espaço do card */
+    user-select: none; /* Não permite selecionar a imagem */
+    -webkit-user-drag: none; /* Impede o arrasto em navegadores Webkit */
+    -moz-user-drag: none; /* Impede o arrasto em navegadores Firefox */
+    user-drag: none; /* Impede o arrasto em navegadores mais modernos */
+    border-radius: ${pxToRem(8)};
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: ${pxToRem(24)};
+`;
+
+export const LinkButton = styled.a`
+  display: flex;
+  align-items: center;
+  gap: ${pxToRem(8)};
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(15)};
+  text-transform: uppercase;
+  color: #3161e8;
+  cursor: pointer;
+`;
+
+export const PageControl = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  gap: ${pxToRem(8)};
+  margin-top: ${pxToRem(24)};
+`;
+
+export const Dot = styled.div`
+  width: ${pxToRem(60)};
+  height: ${pxToRem(8)};
+  border-radius: ${pxToRem(5)};
+  background-color: ${(props) =>
+    props.active ? "#3161E8" : "rgba(49, 97, 232, 0.3)"};
+`;
