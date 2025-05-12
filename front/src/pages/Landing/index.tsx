@@ -6,6 +6,7 @@ import Problemas from "../../sections/Problemas";
 import CTA from "../../sections/CTA";
 import Patrocinadores from "../../sections/Patrocinadores";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const Landing = () => {
   return (
@@ -18,6 +19,7 @@ const Landing = () => {
       <Desafios />
       <CTA />
       <Patrocinadores />
+      <Footer />
     </>
   );
 };
