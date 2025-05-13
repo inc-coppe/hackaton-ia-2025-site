@@ -162,14 +162,15 @@ export const HomeImage = styled.img`
 export const SolidButton = styled.button`
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-transform: uppercase;
   background-color: #ffffff;
   color: #3161e8;
   border-radius: 0.2rem;
-  padding: 2rem 2rem;
+  padding: 0.75rem 2rem;
   border: none;
   cursor: pointer;
+  margin-top: 5rem; /* Space between text and button */
   transition: background-color 0.2s ease;
   width: fit-content; /* Button only as wide as its content */
 
@@ -186,4 +187,79 @@ export const SolidButton = styled.button`
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
   }
+`;
+
+export const PlaceContainerLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  position: absolute;
+  width: 413px;
+  height: 49px;
+  left: 3rem; /* 7.5rem margin-left */
+  bottom: 7rem; /* Position it above the carousel */
+`;
+
+export const PlaceContainerRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0px;
+  position: absolute;
+  width: 406px;
+  height: 49px;
+  right: 7.5rem; /* 7.5rem margin-right */
+  bottom: 7rem; /* Position it above the carousel */
+`;
+
+export const SubtitleLeft = styled.h3`
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  color: #ffffff;
+  margin: 0;
+  width: 413px;
+  height: 25px;
+`;
+
+export const SmallerTitleLeft = styled.h2`
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  width: 413px;
+  height: 24px;
+`;
+
+export const SubtitleRight = styled.h3`
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  color: #ffffff;
+  text-align: right;
+  margin: 0;
+  width: 406px;
+  height: 25px;
+`;
+
+export const SmallerTitleRight = styled.h2`
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  width: 406px;
+  height: 24px;
 `;

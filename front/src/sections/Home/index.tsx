@@ -15,6 +15,12 @@ import {
   CarouselTrack,
   CarouselItem,
   Subtitle,
+  PlaceContainerLeft,
+  PlaceContainerRight,
+  SubtitleLeft,
+  SmallerTitleLeft,
+  SubtitleRight,
+  SmallerTitleRight,
 } from "./style";
 import LogoHackaton from "../../assets/Logo1.png";
 import GradientWpp from "../../assets/gradientewpp.png";
@@ -64,6 +70,16 @@ const HomePage = () => {
             <HomeImage src={LogoHackaton} alt="Hackathon IA 2025" />
           </LogoContainer>
         </Flex>
+
+        <PlaceContainerLeft>
+          <SubtitleLeft>RIO DE JANEIRO:</SubtitleLeft>
+          <SmallerTitleLeft>PRESENCIAL NO PORTO MARAVALLEY</SmallerTitleLeft>
+        </PlaceContainerLeft>
+
+        <PlaceContainerRight>
+          <SubtitleRight>SÃO PAULO:</SubtitleRight>
+          <SmallerTitleRight>ONLINE COM COORDENAÇÃO DA USP</SmallerTitleRight>
+        </PlaceContainerRight>
 
         <CarouselContainer>
           <CarouselTrack>
