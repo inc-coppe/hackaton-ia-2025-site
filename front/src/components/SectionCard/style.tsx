@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const pxToRem = (size) => `${size / 16}rem`;
+
 export const SectionCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,6 +19,12 @@ export const SectionCard = styled.div`
     /* 768px = 48rem */
     padding: 1rem; /* 16px = 1rem */
   }
+
+  transition:  background-color 0.3s ease;
+
+  &:hover {
+    background-color: #C1D0F8;
+  }
 `;
 
 export const CardHeader = styled.div`
@@ -26,7 +34,31 @@ export const CardHeader = styled.div`
   align-items: flex-start;
 `;
 
+export const CardHeaderSeta = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const SetaWrapper = styled.div`
+  width: ${pxToRem(24)};
+  height: ${pxToRem(24)};
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  
+`;
+
+export const SetaIcon = styled.img`
+  width: ${pxToRem(20)};
+  height: ${pxToRem(20)};
+
+`;
+
+
 export const CardTitle = styled.h3`
+  width: 100%;
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 800;

@@ -37,6 +37,7 @@ export const Title = styled.h1`
 `;
 
 export const Body = styled.p`
+  
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 500;

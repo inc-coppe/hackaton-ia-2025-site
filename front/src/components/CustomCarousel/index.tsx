@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import setaIcon from "../../assets/seta_figma.png";
 import {
   CarouselContainer,
   CardsWrapper,
@@ -7,18 +8,31 @@ import {
   LinkButton,
   PageControl,
   Dot,
+  CardSugerido,
+  CardTitulo,
+  CardDescricao,
+  SetaIcon,
+  CardHeaderSeta,
+  SetaWrapper,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
 const HorizontalCarousel = () => {
-  const cardData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+  const cardData = [
+    { id: 1, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido."}, 
+    
+    { id: 2, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido. Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido. Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." }, 
+    
+    { id: 3, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." }, 
+    
+    { id: 4, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "" }];
 
   const wrapperRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
 
   const scrollToIndex = (index) => {
     if (wrapperRef.current) {
-      const cardWidth = (378.75 + 32) / 2; // Largura do card + margem
+      const cardWidth = wrapperRef.current.offsetWidth ;
       wrapperRef.current.scrollLeft = index * cardWidth;
       setCurrentPage(index);
     }
@@ -28,12 +42,21 @@ const HorizontalCarousel = () => {
     <CarouselContainer>
       <CardsWrapper ref={wrapperRef}>
         {cardData.map((item) => (
-          <CardItem key={item.id}>{item.content}</CardItem>
+          <CardItem key={item.id}>
+            <CardHeaderSeta>
+              <CardSugerido>{item.sugerido_por}</CardSugerido>
+              <SetaWrapper>
+                <SetaIcon src = {setaIcon} alt="Seta"/>
+              </SetaWrapper>
+            </CardHeaderSeta>
+            <CardTitulo>{item.titulo}</CardTitulo>
+            <CardDescricao>{item.descricao}</CardDescricao> 
+          </CardItem>
         ))}
       </CardsWrapper>
 
       <PageControl>
-        {cardData.map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <Dot
             key={index}
             active={currentPage === index}
@@ -62,3 +85,4 @@ const HorizontalCarousel = () => {
 };
 
 export default HorizontalCarousel;
+

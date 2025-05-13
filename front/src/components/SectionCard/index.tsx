@@ -1,10 +1,14 @@
 import React from "react";
+import setaIcon from "../../assets/seta_figma_preta.png";
 import {
   SectionCard,
   CardHeader,
   CardTitle,
   CardSubtitle,
   CardDescription,
+  CardHeaderSeta,
+  SetaIcon,
+  SetaWrapper,
 } from "./style";
 
 interface SectionCardProps {
@@ -20,9 +24,15 @@ const SectionCardComponent: React.FC<SectionCardProps> = ({
 }) => {
   return (
     <SectionCard>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardSubtitle>{subtitle}</CardSubtitle>
+      
+        <CardHeaderSeta>
+          <CardTitle>{title}</CardTitle>
+          <SetaWrapper>
+              <SetaIcon src = {setaIcon} alt="Seta"/>
+          </SetaWrapper>
+        </CardHeaderSeta>
+      <CardHeader>  
+        <CardSubtitle>{subtitle}</CardSubtitle>    
       </CardHeader>
       <CardDescription>{description}</CardDescription>
     </SectionCard>

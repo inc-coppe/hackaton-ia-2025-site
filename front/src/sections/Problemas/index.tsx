@@ -8,19 +8,19 @@ import CustomCarousel from "../../components/CustomCarousel";
 const Desafios = () => {
   return (
     <Container>
-      <Texts style={{ marginBottom: "4rem" }}>
+      <Texts style={{ marginBottom: "4rem" , width: "70vw"}}>
         <TitleDiv>
           <SectionSubtitle style={{ color: "#0F0F21" }}>
             BORA RESOLVER PROBLEMAS DE VERDADE?{" "}
           </SectionSubtitle>
           <Title style={{ color: "#0F0F21", width: "70vw" }}>
-            QUEM APOIA A INOVAÇÃO, MOVE O MUNDO.
+            ENCARANDO O QUE IMPORTA, CRIANDO O QUE TRANSFORMA.
           </Title>
 
-          <Body style={{ textAlign: "left" }}>
+          <Body style={{ textAlign: "left", width: "60vw" }}>
             Durante o evento, você pode encarar desafios reais de empresas
-            parceiras ou até propor o seu próprio. São problemas que pedem
-            criatividade, visão de futuro e, claro, muita colaboração.
+            parceiras ou até propor o seu próprio. 
+            São problemas que pedem criatividade, visão de futuro e, claro, muita colaboração.
           </Body>
         </TitleDiv>
       </Texts>
