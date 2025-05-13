@@ -19,17 +19,28 @@ export const CardsWrapper = styled.div`
 `;
 
 export const CardItem = styled.div`
-  min-width: ${pxToRem(378.75)};
-  height: ${pxToRem(251)};
+  width: 33.85vw;
+  height: 32.44vh;
+
   background-color: #2e2989;
   border-radius: ${pxToRem(8)};
   color: white;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: ${pxToRem(18)};
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  
+  padding: ${pxToRem(32)};
+  gap: ${pxToRem(8)};
+
   flex-shrink: 0;
   margin-right: ${pxToRem(32)};
+
+  transition:  background-color 0.3s ease;
+
+  &:hover {
+    background-color: #110249;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -66,4 +77,69 @@ export const Dot = styled.div`
   border-radius: ${pxToRem(5)};
   background-color: ${(props) =>
     props.active ? "#3161E8" : "rgba(49, 97, 232, 0.3)"};
+`;
+
+
+export const CardSugerido = styled.p`
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: ${pxToRem(12)};
+  line-height: ${pxToRem(24)};
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.6);
+  
+  width: ${pxToRem(432)};
+  height: ${pxToRem(24)};
+
+`;
+
+export const SetaWrapper = styled.div`
+  width: ${pxToRem(24)};
+  height: ${pxToRem(24)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px; /* ou o espaçamento que quiser da direita do "Sugerido" */
+`;
+
+export const SetaIcon = styled.img`
+  width: ${pxToRem(20)};
+  height: ${pxToRem(20)};
+
+`;
+
+
+export const CardTitulo = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(18)};
+  line-height: ${pxToRem(25)};
+  letter-spacing: 0;
+  color: #FFFFFF;
+  width: ${pxToRem(456)};
+  height: ${pxToRem(25)};
+  margin: 0;
+  
+`;
+
+export const CardDescricao = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
+  font-size: ${pxToRem(16)};
+  line-height: ${pxToRem(20)};
+  letter-spacing: 0;
+  color: white;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* número de linhas visíveis */
+  -webkit-box-orient: vertical;
+`;
+
+export const CardHeaderSeta = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
