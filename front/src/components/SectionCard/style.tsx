@@ -1,104 +1,143 @@
 import styled from "styled-components";
 
-const pxToRem = (size) => `${size / 16}rem`;
-
 export const SectionCard = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1.75rem;
-  margin: 0.5rem;
-  width: 40vw;
-  height: 17vh;
-  justify-content: center;
+  padding: 1.5rem 2rem; // 24px 32px
+  gap: 0.75rem; // 12px
+  height: 8.188rem; // 131px
+  background: none;
+  width: fit-content;
 
-  background: #ffffff;
-  border-radius: 0.5rem; /* 8px = 0.5rem */
-
-  @media (max-width: 48rem) {
-    /* 768px = 48rem */
-    padding: 1rem; /* 16px = 1rem */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 4rem); // Subtracting space for the arrow
+    height: 100%;
+    background: #ffffff;
+    border-radius: 0.5rem; // 8px
+    z-index: 0;
   }
 
-  transition:  background-color 0.3s ease;
+  @media (max-width: 28rem) {
+    height: 8.188rem; // 131px
+    padding: 1.5rem 2rem;
+    width: 21.375rem; // 342px
 
-  &:hover {
-    background-color: #C1D0F8;
+    &::before {
+      width: 100%;
+    }
+
+    &:nth-of-type(2) {
+      height: 14.25rem; // 228px
+    }
   }
-`;
 
-export const CardHeader = styled.div`
-  display: flex;
-  margin-top: 0.5rem;
-  flex-direction: column;
-  align-items: flex-start;
+  &:hover::before {
+    background-color: #c1d0f8;
+  }
 `;
 
 export const CardHeaderSeta = styled.div`
-  width: 100%;
+  position: relative;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0;
+  gap: 0.625rem; // 10px
+  height: 1.5rem; // 24px
+  z-index: 1;
+
+  @media (max-width: 28rem) {
+    width: 17.375rem; // 278px
+    height: 1.5rem; // 24px
+  }
 `;
 
 export const SetaWrapper = styled.div`
-  width: ${pxToRem(24)};
-  height: ${pxToRem(24)};
+  height: 1.5rem; // 24px
   display: flex;
-  align-items: left;
-  justify-content: center;
-  
 `;
 
 export const SetaIcon = styled.img`
-  width: ${pxToRem(20)};
-  height: ${pxToRem(20)};
-
+  width: 1.5rem; // 24px
+  height: 1.5rem; // 24px
 `;
 
+export const CardHeader = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 0.125rem; // 2px
+  width: 34.5rem; // 552px
+  height: 3.188rem; // 51px
+  z-index: 1;
+
+  @media (max-width: 28rem) {
+    width: 17.375rem; // 278px
+    height: 3rem; // 48px
+  }
+`;
 
 export const CardTitle = styled.h3`
-  width: 100%;
+  position: relative;
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 800;
-  font-size: 0.75rem; /* 12px = 0.75rem */
-  line-height: 1.5rem; /* 24px = 1.5rem */
+  font-size: 0.75rem; // 12px
+  line-height: 1.5rem; // 24px
   color: rgba(15, 15, 33, 0.6);
+  height: 1.5rem; // 24px
+  margin: 0;
+  z-index: 1;
 
-  @media (max-width: 48rem) {
-    /* 768px = 48rem */
-    font-size: 0.625rem; /* 10px = 0.625rem */
-    line-height: 1.25rem; /* 20px = 1.25rem */
+  @media (max-width: 28rem) {
+    height: 1.5rem; // 24px
   }
 `;
 
 export const CardSubtitle = styled.h4`
+  position: relative;
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 700;
-  font-size: 1.125rem; /* 18px = 1.125rem */
-  line-height: 1.5625rem; /* 25px = 1.5625rem */
+  font-size: 1.125rem; // 18px
+  line-height: 1.563rem; // 25px
   color: #0f0f21;
+  height: 1.563rem; // 25px
+  margin: 0;
+  z-index: 1;
 
-  @media (max-width: 48rem) {
-    /* 768px = 48rem */
-    font-size: 1rem; /* 16px = 1rem */
-    line-height: 1.375rem; /* 22px = 1.375rem */
+  @media (max-width: 28rem) {
+    font-size: 1rem; // 16px
+    line-height: 1.375rem; // 22px
+    height: 1.375rem; // 22px
   }
 `;
 
 export const CardDescription = styled.p`
+  position: relative;
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 500;
-  font-size: 1rem; /* 16px = 1rem */
-  line-height: 1.25rem; /* 20px = 1.25rem */
+  font-size: 1rem; // 16px
+  line-height: 1.25rem; // 20px
   color: #0f0f21;
+  width: 34.5rem; // 552px
+  height: 1.25rem; // 20px
+  margin: 0;
+  z-index: 1;
 
-  @media (max-width: 48rem) {
-    /* 768px = 48rem */
-    font-size: 0.875rem; /* 14px = 0.875rem */
-    line-height: 1.125rem; /* 18px = 1.125rem */
+  @media (max-width: 28rem) {
+    width: 17.375rem; // 278px
+    height: ${(props) =>
+      props.$isSecondCard ? "7.5rem" : "1.25rem"}; // 120px or 20px
   }
 `;

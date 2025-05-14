@@ -1,48 +1,53 @@
+import React from "react";
 import {
   Container,
-  FooterNote,
-  FooterWrapper,
   MapSection,
+  LogoSection,
   LogoWrapper,
-  Frame,
-  Column,
-  Subtitle,
   Logo,
+  LinksSection,
+  StyledNavLink,
+  RealizacaoSection,
+  ContactSection,
+  Subtitle,
   BodyText,
+  FooterNote,
 } from "./style";
 import LogoHackaton from "../../assets/Logo2.png";
 
 const Footer = () => {
   return (
     <Container>
-      <FooterWrapper>
-        <MapSection>
-          <Frame>
-            <LogoWrapper>
-              <Logo src={LogoHackaton} alt="Logo HackathonIA" />
-            </LogoWrapper>
-          </Frame>
-          <Column>
-            <Subtitle>Início</Subtitle>
-            <Subtitle>Cronograma</Subtitle>
-            <Subtitle>Desafios</Subtitle>
-            <Subtitle>Materiais</Subtitle>
-            <Subtitle>Regulamento</Subtitle>
-            <Subtitle>Patrocinadores</Subtitle>
-          </Column>
-          <Column>
-            <Subtitle>Realização:</Subtitle>
-            <BodyText>Incubadora de Empresas Coppe/UFRJ</BodyText>
-            <BodyText>CIETEC</BodyText>
-            <BodyText>FAPERJ</BodyText>
-            <BodyText>Instituto Reditus</BodyText>
-          </Column>
-          <Column>
-            <Subtitle>Dúvidas? Fale conosco:</Subtitle>
-            <BodyText>contato@contato.com.br</BodyText>
-          </Column>
-        </MapSection>
-      </FooterWrapper>
+      <MapSection>
+        <LogoSection>
+          <LogoWrapper>
+            <Logo src={LogoHackaton} alt="Logo HackathonIA" />
+          </LogoWrapper>
+        </LogoSection>
+
+        <LinksSection>
+          <StyledNavLink to="/">Início</StyledNavLink>
+          <StyledNavLink to="/cronograma">Cronograma</StyledNavLink>
+          <StyledNavLink to="/desafios">Desafios</StyledNavLink>
+          <StyledNavLink to="/materiais">Materiais</StyledNavLink>
+          <StyledNavLink to="/regulamento">Regulamento</StyledNavLink>
+          <StyledNavLink to="/patrocinadores">Patrocinadores</StyledNavLink>
+        </LinksSection>
+
+        <RealizacaoSection>
+          <Subtitle>Realização:</Subtitle>
+          <BodyText>Incubadora de Empresas Coppe/UFRJ</BodyText>
+          <BodyText>CIETEC</BodyText>
+          <BodyText>FAPERJ</BodyText>
+          <BodyText>Instituto Reditus</BodyText>
+        </RealizacaoSection>
+
+        <ContactSection>
+          <Subtitle>Dúvidas? Fale conosco:</Subtitle>
+          <BodyText>contato@contato.com.br</BodyText>
+        </ContactSection>
+      </MapSection>
+
       <FooterNote>
         © 2025 HackathonIA. Todos os direitos reservados.
       </FooterNote>

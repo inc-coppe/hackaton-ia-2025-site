@@ -71,44 +71,59 @@ const SponsorsSection: React.FC = () => {
       <SponsorsContainer>
         <TierTitle>OURO</TierTitle>
         <SponsorLogoContainer>
-          {/* Use Skeleton.Image for OURO tier */}
-          <Space size={16}>
+          <Space
+            size={12}
+            style={{ flexWrap: "wrap", justifyContent: "center" }}
+          >
             {[1, 2, 3].map((index) => (
               <Skeleton.Image
                 key={index}
                 active
-                style={{ width: 180, height: 90 }} // Adjust size as needed
+                style={{
+                  width: window.innerWidth <= 448 ? 60 : 180, // 60px for mobile
+                  height: window.innerWidth <= 448 ? 30 : 90, // 30px for mobile
+                }}
               />
             ))}
-          </Space>
+          </Space>{" "}
         </SponsorLogoContainer>
 
         <TierTitle>PRATA</TierTitle>
         <SponsorLogoContainer>
-          {/* Use Skeleton.Image for PRATA tier */}
-          <Space size={16}>
+          <Space
+            size={12}
+            style={{ flexWrap: "wrap", justifyContent: "center" }}
+          >
             {[1, 2, 3, 4, 5].map((index) => (
               <Skeleton.Image
                 key={index}
                 active
-                style={{ width: 160, height: 80 }} // Adjust size as needed
+                style={{
+                  width: window.innerWidth <= 448 ? 60 : 160, // 60px for mobile
+                  height: window.innerWidth <= 448 ? 30 : 80, // 30px for mobile
+                }}
               />
             ))}
-          </Space>
+          </Space>{" "}
         </SponsorLogoContainer>
 
         <TierTitle>BRONZE</TierTitle>
         <SponsorLogoContainer>
-          {/* Use Skeleton.Image for BRONZE tier */}
-          <Space size={16}>
+          <Space
+            size={12}
+            style={{ flexWrap: "wrap", justifyContent: "center" }}
+          >
             {[1, 2, 3, 4, 5].map((index) => (
               <Skeleton.Image
                 key={index}
                 active
-                style={{ width: 140, height: 70 }} // Adjust size as needed
+                style={{
+                  width: window.innerWidth <= 448 ? 60 : 140, // 60px for mobile
+                  height: window.innerWidth <= 448 ? 30 : 70, // 30px for mobile
+                }}
               />
             ))}
-          </Space>
+          </Space>{" "}
         </SponsorLogoContainer>
 
         <TierTitle>APOIO</TierTitle>

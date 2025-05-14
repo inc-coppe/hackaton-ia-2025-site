@@ -15,26 +15,29 @@ interface SectionCardProps {
   title: string;
   subtitle: string;
   description: string;
+  isSecondCard?: boolean;
 }
 
 const SectionCardComponent: React.FC<SectionCardProps> = ({
   title,
   subtitle,
   description,
+  isSecondCard = false,
 }) => {
   return (
     <SectionCard>
-      
-        <CardHeaderSeta>
-          <CardTitle>{title}</CardTitle>
-          <SetaWrapper>
-              <SetaIcon src = {setaIcon} alt="Seta"/>
-          </SetaWrapper>
-        </CardHeaderSeta>
-      <CardHeader>  
-        <CardSubtitle>{subtitle}</CardSubtitle>    
+      <CardHeaderSeta>
+        <CardTitle>{title}</CardTitle>
+        <SetaWrapper>
+          <SetaIcon src={setaIcon} alt="Seta" />
+        </SetaWrapper>
+      </CardHeaderSeta>
+      <CardHeader>
+        <CardSubtitle>{subtitle}</CardSubtitle>
       </CardHeader>
-      <CardDescription>{description}</CardDescription>
+      <CardDescription $isSecondCard={isSecondCard}>
+        {description}
+      </CardDescription>
     </SectionCard>
   );
 };
