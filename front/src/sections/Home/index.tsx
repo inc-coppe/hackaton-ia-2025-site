@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   HomePageContainer,
   LogoContainer,
@@ -24,6 +24,7 @@ import {
 } from "./style";
 import LogoHackaton from "../../assets/Logo1.png";
 import GradientWpp from "../../assets/gradientewpp.png";
+import GradientWppMobile from "../../assets/background-home-mob.png";
 
 import c1 from "../../assets/c1.png";
 import c2 from "../../assets/c2.png";
@@ -43,10 +44,42 @@ const HomePage = () => {
   // Duplicate images to create seamless loop
   const allImages = [...carouselImages, ...carouselImages];
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Function to check if viewport is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 500);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add event listener
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Ensure images are loaded before rendering
+  useEffect(() => {
+    const preloadImage = (src: string) => {
+      const img = new Image();
+      img.src = src;
+    };
+
+    preloadImage(GradientWpp);
+    preloadImage(GradientWppMobile);
+  }, []);
+
   return (
     <>
       <HomePageContainer>
-        <Gradient src={GradientWpp} alt="Gradiente" />
+        <Gradient
+          src={isMobile ? GradientWppMobile : GradientWpp}
+          alt="Gradiente"
+        />{" "}
         <LeftContainer>
           <TextContainer>
             <Text>20 E 21 DE SETEMBRO</Text>
@@ -70,30 +103,23 @@ const HomePage = () => {
             <HomeImage src={LogoHackaton} alt="Hackathon IA 2025" />
           </LogoContainer>
         </Flex>
-
         <PlaceContainerLeft>
           <SubtitleLeft>RIO DE JANEIRO:</SubtitleLeft>
           <SmallerTitleLeft>PRESENCIAL NO PORTO MARAVALLEY</SmallerTitleLeft>
         </PlaceContainerLeft>
-
         <PlaceContainerRight>
           <SubtitleRight>SÃO PAULO:</SubtitleRight>
           <SmallerTitleRight>ONLINE COM COORDENAÇÃO DA USP</SmallerTitleRight>
         </PlaceContainerRight>
-
         <CarouselContainer>
           <CarouselTrack>
             {allImages.map((image, index) => (
               <CarouselItem key={index}>
-                <img
-                  style={{ width: "auto", height: "auto" }}
-                  src={image}
-                  alt={`Carousel item ${index + 1}`}
-                />
+                <img src={image} alt={`Carousel item ${index + 1}`} />
               </CarouselItem>
             ))}
           </CarouselTrack>
-        </CarouselContainer>
+        </CarouselContainer>{" "}
       </HomePageContainer>
     </>
   );
