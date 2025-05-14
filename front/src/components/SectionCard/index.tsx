@@ -2,6 +2,7 @@ import React from "react";
 import setaIcon from "../../assets/seta_figma_preta.png";
 import {
   SectionCard,
+  CardContent,
   CardHeader,
   CardTitle,
   CardSubtitle,
@@ -25,19 +26,21 @@ const SectionCardComponent: React.FC<SectionCardProps> = ({
   isSecondCard = false,
 }) => {
   return (
-    <SectionCard>
-      <CardHeaderSeta>
-        <CardTitle>{title}</CardTitle>
-        <SetaWrapper>
-          <SetaIcon src={setaIcon} alt="Seta" />
-        </SetaWrapper>
-      </CardHeaderSeta>
-      <CardHeader>
-        <CardSubtitle>{subtitle}</CardSubtitle>
-      </CardHeader>
-      <CardDescription $isSecondCard={isSecondCard}>
-        {description}
-      </CardDescription>
+    <SectionCard $isSecondCard={isSecondCard}>
+      <CardContent>
+        <CardHeaderSeta>
+          <CardTitle>{title}</CardTitle>
+          <SetaWrapper>
+            <SetaIcon src={setaIcon} alt="Seta" />
+          </SetaWrapper>
+        </CardHeaderSeta>
+        <CardHeader>
+          <CardSubtitle>{subtitle}</CardSubtitle>
+        </CardHeader>
+        <CardDescription $isSecondCard={isSecondCard}>
+          {description}
+        </CardDescription>
+      </CardContent>
     </SectionCard>
   );
 };

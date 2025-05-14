@@ -1,5 +1,18 @@
 import styled from "styled-components";
 
+export const SectionSubtitle = styled.h3`
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.125rem; // 18px
+  line-height: 1.563rem; // 25px
+  color: #ffffff;
+
+  @media (max-width: 28rem) {
+    font-size: 1rem; // 16px
+    line-height: 1.375rem; // 22px
+  }
+`;
 export const Container = styled.div`
   display: flex;
   flex-direction: row;

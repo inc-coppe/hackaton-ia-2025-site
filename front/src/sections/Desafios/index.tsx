@@ -2,8 +2,9 @@ import React from "react";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { Body, Title } from "../CTA/style";
 import { Container, Text, TitleDiv, Button, Frame } from "./style";
-import { SectionSubtitle } from "../Patrocinadores/style";
+
 import SectionCardComponent from "../../components/SectionCard";
+import { SectionSubtitle } from "../Patrocinadores/style";
 
 const Desafios = () => {
   return (
