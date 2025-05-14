@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
-import {
-  HeaderContainer,
-  Logo,
-  NavLink,
-  NavButton,
-  SolidButton,
-  LoginButton,
-  ProfilePicture,
-  UserName,
-  UserContainer,
-  NavigationSection,
-  AuthButtons,
-} from "./style";
+import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import LogoHackaton from "../../assets/Logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  HeaderContainer,
+  Logo,
+  NavigationContainer,
+  MobileNavigation,
+  NavLink,
+  NavButton,
+  AuthContainer,
+  LoginButton,
+  SignUpButton,
+  UserContainer,
+  ProfilePicture,
+  UserName,
+  BurgerButton,
+  MobileMenuContent,
+  TimestampContainer,
+  Timestamp,
+  UserInfo,
+  NavSection,
+} from "./style";
 
 interface User {
   id: string;
   name: string;
   email: string;
-  profile_picture: string;
+  profile_picture_url: string;
 }
 
 const sponsorItems = [
@@ -31,7 +38,7 @@ const sponsorItems = [
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://www.antgroup.com"
+        href="https://www.sponsor1.com"
       >
         Patrocinador 1
       </a>
@@ -43,7 +50,7 @@ const sponsorItems = [
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://www.aliyun.com"
+        href="https://www.sponsor2.com"
       >
         Patrocinador 2
       </a>
@@ -55,7 +62,7 @@ const sponsorItems = [
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://www.luohanacademy.com"
+        href="https://www.sponsor3.com"
       >
         Patrocinador 3
       </a>
@@ -65,6 +72,7 @@ const sponsorItems = [
 
 const Header = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,15 +87,10 @@ const Header = () => {
           });
           if (response.ok) {
             const data = await response.json();
-            // Construct the proxied URL
             const profileUrl = data.id
               ? `http://localhost:8000/api/profile-picture/${data.id}/`
               : null;
-            setUser({
-              ...data,
-              profile_picture_url: profileUrl,
-            });
-            console.log("User data:", data);
+            setUser({ ...data, profile_picture_url: profileUrl });
           }
         } catch (error) {
           console.error("Error fetching user:", error);
@@ -100,56 +103,111 @@ const Header = () => {
 
   const handleUserClick = () => {
     navigate("/profile");
+    setIsMenuOpen(false);
   };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const Navigation = ({ isMobile = false }) => (
+    <>
+      <NavLink href="#inicio" $isMobile={isMobile}>
+        Início
+      </NavLink>
+      <NavLink href="#cronograma" $isMobile={isMobile}>
+        Cronograma
+      </NavLink>
+      <NavLink href="#desafios" $isMobile={isMobile}>
+        Desafios
+      </NavLink>
+      <NavLink href="#materiais" $isMobile={isMobile}>
+        Materiais
+      </NavLink>
+      <NavLink href="#regulamento" $isMobile={isMobile}>
+        Regulamento
+      </NavLink>
+      <Dropdown menu={{ items: sponsorItems }} trigger={["hover"]}>
+        <NavButton type="button" $isMobile={isMobile}>
+          <Space>
+            Patrocinadores
+            <DownOutlined />
+          </Space>
+        </NavButton>
+      </Dropdown>
+    </>
+  );
+
+  const AuthSection = ({ isMobile = false }) =>
+    user ? (
+      <UserContainer onClick={handleUserClick} $isMobile={isMobile}>
+        <ProfilePicture
+          src={user.profile_picture_url}
+          alt={`${user.name}'s profile`}
+        />
+        <UserName>{user.name.split(" ")[0]}</UserName>
+      </UserContainer>
+    ) : (
+      <AuthContainer $isMobile={isMobile}>
+        <LoginButton $isMobile={isMobile}>
+          <Link to="/login">LOGIN</Link>
+        </LoginButton>
+        <SignUpButton $isMobile={isMobile}>
+          <Link to="/register">INSCREVA-SE</Link>
+        </SignUpButton>
+      </AuthContainer>
+    );
 
   return (
     <HeaderContainer>
       <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
 
-      <NavigationSection>
-        <NavLink href="#inicio">Início</NavLink>
-        <NavLink href="#cronograma">Cronograma</NavLink>
-        <NavLink href="#desafios">Desafios</NavLink>
-        <NavLink href="#materiais">Materiais</NavLink>
-        <NavLink href="#regulamento">Regulamento</NavLink>
-        <Dropdown menu={{ items: sponsorItems }} trigger={["hover"]}>
-          <NavButton type="button">
-            <Space>
-              Patrocinadores
-              <DownOutlined />
-            </Space>
-          </NavButton>
-        </Dropdown>
-      </NavigationSection>
+      <NavigationContainer>
+        <Navigation />
+      </NavigationContainer>
 
-      {user ? (
-        <UserContainer onClick={handleUserClick}>
-          <ProfilePicture
-            src={user.profile_picture_url}
-            alt={`${user.name}'s profile`}
-          />
-          <UserName>{user.name.split(" ")[0]}</UserName>
-        </UserContainer>
-      ) : (
-        <AuthButtons>
-          <LoginButton type="button">
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/login"
-            >
-              Login
-            </Link>
-          </LoginButton>
-          <SolidButton type="button">
-            <Link
-              style={{ textDecoration: "none", color: "inherit" }}
-              to="/register"
-            >
-              Inscreva-se
-            </Link>
-          </SolidButton>
-        </AuthButtons>
-      )}
+      <AuthSection />
+
+      <BurgerButton onClick={toggleMenu} $isOpen={isMenuOpen}>
+        <span />
+        <span />
+        <span />
+      </BurgerButton>
+
+      <MobileNavigation $isOpen={isMenuOpen}>
+        <MobileMenuContent>
+          <NavSection>
+            <NavLink href="#inicio" $isMobile>
+              Início
+            </NavLink>
+            <NavLink href="#cronograma" $isMobile>
+              Cronograma
+            </NavLink>
+            <NavLink href="#desafios" $isMobile>
+              Desafios
+            </NavLink>
+            <NavLink href="#materiais" $isMobile>
+              Materiais
+            </NavLink>
+            <NavLink href="#regulamento" $isMobile>
+              Regulamento
+            </NavLink>
+            <Dropdown menu={{ items: sponsorItems }} trigger={["click"]}>
+              <NavButton type="button" $isMobile>
+                <Space>
+                  Patrocinadores
+                  <DownOutlined />
+                </Space>
+              </NavButton>
+            </Dropdown>
+          </NavSection>
+          <AuthSection isMobile />
+          <TimestampContainer>
+            <Timestamp>2025-05-14 02:09:44 UTC</Timestamp>
+            <UserInfo>Login: franciscoflorencio</UserInfo>
+          </TimestampContainer>
+        </MobileMenuContent>
+      </MobileNavigation>
     </HeaderContainer>
   );
 };
