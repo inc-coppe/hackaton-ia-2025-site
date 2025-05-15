@@ -36,35 +36,43 @@ class CustomUser(AbstractBaseUser):
 
 
 class UserProfile(models.Model):
-    GENDER_CHOICES = [
-        ("M", "Masculino"),
-        ("F", "Feminino"),
-        ("O", "Outro"),
-        ("N", "Prefiro não dizer"),
+    EDUCATION_CHOICES = [
+        ("EMI", "Ensino Médio Incompleto"),
+        ("EMC", "Ensino Médio Completo"),
+        ("GC", "Graduação Completa"),
+        ("GI", "Graduação Incompleta"),
+        ("PGC", "Pós-Graduação Completa"),
+        ("PGI", "Pós-Graduação Incompleta"),
+        ("MC", "Mestrado Completo"),
+        ("MI", "Mestrado Incompleto"),
+        ("DC", "Doutorado Completo"),
+        ("DI", "Doutorado Incompleto"),
+        ("PDC", "Pós-Doutorado Completo"),
+        ("PDI", "Pós-Doutorado Incompleto"),
     ]
 
-    EDUCATION_CHOICES = [
-        ("EM", "Ensino Médio"),
-        ("G", "Graduação"),
-        ("P", "Pós-Graduação"),
-        ("M", "Mestrado"),
-        ("D", "Doutorado"),
-        ("PD", "Pós-Doutorado"),
+    MOTIVATION_CHOICES = [
+        ("PARTNERS", "Encontro com grandes parceiros"),
+        ("AI", "Temática IA"),
+        ("HEALTH", "Temática Saúde"),
+        ("UFRJ", "Vontade de interagir mais com a UFRJ"),
+        ("HACKATHON", "O fato de ser um Hackathon e poder desenvolver uma solução"),
     ]
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=255)
     birth_date = models.DateField()
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    linkedin_profile = models.URLField(max_length=255, blank=True, null=True)
+    github_profile = models.URLField(max_length=255, blank=True, null=True)
+    education_level = models.CharField(max_length=3, choices=EDUCATION_CHOICES)
     institution = models.CharField(max_length=255)
-    position = models.CharField(max_length=255)
-    education_level = models.CharField(max_length=2, choices=EDUCATION_CHOICES)
+    phone = models.CharField(max_length=20, blank=True, null=True)
     area_of_expertise = models.CharField(max_length=255)
-    github_profile = models.URLField(
-        max_length=255, blank=True, null=True, default=""
-    )  # Changed field
-    linkedin_profile = models.URLField(
-        max_length=255, blank=True, null=True, default=""
-    )  # Changed field
+    portfolio_url = models.URLField(max_length=255, blank=True, null=True)
+    special_needs = models.TextField(blank=True, null=True)
+    motivation = models.JSONField(default=list)  # Store multiple motivations
+    accepted_terms = models.BooleanField(default=False)
+    share_contacts = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     form_completed = models.BooleanField(default=False)
