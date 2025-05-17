@@ -6,6 +6,7 @@ const pxToRem = (size) => `${size / 16}rem`;
 export const CarouselContainer = styled.div``;
 
 export const CardsWrapper = styled.div`
+  
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -13,8 +14,17 @@ export const CardsWrapper = styled.div`
   -ms-overflow-style: none; /* IE/Edge */
   padding-bottom: ${pxToRem(16)};
 
+  padding-inline: ${pxToRem(32)};
+
   &::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
+  }
+
+  @media (max-width: 28rem) {
+    flex-direction: column;
+    gap: ${pxToRem(22)};
+    overflow-x: hidden;
+    
   }
 `;
 
@@ -41,6 +51,18 @@ export const CardItem = styled.div`
   &:hover {
     background-color: #110249;
   }
+
+  @media (max-width: 28rem) {
+    height: auto;
+    min-width: ${pxToRem(382)};
+    max-width: 100%;
+    margin-right: 0;
+    
+    padding: ${pxToRem(16)};
+    
+
+
+  }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -48,6 +70,9 @@ export const ButtonWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: ${pxToRem(24)};
+  @media (max-width: 28rem) {
+    align-items: center;
+  }
 `;
 
 export const LinkButton = styled.a`
@@ -69,6 +94,10 @@ export const PageControl = styled.div`
   align-items: start;
   gap: ${pxToRem(8)};
   margin-top: ${pxToRem(24)};
+
+  @media (max-width: 28rem) {
+    display: none;
+  }
 `;
 
 export const Dot = styled.div`
@@ -91,6 +120,10 @@ export const CardSugerido = styled.p`
   width: ${pxToRem(432)};
   height: ${pxToRem(24)};
 
+  @media (max-width: 28rem) {
+    margin-top: 1rem;   
+  }
+
 `;
 
 export const SetaWrapper = styled.div`
@@ -99,7 +132,7 @@ export const SetaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 8px; /* ou o espaçamento que quiser da direita do "Sugerido" */
+  margin-left: ${pxToRem(8)}; /* ou o espaçamento que quiser da direita do "Sugerido" */
 `;
 
 export const SetaIcon = styled.img`
@@ -119,6 +152,10 @@ export const CardTitulo = styled.p`
   width: ${pxToRem(456)};
   height: ${pxToRem(25)};
   margin: 0;
+
+  @media (max-width: 28rem) {
+    margin-bottom: 0.35rem;   
+  }
   
 `;
 
@@ -135,6 +172,10 @@ export const CardDescricao = styled.p`
   display: -webkit-box;
   -webkit-line-clamp: 5; /* número de linhas visíveis */
   -webkit-box-orient: vertical;
+
+  @media (max-width: 28rem) {
+    margin-bottom: 1rem;   
+  }
 `;
 
 export const CardHeaderSeta = styled.div`
