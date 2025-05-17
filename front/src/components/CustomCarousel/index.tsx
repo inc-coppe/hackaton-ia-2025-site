@@ -75,7 +75,7 @@ const HorizontalCarousel = () => {
       </PageControl>
 
       <ButtonWrapper>
-        <div />
+        
         <LinkButton href="#desafios">
           Conheça todos os desafios
           <ArrowRightOutlined />

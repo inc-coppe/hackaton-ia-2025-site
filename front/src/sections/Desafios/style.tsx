@@ -88,6 +88,8 @@ export const Body = styled.p`
   color: #ffffff;
   margin: 0;
 
+  
+
   @media (max-width: 28rem) {
     font-size: 1rem;
     line-height: 1.25rem;

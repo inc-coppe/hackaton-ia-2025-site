@@ -6,7 +6,7 @@ const pxToRem = (size) => `${size / 16}rem`;
 export const CarouselContainer = styled.div``;
 
 export const CardsWrapper = styled.div`
-  
+
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -14,13 +14,17 @@ export const CardsWrapper = styled.div`
   -ms-overflow-style: none; /* IE/Edge */
   padding-bottom: ${pxToRem(16)};
 
-  padding-inline: ${pxToRem(32)};
+  width: 110%;
+
 
   &::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
   }
 
   @media (max-width: 28rem) {
+    width: 100%;
+    margin-top: 8rem;
+
     flex-direction: column;
     gap: ${pxToRem(22)};
     overflow-x: hidden;
@@ -54,8 +58,7 @@ export const CardItem = styled.div`
 
   @media (max-width: 28rem) {
     height: auto;
-    min-width: ${pxToRem(382)};
-    max-width: 100%;
+    width: 100%;
     margin-right: 0;
     
     padding: ${pxToRem(16)};
@@ -70,8 +73,13 @@ export const ButtonWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: ${pxToRem(24)};
+  justify-content: flex-end;
   @media (max-width: 28rem) {
-    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 `;
 

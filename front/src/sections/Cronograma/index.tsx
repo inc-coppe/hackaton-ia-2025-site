@@ -11,9 +11,10 @@ const Cronograma = () => {
         <Title >
           PREPARE-SE PARA CADA MOMENTO. 
         </Title>
-        <TimelineCarousel />
+        <TimelineCarousel />  
       </Margin>
     </Container>
+    
   );
 };
 //<TimelineCarousel />

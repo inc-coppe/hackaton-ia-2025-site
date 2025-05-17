@@ -16,11 +16,15 @@ export const CardsWrapper = styled.div`
   -ms-overflow-style: none; /* IE/Edge */
   padding-bottom: ${pxToRem(16)};
 
+  width: 110%;
+
   &::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
   }
 
   @media (max-width: 28rem) {
+    width: 100%;
+
     flex-direction: column;
     overflow-x: visible;
     gap: ${pxToRem(22)};
@@ -68,6 +72,14 @@ export const ButtonWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: ${pxToRem(24)};
+  @media (max-width: 28rem) {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    
+  }
 `;
 
 export const LinkButton = styled.a`

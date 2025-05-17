@@ -13,7 +13,7 @@ export const Container = styled.div`
 
   @media (max-width: 28rem) {
     margin: 0rem;
-    padding: 0 3.75rem;
+    padding: 0 1.75rem;
     align-items: center;
     padding-top: 7.5rem;
     height: 180vh;
@@ -50,7 +50,7 @@ export const SectionSubtitle = styled.h3`
 `;
 
 export const Title = styled.h1`
-  width: 70vw;
+  
   
   font-family: "Montserrat";
   font-style: normal;
@@ -75,7 +75,8 @@ export const Title = styled.h1`
 `;
 
 export const Body = styled.p`
-  width: 60vw;
+  width: 58rem;
+  text-align: left;
   
   font-family: "Nunito Sans";
   font-style: normal;
@@ -105,12 +106,13 @@ export const Body = styled.p`
 `;
 
 export const Texts = styled.div`
+  width: 65rem;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0;
   gap: 2rem;
-  width: 70vw;
   margin-bottom: 4rem;
 
   @media (max-width: 28rem) {
@@ -118,5 +120,12 @@ export const Texts = styled.div`
     height: 17.4375rem; // 279px
     gap: 1.5rem; // 24px
     align-self: stretch;
+    padding: 0 10.75rem;
+    
   }
+`;
+
+export const CustomCarouselWrapper = styled.div`
+  width: 100%;
+  padding: 0 0rem;
 `;
