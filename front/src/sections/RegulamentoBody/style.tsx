@@ -5,6 +5,13 @@ export const RegulamentoBodyContainer = styled.div`
     padding-right: 10.5rem;
     padding-top: 5rem;
     padding-bottom: 12.5rem;
+
+    @media (max-width: 28rem) {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 4rem;
+        padding-bottom: 3.75rem;
+  }
 `;
 
 export const DescricaoBody = styled.div`
@@ -19,6 +26,11 @@ export const DescricaoBody = styled.div`
 
     padding-bottom: 1rem;
 
+    @media (max-width: 28rem) {
+        font-size: 1rem;
+        line-height: 1.25rem;
+
+    }
 `;
 
 export const Title = styled.div`
@@ -33,6 +45,12 @@ export const Title = styled.div`
     padding-top: 5rem;
 
     color: #0F0F21;
+
+    @media (max-width: 28rem) {
+        font-size: 1.125rem;
+        padding-top: 2rem;
+    }
+    
 `
 
 export const SubTitle = styled.div`
@@ -46,6 +64,10 @@ export const SubTitle = styled.div`
     padding-bottom: 1.5rem;
     
     color: #0F0F21;
+
+    @media (max-width: 28rem) {
+        font-size: 1rem;
+    }
     
 `
 
@@ -59,6 +81,10 @@ export const Body = styled.div`
     
 
     color: #0F0F2199;
+
+    @media (max-width: 28rem) {
+        font-size: 1rem;
+    }
     
 `
 export const Paragraph = styled.div`
@@ -71,6 +97,10 @@ export const Paragraph = styled.div`
     color: #0F0F2199;
 
     padding-bottom: 1rem;
+
+    @media (max-width: 28rem) {
+        font-size: 1rem;
+    }
 `;
 
 

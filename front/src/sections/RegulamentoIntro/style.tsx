@@ -8,6 +8,14 @@ export const RegulamentoIntroContainer = styled.div`
   padding-top: 10rem;
 
   background: linear-gradient(252.74deg, #2E2989 38.15%, #53167F 100%);
+
+  @media (max-width: 28rem) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 7.875rem;
+    
+    height: 15.688rem;
+  }
   
 `;
 
@@ -21,7 +29,9 @@ export const Title = styled.div`
     text-transform: uppercase;
     color: #FFFFFF;
 
-    
+  @media (max-width: 28rem) {
+    font-size: 2rem;
+  }
 `;
 
 export const SubTitle = styled.div`
@@ -35,5 +45,9 @@ export const SubTitle = styled.div`
     color: #FFFFFF;
 
     padding-bottom: 1rem;
+
+    @media (max-width: 28rem) {
+      font-size: 1rem;
+    } 
 
 `;
