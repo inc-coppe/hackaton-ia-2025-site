@@ -3,7 +3,10 @@ import styled from "styled-components";
 // Função auxiliar para usar rem
 const pxToRem = (size) => `${size / 16}rem`;
 
-export const CarouselContainer = styled.div``;
+export const CarouselContainer = styled.div`
+  @media (max-width: 28rem) {
+    margin-top: ${pxToRem(24)};
+  }`;
 
 export const CardsWrapper = styled.div`
   display: flex;
@@ -13,14 +16,24 @@ export const CardsWrapper = styled.div`
   -ms-overflow-style: none; /* IE/Edge */
   padding-bottom: ${pxToRem(16)};
 
+  width: 110%;
+
   &::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
+  }
+
+  @media (max-width: 28rem) {
+    width: 100%;
+
+    flex-direction: column;
+    overflow-x: visible;
+    gap: ${pxToRem(22)};
   }
 `;
 
 export const CardItem = styled.div`
   min-width: ${pxToRem(600)};
-  height: ${pxToRem(572)};
+
   background-color: #0f0f21;
   border-radius: ${pxToRem(8)};
   color: white;
@@ -32,16 +45,26 @@ export const CardItem = styled.div`
   margin-right: ${pxToRem(32)};
   position: relative;
 
+  @media (max-width: 28rem) {
+    
+    min-width: ${pxToRem(342)};
+    height: auto; // <- Deixa a altura se ajustar naturalmente
+    margin-right: 0; // Remove margem lateral se quiser centralizar
+  
+  }
+
   img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover; /* Faz a imagem cobrir todo o espaço do card */
     user-select: none; /* Não permite selecionar a imagem */
     -webkit-user-drag: none; /* Impede o arrasto em navegadores Webkit */
     -moz-user-drag: none; /* Impede o arrasto em navegadores Firefox */
     user-drag: none; /* Impede o arrasto em navegadores mais modernos */
     border-radius: ${pxToRem(8)};
+  
   }
+
 `;
 
 export const ButtonWrapper = styled.div`
@@ -49,6 +72,14 @@ export const ButtonWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: ${pxToRem(24)};
+  @media (max-width: 28rem) {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    
+  }
 `;
 
 export const LinkButton = styled.a`
@@ -70,6 +101,10 @@ export const PageControl = styled.div`
   align-items: start;
   gap: ${pxToRem(8)};
   margin-top: ${pxToRem(24)};
+
+  @media (max-width: 28rem) {
+    display: none;
+  }
 `;
 
 export const Dot = styled.div`

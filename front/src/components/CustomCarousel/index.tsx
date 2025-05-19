@@ -23,9 +23,10 @@ const HorizontalCarousel = () => {
     
     { id: 2, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido. Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido. Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." }, 
     
-    { id: 3, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." }, 
+    { id: 3, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." },
+  
     
-    { id: 4, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "" }];
+  ];
 
   const wrapperRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -74,7 +75,7 @@ const HorizontalCarousel = () => {
       </PageControl>
 
       <ButtonWrapper>
-        <div />
+        
         <LinkButton href="#desafios">
           Conheça todos os desafios
           <ArrowRightOutlined />
