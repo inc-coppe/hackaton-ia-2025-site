@@ -9,6 +9,7 @@ import Landing from "./pages/Landing";
 import Profile from "./pages/Profile";
 import UserRegistrationForm from "./pages/UserRegistrationForm";
 import Cronograma from "./pages/Cronograma";
+import Regulamento from "./pages/Regulamento";
 
 function Logout() {
   localStorage.removeItem("access_token");
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/cronograma" element={<Cronograma />} />
+        <Route path="/Regulamento" element={<Regulamento />} />
         <Route path="profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />

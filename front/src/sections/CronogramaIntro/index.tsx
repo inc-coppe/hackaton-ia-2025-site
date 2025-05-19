@@ -1,9 +1,6 @@
 import React from "react";
 import { Title, CronogramaIntroContainer, Gradient, SubTitle, TitleBody } from "./style";
 
-import GradientWpp from "../../assets/gradientewpp.png";
-import GradientWppMobile from "../../assets/background-home-mob.png";
-
 const CronogramaIntro = () => {
     return (
         <>
@@ -24,7 +21,5 @@ const CronogramaIntro = () => {
         </>
     );
 };
-
-//<Gradient src={GradientWpp} alt="Gradiente" />{" "}
 
 export default CronogramaIntro;
