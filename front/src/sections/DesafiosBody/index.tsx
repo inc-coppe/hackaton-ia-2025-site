@@ -90,7 +90,7 @@ const ScrollTracker = () => {
     
     activeIndex = index; 
   
-    return <div>Scroll vertical: {scrollY}px</div>;
+    return ;
 };
 
 const pos_desafios = [500, 929, 1354, 1775, 2211, 2637, 3057, 3457];
@@ -108,6 +108,8 @@ function handleClick(rem_destino: number) {
 const DesafiosBody = () => {
     return(
         <>
+            {ScrollTracker ()}
+            
             <DesafiosBodyContainer>
                 <PreDivisionText>
                     Abaixo, reunimos todas as sugestões disponíveis para inspirar sua jornada.
@@ -144,10 +146,10 @@ const DesafiosBody = () => {
                                 {Array.isArray(info.descricao) ? (
                                 
                                     info.descricao.map((paragrafo, idx) => (
-                                        < Paragraph key={idx}>{paragrafo} {ScrollTracker()}</Paragraph>
+                                        < Paragraph key={idx}>{paragrafo} </Paragraph>
                                     ))
                                 ) : (
-                                    <Paragraph>{info.descricao} </Paragraph>
+                                    <Paragraph>{info.descricao}  </Paragraph>
                                 )}
                         
                             </ChallengesContainer>
