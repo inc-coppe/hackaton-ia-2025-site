@@ -25,6 +25,7 @@ import {
 import LogoHackaton from "../../assets/Logo1.png";
 import GradientWpp from "../../assets/gradientewpp.png";
 import GradientWppMobile from "../../assets/background-home-mob.png";
+import IA from "../../assets/ia.png";
 
 import c1 from "../../assets/c1.png";
 import c2 from "../../assets/c2.png";
@@ -84,8 +85,19 @@ const HomePage = () => {
           <TextContainer>
             <Text>20 E 21 DE SETEMBRO</Text>
             <Title>HACKATHON</Title>
-            <div style={{ display: "flex", flexDirection: "row", gap: "2rem" }}>
-              <TitleNoBg>IA</TitleNoBg>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: "2rem",
+              }}
+            >
+              <img
+                style={{ height: "4rem", width: "6.5rem" }}
+                src={IA}
+                alt="IA"
+              />
               <Title> 2025</Title>
             </div>
           </TextContainer>

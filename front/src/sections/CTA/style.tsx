@@ -24,9 +24,6 @@ export const Highlight = styled.div`
   gap: 4rem;
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
   border-radius: 0.5rem; // 8px
-  width: 85%;
-  height: 75%;
-  position: relative;
 
   @media (max-width: 28rem) {
     width: 21.375rem; // 342px

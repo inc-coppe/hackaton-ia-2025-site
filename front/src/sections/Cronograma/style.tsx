@@ -7,17 +7,14 @@ export const Container = styled.div`
   background: linear-gradient(58.59deg, #2e2989 41.91%, #53167f 100%);
   justify-content: center;
   position: relative; /* Ensure overlay is positioned relative to this container */
-  height: 100vh; /* This should be enough to make space for the overlay */
-  
+  height: 150vh; /* This should be enough to make space for the overlay */
 
-  @media (max-width: 28rem) {    
-    
+  @media (max-width: 28rem) {
     justify-content: flex-start;
     padding-top: 3.5rem;
     min-height: 122rem;
     align-items: stretch;
   }
-
 `;
 
 // White overlay for the bottom of the section
@@ -32,13 +29,11 @@ export const WhiteOverlay = styled.div`
 
   @media (max-width: 28rem) {
     height: 9%;
-
   }
 `;
 
 // Wrapper for margin around the content
 export const Margin = styled.div`
-  
   margin: 7.5rem;
   position: relative; /* Ensure content remains above the overlay */
   z-index: 1; /* Ensure content is above the white overlay */

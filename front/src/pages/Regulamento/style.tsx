@@ -101,6 +101,7 @@ export const Paragraph = styled.div`
 export const RegulemantoInfoContainer = styled.div`
   position: relative;
 `;
+
 export const RegulamentoIntroContainer = styled.div`
   position: relative;
   height: 19.75rem;

@@ -3,13 +3,11 @@ import styled from "styled-components";
 const pxToRem = (size) => `${size / 16}rem`;
 
 export const Container = styled.div`
-  height: 120vh;
   margin: 7.5rem;
 
   /*display: flex;
   flex-direction: column;
   align-items: center;*/
-  
 
   @media (max-width: 28rem) {
     margin: 0rem;
@@ -17,7 +15,6 @@ export const Container = styled.div`
     align-items: center;
     padding-top: 7.5rem;
     height: 180vh;
-    
   }
 `;
 
@@ -28,9 +25,7 @@ export const TitleDiv = styled.div`
 
   @media (max-width: 28rem) {
     align-items: center;
-    
   }
-  
 `;
 
 export const SectionSubtitle = styled.h3`
@@ -45,13 +40,10 @@ export const SectionSubtitle = styled.h3`
   @media (max-width: 28rem) {
     font-size: 1rem; // 16px
     line-height: 1.375rem; // 22px
-    
   }
 `;
 
 export const Title = styled.h1`
-  
-  
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 900;
@@ -77,7 +69,7 @@ export const Title = styled.h1`
 export const Body = styled.p`
   width: 58rem;
   text-align: left;
-  
+
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 500;
@@ -96,18 +88,16 @@ export const Body = styled.p`
     width: 21.375rem; // 342px
     height: 6.25rem; // 100px
 
-    
     text-align: left;
-    
-    margin-bottom: 2.4rem;
-    margin-top: 1rem;   
 
+    margin-bottom: 2.4rem;
+    margin-top: 1rem;
   }
 `;
 
 export const Texts = styled.div`
   width: 65rem;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,7 +111,6 @@ export const Texts = styled.div`
     gap: 1.5rem; // 24px
     align-self: stretch;
     padding: 0 10.75rem;
-    
   }
 `;
 
@@ -129,3 +118,4 @@ export const CustomCarouselWrapper = styled.div`
   width: 100%;
   padding: 0 0rem;
 `;
+

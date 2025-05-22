@@ -9,9 +9,9 @@ import {
   SponsorButton,
   TierTitle,
   SponsorLogoContainer,
-  SponsorLogo,
   Resize,
 } from "./style";
+import SponsorCard from "../../components/SponsorCard";
 import apoio1 from "../../assets/apoio1.png";
 import apoio2 from "../../assets/apoio2.png";
 import apoio3 from "../../assets/apoio3.png";
@@ -27,23 +27,33 @@ import realizacao3 from "../../assets/realizacao3.png";
 import realizacao4 from "../../assets/realizacao4.png";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
-// Mock data for sponsors
 const sponsorsData = {
   ouro: [],
   prata: [],
   bronze: [],
   apoio: [
-    apoio1,
-    apoio2,
-    apoio3,
-    apoio4,
-    apoio5,
-    apoio6,
-    apoio7,
-    apoio8,
-    apoio9,
+    { image: apoio1, title: "Distrito" },
+    { image: apoio2, title: "Hub Digital da COPPE/UFRJ" },
+    { image: apoio3, title: "Abstartups – Associação Brasileira de Startups" },
+    { image: apoio4, title: "NVIDIA" },
+    {
+      image: apoio5,
+      title: "LNCC – Laboratório Nacional de Computação Científica",
+    },
+    { image: apoio6, title: "Porto Maravalley" },
+    { image: apoio7, title: "WOW Aceleradora de Startups" },
+    { image: apoio8, title: "EloGroup" },
+    { image: apoio9, title: "CA² Consulting" },
   ],
-  realizacao: [realizacao1, realizacao2, realizacao3, realizacao4],
+  realizacao: [
+    { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
+    {
+      image: realizacao2,
+      title: "Centro de Inovação, Empreendedorismo e Tecnologia",
+    },
+    { image: realizacao3, title: "FAPERJ" },
+    { image: realizacao4, title: "Instituto Reditus" },
+  ],
 };
 
 const SponsorsSection: React.FC = () => {
@@ -71,72 +81,59 @@ const SponsorsSection: React.FC = () => {
       <SponsorsContainer>
         <TierTitle>OURO</TierTitle>
         <SponsorLogoContainer>
-          <Space
-            size={12}
-            style={{ flexWrap: "wrap", justifyContent: "center" }}
-          >
-            {[1, 2, 3].map((index) => (
-              <Skeleton.Image
-                key={index}
-                active
-                style={{
-                  width: window.innerWidth <= 448 ? 60 : 180, // 60px for mobile
-                  height: window.innerWidth <= 448 ? 30 : 90, // 30px for mobile
-                }}
-              />
-            ))}
-          </Space>{" "}
+          {[1, 2, 3].map((index) => (
+            <SponsorCard
+              key={index}
+              imageUrl=""
+              title={`Patrocinador Ouro ${index}`}
+              isLoading
+            />
+          ))}
         </SponsorLogoContainer>
 
         <TierTitle>PRATA</TierTitle>
         <SponsorLogoContainer>
-          <Space
-            size={12}
-            style={{ flexWrap: "wrap", justifyContent: "center" }}
-          >
-            {[1, 2, 3, 4, 5].map((index) => (
-              <Skeleton.Image
-                key={index}
-                active
-                style={{
-                  width: window.innerWidth <= 448 ? 60 : 160, // 60px for mobile
-                  height: window.innerWidth <= 448 ? 30 : 80, // 30px for mobile
-                }}
-              />
-            ))}
-          </Space>{" "}
+          {[1, 2, 3, 4, 5].map((index) => (
+            <SponsorCard
+              key={index}
+              imageUrl=""
+              title={`Patrocinador Prata ${index}`}
+              isLoading
+            />
+          ))}
         </SponsorLogoContainer>
 
         <TierTitle>BRONZE</TierTitle>
         <SponsorLogoContainer>
-          <Space
-            size={12}
-            style={{ flexWrap: "wrap", justifyContent: "center" }}
-          >
-            {[1, 2, 3, 4, 5].map((index) => (
-              <Skeleton.Image
-                key={index}
-                active
-                style={{
-                  width: window.innerWidth <= 448 ? 60 : 140, // 60px for mobile
-                  height: window.innerWidth <= 448 ? 30 : 70, // 30px for mobile
-                }}
-              />
-            ))}
-          </Space>{" "}
+          {[1, 2, 3, 4, 5].map((index) => (
+            <SponsorCard
+              key={index}
+              imageUrl=""
+              title={`Patrocinador Bronze ${index}`}
+              isLoading
+            />
+          ))}
         </SponsorLogoContainer>
 
         <TierTitle>APOIO</TierTitle>
         <SponsorLogoContainer>
-          {sponsorsData.apoio.map((logoUrl, index) => (
-            <SponsorLogo key={index} imageUrl={logoUrl} />
+          {sponsorsData.apoio.map((sponsor, index) => (
+            <SponsorCard
+              key={index}
+              imageUrl={sponsor.image}
+              title={sponsor.title}
+            />
           ))}
         </SponsorLogoContainer>
 
         <TierTitle>REALIZAÇÃO</TierTitle>
         <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
-          {sponsorsData.realizacao.map((logoUrl, index) => (
-            <SponsorLogo key={index} imageUrl={logoUrl} />
+          {sponsorsData.realizacao.map((sponsor, index) => (
+            <SponsorCard
+              key={index}
+              imageUrl={sponsor.image}
+              title={sponsor.title}
+            />
           ))}
         </SponsorLogoContainer>
       </SponsorsContainer>
