@@ -88,7 +88,6 @@ export const SponsorButton = styled.button`
   line-height: 0.9375rem; // 15px
   text-transform: uppercase;
   color: #3161e8;
-  align-items: center;
 
   &:hover {
     opacity: 0.8;
@@ -100,25 +99,32 @@ export const SponsorButton = styled.button`
 `;
 
 export const SponsorLogoContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1.25rem;
+  display: flex;
   margin-bottom: 8rem;
   margin-top: 2rem;
-  width: 100%;
-  padding: 0; /* Remove horizontal padding to allow grid to center */
-
-  /* This will center the grid items as a group, even with fewer than 5 */
-  justify-items: center;
-  align-items: start;
-  place-content: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 0 10rem;
 
   @media (max-width: 28rem) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+    padding: 0 1rem;
     margin-bottom: 2.5rem;
     margin-top: 1.5rem;
-    place-content: center;
+    gap: 0.75rem; // Reduced gap for tighter layout
+
+    .ant-space {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 0.75rem !important; // Reduced gap between skeletons
+    }
+
+    .ant-skeleton-image {
+      width: 6.25rem !important; // 100px - smaller size
+      height: 3.125rem !important; // 50px - smaller size
+    }
   }
 `;
 
