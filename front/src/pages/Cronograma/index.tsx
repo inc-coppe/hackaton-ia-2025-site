@@ -19,129 +19,120 @@ import { Title } from "./style";
 
 const eventos_pre = [
   {
-    dataLugar: "DD/MM A DD/MM • [LUGAR]",
-    titulo: "Webinars Preparatórios",
-    descricao: "Um pequeno texto explicativo sobre os webinars...",
+    dataLugar: "01/09 a 29/09 • Online",
+    titulo: "_Treinamento NVIDIA",
+    descricao: "Online para todos os inscritos lhes fornecendo uma base técnica sobre os desfios a serem solucionados.",
   },
   {
     dataLugar: "",
-    titulo: "Se houver outro tópico para a mesma data e hora",
+    titulo: "_Seleção de candidatos",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Baseada na análise de currículos e desempenho no treinamento. ",
   },
   {
-    dataLugar: "DD/MM E DD/MM ÀS 19H • DISCORD",
-    titulo: "Workshops Técnicos com a NVIDIA",
+    dataLugar: "",
+    titulo: "_Escolha da trilha",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Pelos candidatos de forma a selecionarem os desafios que irão resolver. ",
+  },
+];
+
+const eventos_sex = [
+  {
+    dataLugar: "16H00 às 17H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Credenciamento e recepção.",
+    descricao: "",
   },
   {
-    dataLugar: "DD/MM ÀS 19H • DISCORD",
-    titulo: "Orientações Gerais sobre a Dinâmica do Hackathon",
-    descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Abertura oficial",
+    descricao: "Apresentação inicial com os principais parceiros do objetivo do evento.",
   },
   {
-    dataLugar: "DD/MM ÀS 19H • DISCORD",
-    titulo: "Apresentação dos Desafios",
+    dataLugar: "19H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Formação de equipes",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Organização de equipes multidisciplinares e espaço destinado para networking. ",
   },
   {
-    dataLugar: "DD/MM ÀS 19H • DISCORD",
-    titulo: "Sessões de Q&A",
+    dataLugar: "21H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Ideação",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Encontro das equipes para o começo do processo de ideação. ",
   },
 ];
 
 const eventos_sab = [
   {
-    dataLugar: "09H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Evento Oficial de Abertura",
-    descricao: "Abertura oficial, com sessão de disseminação de conhecimento.",
+    dataLugar: "Manhã • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_ Discussão de abordagens",
+    descricao: "Exploração de estratégias e abordagens com o suporte de mentores especializados.",
   },
   {
     dataLugar: "",
-    titulo: "Networking e Formação de Equipes",
+    titulo: "_Desenvolvimento",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Avanço no desenvolvimento das soluções. ",
   },
   {
-    dataLugar: "10H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Início da Fase de Ideação",
+    dataLugar: "Tarde • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Sessões de mentoria sob demanda",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Sessões específicas para revisão e refinamento das soluções, especialmente na modelagem de negócios. ",
   },
   {
-    dataLugar: "12H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Almoço",
+    dataLugar: "",
+    titulo: "_Desenvolvimento",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Avanço no desenvolvimento das soluções. ",
   },
   {
-    dataLugar: "14H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Criação de MVP",
+    dataLugar: "Noite • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Desenvolvimento",
     descricao:
-      "Momento reservado para discussões de abordagens e estratégias com mentores especializados.Participação especial dos mentores Nome do Mentor (Parceria) e Nome do Mentor (Parceria) que ficaram à disposição pelo espaço para atender às equipes.",
+      "Avanço no desenvolvimento das soluções. ",
   },
   {
-    dataLugar: "17H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Snacks",
+    dataLugar: "",
+    titulo: "_Checkpoint",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-  },
-  {
-    dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Sessões de Mentoria",
-    descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Checkpoint para avaliação do progesso e ajustes necessários. ",
   },
 ];
 
+
 const eventos_dom = [
   {
-    dataLugar: "09H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Evento Oficial de Abertura",
-    descricao: "Abertura oficial, com sessão de disseminação de conhecimento.",
+    dataLugar: "Manhã • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_ Desenvolvimento",
+    descricao: "Avanço no desenvolvimento das soluções. ",
   },
   {
-    dataLugar: "",
-    titulo: "Networking e Formação de Equipes",
+    dataLugar: "16H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Apresentação",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Exposição das soluções para um painel de jurados composto por parceiros. ",
   },
   {
-    dataLugar: "10H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Início da Fase de Ideação",
+    dataLugar: "17H30 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    titulo: "_Avaliação",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-  },
-  {
-    dataLugar: "12H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Almoço",
-    descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-  },
-  {
-    dataLugar: "14H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Criação de MVP",
-    descricao:
-      "Momento reservado para discussões de abordagens e estratégias com mentores especializados. Participação especial dos mentores Nome do Mentor (Parceria) e Nome do Mentor (Parceria) que ficaram à disposição pelo espaço para atender às equipes.",
-  },
-  {
-    dataLugar: "17H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Snacks",
-    descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Processo de avaliação das soluções apresentadas ",
   },
   {
     dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "Sessões de Mentoria",
+    titulo: "_Cerimônia de encerramento e premiação",
     descricao:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "Encerramento oficial do evento e premiação das melhores soluções. ",
+  },
+  {
+    dataLugar: "",
+    titulo: "_Checkpoint",
+    descricao:
+      "Checkpoint para avaliação do progesso e ajustes necessários. ",
   },
 ];
+
 
 const Cronograma = () => {
   return (
@@ -181,7 +172,24 @@ const Cronograma = () => {
           ))}
         </CronogramaDayContainer>
 
-        <CronogramaTitle>/sábado, 20/09</CronogramaTitle>
+        <CronogramaTitle>/sexta, 17/10</CronogramaTitle>
+
+        <CronogramaDayContainer>
+          {eventos_sex.map((evento, index) => (
+            <EventoContainer key={index}>
+              <DataLugarText>{evento.dataLugar}</DataLugarText>
+
+              <EventoTitle>
+                <Circle />
+                {evento.titulo}
+              </EventoTitle>
+
+              <EventoBody>{evento.descricao}</EventoBody>
+            </EventoContainer>
+          ))}
+        </CronogramaDayContainer>
+                
+        <CronogramaTitle>/sábado, 18/10</CronogramaTitle>
 
         <CronogramaDayContainer>
           {eventos_sab.map((evento, index) => (
@@ -198,7 +206,7 @@ const Cronograma = () => {
           ))}
         </CronogramaDayContainer>
 
-        <CronogramaTitle>/domingo, 21/09</CronogramaTitle>
+        <CronogramaTitle>/domingo, 19/10</CronogramaTitle>
 
         <CronogramaDayContainer>
           {eventos_dom.map((evento, index) => (
@@ -221,4 +229,3 @@ const Cronograma = () => {
 };
 
 export default Cronograma;
-

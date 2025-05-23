@@ -10,6 +10,7 @@ export const CronogramaBodyContainer = styled.div`
 
 export const CronogramaDayContainer = styled.div`
   position: relative;
+  
   border-left: 0.125rem solid #377dff;
 
   display: flex;
@@ -87,6 +88,11 @@ export const EventoBody = styled.div`
 
 export const EventoContainer = styled.div`
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
 `;
 
 export const CronogramaIntroContainer = styled.div`
