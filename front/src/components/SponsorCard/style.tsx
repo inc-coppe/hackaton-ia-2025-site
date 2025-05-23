@@ -1,3 +1,4 @@
+// SponsorCard/style.tsx
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
@@ -5,10 +6,16 @@ export const CardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 180px;
+  max-width: 230px;
   min-width: 0;
-  height: 260px;
+  height: 300px;
   background: transparent;
+
+  @media (max-width: 28rem) {
+    width: 159px;
+    height: 223px;
+    max-width: 159px;
+  }
 `;
 
 export const LogoContainer = styled.div`
@@ -16,7 +23,8 @@ export const LogoContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 180px;
+  height: 230px;
+  padding: 0 24px;
   background: #ffffff;
   border-width: 2px 2px 0 2px;
   border-style: solid;
@@ -24,10 +32,19 @@ export const LogoContainer = styled.div`
   border-radius: 8px 8px 0 0;
 
   img {
-    width: 90%;
-    max-width: 150px;
-    height: 80px;
+    width: 182px;
+    height: 91px;
     object-fit: contain;
+  }
+
+  @media (max-width: 28rem) {
+    height: 159px;
+    padding: 0 16px;
+
+    img {
+      width: 127px;
+      height: 63.5px;
+    }
   }
 `;
 
@@ -36,7 +53,8 @@ export const TitleContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60px;
+  height: 70px;
+  padding: 16px;
   background: #2e2989;
   border-radius: 0 0 8px 8px;
 
@@ -47,13 +65,28 @@ export const TitleContainer = styled.div`
     line-height: 19px;
     color: #ffffff;
     text-align: center;
-    width: 100%;
-    white-space: normal;
+    width: 198px;
+    height: 38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     word-break: break-word;
-    display: block;
   }
 
   ${CardContainer}:hover & {
     background: #110249;
+  }
+
+  @media (max-width: 28rem) {
+    height: 64px;
+    padding: 16px;
+
+    span {
+      width: 127px;
+      height: 32px;
+      font-size: 12px;
+      line-height: 16px;
+    }
   }
 `;

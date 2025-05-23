@@ -69,12 +69,15 @@ export const HomePageContainer = styled.div`
   z-index: 0;
   padding: 0 2rem;
   padding-bottom: 12.5rem;
+  margin-top: 4rem;
 
   @media (max-width: 28rem) {
-    height: 47.4375rem;
+    height: 110vh; // Changed from fixed height
     padding: 0;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: flex-start;
+    top: 0; // Remove top spacing
   }
 `;
 
@@ -86,8 +89,10 @@ export const LeftContainer = styled.div`
 
   @media (max-width: 28rem) {
     margin-left: 1.5rem;
-    margin-top: 2.5rem;
+    margin-top: 1rem; // Reduced from 2.5rem
     gap: 1rem;
+    width: calc(100% - 3rem);
+    align-items: flex-start;
   }
 `;
 
@@ -112,9 +117,14 @@ export const TextContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   max-width: 50%;
+  position: relative; // Add this
+  z-index: 2; // Add this
 
   @media (max-width: 28rem) {
     max-width: 100%;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 `;
 
@@ -126,12 +136,19 @@ export const Text = styled.p`
   line-height: 1.5rem;
   text-align: left;
   color: #ffffff;
-  margin-bottom: 0;
+  margin: 0;
+  position: relative; // Add this
+  z-index: 2; // Add this
+  width: auto;
 
   @media (max-width: 28rem) {
     font-size: 1.125rem;
     line-height: 1.375rem;
-    width: 13.1875rem;
+    margin-bottom: 0.25rem;
+    display: block;
+    position: relative;
+    z-index: 2;
+    width: auto;
   }
 `;
 
@@ -149,8 +166,8 @@ export const Title = styled.h1`
   @media (max-width: 28rem) {
     font-size: 2.8125rem;
     line-height: 2.8125rem;
-    width: 17.125rem;
     height: 2.8125rem;
+    width: auto;
   }
 `;
 
@@ -191,7 +208,8 @@ export const LogoContainer = styled.div`
     width: 11.875rem;
     height: 13.4375rem;
     left: 6.25rem;
-    top: 12rem;
+    top: 10rem; // Adjusted from 12rem
+    z-index: 1;
   }
 `;
 
@@ -226,7 +244,7 @@ export const SolidButton = styled.button`
     width: 10.875rem;
     height: 2.4375rem;
     left: 6.75rem;
-    top: 26.9375rem;
+    top: 24rem; // Adjusted from 26.9375rem
     padding: 0.75rem 1.25rem;
     font-size: 0.9375rem;
     line-height: 0.9375rem;
@@ -250,7 +268,7 @@ export const PlaceContainerLeft = styled.div`
     width: 21.375rem;
     height: 4.125rem;
     left: 1.5rem;
-    top: 32.125rem;
+    top: 30rem; // Adjusted from 32.125rem
     bottom: auto;
   }
 `;
@@ -270,10 +288,10 @@ export const PlaceContainerRight = styled.div`
   @media (max-width: 28rem) {
     width: 21.375rem;
     height: 4.125rem;
-    right: 1.5rem; // Keep right positioning
-    top: 37.25rem;
+    right: 1.5rem;
+    top: 35rem; // Adjusted from 37.25rem
     bottom: auto;
-    align-items: flex-end; // Keep end alignment
+    align-items: flex-end;
   }
 `;
 
