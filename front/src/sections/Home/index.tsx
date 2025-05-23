@@ -42,28 +42,20 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9];
-  // Duplicate images to create seamless loop
   const allImages = [...carouselImages, ...carouselImages];
 
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Function to check if viewport is mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 500);
     };
 
-    // Initial check
     checkMobile();
-
-    // Add event listener
     window.addEventListener("resize", checkMobile);
-
-    // Cleanup
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Ensure images are loaded before rendering
   useEffect(() => {
     const preloadImage = (src: string) => {
       const img = new Image();
@@ -90,15 +82,19 @@ const HomePage = () => {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                gap: "2rem",
+                gap: "1rem",
               }}
             >
               <img
-                style={{ height: "4rem", width: "6.5rem" }}
+                style={{
+                  height: isMobile ? "2.25rem" : "3.75rem",
+                  width: "auto",
+                  objectFit: "contain",
+                }}
                 src={IA}
                 alt="IA"
               />
-              <Title> 2025</Title>
+              <Title>2025</Title>
             </div>
           </TextContainer>
           <SolidButton type="button">

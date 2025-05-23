@@ -20,8 +20,8 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
           <Skeleton.Image
             active
             style={{
-              width: "182px",
-              height: "91px",
+              width: window.innerWidth <= 448 ? "127px" : "182px",
+              height: window.innerWidth <= 448 ? "63.5px" : "91px",
             }}
           />
         ) : (
