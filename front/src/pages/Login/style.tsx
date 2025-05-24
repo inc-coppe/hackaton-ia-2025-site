@@ -14,6 +14,7 @@ export const LoginContainer = styled.div`
 `;
 
 export const LoginCard = styled.div`
+  /* Estilo desktop original */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -29,12 +30,16 @@ export const LoginCard = styled.div`
   border-radius: 0.5rem; // 8px
 
   @media (max-width: 50rem) {
-    // 800px
-    width: 90%;
+    /* Sobrescreve para o estilo mobile */
     flex-direction: column;
-    height: auto;
-    padding: 1.5rem;
-    gap: 2rem;
+    width: 354px;
+    height: 470px;
+    padding: 24px 16px;
+    gap: 32px;
+    left: 18px;
+    top: 106px;
+    border-radius: 8px;
+    transform: none;
   }
 `;
 
@@ -48,9 +53,10 @@ export const TextContainer = styled.div`
   height: 16.3125rem; // 261px
 
   @media (max-width: 50rem) {
-    width: 100%;
-    height: auto;
-    gap: 2rem;
+    width: 322px;
+    height: 175px;
+    gap: 32px;
+    align-items: center;
   }
 `;
 
@@ -64,8 +70,10 @@ export const TextContent = styled.div`
   height: 9.3125rem; // 149px
 
   @media (max-width: 50rem) {
-    width: 100%;
-    height: auto;
+    width: 322px;
+    height: 95px;
+    align-items: center;
+    gap: 16px;
   }
 `;
 
@@ -82,9 +90,11 @@ export const Title = styled.h1`
   margin: 0;
 
   @media (max-width: 50rem) {
-    width: 100%;
-    font-size: 2.5rem;
-    line-height: 3rem;
+    width: 322px;
+    height: 39px;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
   }
 `;
 
@@ -100,8 +110,11 @@ export const Subtitle = styled.p`
   margin: 0;
 
   @media (max-width: 50rem) {
-    width: 100%;
-    height: auto;
+    width: 322px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
   }
 `;
 
@@ -119,7 +132,6 @@ export const GoogleButtonWrapper = styled.div`
   border-radius: 0.125rem; // 2px
   position: relative;
 
-  /* Override Google Button styles */
   & > div {
     transform: none !important;
     width: 100% !important;
@@ -163,7 +175,12 @@ export const GoogleButtonWrapper = styled.div`
   }
 
   @media (max-width: 50rem) {
-    width: 100%;
+    width: 322px;
+    height: 48px;
+    padding: 12px 20px;
+    gap: 16px;
+    border-radius: 2px;
+    border: 2px solid #3161e8;
   }
 `;
 
@@ -173,11 +190,12 @@ export const Logo = styled.img`
   object-fit: contain;
 
   @media (max-width: 50rem) {
-    width: 12rem;
-    height: 12rem;
+    width: 209.55px;
+    height: 215px;
+    order: -1;
+    margin-bottom: 1rem;
   }
 `;
-
 export const ErrorMessage = styled.div`
   color: #ff4d4d;
   font-family: "Montserrat", sans-serif;
