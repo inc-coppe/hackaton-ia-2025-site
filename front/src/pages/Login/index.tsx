@@ -8,8 +8,17 @@ import {
   ErrorMessage,
   GoogleButtonWrapper,
   Logo,
+  TextContainer,
+  TextContent,
+  ButtonText,
+  GoogleIcon,
+  CustomGoogleButton,
 } from "./style";
-import LogoHackaton from "../../assets/Logo.png";
+import LogoHackaton from "../../assets/Logo1.png";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import AnimatedBlobs from "../../components/AnimatedBlobs";
+import GoogleIconSvg from "../../assets/google.svg";
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
@@ -50,29 +59,38 @@ function Login() {
   };
 
   return (
-    <LoginContainer>
-      <LoginCard>
-        <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
-        <Title>Bem vindo!</Title>
-        <Subtitle>
-          Faça Login para continuar navegando pelo site, após preencher o
-          formulário e entrar no Discord{" "}
-        </Subtitle>
+    <>
+      <Header />
+      <LoginContainer>
+        <AnimatedBlobs />
+        <LoginCard>
+          <TextContainer>
+            <TextContent>
+              <Title>BOAS-VINDAS!</Title>
+              <Subtitle>
+                Para participar do HackathonIA 2025, inicie a sessão com Google
+                e preencha nosso formulário de inscrição.
+              </Subtitle>
+            </TextContent>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
 
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-
-        <GoogleButtonWrapper>
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleFailure}
-            theme="filled_blue"
-            size="large"
-            shape="rectangular"
-            locale="en"
-          />
-        </GoogleButtonWrapper>
-      </LoginCard>
-    </LoginContainer>
+            <GoogleButtonWrapper>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleFailure}
+                theme="filled_white"
+                color="blue"
+                size="large"
+                shape="rectangular"
+                locale="en"
+              />
+            </GoogleButtonWrapper>
+          </TextContainer>
+          <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
+        </LoginCard>
+      </LoginContainer>
+      <Footer />{" "}
+    </>
   );
 }
 
