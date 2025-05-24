@@ -39,6 +39,7 @@ import c9 from "../../assets/c9.png";
 
 import { Flex } from "antd";
 import { Link } from "react-router-dom";
+import AnimatedBlobs from "../../components/AnimatedBlobs";
 
 const HomePage = () => {
   const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9];
@@ -69,10 +70,7 @@ const HomePage = () => {
   return (
     <>
       <HomePageContainer>
-        <Gradient
-          src={isMobile ? GradientWppMobile : GradientWpp}
-          alt="Gradiente"
-        />{" "}
+        <AnimatedBlobs />
         <LeftContainer>
           <TextContainer>
             <Text>20 E 21 DE SETEMBRO</Text>
@@ -90,6 +88,7 @@ const HomePage = () => {
                   height: isMobile ? "2.25rem" : "3.75rem",
                   width: "auto",
                   objectFit: "contain",
+                  zIndex: 2,
                 }}
                 src={IA}
                 alt="IA"
@@ -97,7 +96,7 @@ const HomePage = () => {
               <Title>2025</Title>
             </div>
           </TextContainer>
-          <SolidButton type="button">
+          <SolidButton type="button" style={{ zIndex: 2 }}>
             <Link
               style={{ textDecoration: "none", color: "inherit" }}
               to="/register"
