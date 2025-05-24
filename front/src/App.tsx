@@ -9,8 +9,10 @@ import Landing from "./pages/Landing";
 import Profile from "./pages/Profile";
 import UserRegistrationForm from "./pages/UserRegistrationForm";
 import Cronograma from "./pages/Cronograma";
+import Patrocinador from "./pages/Patrocinador";
 import Regulamento from "./pages/Regulamento";
 import Desafios from "./pages/Desafios";
+import Materiais from "./pages/Materiais";
 
 function Logout() {
   localStorage.removeItem("access_token");
@@ -28,11 +30,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        
+
         <Route path="/cronograma" element={<Cronograma />} />
         <Route path="/regulamento" element={<Regulamento />} />
         <Route path="/desafios" element={<Desafios />} />
-        
+        <Route path="/patrocinador" element={<Patrocinador />} />
+        <Route path="/materiais" element={<Materiais />} />
+
         <Route path="profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
