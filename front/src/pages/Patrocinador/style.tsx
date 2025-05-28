@@ -11,9 +11,8 @@ export const SponsorContainer = styled.div`
   background: #ffffff;
 
   @media (max-width: 48rem) {
-    // 768px
     width: 24.375rem; // 390px
-    height: 168.625rem; // 2698px
+    
   }
 `;
 
@@ -42,6 +41,7 @@ export const TextContainer = styled.div`
   max-width: 100%;
 
   @media (max-width: 48rem) {
+    
     width: 100%;
     gap: 1.5rem; // 24px
   }
@@ -65,6 +65,7 @@ export const Title = styled.div`
   @media (max-width: 48rem) {
     font-size: 2rem; // 32px
     line-height: 2.4375rem; // 39px
+
   }
 `;
 
@@ -80,6 +81,7 @@ export const Subtitle = styled.h2`
   @media (max-width: 48rem) {
     font-size: 1rem; // 16px
     line-height: 1.375rem; // 22px
+    padding-top: 3.75rem;
   }
 `;
 
@@ -95,6 +97,7 @@ export const Description = styled.p`
   @media (max-width: 48rem) {
     font-size: 1rem; // 16px
     line-height: 1.25rem; // 20px
+    font-weight: 500;
   }
 `;
 
@@ -115,6 +118,13 @@ export const Button = styled.button`
   &:hover {
     background: #f5f5f5;
   }
+`;
+
+export const ButtonContainer = styled.div`
+  width: 100%;                  
+  display: flex;
+  justify-content: center;      
+  
 `;
 
 export const ButtonText = styled.span`
@@ -138,6 +148,7 @@ export const AboutSection = styled.div`
 
   @media (max-width: 48rem) {
     padding: 2.5rem 1.5rem; // 40px 24px
+    gap: 2rem; // 32px
   }
 `;
 
@@ -184,7 +195,7 @@ export const CardsContainer = styled.div`
   margin: 0 auto;
 
   @media (max-width: 48rem) {
-    gap: 1rem; // 16px
+    gap: 1.5rem; // 24px
   }
 `;
 
@@ -227,15 +238,28 @@ export const CTASection = styled.div`
   padding: 0 7.5rem 7.5rem; // 0px 120px 120px
   gap: 4rem; // 64px
   width: 100%;
+  
 
   @media (max-width: 48rem) {
     padding: 0 1.5rem 2.5rem; // 0px 24px 40px
   }
 `;
 
-export const CTAContainer = styled.div`
+export const CTAWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 4rem;
+  width: 100%;
+
+  @media (max-width: 48rem) {
+    flex-direction: column;
+    gap: 2rem;
+  }
+`;
+
+export const CTAContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   padding: 5rem; // 80px
   gap: 4rem; // 64px
@@ -245,7 +269,7 @@ export const CTAContainer = styled.div`
 
   @media (max-width: 48rem) {
     flex-direction: column;
-    padding: 2.5rem 1.5rem; // 40px 24px
+    padding: 2.5rem 1rem; // 40px 16px
     gap: 2rem; // 32px
   }
 `;
@@ -273,6 +297,8 @@ export const CTATitle = styled.h2`
   @media (max-width: 48rem) {
     font-size: 2rem; // 32px
     line-height: 2.4375rem; // 39px
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 `;
 
@@ -311,6 +337,8 @@ export const BenefitsContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem; // 24px
   width: 34.5rem; // 552px
+  width: 100%;
+
 
   @media (max-width: 48rem) {
     width: 100%;
@@ -324,6 +352,7 @@ export const BenefitBox = styled.div`
   padding: 1rem 1.5rem; // 16px 24px
   background: #0f0f21;
   border-radius: 0.5rem; // 8px
+  width: 100%;
 `;
 
 export const BenefitBoxTitle = styled.h3`
