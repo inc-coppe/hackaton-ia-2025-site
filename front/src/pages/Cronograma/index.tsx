@@ -11,6 +11,7 @@ import {
   EventoBody,
   EventoContainer,
   EventoTitle,
+  InfoBodyContainer,
 } from "./style";
 import { CronogramaIntroContainer } from "./style";
 import { SubTitle } from "./style";
@@ -149,25 +150,30 @@ const Cronograma = () => {
           a criar, colaborar e brilhar com sua solução.
         </TitleBody>
       </CronogramaIntroContainer>
+      
       <CronogramaBodyContainer>
         <PreDivisionText>
           Confira a agenda e já vai se preparando para aproveitar cada passo
           dessa experiência.
         </PreDivisionText>
-
+        
         <CronogramaTitle>/Pré-evento</CronogramaTitle>
 
-        <CronogramaDayContainer>
+        <CronogramaDayContainer>          
           {eventos_pre.map((evento, index) => (
             <EventoContainer key={index}>
               <DataLugarText>{evento.dataLugar}</DataLugarText>
 
-              <EventoTitle>
-                <Circle />
-                {evento.titulo}
-              </EventoTitle>
+              <InfoBodyContainer>
+                <EventoTitle>
+                  <Circle />
+                  {evento.titulo}
+                </EventoTitle>
+              
 
-              <EventoBody>{evento.descricao}</EventoBody>
+                <EventoBody>{evento.descricao}</EventoBody>
+            
+              </InfoBodyContainer>
             </EventoContainer>
           ))}
         </CronogramaDayContainer>
