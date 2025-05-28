@@ -26,6 +26,8 @@ import {
   BenefitsContainer,
   BenefitBox,
   BenefitBoxTitle,
+  ButtonContainer,
+  CTAWrapper,
 } from "./style";
 import { useNavigate } from "react-router-dom";
 
@@ -40,7 +42,9 @@ function Sponsor() {
   return (
     <>
       <Header />
+      
       <SponsorContainer>
+        
         <HighlightSection>
           <TextContainer>
             <Title>
@@ -57,9 +61,13 @@ function Sponsor() {
               impulsionar um ecossistema de inovação com impacto social e
               econômico duradouro.
             </Description>
-            <Button onClick={handleContact}>
-              <ButtonText>SEJA UM PATROCINADOR</ButtonText>
-            </Button>
+            
+            <ButtonContainer>
+              <Button onClick={handleContact}>
+                <ButtonText>SEJA UM PATROCINADOR</ButtonText>
+              </Button>
+            </ButtonContainer>
+
           </TextContainer>
         </HighlightSection>
 
@@ -71,6 +79,7 @@ function Sponsor() {
             Incubadora de Empresas COPPE/UFRJ – participando ativamente da
             transformação tecnológica no Brasil. Como parceiro, você poderá:
           </AboutDescription>
+          
           <CardsContainer>
             {benefits.map((benefit, index) => (
               <BenefitCard key={index}>
@@ -83,26 +92,36 @@ function Sponsor() {
 
         <CTASection>
           <CTAContainer>
-            <CTATextContainer>
-              <CTATitle>PATROCINADORES TÊM ACESSO A BENEFÍCIOS COMO:</CTATitle>
-              <CTADescription>
-                Os detalhes sobre níveis e cotas são apresentados ao entrar em
-                contato com nossa equipe. O próximo passo é seu.
-              </CTADescription>
-              <CTAQuestion>Bora construir isso juntos?</CTAQuestion>
-            </CTATextContainer>
-            <BenefitsContainer>
-              {ctaBenefits.map((benefit, index) => (
-                <BenefitBox key={index}>
-                  <BenefitBoxTitle>{benefit}</BenefitBoxTitle>
-                </BenefitBox>
-              ))}
-            </BenefitsContainer>
-          </CTAContainer>
-          <Button onClick={handleContact}>
-            <ButtonText>SEJA UM PATROCINADOR</ButtonText>
-          </Button>
+            <CTAWrapper>
+              <CTATextContainer>
+                <CTATitle>PATROCINADORES TÊM ACESSO A BENEFÍCIOS COMO:</CTATitle>
+
+                <CTADescription>
+                  Os detalhes sobre níveis e cotas são apresentados ao entrar em
+                  contato com nossa equipe. 
+                </CTADescription>
+
+                <CTAQuestion>O próximo passo é seu. Bora construir isso juntos?</CTAQuestion>
+              </CTATextContainer>
+
+              <BenefitsContainer>
+                {ctaBenefits.map((benefit, index) => (
+                  <BenefitBox key={index}>
+                    <BenefitBoxTitle>{benefit}</BenefitBoxTitle>
+                  </BenefitBox>
+                ))}
+              </BenefitsContainer>
+            </CTAWrapper>
+                
+            <ButtonContainer>
+              <Button onClick={handleContact}>
+                <ButtonText>SEJA UM PATROCINADOR</ButtonText>
+              </Button>
+            </ButtonContainer>
+          </CTAContainer>  
         </CTASection>
+
+
       </SponsorContainer>
       <Footer />
     </>
