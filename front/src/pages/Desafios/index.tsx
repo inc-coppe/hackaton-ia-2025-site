@@ -15,7 +15,7 @@ import {
   Title,
   Titulo_info,
 } from "./style";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { SubTitle, TitleBody } from "../Cronograma/style";
 
 const desafios_menu = [
@@ -104,9 +104,12 @@ const desafios_explicados = [
   },
 ];
 
-let activeIndex = 0;
+interface ScrollTrackerProps {
+  challengesRefs: React.RefObject<HTMLElement[]>;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const ScrollTracker = () => {
+const ScrollTracker: React.FC<ScrollTrackerProps> = ({ challengesRefs, setActiveIndex }) => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -121,35 +124,44 @@ const ScrollTracker = () => {
     };
   }, []);
 
-  let index = 0;
-  for (let i = 0; i < pre_desafios.length; i++) {
-    if (scrollY / 16 >= pre_desafios[i] / 16) {
-      index = i;
-    } else {
-      break; // otimização: parou quando passou do valor
+  useEffect(() => {
+    let index = 0;
+
+    for (let i = 0; i < challengesRefs.current.length; i++) {
+      const elTop = challengesRefs.current[i]?.offsetTop || 0;
+
+      if (scrollY >= elTop - 150) { 
+        index = i;
+      } else {
+        break;
+      }
     }
-  }
 
-  activeIndex = index;
+    setActiveIndex(index);
+  }, [scrollY, challengesRefs, setActiveIndex]);
 
-  return;
+
+  return null;
 };
 
-const pos_desafios = [500, 929, 1354, 1775, 2211, 2637, 3057, 3457];
-const pre_desafios = [500, 800, 1200, 1600, 2000, 2400, 2900, 3300];
 
-function handleClick(rem_destino: number) {
-  rem_destino = pos_desafios[rem_destino] / 16;
-  const remInPx = parseFloat(
-    getComputedStyle(document.documentElement).fontSize,
-  );
-  window.scrollTo({
-    top: rem_destino * remInPx,
-    behavior: "smooth",
-  });
+function handleClick(index: number, refs: (HTMLElement | null)[]) {
+  const sectionRef = refs[index];
+  const offset = 70; // para deixar um pouco antes de onde de fato está sendo marcado o começo da sessão.
+  
+  if (sectionRef) {
+    const elementTop = sectionRef.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: elementTop - offset,
+      behavior: 'smooth',
+    });
+  }
 }
 
 const Desafios = () => {
+  const challengesRefs = useRef<HTMLElement[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <>
       <Header />
@@ -163,7 +175,6 @@ const Desafios = () => {
           parceiras ou até propor o seu próprio.
         </TitleBody>
       </DesafiosIntroContainer>
-      {ScrollTracker()}
 
       <DesafiosBodyContainer>
         <PreDivisionText>
@@ -179,14 +190,18 @@ const Desafios = () => {
                 key={index}
                 className={activeIndex === index ? "active" : ""}
               >
-                <span onClick={() => handleClick(index)}>{desafio}</span>
+                <span onClick={() => handleClick(index, challengesRefs.current)}>{desafio}</span>
               </MenuText>
             ))}
           </MenuContainer>
 
           <ConteudoDesafiosContainer>
             {desafios_explicados.map((info, index) => (
-              <ChallengesContainer key={index}>
+              <ChallengesContainer key={index}
+              ref={(el) => {
+                if (el) challengesRefs.current[index] = el;
+              }}>
+              
                 <Titulo_info>
                   <ChallengesSubTitle>{info.sugerido_por}</ChallengesSubTitle>
 
@@ -202,8 +217,11 @@ const Desafios = () => {
                 )}
               </ChallengesContainer>
             ))}
-            ;
+            
           </ConteudoDesafiosContainer>
+
+          <ScrollTracker challengesRefs={challengesRefs} setActiveIndex={setActiveIndex}/>
+        
         </DesafiosBodyPrincipalContainer>
       </DesafiosBodyContainer>
       <Footer />
