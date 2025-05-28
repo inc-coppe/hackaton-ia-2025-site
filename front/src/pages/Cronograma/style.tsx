@@ -6,6 +6,13 @@ export const CronogramaBodyContainer = styled.div`
   padding-left: 7.5rem;
   padding-right: 7.5rem;
   padding-bottom: 7.5rem;
+  
+  @media (max-width: 28rem) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    //padding-top: 4rem;
+    padding-bottom: 3.75rem;
+  }
 `;
 
 export const CronogramaDayContainer = styled.div`
@@ -16,6 +23,12 @@ export const CronogramaDayContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
+
+  @media (max-width: 28rem) {
+    border-left: 0;
+    gap: 2rem;
+    
+  }
 `;
 
 export const CronogramaTitle = styled.div`
@@ -28,8 +41,14 @@ export const CronogramaTitle = styled.div`
   color: #0f0f21;
   text-transform: uppercase;
 
-  padding-top: 5rem;
-  padding-bottom: 4rem;
+  padding-top: 7.5rem;
+  padding-bottom: 2.5rem;
+
+  @media (max-width: 28rem) {
+    padding-bottom: 2.5rem;
+    padding-top: 3.75rem;
+    
+  }
 `;
 
 export const Circle = styled.div`
@@ -45,6 +64,11 @@ export const Circle = styled.div`
   background-color: white;
   border: 0.125rem solid #377dff; /* círculo azul */
   border-radius: 50%;
+
+  @media (max-width: 28rem) {
+    border: 0;
+    
+  }
 `;
 
 export const DataLugarText = styled.div`
@@ -58,6 +82,10 @@ export const DataLugarText = styled.div`
   text-transform: uppercase;
 
   padding-left: 1.5rem;
+
+  @media (max-width: 28rem) {
+    padding-left: 0;    
+  }
 `;
 
 export const EventoTitle = styled.div`
@@ -72,6 +100,11 @@ export const EventoTitle = styled.div`
   color: #0f0f21;
 
   padding-left: 1.5rem;
+
+  @media (max-width: 28rem) {
+    padding-left: 0;    
+    font-size: 1.125rem;
+  }
 `;
 
 export const EventoBody = styled.div`
@@ -84,6 +117,12 @@ export const EventoBody = styled.div`
   color: #0f0f2199;
 
   padding-left: 1.5rem;
+
+  @media (max-width: 28rem) {
+    padding-left: 0;
+    font-size: 1rem;  
+    line-height: 1.25rem;
+  }
 `;
 
 export const EventoContainer = styled.div`
@@ -93,6 +132,19 @@ export const EventoContainer = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 
+  @media (max-width: 28rem) {
+    gap: 0.25rem;
+  }
+
+`;
+
+export const InfoBodyContainer = styled.div`
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  
 `;
 
 export const CronogramaIntroContainer = styled.div`
@@ -104,6 +156,14 @@ export const CronogramaIntroContainer = styled.div`
   padding-bottom: 12.5rem;
 
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
+
+  @media (max-width: 28rem) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 7.875rem;
+
+    height: 25rem;
+  }
 `;
 
 export const Title = styled.div`
@@ -115,6 +175,10 @@ export const Title = styled.div`
   text-align: left;
   text-transform: uppercase;
   color: #ffffff;
+
+  @media (max-width: 28rem) {
+    font-size: 2rem;    
+  }
 `;
 
 export const SubTitle = styled.div`
@@ -128,6 +192,10 @@ export const SubTitle = styled.div`
   color: #ffffff;
 
   padding-bottom: 1rem;
+
+  @media (max-width: 28rem) {
+    font-size: 1rem;    
+  }
 `;
 
 export const TitleBody = styled.div`
@@ -140,6 +208,11 @@ export const TitleBody = styled.div`
   color: #ffffff;
 
   padding-top: 2rem;
+
+  @media (max-width: 28rem) {
+    font-size: 1rem;
+    line-height: 1.25rem;    
+  }
 `;
 
 export const Gradient = styled.img`
@@ -165,4 +238,9 @@ export const PreDivisionText = styled.div`
   color: #0f0f21;
 
   padding-top: 5rem;
+
+  @media (max-width: 28rem) {
+    font-size: 1rem;  
+    line-height: 1.25rem;
+  }
 `;
