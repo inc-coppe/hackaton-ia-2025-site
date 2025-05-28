@@ -212,3 +212,25 @@ export const Titulo_info = styled.div`
 
   gap: 0.5rem;
 `;
+
+export const ImagemWrapper = styled.div`
+  margin: 0 auto;
+  
+  width: 83%;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Faz a imagem cobrir todo o espaço do card */
+    user-select: none; /* Não permite selecionar a imagem */
+    -webkit-user-drag: none; /* Impede o arrasto em navegadores Webkit */
+    -moz-user-drag: none; /* Impede o arrasto em navegadores Firefox */
+    user-drag: none; /* Impede o arrasto em navegadores mais modernos */
+    border-radius: 0.5rem;
+  
+  }
+
+  @media (max-width: 28rem) {
+    width: 100%;
+  }
+`;

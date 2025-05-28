@@ -15,9 +15,12 @@ import {
   Title,
   Titulo_info,
   SubTitle,
+  ImagemWrapper,
 } from "./style";
 import { useEffect, useState, useRef } from "react";
 import { TitleBody } from "../Cronograma/style";
+
+import img_carregando from "../../assets/sem_imagem.png";
 
 const desafios_menu = [
   "Título de um desafio",
@@ -215,6 +218,10 @@ const Desafios = () => {
                 ) : (
                   <Paragraph>{info.descricao} </Paragraph>
                 )}
+
+                <ImagemWrapper>
+                  <img src={img_carregando} alt={`Image `} />
+                </ImagemWrapper>
               </ChallengesContainer>
             ))}
             
