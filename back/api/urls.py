@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     CreateUserView,
     UserDetailView,
+    UserProfileUpdateView,
     check_profile,
     create_profile,
     google_login,
@@ -21,4 +22,5 @@ urlpatterns = [
     ),
     path("profile/create/", create_profile, name="create_profile"),
     path("profile/check/", check_profile, name="check_profile"),
+    path("profile/update/", UserProfileUpdateView.as_view(), name="update_profile"),
 ]

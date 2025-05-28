@@ -6,10 +6,28 @@ import re
 
 class UserSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
+    linkedin_profile = serializers.CharField(
+        source="userprofile.linkedin_profile", read_only=True, allow_null=True
+    )
+    github_profile = serializers.CharField(
+        source="userprofile.github_profile", read_only=True, allow_null=True
+    )
+    tags = serializers.JSONField(
+        source="userprofile.tags", read_only=True, allow_null=True
+    )
 
     class Meta:
         model = CustomUser
-        fields = ["id", "email", "name", "profile_picture", "profile_picture_url"]
+        fields = [
+            "id",
+            "email",
+            "name",
+            "profile_picture",
+            "profile_picture_url",
+            "linkedin_profile",
+            "github_profile",
+            "tags",
+        ]
 
     def get_profile_picture_url(self, obj):
         if not obj.profile_picture:
@@ -157,3 +175,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
             ret["updated_at"] = instance.updated_at.strftime("%Y-%m-%d %H:%M:%S")
         ret["education_level_display"] = instance.get_education_level_display()
         return ret
+
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ["tags"]
+
+    def validate_tags(self, value):
+        if not isinstance(value, list):
+            raise serializers.ValidationError("Tags devem ser uma lista de strings.")
+        if any(not isinstance(s, str) for s in value):
+            raise serializers.ValidationError("Todas as tags devem ser strings.")
+        return value

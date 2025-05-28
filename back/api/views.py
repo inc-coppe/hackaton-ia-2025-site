@@ -14,12 +14,18 @@ from rest_framework.views import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from allauth.socialaccount.models import SocialToken, SocialAccount
 
 from .models import CustomUser, UserProfile
-from .serializers import UserSerializer, UserProfileSerializer
+from .serializers import (
+    UserProfileUpdateSerializer,
+    UserSerializer,
+    UserProfileSerializer,
+)
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -176,3 +182,13 @@ def list_profiles(request):
     profiles = UserProfile.objects.all().order_by("-created_at")
     serializer = UserProfileSerializer(profiles, many=True)
     return Response(serializer.data)
+
+
+class UserProfileUpdateView(generics.UpdateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileUpdateSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.userprofile
