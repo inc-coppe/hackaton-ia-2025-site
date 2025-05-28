@@ -14,9 +14,10 @@ import {
   PreDivisionText,
   Title,
   Titulo_info,
+  SubTitle,
 } from "./style";
 import { useEffect, useState, useRef } from "react";
-import { SubTitle, TitleBody } from "../Cronograma/style";
+import { TitleBody } from "../Cronograma/style";
 
 const desafios_menu = [
   "Título de um desafio",
@@ -171,8 +172,7 @@ const Desafios = () => {
         <Title>Encarando o que importa, criando o que transforma.</Title>
 
         <TitleBody>
-          Durante o evento, você pode encarar desafios reais de empresas
-          parceiras ou até propor o seu próprio.
+          Durante o evento, você pode encarar desafios reais de empresas parceiras ou até propor o seu próprio. Lembrando que as ideias não param no evento – os projetos serão publicados em código aberto (open source) e poderão seguir ganhando vida!
         </TitleBody>
       </DesafiosIntroContainer>
 

@@ -14,7 +14,8 @@ export const DesafiosIntroContainer = styled.div`
     padding-right: 1.5rem;
     padding-top: 7.875rem;
 
-    height: 15.688rem;
+    height: auto;
+    padding-bottom: 3.75rem;
   }
 `;
 
@@ -31,6 +32,27 @@ export const Title = styled.div`
   text-align: left;
   text-transform: uppercase;
   color: #ffffff;
+
+  @media (max-width: 28rem) {
+    font-size: 2.5rem; // era para ser 2 mas 2.5 fica igual ao Figma
+  }
+`;
+
+export const SubTitle = styled.div`
+  font-family: Nunito Sans;
+  font-size: 1.125rem;
+  line-height: 100%;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: uppercase;
+  color: #ffffff;
+
+  padding-bottom: 1rem;
+
+  @media (max-width: 28rem) {
+    font-size: 1.25rem;    
+  }
 `;
 
 export const DesafiosBodyContainer = styled.div`
@@ -42,9 +64,8 @@ export const DesafiosBodyContainer = styled.div`
   @media (max-width: 28rem) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    padding-top: 7.875rem;
-
-    height: 15.688rem;
+    padding-bottom: 3.75rem;
+    height: auto;
   }
 `;
 
@@ -54,6 +75,13 @@ export const ConteudoDesafiosContainer = styled.div`
   flex: 1; // ocupa o resto da largura
   padding-left: 4rem;
   gap: 7.5rem; // espaçamento entre desafios
+
+  @media (max-width: 28rem) {
+    padding-left: 0rem;
+    gap: 3.75rem;
+    
+  }
+
 `;
 
 export const DesafiosBodyPrincipalContainer = styled.div`
@@ -61,6 +89,10 @@ export const DesafiosBodyPrincipalContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: 4rem;
+
+  @media (max-width: 28rem) {
+    flex-direction: column;
+  }
 `;
 
 export const MenuContainer = styled.div`
@@ -74,6 +106,10 @@ export const MenuContainer = styled.div`
   height: 41.75rem;
 
   gap: 0.438rem;
+
+  @media (max-width: 28rem) {
+    display: none; // não temos menu na versão mobile
+  }
 `;
 
 export const ChallengesContainer = styled.div`
@@ -85,6 +121,10 @@ export const ChallengesContainer = styled.div`
 
   gap: 1.5rem; //7.5
   padding-left: 4rem;
+
+  @media (max-width: 28rem) {
+    padding-left: 0;
+  }
 `;
 
 export const MenuText = styled.div`
@@ -144,6 +184,10 @@ export const ChallengesBody = styled.div`
   letter-spacing: 0;
   text-align: left;
   color: #0f0f2199;
+
+  @media (max-width: 28rem) {
+    font-size: 1rem;
+  }
 `;
 
 export const Paragraph = styled.div`
