@@ -76,6 +76,7 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     form_completed = models.BooleanField(default=False)
+    tags = models.JSONField(default=list, blank=True)
 
     class Meta:
         db_table = "user_profiles"
