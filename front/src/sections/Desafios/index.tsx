@@ -1,20 +1,27 @@
 import React from "react";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { Body, Title } from "../CTA/style";
-import { Container, Text, TitleDiv, Button, Frame } from "./style";
+import SectionCardComponent from "../../components/SectionCard"; // Supondo que o caminho está correto
 
-import SectionCardComponent from "../../components/SectionCard";
-import { SectionSubtitle } from "../Patrocinadores/style";
+// Importando TODOS os estilos do arquivo local
+import {
+  Container,
+  Text,
+  TitleDiv,
+  Button,
+  Frame,
+  SectionSubtitle,
+  Title,
+  Body,
+} from "./style";
 
-const Desafios = () => {
+const Aquecimento = () => {
+  // Renomeei para refletir o conteúdo
   return (
     <Container>
-      {/* Left Side: Text Content */}
+      {/* Lado Esquerdo: Conteúdo de Texto */}
       <Text>
         <TitleDiv>
-          <SectionSubtitle style={{ color: "white" }}>
-            AQUECIMENTO!
-          </SectionSubtitle>
+          <SectionSubtitle>AQUECIMENTO!</SectionSubtitle>
           <Title style={{ textAlign: "left" }}>
             TUDO O QUE É PRECISO PARA CHEGAR COM CONFIANÇA.
           </Title>
@@ -27,9 +34,9 @@ const Desafios = () => {
         </Body>
       </Text>
 
-      {/* Right Side: Sections and Button */}
+      {/* Lado Direito: Seções e Botão */}
       <Frame>
-        {/* Section Cards */}
+        {/* Cards de Seção */}
         <SectionCardComponent
           title="NOME DO RESPONSÁVEL PELO CONTEÚDO"
           subtitle="_Título"
@@ -45,7 +52,7 @@ const Desafios = () => {
           subtitle="_Título"
           description="Uma descrição breve do que é."
         />
-        {/* Button */}
+        {/* Botão */}
         <Button>
           ACESSE TODOS OS MATERIAIS <ArrowRightOutlined />
         </Button>
@@ -54,4 +61,4 @@ const Desafios = () => {
   );
 };
 
-export default Desafios;
+export default Aquecimento;

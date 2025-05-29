@@ -1,18 +1,5 @@
 import styled from "styled-components";
 
-export const SectionSubtitle = styled.h3`
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.125rem; // 18px
-  line-height: 1.563rem; // 25px
-  color: #ffffff;
-
-  @media (max-width: 28rem) {
-    font-size: 1rem; // 16px
-    line-height: 1.375rem; // 22px
-  }
-`;
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -24,12 +11,12 @@ export const Container = styled.div`
   min-height: 100vh;
   gap: 4rem;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
+    /* Breakpoint ajustado para mais consistência */
     flex-direction: column;
-    align-items: flex-start;
     padding: 3.75rem 1.5rem;
     gap: 2.5rem;
-    height: 67.25rem;
+    min-height: auto; /* Remove a altura mínima para mobile */
   }
 `;
 
@@ -41,9 +28,9 @@ export const Text = styled.div`
   gap: 1.5rem;
   width: 45%;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 19.125rem;
+  @media (max-width: 48rem) {
+    width: 100%; /* Ocupa 100% da largura da coluna */
+    /* REMOVIDO: height: 19.125rem; */
   }
 `;
 
@@ -56,9 +43,8 @@ export const TitleDiv = styled.div`
   gap: 0.25rem;
   width: 100%;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 11.375rem;
+  @media (max-width: 48rem) {
+    /* REMOVIDO: height: 11.375rem; */
   }
 `;
 
@@ -71,11 +57,10 @@ export const Title = styled.h1`
   color: #ffffff;
   margin: 0;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     font-size: 2rem;
     line-height: 2.438rem;
-    width: 21.375rem;
-    height: 9.75rem;
+    /* REMOVIDO: height: 9.75rem; */
   }
 `;
 
@@ -88,11 +73,10 @@ export const Body = styled.p`
   color: #ffffff;
   margin: 0;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     font-size: 1rem;
     line-height: 1.25rem;
-    width: 21.375rem;
-    height: 6.25rem;
+    /* REMOVIDO: height: 6.25rem; */
   }
 `;
 
@@ -103,10 +87,9 @@ export const Frame = styled.div`
   gap: 2rem;
   width: 45%;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 38.125rem;
-    gap: 2rem;
+  @media (max-width: 48rem) {
+    width: 100%; /* Ocupa 100% da largura da coluna */
+    /* REMOVIDO: height: 38.125rem; */
   }
 `;
 
@@ -130,20 +113,37 @@ export const Button = styled.button`
   line-height: 0.938rem;
   text-transform: uppercase;
   color: #ffffff;
+  transition: opacity 0.2s;
 
   &:hover {
     opacity: 0.8;
   }
 
-  .anticon {
+  .anticon,
+  svg {
     width: 1.5rem;
     height: 1.5rem;
     color: #ffffff;
   }
 
-  @media (max-width: 28rem) {
-    width: 21rem;
-    height: 2.5rem;
+  @media (max-width: 48rem) {
+    width: 100%;
+    justify-content: flex-start; /* Alinha o texto do botão à esquerda */
+    padding: 0.5rem 0; /* Ajusta o padding */
+  }
+`;
+
+export const SectionSubtitle = styled.h3`
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.563rem;
+  color: #ffffff;
+
+  @media (max-width: 48rem) {
+    font-size: 1rem;
+    line-height: 1.375rem;
   }
 `;
 

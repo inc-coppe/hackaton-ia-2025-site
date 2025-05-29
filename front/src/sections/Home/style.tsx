@@ -9,8 +9,8 @@ export const CarouselContainer = styled.div`
   overflow: hidden;
   backdrop-filter: blur(0.625rem);
 
-  @media (max-width: 28rem) {
-    height: 4.2rem; // 70% of 6rem
+  @media (max-width: 48rem) {
+    height: 4.2rem;
   }
 `;
 
@@ -36,8 +36,8 @@ export const CarouselTrack = styled.div`
     }
   }
 
-  @media (max-width: 28rem) {
-    gap: 0.5rem; // Keep the same gap for consistency
+  @media (max-width: 48rem) {
+    gap: 0.5rem;
   }
 `;
 
@@ -52,7 +52,7 @@ export const CarouselItem = styled.div`
     border-radius: 0.5rem;
   }
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     transform: scale(0.7);
   }
 `;
@@ -64,6 +64,7 @@ export const HomePageContainer = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  /* Revertido para o original, mantendo o layout de duas colunas */
   justify-content: space-between;
   align-items: center;
   z-index: 0;
@@ -71,13 +72,13 @@ export const HomePageContainer = styled.div`
   padding-bottom: 12.5rem;
   margin-top: 4rem;
 
-  @media (max-width: 28rem) {
-    height: 110vh; // Changed from fixed height
+  @media (max-width: 48rem) {
+    height: 110vh;
     padding: 0;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    top: 0; // Remove top spacing
+    top: 0;
   }
 `;
 
@@ -86,16 +87,18 @@ export const LeftContainer = styled.div`
   flex-direction: column;
   gap: 2rem;
   margin-left: 1rem;
+  /* z-index aqui não é mais necessário, pois o da imagem resolverá a sobreposição */
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     margin-left: 1.5rem;
-    margin-top: 1rem; // Reduced from 2.5rem
+    margin-top: 1rem;
     gap: 1rem;
     width: calc(100% - 3rem);
     align-items: flex-start;
   }
 `;
 
+// ... (Gradient, TextContainer, Text, Title - sem alterações) ...
 export const Gradient = styled.img`
   position: absolute;
   top: 0;
@@ -104,10 +107,6 @@ export const Gradient = styled.img`
   height: 100%;
   object-fit: cover;
   z-index: -1;
-
-  @media (max-width: 28rem) {
-    }
-  }
 `;
 
 export const TextContainer = styled.div`
@@ -116,12 +115,10 @@ export const TextContainer = styled.div`
   gap: 1rem;
   justify-content: center;
   align-items: flex-start;
-  max-width: 50%;
-  position: relative; // Add this
-  z-index: 2; // Add this
+  position: relative;
+  z-index: 2;
 
-  @media (max-width: 28rem) {
-    max-width: 100%;
+  @media (max-width: 48rem) {
     width: 100%;
     align-items: flex-start;
     gap: 0.5rem;
@@ -137,11 +134,11 @@ export const Text = styled.p`
   text-align: left;
   color: #ffffff;
   margin: 0;
-  position: relative; // Add this
-  z-index: 2; // Add this
+  position: relative;
+  z-index: 2;
   width: auto;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     font-size: 1.125rem;
     line-height: 1.375rem;
     margin-bottom: 0.25rem;
@@ -163,36 +160,9 @@ export const Title = styled.h1`
   color: #ffffff;
   margin-bottom: 0;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     font-size: 2.8125rem;
     line-height: 2.8125rem;
-    height: 2.8125rem;
-    width: auto;
-  }
-`;
-
-export const TitleNoBg = styled.h1`
-  font-family: Montserrat;
-  font-weight: 900;
-  font-size: 5rem;
-  line-height: 5rem;
-  letter-spacing: 0;
-  text-align: left;
-  text-transform: uppercase;
-  color: #110249e5;
-  text-shadow:
-    -0.3125rem -0.3125rem 0 #ffffff,
-    0.3125rem -0.3125rem 0 #ffffff,
-    -0.3125rem 0.3125rem 0 #ffffff,
-    0.3125rem 0.3125rem 0 #ffffff;
-  margin-bottom: 0;
-
-  @media (max-width: 28rem) {
-    font-size: 2.8125rem;
-    line-height: 2.8125rem;
-    width: 2.9375rem;
-    height: 2.8125rem;
-    border: 0.25rem solid #ffffff;
   }
 `;
 
@@ -200,15 +170,20 @@ export const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 1rem;
 
-  @media (max-width: 28rem) {
-    margin: 0;
+  /* MUDANÇA PRINCIPAL ABAIXO */
+  margin-left: -20rem; /* Puxa a imagem para a esquerda sobre o texto */
+  z-index: 1; /* Garante que a imagem fique na frente do fundo mas atrás do texto */
+  position: relative; /* Necessário para o z-index funcionar corretamente */
+
+  @media (max-width: 48rem) {
+    margin: 0; /* Reseta a margem negativa do desktop */
     position: absolute;
     width: 11.875rem;
     height: 13.4375rem;
-    left: 6.25rem;
-    top: 10rem; // Adjusted from 12rem
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10rem;
     z-index: 1;
   }
 `;
@@ -217,13 +192,15 @@ export const HomeImage = styled.img`
   width: 38.625rem;
   height: 42.625rem;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     width: 125%;
     height: 125%;
     mix-blend-mode: lighten;
   }
 `;
 
+// O resto dos seus estilos (SolidButton, PlaceContainer, etc.) permanecem como estavam.
+// ...
 export const SolidButton = styled.button`
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
@@ -238,13 +215,15 @@ export const SolidButton = styled.button`
   margin-top: 5rem;
   transition: background-color 0.2s ease;
   width: fit-content;
+  z-index: 2; /* Botão na frente */
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     position: absolute;
     width: 10.875rem;
     height: 2.4375rem;
-    left: 6.75rem;
-    top: 24rem; // Adjusted from 26.9375rem
+    left: 50%;
+    transform: translateX(-50%);
+    top: 24rem;
     padding: 0.75rem 1.25rem;
     font-size: 0.9375rem;
     line-height: 0.9375rem;
@@ -264,11 +243,11 @@ export const PlaceContainerLeft = styled.div`
   bottom: 7rem;
   margin-bottom: 4rem;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     width: 21.375rem;
     height: 4.125rem;
     left: 1.5rem;
-    top: 30rem; // Adjusted from 32.125rem
+    top: 30rem;
     bottom: auto;
   }
 `;
@@ -285,11 +264,11 @@ export const PlaceContainerRight = styled.div`
   bottom: 7rem;
   margin-bottom: 4rem;
 
-  @media (max-width: 28rem) {
+  @media (max-width: 48rem) {
     width: 21.375rem;
     height: 4.125rem;
     right: 1.5rem;
-    top: 35rem; // Adjusted from 37.25rem
+    top: 35rem;
     bottom: auto;
     align-items: flex-end;
   }
@@ -303,12 +282,9 @@ export const SubtitleLeft = styled.h3`
   line-height: 1.5625rem;
   color: #ffffff;
   margin: 0;
-  width: 25.8125rem;
-  height: 1.5625rem;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 1.375rem;
+  @media (max-width: 48rem) {
+    width: 100%;
     font-size: 1rem;
     line-height: 1.375rem;
   }
@@ -323,15 +299,11 @@ export const SubtitleRight = styled.h3`
   color: #ffffff;
   text-align: right;
   margin: 0;
-  width: 25.375rem;
-  height: 1.5625rem;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 1.375rem;
+  @media (max-width: 48rem) {
+    width: 100%;
     font-size: 1rem;
     line-height: 1.375rem;
-    text-align: right; // Keep right alignment
   }
 `;
 
@@ -343,12 +315,9 @@ export const SmallerTitleLeft = styled.h2`
   line-height: 1.5rem;
   color: #ffffff;
   margin: 0;
-  width: 25.8125rem;
-  height: 1.5rem;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 2.75rem;
+  @media (max-width: 48rem) {
+    width: 100%;
     font-size: 1.125rem;
     line-height: 1.375rem;
   }
@@ -363,14 +332,10 @@ export const SmallerTitleRight = styled.h2`
   text-align: right;
   color: #ffffff;
   margin: 0;
-  width: 25.375rem;
-  height: 1.5rem;
 
-  @media (max-width: 28rem) {
-    width: 21.375rem;
-    height: 2.75rem;
+  @media (max-width: 48rem) {
+    width: 100%;
     font-size: 1.125rem;
     line-height: 1.375rem;
-    text-align: right; // Keep right alignment
   }
 `;

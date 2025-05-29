@@ -4,13 +4,14 @@ import Footer from "../../components/Footer";
 import {
   SponsorContainer,
   HighlightSection,
-  TextContainer,
-  Title,
-  Subtitle,
-  Description,
-  Button,
-  ButtonText,
+  HighlightTextContainer,
+  HighlightTitleGroup,
+  HighlightPreamble,
+  HighlightMainTitle,
+  HighlightDescription,
+  HighlightButtonContainer, // Novo container para o botão do topo
   AboutSection,
+  AboutTextContainer, // Novo container para o texto do About
   AboutTitle,
   AboutDescription,
   CardsContainer,
@@ -19,71 +20,122 @@ import {
   BenefitTitle,
   CTASection,
   CTAContainer,
+  CTAWrapper, // Para layout lado a lado no CTA
   CTATextContainer,
   CTATitle,
-  CTADescription,
-  CTAQuestion,
+  CTADescription, // Reutilizaremos para as duas descrições no CTA
   BenefitsContainer,
   BenefitBox,
   BenefitBoxTitle,
-  ButtonContainer,
-  CTAWrapper,
+  ActionButton, // Componente de botão reutilizado
+  ActionButtonText, // Texto do botão reutilizado
 } from "./style";
-import { useNavigate } from "react-router-dom";
+import b1 from "../../assets/b1.png";
+import b2 from "../../assets/b2.png";
+import b3 from "../../assets/b3.png";
+import b4 from "../../assets/b4.png";
+import b5 from "../../assets/b5.png";
+import b6 from "../../assets/b6.png";
+
+const icons = {
+  groups: b1,
+  newspaper: b2,
+  brand_awareness: b3,
+  handshake: b4,
+  communication: b5,
+  network_intelligence: b6,
+};
+
+const benefitsData = [
+  { iconKey: "groups", title: "Acessar talentos altamente qualificados" },
+  {
+    iconKey: "newspaper",
+    title: "Ter presença em todos os materiais do evento",
+  },
+  {
+    iconKey: "brand_awareness",
+    title: "Divulgar sua marca para participantes e stakeholders",
+  },
+  {
+    iconKey: "handshake",
+    title:
+      "Fortalecer sua atuação em inovação aberta e responsabilidade social",
+  },
+  {
+    iconKey: "communication",
+    title:
+      "Participar de momentos estratégicos como mentorias e sessões de networking",
+  },
+  {
+    iconKey: "network_intelligence",
+    title:
+      "Associar sua marca a um dos temas mais estratégicos da década: a inteligência artificial",
+  },
+];
+
+const ctaBenefitsData = [
+  "Divulgação da marca em materiais e redes oficiais",
+  "Acesso ao report completo do evento",
+  "Espaço para ações promocionais e distribuição de brindes",
+  "Participação em atividades presenciais no lounge de ativação",
+  "Contato com participantes interessados em oportunidades de carreira",
+];
 
 function Sponsor() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Não usado atualmente
 
   const handleContact = () => {
-    // Replace with actual contact functionality
-    window.location.href = "mailto:contato@contato.com.br";
+    window.location.href = "mailto:contato@contato.com.br"; // Ou formulário de contato
   };
 
   return (
     <>
       <Header />
-      
       <SponsorContainer>
-        
         <HighlightSection>
-          <TextContainer>
-            <Title>
-              <Subtitle>
+          <HighlightTextContainer>
+            <HighlightTitleGroup>
+              <HighlightPreamble>
                 IMPULSIONE TALENTOS, CONSTRUA O FUTURO E DEIXE A SUA MARCA.
-              </Subtitle>
-              QUEM APOIA A INOVAÇÃO, MOVE O MUNDO.
-            </Title>
-            <Description>
+              </HighlightPreamble>
+              <HighlightMainTitle>
+                QUEM APOIA A INOVAÇÃO, MOVE O MUNDO.
+              </HighlightMainTitle>
+            </HighlightTitleGroup>
+            <HighlightDescription>
               O Hackathon de IA é mais que um evento: é uma jornada coletiva
               para resolver desafios reais com criatividade, tecnologia e
               colaboração. Patrocinar esse movimento é participar do avanço da
               inteligência artificial no Brasil, apoiar a formação de talentos e
               impulsionar um ecossistema de inovação com impacto social e
               econômico duradouro.
-            </Description>
-            
-            <ButtonContainer>
-              <Button onClick={handleContact}>
-                <ButtonText>SEJA UM PATROCINADOR</ButtonText>
-              </Button>
-            </ButtonContainer>
-
-          </TextContainer>
+            </HighlightDescription>
+            <HighlightButtonContainer>
+              <ActionButton onClick={handleContact}>
+                <ActionButtonText>QUERO PATROCINAR</ActionButtonText>
+              </ActionButton>
+            </HighlightButtonContainer>
+          </HighlightTextContainer>
         </HighlightSection>
 
         <AboutSection>
-          <AboutTitle>VISIBILIDADE, CONEXÕES E IMPACTO REAL.</AboutTitle>
-          <AboutDescription>
-            Ao se tornar patrocinador, sua marca se posiciona ao lado de
-            universidades líderes como UFRJ, USP e instituições como a
-            Incubadora de Empresas COPPE/UFRJ – participando ativamente da
-            transformação tecnológica no Brasil. Como parceiro, você poderá:
-          </AboutDescription>
-          
+          <AboutTextContainer>
+            <AboutTitle>VISIBILIDADE, CONEXÕES E IMPACTO REAL.</AboutTitle>
+            <AboutDescription>
+              Ao se tornar patrocinador, sua marca se posiciona ao lado de
+              universidades líderes como UFRJ, USP e instituições como a
+              Incubadora de Empresas COPPE/UFRJ – participando ativamente da
+              transformação tecnológica no Brasil. Como parceiro, você poderá:
+            </AboutDescription>
+          </AboutTextContainer>
           <CardsContainer>
-            {benefits.map((benefit, index) => (
+            {benefitsData.map((benefit, index) => (
               <BenefitCard key={index}>
-                <BenefitIcon src={benefit.icon} alt={benefit.title} />
+                <BenefitIcon
+                  src={icons[benefit.iconKey as keyof typeof icons]}
+                  alt=""
+                />{" "}
+                {/* Ícone primeiro */}
                 <BenefitTitle>{benefit.title}</BenefitTitle>
               </BenefitCard>
             ))}
@@ -94,76 +146,38 @@ function Sponsor() {
           <CTAContainer>
             <CTAWrapper>
               <CTATextContainer>
-                <CTATitle>PATROCINADORES TÊM ACESSO A BENEFÍCIOS COMO:</CTATitle>
-
+                <CTATitle>
+                  PATROCINADORES TÊM ACESSO A BENEFÍCIOS COMO:
+                </CTATitle>
                 <CTADescription>
                   Os detalhes sobre níveis e cotas são apresentados ao entrar em
-                  contato com nossa equipe. 
+                  contato com nossa equipe.
                 </CTADescription>
-
-                <CTAQuestion>O próximo passo é seu. Bora construir isso juntos?</CTAQuestion>
+                <CTADescription>
+                  {" "}
+                  {/* Figma tem dois parágrafos aqui */}O próximo passo é seu.
+                  Bora construir isso juntos?
+                </CTADescription>
               </CTATextContainer>
-
               <BenefitsContainer>
-                {ctaBenefits.map((benefit, index) => (
+                {ctaBenefitsData.map((benefit, index) => (
                   <BenefitBox key={index}>
                     <BenefitBoxTitle>{benefit}</BenefitBoxTitle>
                   </BenefitBox>
                 ))}
               </BenefitsContainer>
             </CTAWrapper>
-                
-            <ButtonContainer>
-              <Button onClick={handleContact}>
-                <ButtonText>SEJA UM PATROCINADOR</ButtonText>
-              </Button>
-            </ButtonContainer>
-          </CTAContainer>  
+            <ActionButton onClick={handleContact}>
+              {" "}
+              {/* Botão centralizado por padrão pelo align-items do CTAContainer */}
+              <ActionButtonText>QUERO PATROCINAR</ActionButtonText>
+            </ActionButton>
+          </CTAContainer>
         </CTASection>
-
-
       </SponsorContainer>
       <Footer />
     </>
   );
 }
-
-const benefits = [
-  {
-    icon: "groups_icon.svg",
-    title: "Acessar talentos altamente qualificados",
-  },
-  {
-    icon: "newspaper_icon.svg",
-    title: "Ter presença em todos os materiais do evento",
-  },
-  {
-    icon: "brand_awareness_icon.svg",
-    title: "Divulgar sua marca para participantes e stakeholders",
-  },
-  {
-    icon: "handshake_icon.svg",
-    title:
-      "Fortalecer sua atuação em inovação aberta e responsabilidade social",
-  },
-  {
-    icon: "communication_icon.svg",
-    title:
-      "Participar de momentos estratégicos como mentorias e sessões de networking",
-  },
-  {
-    icon: "network_intelligence_icon.svg",
-    title:
-      "Associar sua marca a um dos temas mais estratégicos da década: a inteligência artificial",
-  },
-];
-
-const ctaBenefits = [
-  "Divulgação da marca em materiais e redes oficiais",
-  "Acesso ao report completo do evento",
-  "Espaço para ações promocionais e distribuição de brindes",
-  "Participação em atividades presenciais no lounge de ativação",
-  "Contato com participantes interessados em oportunidades de carreira",
-];
 
 export default Sponsor;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Space } from "antd";
+import { Dropdown, Space, MenuProps } from "antd"; // Importar MenuProps para tipagem
 import { DownOutlined } from "@ant-design/icons";
 import LogoHackaton from "../../assets/Logo.png";
 import {
@@ -31,18 +31,18 @@ interface User {
   profile_picture_url: string;
 }
 
-const sponsorItems = [
+// Tipagem para os itens do menu do Ant Design
+const sponsorItems: MenuProps["items"] = [
+  // Adicionando tipagem
   {
-    key: "1",
+    key: "1", // Chave única para o novo item
     label: (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.sponsor1.com"
-      >
-        Patrocinador 1
-      </a>
+      // Link para a sua página interna /patrocinador
+      <Link to="/patrocinador">Nossos Patrocinadores</Link>
     ),
+  },
+  {
+    type: "divider", // Adiciona um separador visual
   },
   {
     key: "2",
@@ -97,7 +97,6 @@ const Header = () => {
         }
       }
     };
-
     fetchUser();
   }, []);
 
@@ -110,25 +109,15 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const Navigation = ({ isMobile = false }) => (
+  const Navigation = () => (
     <>
-      <NavLink href="#inicio" $isMobile={isMobile}>
-        Início
-      </NavLink>
-      <NavLink href="#cronograma" $isMobile={isMobile}>
-        Cronograma
-      </NavLink>
-      <NavLink href="#desafios" $isMobile={isMobile}>
-        Desafios
-      </NavLink>
-      <NavLink href="#materiais" $isMobile={isMobile}>
-        Materiais
-      </NavLink>
-      <NavLink href="#regulamento" $isMobile={isMobile}>
-        Regulamento
-      </NavLink>
+      <NavLink to="/">Início</NavLink>
+      <NavLink to="/cronograma">Cronograma</NavLink>
+      <NavLink to="/desafios">Desafios</NavLink>
+      <NavLink to="/materiais">Materiais</NavLink>
+      <NavLink to="/regulamento">Regulamento</NavLink>
       <Dropdown menu={{ items: sponsorItems }} trigger={["hover"]}>
-        <NavButton type="button" $isMobile={isMobile}>
+        <NavButton type="button">
           <Space>
             Patrocinadores
             <DownOutlined />
@@ -160,7 +149,9 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
+      <Link to="/">
+        <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
+      </Link>
 
       <NavigationContainer>
         <Navigation />
@@ -177,21 +168,22 @@ const Header = () => {
       <MobileNavigation $isOpen={isMenuOpen}>
         <MobileMenuContent>
           <NavSection>
-            <NavLink href="#inicio" $isMobile>
+            <NavLink to="/" onClick={toggleMenu} $isMobile>
               Início
             </NavLink>
-            <NavLink href="#cronograma" $isMobile>
+            <NavLink to="/cronograma" onClick={toggleMenu} $isMobile>
               Cronograma
             </NavLink>
-            <NavLink href="#desafios" $isMobile>
+            <NavLink to="/desafios" onClick={toggleMenu} $isMobile>
               Desafios
             </NavLink>
-            <NavLink href="#materiais" $isMobile>
+            <NavLink to="/materiais" onClick={toggleMenu} $isMobile>
               Materiais
             </NavLink>
-            <NavLink href="#regulamento" $isMobile>
+            <NavLink to="/regulamento" onClick={toggleMenu} $isMobile>
               Regulamento
             </NavLink>
+            {/* O Dropdown agora está diretamente aqui, sem o NavLink em volta */}
             <Dropdown menu={{ items: sponsorItems }} trigger={["click"]}>
               <NavButton type="button" $isMobile>
                 <Space>
@@ -203,7 +195,7 @@ const Header = () => {
           </NavSection>
           <AuthSection isMobile />
           <TimestampContainer>
-            <Timestamp>2025-05-14 02:09:44 UTC</Timestamp>
+            <Timestamp>2025-05-28 22:42:41 UTC</Timestamp>
             <UserInfo>Login: franciscoflorencio</UserInfo>
           </TimestampContainer>
         </MobileMenuContent>
