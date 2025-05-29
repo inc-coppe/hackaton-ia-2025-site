@@ -128,7 +128,7 @@ export const Button = styled.button`
 
   @media (max-width: 48rem) {
     width: 100%;
-    justify-content: flex-start; /* Alinha o texto do botão à esquerda */
+    justify-content: center; /* Alinha o texto do botão à esquerda */
     padding: 0.5rem 0; /* Ajusta o padding */
   }
 `;

@@ -7,24 +7,25 @@ export const Container = styled.div`
   padding: 0;
   gap: 1rem; // Reduced further from 2rem to 1rem
   width: calc(100% - 15rem);
-  max-width: 1296px;
+  /*max-width: 1296px; -> comentado porque estava desalinhando*/ 
   height: auto;
   position: relative;
   z-index: 1;
   margin: 0 7.5rem;
   margin-bottom: 7.5rem;
 
-  @media (max-width: 28rem) {
-    width: 342px;
-    padding: 0;
-    gap: 1rem; // Consistent gap for mobile
-    margin: 0 1.5rem;
+  @media (max-width: 28rem) {    
+    margin: 0;
+    padding: 3.75rem 1.5rem;
+    width: 100%;
+    gap: 1.5rem; // Consistent gap for mobile
+    //margin: 0 1.5rem;
   }
 `;
 
 export const Resize = styled.div`
   width: 100%;
-  max-width: 800px;
+  /*max-width: 800px; -> comentado porque estava limitando o Sectiontext */
   display: flex;
   flex-direction: column;
   gap: 0.75rem; // Add small gap between text elements
@@ -45,6 +46,8 @@ export const SectionTitle = styled.h2`
   color: #0f0f21;
   text-align: left;
   margin: 0; // Remove default margins
+
+  max-width: 800px;
 
   @media (max-width: 28rem) {
     font-size: 2rem;
@@ -137,7 +140,7 @@ export const SponsorLogoContainer = styled.div`
     gap: 24px;
     margin-top: 24px;
     justify-content: flex-start;
-    width: 342px;
+    width: 342px; 
   }
 `;
 
@@ -153,8 +156,9 @@ export const SponsorsContainer = styled.div`
   margin-top: -1rem; // Pull the sponsors section up slightly
 
   @media (max-width: 28rem) {
-    gap: 24px;
-    width: 342px;
+    
+    gap: 1.5rem;
+    width:100%;
     margin-top: -0.5rem;
   }
 `;
@@ -192,6 +196,6 @@ export const TierTitle = styled.h4`
     font-size: 20px;
     line-height: 24px;
     height: 24px;
-    width: 342px;
+    width: 100%;
   }
 `;

@@ -280,4 +280,3 @@ export const ImagemWrapper = styled.div`
 export const TextNextToMedia = styled.div`
   flex-grow: 1;
 `;
-

@@ -11,10 +11,8 @@ const SobrePage = () => {
       <Text>
         <Title>EXPLORE. CRIE. CONQUISTE.</Title>
         <Body>
-          Mergulhe em um fim de semana imersivo com foco em inovação e
-          Inteligência Artificial. Enfrente desafios reais, troque ideias com
-          especialistas e desenvolva soluções de impacto ao lado de talentos de
-          diversas áreas!
+          Mergulhe em um fim de semana imersivo com foco em inovação e Inteligência Artificial. 
+          Enfrente desafios reais, troque ideias com especialistas e desenvolva soluções de impacto ao lado de talentos de diversas áreas! Tudo que for construído aqui será compartilhado com o mundo, em código aberto, para ir ainda mais longe.
         </Body>
       </Text>
       <Line>

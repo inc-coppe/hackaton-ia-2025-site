@@ -9,9 +9,9 @@ export const CardContainer = styled.div`
   padding: 1rem 2rem 1.5rem;
 
   @media (max-width: 28rem) {
-    width: 21.375rem; // 342px
+    width: auto; // alterado para ficar centralizado, era 21.375rem (342px)
     height: 13.25rem; // 212px
-    padding: 1rem 2rem 1.5rem; // 16px 32px 24px
+    padding: 0rem 2rem 1.5rem; // 16px 32px 24px
     gap: 2rem; // 32px
     align-self: stretch;
   }
@@ -49,7 +49,7 @@ export const CardText = styled.p`
   @media (max-width: 28rem) {
     font-size: 1rem; // 16px
     line-height: 1.25rem; // 20px
-    width: 17.375rem; // 278px
+    width: auto; // alterado para ficar centralizado, era 17.375rem (278px)
     height: 2.5rem; // 40px
   }
 `;

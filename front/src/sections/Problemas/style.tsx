@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /*Trocado para ajustar a disposição dos textos - era center*/ 
 
   /* LINHA CORRIGIDA ABAIXO */
   padding: 7.5rem; /* Trocamos 'margin' por 'padding' */

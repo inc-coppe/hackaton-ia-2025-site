@@ -10,8 +10,8 @@ export const Container = styled.div`
   @media (max-width: 28rem) {
     padding: 3.75rem 1.5rem 2.5rem; // 60px 24px 40px
     gap: 4rem; // 64px
-    width: 24.375rem; // 390px
-    height: 33.625rem; // 538px
+    width: auto; // // auto para que ele se ajuste de acordo com o padding, antes era 24.375rem (390px)
+    height: auto; // 538px
     align-self: stretch;
   }
 `;
@@ -26,7 +26,7 @@ export const Highlight = styled.div`
   border-radius: 0.5rem; // 8px
 
   @media (max-width: 28rem) {
-    width: 21.375rem; // 342px
+    width: auto; // auto para que ele se ajuste de acordo com o padding, antes era 21.375rem (342px)
     height: 27.375rem; // 438px
     padding: 2.5rem 1rem; // 40px 16px
     gap: 2.5rem; // 40px
@@ -43,7 +43,7 @@ export const Texts = styled.div`
   width: 100%;
 
   @media (max-width: 28rem) {
-    width: 19.375rem; // 310px
+    width: 100%; // 310px
     height: 17.4375rem; // 279px
     gap: 1.5rem; // 24px
     align-self: stretch;
@@ -64,7 +64,9 @@ export const Title = styled.h1`
   flex-grow: 0;
 
   @media (max-width: 28rem) {
-    width: 19.375rem; // 310px
+    padding: 0rem 2rem;
+    
+    width: 100%; // 19.375rem (310px)
     height: 12.1875rem; // 195px
     font-size: 2rem; // 32px
     line-height: 2.4375rem; // 39px
@@ -86,7 +88,9 @@ export const Body = styled.p`
   margin-bottom: 3rem;
 
   @media (max-width: 28rem) {
-    width: 19.375rem; // 310px
+    padding: 0rem 0.5rem;
+    
+    width: 100%; // 19.375rem (310px)
     height: 3.75rem; // 60px
     font-size: 1rem; // 16px
     line-height: 1.25rem; // 20px

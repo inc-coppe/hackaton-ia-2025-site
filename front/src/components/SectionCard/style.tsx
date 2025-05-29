@@ -14,10 +14,12 @@ export const SectionCard = styled.div<{ $isSecondCard?: boolean }>`
   border-radius: 0.5rem; // 8px
 
   @media (max-width: 28rem) {
-    width: 21.375rem; // 342px
-    height: ${(props) =>
-      props.$isSecondCard ? "14.25rem" : "8.188rem"}; // 228px or 131px
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 1rem ;
+    align-items: center;
+
+    width: 100%; /*Era 21.375rem (342px) */
+    
+    height: auto; /* */
   }
 
   transition: background-color 0.3s ease;
@@ -35,7 +37,7 @@ export const CardContent = styled.div`
   max-width: 34.5rem; // 552px as max-width instead
 
   @media (max-width: 28rem) {
-    width: 17.375rem; // 278px
+    width: 100%;///*Era 17.375rem (78px) */
   }
 `;
 
@@ -59,8 +61,8 @@ export const SetaWrapper = styled.div`
 `;
 
 export const SetaIcon = styled.img`
-  width: 1.5rem; // 24px
-  height: 1.5rem; // 24px
+  width: 0.938rem; // 15px
+  height: 0.938rem; // 15px
 `;
 
 export const CardHeader = styled.div`
