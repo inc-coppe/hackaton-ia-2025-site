@@ -31,7 +31,7 @@ const Footer = () => {
           <StyledNavLink to="/desafios">Desafios</StyledNavLink>
           <StyledNavLink to="/materiais">Materiais</StyledNavLink>
           <StyledNavLink to="/regulamento">Regulamento</StyledNavLink>
-          <StyledNavLink to="/patrocinadores">Patrocinadores</StyledNavLink>
+          <StyledNavLink to="/patrocinador">Patrocinadores</StyledNavLink>
         </LinksSection>
 
         <RealizacaoSection>

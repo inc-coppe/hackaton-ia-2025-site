@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 export const HeaderContainer = styled.header`
@@ -90,7 +91,7 @@ const mobileLinkStyles = css`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
-export const NavLink = styled.a<{ $isMobile?: boolean }>`
+export const NavLink = styled(Link)<{ $isMobile?: boolean }>`
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 0.9rem;
