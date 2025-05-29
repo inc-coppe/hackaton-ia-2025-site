@@ -16,6 +16,7 @@ const Landing = () => {
       <SobrePage />
       <Cronograma />
       <Problemas />
+      <Desafios />
       <CTA />
       <Patrocinadores />
       <Footer />
