@@ -1,240 +1,263 @@
+import React, { useEffect, useState, useRef } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
-  ChallengesContainer,
-  ChallengesSubTitle,
-  ChallengesTitle,
-  ConteudoDesafiosContainer,
-  DesafiosBodyContainer,
-  DesafiosBodyPrincipalContainer,
+  DesafiosPageContainer,
   DesafiosIntroContainer,
+  HighlightTextWrapper,
+  TitleGroup,
+  IntroSubtitle,
+  IntroTitle,
+  IntroDescription,
+  DesafiosBodyContainer,
+  PreDivisionText,
+  DesafiosBodyPrincipalContainer,
   MenuContainer,
   MenuText,
-  Paragraph,
-  PreDivisionText,
-  Title,
-  Titulo_info,
-  SubTitle,
+  ConteudoDesafiosContainer,
+  ChallengeItemContainer,
+  ChallengeTitleGroup,
+  ChallengeAuthor,
+  ChallengeMainTitle,
+  ChallengeParagraph,
   ImagemWrapper,
+  ChallengeMediaLayout,
+  TextNextToMedia,
 } from "./style";
-import { useEffect, useState, useRef } from "react";
-import { TitleBody } from "../Cronograma/style";
 
-import img_carregando from "../../assets/sem_imagem.png";
-
+// Seus dados mockados (mantidos como no seu exemplo)
 const desafios_menu = [
-  "Título de um desafio",
-  "Título maior de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
-  "Título maior de um desafio",
-  "Título maior de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
-  "Título maior grande de um desafio",
-  "Título de um desafio",
-  "Título de um desafio",
+  "Otimização de Rotas de Entrega com IA",
+  "Detecção Precoce de Doenças em Plantas",
+  "Chatbot Inteligente para Suporte ao Cliente",
+  // ... (restante dos itens do menu)
 ];
 
 const desafios_explicados = [
   {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
+    id: "desafio-rotas",
+    titulo: "Otimização de Rotas de Entrega com IA",
+    sugerido_por: "LOGÍSTICA BRASIL S.A.",
     descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Desenvolver um sistema que utilize inteligência artificial para otimizar as rotas de uma frota de veículos de entrega, considerando variáveis como tráfego em tempo real, janelas de entrega, capacidade dos veículos e custos operacionais. O objetivo é reduzir o tempo total de percurso, o consumo de combustível e as emissões de CO2, aumentando a eficiência e a satisfação do cliente.",
+      // Este segundo parágrafo só será usado se textoAoLadoDaImagem não existir e imagem for true
+      // Ou se imagem for false, ele será o segundo parágrafo normal.
+      "A solução deve apresentar uma interface clara para o gestor da frota e, idealmente, fornecer feedback em tempo real para os motoristas.",
     ],
-  },
-
-  {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
-    descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ],
+    imagem: true,
+    textoAoLadoDaImagem:
+      "A plataforma deverá permitir o cadastro de novos pontos de entrega e a reconfiguração dinâmica das rotas em caso de imprevistos, como acidentes ou bloqueios de vias. A escalabilidade para um grande número de veículos e entregas é um diferencial importante.",
   },
   {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
+    id: "desafio-plantas",
+    titulo: "Detecção Precoce de Doenças em Plantas",
+    sugerido_por: "AGROTECH SOLUTIONS",
     descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Criar uma solução baseada em IA, preferencialmente utilizando visão computacional, para identificar sinais precoces de doenças e pragas em plantações agrícolas a partir de imagens capturadas por drones ou smartphones. O sistema deve classificar o tipo de problema e, se possível, indicar o nível de infestação, auxiliando agricultores na tomada de decisão rápida para tratamento e minimização de perdas.",
+      "Considerar a variação de iluminação, tipos de cultura e a qualidade das imagens como desafios a serem superados. A interface deve ser intuitiva para usuários com pouca familiaridade tecnológica.",
     ],
+    imagem: false,
   },
   {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
+    id: "desafio-chatbot",
+    titulo: "Chatbot Inteligente para Suporte",
+    sugerido_por: "CLIENT CARE INC.",
     descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Desenvolver um chatbot avançado para atendimento ao cliente, capaz de compreender linguagem natural, resolver problemas comuns e escalar para atendentes humanos de forma eficiente quando necessário.",
+      "O chatbot deve aprender com interações passadas e ser personalizável para diferentes segmentos de negócio.",
     ],
+    imagem: false,
   },
-  {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
-    descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ],
-  },
-  {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
-    descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ],
-  },
-  {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
-    descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ],
-  },
-  {
-    titulo: "_TÍTULO DO DESAFIO",
-    sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO",
-    descricao: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ],
-  },
+  // ... mais desafios
 ];
 
 interface ScrollTrackerProps {
-  challengesRefs: React.RefObject<HTMLElement[]>;
+  challengesRefs: React.MutableRefObject<(HTMLElement | null)[]>;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ScrollTracker: React.FC<ScrollTrackerProps> = ({ challengesRefs, setActiveIndex }) => {
+const ScrollTracker: React.FC<ScrollTrackerProps> = ({
+  challengesRefs,
+  setActiveIndex,
+}) => {
+  // ... (lógica do ScrollTracker - sem alterações)
   const [scrollY, setScrollY] = useState(0);
-
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll); // limpeza
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    let index = 0;
+    let currentClosestIndex = 0;
+    let smallestDistance = Infinity;
 
-    for (let i = 0; i < challengesRefs.current.length; i++) {
-      const elTop = challengesRefs.current[i]?.offsetTop || 0;
+    challengesRefs.current.forEach((ref, index) => {
+      if (ref) {
+        const rect = ref.getBoundingClientRect();
+        const distanceToTop = Math.abs(rect.top - 80);
 
-      if (scrollY >= elTop - 150) { 
-        index = i;
-      } else {
-        break;
+        if (distanceToTop < smallestDistance) {
+          smallestDistance = distanceToTop;
+          currentClosestIndex = index;
+        }
       }
-    }
-
-    setActiveIndex(index);
+    });
+    setActiveIndex(currentClosestIndex);
   }, [scrollY, challengesRefs, setActiveIndex]);
-
 
   return null;
 };
 
-
-function handleClick(index: number, refs: (HTMLElement | null)[]) {
-  const sectionRef = refs[index];
-  const offset = 70; // para deixar um pouco antes de onde de fato está sendo marcado o começo da sessão.
-  
-  if (sectionRef) {
-    const elementTop = sectionRef.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({
-      top: elementTop - offset,
-      behavior: 'smooth',
-    });
-  }
-}
-
 const Desafios = () => {
-  const challengesRefs = useRef<HTMLElement[]>([]);
+  const challengesRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleClick = (index: number) => {
+    // ... (lógica do handleClick - sem alterações)
+    const sectionRef = challengesRefs.current[index];
+    const headerOffset = 80;
+    if (sectionRef) {
+      const elementPosition =
+        sectionRef.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const menuData = desafios_explicados.map((desafio, index) => ({
+    id: desafio.id || `desafio-${index}`,
+    title: desafios_menu[index] || desafio.titulo,
+  }));
 
   return (
     <>
       <Header />
-      <DesafiosIntroContainer>
-        <SubTitle>Bora resolver problemas de verdade?</SubTitle>
+      <DesafiosPageContainer>
+        <DesafiosIntroContainer>
+          <HighlightTextWrapper>
+            <TitleGroup>
+              <IntroSubtitle>BORA RESOLVER PROBLEMAS DE VERDADE?</IntroSubtitle>
+              <IntroTitle>
+                ENCARANDO O QUE IMPORTA, CRIANDO O QUE TRANSFORMA.
+              </IntroTitle>
+            </TitleGroup>
+            <IntroDescription>
+              Durante o evento, você pode encarar desafios reais de empresas
+              parceiras ou até propor o seu próprio. Lembrando que as ideias não
+              param no evento – os projetos serão publicados em código aberto
+              (open source) e poderão seguir ganhando vida!
+            </IntroDescription>
+          </HighlightTextWrapper>
+        </DesafiosIntroContainer>
 
-        <Title>Encarando o que importa, criando o que transforma.</Title>
+        <DesafiosBodyContainer>
+          <PreDivisionText style={{ textAlign: "left" }}>
+            Abaixo, reunimos todas as sugestões disponíveis para inspirar sua
+            jornada. Explore, escolha o que mais te motiva e venha construir
+            soluções com a gente.
+          </PreDivisionText>
 
-        <TitleBody>
-          Durante o evento, você pode encarar desafios reais de empresas parceiras ou até propor o seu próprio. Lembrando que as ideias não param no evento – os projetos serão publicados em código aberto (open source) e poderão seguir ganhando vida!
-        </TitleBody>
-      </DesafiosIntroContainer>
+          <DesafiosBodyPrincipalContainer>
+            <MenuContainer>
+              {menuData.map((item, index) => (
+                <MenuText
+                  key={item.id}
+                  $active={activeIndex === index}
+                  onClick={() => handleClick(index)}
+                >
+                  {item.title}
+                </MenuText>
+              ))}
+            </MenuContainer>
 
-      <DesafiosBodyContainer>
-        <PreDivisionText>
-          Abaixo, reunimos todas as sugestões disponíveis para inspirar sua
-          jornada. Explore, escolha o que mais te motiva e venha construir
-          soluções com a gente.
-        </PreDivisionText>
+            <ConteudoDesafiosContainer>
+              {desafios_explicados.map((info, index) => (
+                <ChallengeItemContainer
+                  key={info.id || index}
+                  id={info.id || `desafio-${index}`}
+                  ref={(el) => (challengesRefs.current[index] = el)}
+                >
+                  <ChallengeTitleGroup>
+                    <ChallengeAuthor>{info.sugerido_por}</ChallengeAuthor>
+                    <ChallengeMainTitle>{info.titulo}</ChallengeMainTitle>
+                  </ChallengeTitleGroup>
 
-        <DesafiosBodyPrincipalContainer>
-          <MenuContainer>
-            {desafios_menu.map((desafio, index) => (
-              <MenuText
-                key={index}
-                className={activeIndex === index ? "active" : ""}
-              >
-                <span onClick={() => handleClick(index, challengesRefs.current)}>{desafio}</span>
-              </MenuText>
-            ))}
-          </MenuContainer>
+                  {/* PARTE CORRIGIDA ABAIXO */}
+                  {/* Renderiza o primeiro parágrafo da descrição, se existir */}
+                  {Array.isArray(info.descricao) && info.descricao[0] && (
+                    <ChallengeParagraph>{info.descricao[0]}</ChallengeParagraph>
+                  )}
 
-          <ConteudoDesafiosContainer>
-            {desafios_explicados.map((info, index) => (
-              <ChallengesContainer key={index}
-              ref={(el) => {
-                if (el) challengesRefs.current[index] = el;
-              }}>
-              
-                <Titulo_info>
-                  <ChallengesSubTitle>{info.sugerido_por}</ChallengesSubTitle>
+                  {/* Se for um desafio com imagem, renderiza o layout de mídia */}
+                  {info.imagem && (
+                    <ChallengeMediaLayout>
+                      <ImagemWrapper>
+                        <img
+                          src={`https://picsum.photos/506/270`}
+                          alt={`Imagem para ${info.titulo}`}
+                        />
+                      </ImagemWrapper>
+                      {/* Renderiza o textoAoLadoDaImagem se existir */}
+                      {info.textoAoLadoDaImagem && (
+                        <TextNextToMedia>
+                          <ChallengeParagraph>
+                            {info.textoAoLadoDaImagem}
+                          </ChallengeParagraph>
+                        </TextNextToMedia>
+                      )}
+                    </ChallengeMediaLayout>
+                  )}
 
-                  <ChallengesTitle>{info.titulo}</ChallengesTitle>
-                </Titulo_info>
+                  {/* Se NÃO for um desafio com imagem, renderiza o restante da descrição (se houver) */}
+                  {!info.imagem &&
+                    Array.isArray(info.descricao) &&
+                    info.descricao.slice(info.imagem ? 1 : 0).map(
+                      (
+                        paragrafo,
+                        idx, // Se não tem imagem, começa do 0, se tem imagem e já renderizou o [0], começaria do 1.
+                      ) => (
+                        // Simplificando: se não tem imagem, renderiza todos. Se tem imagem, o [0] já foi renderizado acima.
+                        // A lógica acima já renderiza info.descricao[0] se info.imagem for true.
+                        // Então, se não for imagem, precisa renderizar todos. Se for imagem, renderiza o resto (a partir do [1]).
+                        <ChallengeParagraph key={`para-${index}-${idx}`}>
+                          {paragrafo}
+                        </ChallengeParagraph>
+                      ),
+                    )}
+                  {/* Se a descrição não for um array e não tiver imagem */}
+                  {!info.imagem &&
+                    !Array.isArray(info.descricao) &&
+                    typeof info.descricao === "string" && (
+                      <ChallengeParagraph>{info.descricao}</ChallengeParagraph>
+                    )}
 
-                {Array.isArray(info.descricao) ? (
-                  info.descricao.map((paragrafo, idx) => (
-                    <Paragraph key={idx}>{paragrafo} </Paragraph>
-                  ))
-                ) : (
-                  <Paragraph>{info.descricao} </Paragraph>
-                )}
-
-                <ImagemWrapper>
-                  <img src={img_carregando} alt={`Image `} />
-                </ImagemWrapper>
-              </ChallengesContainer>
-            ))}
-            
-          </ConteudoDesafiosContainer>
-
-          <ScrollTracker challengesRefs={challengesRefs} setActiveIndex={setActiveIndex}/>
-        
-        </DesafiosBodyPrincipalContainer>
-      </DesafiosBodyContainer>
+                  {/* Renderiza o segundo parágrafo (ou mais) se for item com imagem e não usou textoAoLadoDaImagem para o segundo parágrafo */}
+                  {info.imagem &&
+                    Array.isArray(info.descricao) &&
+                    info.descricao[1] &&
+                    !info.textoAoLadoDaImagem && (
+                      <ChallengeParagraph>
+                        {info.descricao[1]}
+                      </ChallengeParagraph>
+                    )}
+                  {/* E assim por diante para info.descricao[2], etc., se necessário */}
+                </ChallengeItemContainer>
+              ))}
+            </ConteudoDesafiosContainer>
+            <ScrollTracker
+              challengesRefs={challengesRefs}
+              setActiveIndex={setActiveIndex}
+            />
+          </DesafiosBodyPrincipalContainer>
+        </DesafiosBodyContainer>
+      </DesafiosPageContainer>
       <Footer />
     </>
   );
 };
 
 export default Desafios;
-

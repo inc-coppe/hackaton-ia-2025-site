@@ -14,6 +14,7 @@ export const HighlightSection = styled.section`
   align-items: center;
   justify-content: center;
   padding: 9.125rem 7.5rem 5rem;
+  margin-top: 4rem;
   gap: 4rem;
   width: 100%;
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
