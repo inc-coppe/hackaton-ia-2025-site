@@ -1,108 +1,148 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
-  MaterialsContainer,
+  PageContainer,
   HighlightSection,
-  TextContainer,
-  Title,
-  Subtitle,
-  Description,
-  MainContent,
+  HighlightTextWrapper,
+  HighlightTitleGroup,
+  HighlightPreamble,
+  HighlightTitle,
+  HighlightDescription,
+  MainContentWrapper,
   IntroText,
-  MaterialsSection,
+  MaterialsLayoutContainer,
   SideMenu,
-  MenuTitle,
-  MenuSelected,
+  MenuLink,
   ContentArea,
-  ChapterSection,
+  ChapterSectionWrapper,
   ChapterTitle,
   ChapterAuthor,
-  ChapterDescription,
-  VideoContainer,
-  SubtitleSection,
-  SubtitleTitle,
-  SubtitleText,
+  ChapterParagraph,
+  VideoPlaceholder,
+  ChapterSubtitleSection,
+  ChapterSubtitleTitle,
 } from "./style";
 
+// Mock de dados para os capítulos/seções
+const materialChapters = [
+  {
+    id: "introducao-ia",
+    menuTitle: "Introdução à IA",
+    chapterTitle: "_TÍTULO DO CAPÍTULO: INTRODUÇÃO À IA",
+    author: "POR [NOME DO CRIADOR DO CONTEÚDO]",
+    description1:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    videoAvailable: true,
+    description2:
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    subsections: [
+      {
+        title: "Subtítulo da Seção 1.1",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      },
+    ],
+  },
+  {
+    id: "fundamentos-ml",
+    menuTitle: "Fundamentos de Machine Learning",
+    chapterTitle: "_TÍTULO DO CAPÍTULO: FUNDAMENTOS DE ML",
+    author: "POR [OUTRO CRIADOR]",
+    description1:
+      "Aprenda os conceitos básicos de Machine Learning, algoritmos e como eles funcionam.",
+    videoAvailable: true,
+    description2: "Mais detalhes e exemplos práticos serão abordados.",
+    subsections: [],
+  },
+  // Adicione mais capítulos aqui conforme necessário
+];
+
 function Materials() {
-  const menuItems = [
-    "Introdução à IA",
-    "Fundamentos de Machine Learning",
-    "Deep Learning",
-    "Processamento de Linguagem Natural",
-    "Visão Computacional",
-    "Ética em IA",
-    "Cases Práticos",
-  ];
+  const [activeChapterId, setActiveChapterId] = useState(
+    materialChapters[0]?.id || "",
+  );
+
+  // Função para rolar para a seção (simples, para demonstração)
+  // Em uma app real, você pode querer carregar conteúdo dinamicamente
+  const handleMenuClick = (chapterId: string) => {
+    setActiveChapterId(chapterId);
+    const element = document.getElementById(chapterId);
+    if (element) {
+      // Considerar a altura do Header fixo se ele estiver sobrepondo
+      const headerOffset = 80; // Ajuste este valor conforme a altura do seu Header
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <>
       <Header />
-      <MaterialsContainer>
+      <PageContainer>
         <HighlightSection>
-          <TextContainer>
-            <Title>
-              <Subtitle>AQUECIMENTO!</Subtitle>
-              TUDO O QUE É PRECISO PARA CHEGAR COM CONFIANÇA.
-            </Title>
-            <Description>
+          <HighlightTextWrapper>
+            <HighlightTitleGroup>
+              <HighlightPreamble>AQUECIMENTO!</HighlightPreamble>
+              <HighlightTitle>
+                TUDO O QUE É PRECISO PARA CHEGAR COM CONFIANÇA.
+              </HighlightTitle>
+            </HighlightTitleGroup>
+            <HighlightDescription>
               Antes do hackathon começar, você tem acesso a uma seleção de
               materiais exclusivos — webinars, trilhas de estudo e guias
               práticos — desenvolvidos com o apoio de [COLOCAR AQUI O NOME DAS
               EMPRESAS], grandes nomes da tecnologia e da pesquisa.
-            </Description>
-          </TextContainer>
+            </HighlightDescription>
+          </HighlightTextWrapper>
         </HighlightSection>
 
-        <MainContent>
-          <IntroText>
+        <MainContentWrapper>
+          <IntroText style={{ textAlign: "left" }}>
             Escolha por onde começar, aprenda no seu ritmo e aproveite cada
             recurso para chegar com mais preparo — e mais inspiração.
           </IntroText>
 
-          <MaterialsSection>
+          <MaterialsLayoutContainer>
             <SideMenu>
-              {menuItems.map((item, index) => (
-                <MenuTitle key={index} active={index === 0}>
-                  {item}
-                </MenuTitle>
+              {materialChapters.map((chapter) => (
+                <MenuLink
+                  key={chapter.id}
+                  $active={chapter.id === activeChapterId}
+                  onClick={() => handleMenuClick(chapter.id)}
+                >
+                  {chapter.menuTitle}
+                </MenuLink>
               ))}
-              <MenuSelected />
             </SideMenu>
 
             <ContentArea>
-              {[1, 2, 3].map((_, index) => (
-                <ChapterSection key={index}>
-                  <ChapterTitle>_TÍTULO DO CAPÍTULO/MÓDULO</ChapterTitle>
-                  <ChapterAuthor>
-                    POR [NOME DO CRIADOR DO CONTEÚDO]
-                  </ChapterAuthor>
-                  <ChapterDescription>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </ChapterDescription>
-                  <VideoContainer />
-                  <ChapterDescription>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </ChapterDescription>
-                  <SubtitleSection>
-                    <SubtitleTitle>Subtítulo</SubtitleTitle>
-                    <SubtitleText>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </SubtitleText>
-                  </SubtitleSection>
-                </ChapterSection>
+              {materialChapters.map((chapter) => (
+                <ChapterSectionWrapper key={chapter.id} id={chapter.id}>
+                  <ChapterTitle>{chapter.chapterTitle}</ChapterTitle>
+                  <ChapterAuthor>{chapter.author}</ChapterAuthor>
+                  <ChapterParagraph>{chapter.description1}</ChapterParagraph>
+                  {chapter.videoAvailable && <VideoPlaceholder />}
+                  {chapter.description2 && (
+                    <ChapterParagraph>{chapter.description2}</ChapterParagraph>
+                  )}
+                  {chapter.subsections?.map((sub, subIndex) => (
+                    <ChapterSubtitleSection key={subIndex}>
+                      <ChapterSubtitleTitle>{sub.title}</ChapterSubtitleTitle>
+                      <ChapterParagraph>{sub.text}</ChapterParagraph>
+                    </ChapterSubtitleSection>
+                  ))}
+                </ChapterSectionWrapper>
               ))}
             </ContentArea>
-          </MaterialsSection>
-        </MainContent>
-      </MaterialsContainer>
+          </MaterialsLayoutContainer>
+        </MainContentWrapper>
+      </PageContainer>
       <Footer />
     </>
   );
