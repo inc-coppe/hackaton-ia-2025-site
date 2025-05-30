@@ -133,6 +133,9 @@ export const MaterialsLayoutContainer = styled.section`
 `;
 
 export const SideMenu = styled.aside`
+  position: sticky; /* o menu deve ficar fixo a 6 rem do topo*/
+  top: 6rem;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
