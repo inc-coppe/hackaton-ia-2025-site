@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {
@@ -16,6 +16,7 @@ import {
   MenuLink,
   ContentArea,
   ChapterSectionWrapper,
+  ChapterTitleWrapper,
   ChapterTitle,
   ChapterAuthor,
   ChapterParagraph,
@@ -57,29 +58,67 @@ const materialChapters = [
   // Adicione mais capítulos aqui conforme necessário
 ];
 
+interface ScrollTrackerProps {
+  MateriaisRefs: React.MutableRefObject<(HTMLElement | null)[]>;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const ScrollTracker: React.FC<ScrollTrackerProps> = ({
+  MateriaisRefs,
+  setActiveIndex,
+}) => {
+  // ... (lógica do ScrollTracker - sem alterações)
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    let currentClosestIndex = 0;
+    let smallestDistance = Infinity;
+
+    MateriaisRefs.current.forEach((ref, index) => {
+      if (ref) {
+        const rect = ref.getBoundingClientRect();
+        const distanceToTop = Math.abs(rect.top - 80);
+
+        if (distanceToTop < smallestDistance) {
+          smallestDistance = distanceToTop;
+          currentClosestIndex = index;
+        }
+      }
+    });
+    setActiveIndex(currentClosestIndex);
+  }, [scrollY, MateriaisRefs, setActiveIndex]);
+
+  return null;
+};
+
 function Materials() {
-  const [activeChapterId, setActiveChapterId] = useState(
-    materialChapters[0]?.id || "",
-  );
+  const MateriaisRefs = useRef<(HTMLElement | null)[]>([]);
+    const [activeIndex, setActiveIndex] = useState(0);
+  
+    const handleClick = (index: number) => {
+      // ... (lógica do handleClick - sem alterações)
+      const sectionRef = MateriaisRefs.current[index];
+      const headerOffset = 80;
+      if (sectionRef) {
+        const elementPosition =
+          sectionRef.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    };
 
-  // Função para rolar para a seção (simples, para demonstração)
-  // Em uma app real, você pode querer carregar conteúdo dinamicamente
-  const handleMenuClick = (chapterId: string) => {
-    setActiveChapterId(chapterId);
-    const element = document.getElementById(chapterId);
-    if (element) {
-      // Considerar a altura do Header fixo se ele estiver sobrepondo
-      const headerOffset = 80; // Ajuste este valor conforme a altura do seu Header
-      const elementPosition =
-        element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+    const menuData = materialChapters.map((material, index) => ({
+      id: material.id || `material-${index}`,
+      title: materialChapters[index] || material.menuTitle,
+  }));
 
   return (
     <>
@@ -110,22 +149,29 @@ function Materials() {
 
           <MaterialsLayoutContainer>
             <SideMenu>
-              {materialChapters.map((chapter) => (
+              {menuData.map((item, index) => (
                 <MenuLink
-                  key={chapter.id}
-                  $active={chapter.id === activeChapterId}
-                  onClick={() => handleMenuClick(chapter.id)}
+                  key={item.id}
+                  $active={activeIndex === index}
+                  onClick={() => handleClick(index)}
                 >
-                  {chapter.menuTitle}
+                  {item.title.menuTitle}
                 </MenuLink>
               ))}
             </SideMenu>
 
             <ContentArea>
-              {materialChapters.map((chapter) => (
-                <ChapterSectionWrapper key={chapter.id} id={chapter.id}>
-                  <ChapterTitle>{chapter.chapterTitle}</ChapterTitle>
-                  <ChapterAuthor>{chapter.author}</ChapterAuthor>
+              {materialChapters.map((chapter, index) => (
+                <ChapterSectionWrapper 
+                  key={chapter.id || index} 
+                  id={chapter.id || `desafio-${index}`}
+                  ref={(el) => (MateriaisRefs.current[index] = el)}
+                  >                                    
+                  <ChapterTitleWrapper>
+                    <ChapterTitle>{chapter.chapterTitle}</ChapterTitle>
+                    <ChapterAuthor>{chapter.author}</ChapterAuthor>
+                  </ChapterTitleWrapper>
+
                   <ChapterParagraph>{chapter.description1}</ChapterParagraph>
                   {chapter.videoAvailable && <VideoPlaceholder />}
                   {chapter.description2 && (
@@ -140,6 +186,11 @@ function Materials() {
                 </ChapterSectionWrapper>
               ))}
             </ContentArea>
+          
+          <ScrollTracker
+              MateriaisRefs={MateriaisRefs}
+              setActiveIndex={setActiveIndex}
+            />
           </MaterialsLayoutContainer>
         </MainContentWrapper>
       </PageContainer>
