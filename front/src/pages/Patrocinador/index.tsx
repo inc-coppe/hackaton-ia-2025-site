@@ -125,7 +125,10 @@ function Sponsor() {
               Ao se tornar patrocinador, sua marca se posiciona ao lado de
               universidades líderes como UFRJ, USP e instituições como a
               Incubadora de Empresas COPPE/UFRJ – participando ativamente da
-              transformação tecnológica no Brasil. Como parceiro, você poderá:
+              transformação tecnológica no Brasil.
+            </AboutDescription>
+            <AboutDescription>
+              Como parceiro, você poderá:
             </AboutDescription>
           </AboutTextContainer>
           <CardsContainer>
@@ -147,7 +150,7 @@ function Sponsor() {
             <CTAWrapper>
               <CTATextContainer>
                 <CTATitle>
-                  PATROCINADORES TÊM ACESSO A BENEFÍCIOS COMO:
+                  PATROCINADORES TÊM ACESSO A UMA SÉRIE DE BENEFÍCIOS!
                 </CTATitle>
                 <CTADescription>
                   Os detalhes sobre níveis e cotas são apresentados ao entrar em

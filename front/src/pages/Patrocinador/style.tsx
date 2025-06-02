@@ -13,7 +13,7 @@ export const HighlightSection = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 9.125rem 7.5rem 5rem;
+  padding: 5rem 7.5rem 5rem;
   margin-top: 4rem;
   gap: 4rem;
   width: 100%;
@@ -21,7 +21,7 @@ export const HighlightSection = styled.section`
 
   @media (max-width: 48rem) {
     padding: 3.75rem 1.5rem;
-    gap: 2.5rem;
+    
   }
 `;
 
@@ -34,8 +34,6 @@ export const HighlightTextContainer = styled.div`
   max-width: 81rem;
 
   @media (max-width: 48rem) {
-    align-items: center;
-    text-align: center;
     gap: 2rem;
   }
 `;
@@ -43,7 +41,7 @@ export const HighlightTextContainer = styled.div`
 export const HighlightTitleGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
   width: 100%;
 `;
 
@@ -57,7 +55,7 @@ export const HighlightPreamble = styled.h2`
 
   @media (max-width: 48rem) {
     font-size: 1rem;
-    line-height: 1.375rem;
+    line-height: 1.375rem; 
   }
 `;
 
@@ -69,9 +67,13 @@ export const HighlightMainTitle = styled.h1`
   color: #ffffff;
   margin: 0;
 
+  width: 70%;
+
   @media (max-width: 48rem) {
     font-size: 2rem;
     line-height: 2.4375rem;
+
+    width: 100%;
   }
 `;
 
@@ -265,9 +267,11 @@ export const CTATextContainer = styled.div`
 
   @media (max-width: 48rem) {
     width: 100%;
-    align-items: center;
-    text-align: center;
     gap: 1rem;
+    white-space: normal;              
+    overflow-wrap: break-word;        
+    word-break: break-word;           
+    
   }
 `;
 
@@ -278,10 +282,12 @@ export const CTATitle = styled.h2`
   line-height: 3.8125rem;
   color: #ffffff;
   margin: 0;
+  padding-bottom: 5rem;
 
   @media (max-width: 48rem) {
     font-size: 2rem;
     line-height: 2.4375rem;
+    padding-bottom: 0;
   }
 `;
 
