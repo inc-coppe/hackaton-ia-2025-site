@@ -71,7 +71,7 @@ export const HighlightTitle = styled.h1`
 export const ContentContainer = styled.main`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left; /* Estava centralizado gernado desalinhamento */
   padding: 5rem 10.5rem 7.5rem;
   gap: 5rem;
   width: 100%;
