@@ -79,7 +79,6 @@ function Login() {
                 onSuccess={handleGoogleSuccess}
                 onError={handleGoogleFailure}
                 theme="filled_white"
-                color="blue"
                 size="large"
                 shape="rectangular"
                 locale="en"
