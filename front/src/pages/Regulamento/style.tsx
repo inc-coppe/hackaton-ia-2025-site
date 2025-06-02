@@ -31,7 +31,7 @@ export const HighlightTextContainer = styled.div`
   align-items: flex-start;
   gap: 0.25rem;
   width: 100%;
-  max-width: 57.25rem;
+  //max-width: 57.25rem;
 
   @media (max-width: 30rem) {
     max-width: 21.375rem;
@@ -73,7 +73,7 @@ export const ContentContainer = styled.main`
   flex-direction: column;
   align-items: left; /* Estava centralizado gernado desalinhamento */
   padding: 5rem 10.5rem 7.5rem;
-  gap: 5rem;
+  gap: 3.5rem;
   width: 100%;
 
   @media (max-width: 48rem) {
@@ -94,7 +94,7 @@ export const IntroParagraph = styled.p`
   line-height: 1.5rem;
   color: #0f0f21;
   width: 100%;
-  max-width: 75rem;
+  //max-width: 75rem;
   margin: 0;
 
   @media (max-width: 30rem) {
@@ -110,7 +110,7 @@ export const ArticleSection = styled.article`
   align-items: flex-start;
   gap: 1.5rem;
   width: 100%;
-  max-width: 75rem;
+  //max-width: 75rem;
 
   @media (max-width: 30rem) {
     max-width: 21.375rem;
@@ -152,10 +152,21 @@ export const ArticleParagraph = styled.p`
   line-height: 1.5rem;
   color: rgba(15, 15, 33, 0.6);
   margin: 0;
-  padding-bottom: 1rem;
+  text-indent: 2em;
 
   @media (max-width: 30rem) {
     font-size: 1rem;
     line-height: 1.25rem;
   }
+`;
+
+export const StyledImage = styled.img`
+  display: block;
+  margin: 0 auto;
+  
+  width: 100%;
+  max-width: 37.5rem;
+  height: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
 `;
