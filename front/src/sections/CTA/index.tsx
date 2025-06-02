@@ -8,8 +8,7 @@ const CTA = () => {
         <Texts>
           <Title>JUNTE-SE A QUEM ESTÁ FAZENDO A DIFERENÇA COM IA.</Title>
           <Body>
-            Inscreva-se e embarque em uma jornada de inovação, conexões reais e
-            soluções que transformam.
+            Venha criar soluções que importam — colaborativas, em código aberto e com potencial de impacto real.
           </Body>
         </Texts>
 

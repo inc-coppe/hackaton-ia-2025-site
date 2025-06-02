@@ -5,17 +5,17 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 3.75rem 6.25rem;
+  padding: 3.75rem 6.25rem 7rem;
   background: linear-gradient(243.99deg, #2e2989 32.82%, #3161e8 100.02%);
   width: 100%;
-  min-height: 100vh;
+  
   gap: 4rem;
 
   @media (max-width: 48rem) {
     /* Breakpoint ajustado para mais consistência */
     flex-direction: column;
     padding: 3.75rem 1.5rem;
-    gap: 2.5rem;
+    gap: 2.5rem;    
     min-height: auto; /* Remove a altura mínima para mobile */
   }
 `;
@@ -128,7 +128,7 @@ export const Button = styled.button`
 
   @media (max-width: 48rem) {
     width: 100%;
-    justify-content: flex-start; /* Alinha o texto do botão à esquerda */
+    justify-content: center; /* Alinha o texto do botão à esquerda */
     padding: 0.5rem 0; /* Ajusta o padding */
   }
 `;

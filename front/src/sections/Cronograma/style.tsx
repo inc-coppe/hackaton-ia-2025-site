@@ -10,10 +10,13 @@ export const Container = styled.div`
   height: 150vh; /* This should be enough to make space for the overlay */
 
   @media (max-width: 28rem) {
-    min-height: 280vh; /* Adjust height for mobile */
+    /* min-height: 280vh;  essa linha fazia com que sempre ocupasse muito mais espaço que o necessário */
+    height: auto;
     justify-content: flex-start;
     padding-top: 3.5rem;
     align-items: stretch;
+
+    padding-bottom: 3.75rem;
   }
 `;
 

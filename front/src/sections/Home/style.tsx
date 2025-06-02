@@ -73,11 +73,13 @@ export const HomePageContainer = styled.div`
   margin-top: 4rem;
 
   @media (max-width: 48rem) {
-    height: 110vh;
+    min-height: 90vh; /*Define como múnimo sendo 90vh mas se for maior ele se ajusta automaticamente */
+    height: auto;
     padding: 0;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+
     top: 0;
   }
 `;
