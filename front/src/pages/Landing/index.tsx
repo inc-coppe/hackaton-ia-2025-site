@@ -7,10 +7,11 @@ import CTA from "../../sections/CTA";
 import Patrocinadores from "../../sections/Patrocinadores";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { Container } from "./style";
 
 const Landing = () => {
   return (
-    <>
+    <Container>
       <Header />
       <HomePage />
       <SobrePage />
@@ -20,7 +21,7 @@ const Landing = () => {
       <CTA />
       <Patrocinadores />
       <Footer />
-    </>
+    </Container>
   );
 };
 

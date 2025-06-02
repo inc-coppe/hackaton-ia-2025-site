@@ -121,53 +121,63 @@ export const Subtitle = styled.p`
 export const GoogleButtonWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0.75rem 1.25rem; // 12px 20px
-  gap: 1rem; // 16px
-  width: 20.125rem; // 322px
-  height: 3rem; // 48px
-  border: 0.125rem solid #3161e8; // 2px
-  border-radius: 0.125rem; // 2px
-  position: relative;
+  padding: 0;
+  width: 322px;
+  height: 48px;
 
   & > div {
-    transform: none !important;
     width: 100% !important;
+    height: 100% !important;
 
     & > div {
-      width: 100% !important;
-      font-family: "Montserrat" !important;
-      font-weight: 700 !important;
-      font-size: 0.9375rem !important; // 15px
-      line-height: 0.9375rem !important; // 15px
-      text-transform: uppercase !important;
-      color: #3161e8 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 16px !important;
+
+      padding: 12px 20px !important;
+      width: 322px !important;
+      height: 48px !important;
+
+      border: 2px solid #3161e8 !important;
+      border-radius: 2px !important;
       background: transparent !important;
-      padding: 0 !important;
-      border: none !important;
       box-shadow: none !important;
 
       & > div {
+        background: none !important;
         padding: 0 !important;
-        background: transparent !important;
+        display: flex !important;
+        align-items: center !important;
 
         & > svg {
-          width: 1.5rem !important; // 24px
-          height: 1.5rem !important; // 24px
-          margin-right: 1rem !important; // 16px
+          width: 24px !important;
+          height: 24px !important;
+          flex: none !important;
+          order: 0 !important;
+          flex-grow: 0 !important;
+          margin: 0 !important;
         }
 
         & > span {
+          width: 242px !important;
+          height: 15px !important;
+
           font-family: "Montserrat" !important;
+          font-style: normal !important;
           font-weight: 700 !important;
-          font-size: 0.9375rem !important; // 15px
-          line-height: 0.9375rem !important; // 15px
+          font-size: 15px !important;
+          line-height: 15px !important;
           text-transform: uppercase !important;
+
           color: #3161e8 !important;
-          width: 15.125rem !important; // 242px
-          height: 0.9375rem !important; // 15px
+          flex: none !important;
+          order: 1 !important;
+          flex-grow: 0 !important;
+          margin: 0 !important;
           padding: 0 !important;
         }
       }
@@ -177,10 +187,6 @@ export const GoogleButtonWrapper = styled.div`
   @media (max-width: 50rem) {
     width: 322px;
     height: 48px;
-    padding: 12px 20px;
-    gap: 16px;
-    border-radius: 2px;
-    border: 2px solid #3161e8;
   }
 `;
 
@@ -219,14 +225,14 @@ export const CustomGoogleButton = styled.button`
   gap: 1rem;
   width: 20.125rem; // 322px
   height: 3rem; // 48px
-  background: transparent;
-  border: 0.125rem solid #3161e8;
+  background: transparent; // Fundo transparente
+  border: 0.125rem solid #3161e8; // Sua borda azul! 🎉
   border-radius: 0.125rem;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(49, 97, 232, 0.05);
+    background: rgba(49, 97, 232, 0.05); // Efeito hover sutil
   }
 `;
 
@@ -239,7 +245,7 @@ export const GoogleIcon = styled.img`
 `;
 
 export const ButtonText = styled.span`
-  width: 15.125rem; // 242px
+  width: auto; // Ajustado para auto para caber o texto dinamicamente
   height: 0.9375rem; // 15px
   font-family: "Montserrat";
   font-style: normal;
@@ -247,7 +253,7 @@ export const ButtonText = styled.span`
   font-size: 0.9375rem; // 15px
   line-height: 0.9375rem; // 15px
   text-transform: uppercase;
-  color: #3161e8;
+  color: #3161e8; // Texto azul
   flex: none;
   order: 1;
   flex-grow: 0;
