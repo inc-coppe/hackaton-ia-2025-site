@@ -94,7 +94,7 @@ export const MainContentWrapper = styled.div`
   gap: 2.5rem; /* Desktop: 40px (entre IntroText e MaterialsLayout) */
 
   @media (max-width: 48rem) {
-    padding: 2.5rem 1.5rem 3.75rem; /* Mobile: 40px 24px 60px */
+    padding: 3.75rem 1.5rem 3.75rem; /* Mobile: 40px 24px 60px */
     gap: 2.5rem; /* Mobile: Adapatado, Figma indica 60px para o container 'Materiais', que inclui este e o próximo */
   }
 `;
@@ -139,23 +139,19 @@ export const SideMenu = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-right: 1.5rem; /* Desktop: 24px (do Menu Figma) */
   gap: 1.5rem; /* Desktop: 24px */
   width: 17.125rem; /* Desktop: 274px */
   border-right: 0.125rem solid #c1d0f8; /* Desktop: 2px */
   flex-shrink: 0;
 
   @media (max-width: 48rem) {
-    width: 100%;
-    border-right: none;
-    border-bottom: 0.125rem solid #c1d0f8;
-    padding-right: 0;
-    padding-bottom: 1.5rem;
-    gap: 1rem;
+    display: none; /* Menu lateral escondido no mobile conforme seu código e Figma */
   }
 `;
 
 export const MenuLink = styled.button<{ $active?: boolean }>`
+  width: 17.125rem;
+  
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 0.9375rem; /* 15px */
@@ -166,8 +162,11 @@ export const MenuLink = styled.button<{ $active?: boolean }>`
   cursor: pointer;
   padding: 0.5rem 0; /* Adiciona padding vertical para melhor clique */
   text-align: left;
-  width: 100%;
   transition: color 0.2s ease;
+
+  border-right: ${({ $active }) =>
+    $active ? "0.125rem solid #3161E8" : "0.125rem solid transparent"};
+  margin-right: -0.125rem;
 
   &:hover {
     color: #3161e8;
@@ -192,6 +191,14 @@ export const ChapterSectionWrapper = styled.article`
   flex-direction: column;
   align-items: flex-start; /* Padrão, vídeo pode ser centralizado se necessário */
   gap: 2rem; /* Desktop & Mobile: 32px */
+  width: 100%;
+`;
+
+export const ChapterTitleWrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Padrão, vídeo pode ser centralizado se necessário */
+  gap: 0.25rem; /* Desktop & Mobile: 32px */
   width: 100%;
 `;
 
@@ -233,6 +240,8 @@ export const VideoPlaceholder = styled.div`
   aspect-ratio: 16 / 9; /* Mantém proporção 16:9 */
   background: #d9d9d9;
   border-radius: 0.5rem; /* 8px */
+
+  margin: 0 auto;
 
   @media (max-width: 48rem) {
     max-width: 100%; /* Mobile: 342px (ocupa toda a largura disponível) */

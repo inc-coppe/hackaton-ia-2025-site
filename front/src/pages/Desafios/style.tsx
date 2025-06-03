@@ -142,14 +142,14 @@ export const MenuContainer = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0.75rem 1.5rem 0.75rem 0; /* Desktop: 12px 24px 12px 0px */
+  padding: 0 0rem 0 0; /* Desktop: 12px 24px 12px 0px */
   gap: 1rem; /* Desktop Figma sugere 24px, mas os itens são próximos. 1rem (16px) pode ser melhor */
   width: 17.125rem; /* Desktop: 274px */
   border-right: 0.125rem solid #c1d0f8; /* Desktop: 2px */
   flex-shrink: 0; /* Impede que o menu encolha */
   align-self: flex-start; /* Garante que comece do topo do flex container */
   max-height: calc(100vh - 8rem); /* Evita que seja maior que a tela */
-  overflow-y: auto;
+  
 
   @media (max-width: 48rem) {
     display: none; /* Menu lateral escondido no mobile conforme seu código e Figma */
@@ -157,6 +157,8 @@ export const MenuContainer = styled.aside`
 `;
 
 export const MenuText = styled.button<{ $active?: boolean }>`
+  width: 17.125rem;
+
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 0.9375rem; /* 15px */
@@ -167,7 +169,6 @@ export const MenuText = styled.button<{ $active?: boolean }>`
   cursor: pointer;
   padding: 0.5rem 0; /* Espaçamento vertical para clique */
   text-align: left;
-  width: 100%;
   transition: color 0.2s ease;
   border-right: ${({ $active }) =>
     $active ? "0.125rem solid #3161E8" : "0.125rem solid transparent"};
