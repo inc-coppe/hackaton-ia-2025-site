@@ -10,11 +10,8 @@ from .views import (
     serve_profile_picture,
     MyUserProfileView,
     UserPublicProfileView,
-    FollowUserView,
-    UnfollowUserView,
-    UserFollowingListView,
-    UserFollowersListView,
     list_profiles,
+    UserSearchView,
 )
 
 urlpatterns = [
@@ -22,15 +19,23 @@ urlpatterns = [
     path("auth/user/", CurrentUserDetailView.as_view(), name="current_user_detail"),
     path("google/login/", google_login, name="google_login_token_exchange"),
     path("auth/google/callback/", google_login_callback, name="google_callback"),
-    path("profile-picture/<int:user_id>/", serve_profile_picture, name="serve_profile_picture"),
+    path(
+        "profile-picture/<int:user_id>/",
+        serve_profile_picture,
+        name="serve_profile_picture",
+    ),
     path("profile/create/", create_profile, name="create_profile"),
     path("profile/me/", MyUserProfileView.as_view(), name="my_user_profile"),
     path("profile/check/", check_profile, name="check_profile"),
-    path("profile/update/", UserProfileUpdateView.as_view(), name="update_profile_tags"),
-    path("users/<int:user_id>/profile/", UserPublicProfileView.as_view(), name="user_public_profile"),
-    path("users/<int:user_id>/follow/", FollowUserView.as_view(), name="follow_user"),
-    path("users/<int:user_id>/unfollow/", UnfollowUserView.as_view(), name="unfollow_user"),
-    path("users/<int:user_id>/following/", UserFollowingListView.as_view(), name="user_following_list"),
-    path("users/<int:user_id>/followers/", UserFollowersListView.as_view(), name="user_followers_list"),
+    path(
+        "profile/update/", UserProfileUpdateView.as_view(), name="update_profile_tags"
+    ),
+    path(
+        "users/<int:user_id>/profile/",
+        UserPublicProfileView.as_view(),
+        name="user_public_profile",
+    ),
+    # Rotas de seguir/deixar de seguir e listagens de seguidores/seguindo foram removidas
     path("admin/profiles/", list_profiles, name="admin_list_profiles"),
+    path("users/search/", UserSearchView.as_view(), name="user_search"),
 ]

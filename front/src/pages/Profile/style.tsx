@@ -404,3 +404,244 @@ export const CancelButton = styled(AddButton)`
     background-color: #e9ecef; /* Um cinza muito claro para hover */
   }
 `;
+
+export const SearchInputContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+`;
+
+export const SearchField = styled.input`
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  flex-grow: 1;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    border-color: #007bff;
+  }
+
+  &::placeholder {
+    color: #a0a0a0;
+  }
+`;
+
+export const SearchButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease-in-out,
+    transform 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+`;
+
+export const UserResultsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+`;
+
+export const UserCard = styled(InfoCard)`
+  // Reutilizando InfoCard para o estilo base
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  text-align: center;
+`;
+
+export const UserAvatar = styled(ProfileImage)`
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+`;
+
+export const UserDisplayName = styled.h3`
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+`;
+
+export const UserDetailText = styled.p`
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+`;
+
+export const UserTagsContainer = styled(TagsContainer)`
+  justify-content: center;
+  margin-top: 0.5rem;
+`;
+
+export const UserTagPill = styled(TagPill)`
+  background-color: #e2f0ff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  cursor: default;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.6rem;
+
+  ${CloseIcon} {
+    display: none; /* Não permite remover tags em perfis de outros usuários */
+  }
+`;
+
+export const FollowButton = styled(AddButton)`
+  // Reutilizando AddButton para o estilo base
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  background-color: ${(props) => (props.isFollowing ? "#dc3545" : "#28a745")};
+
+  &:hover {
+    background-color: ${(props) => (props.isFollowing ? "#c82333" : "#218838")};
+  }
+`;
+
+export const NoResultsMessage = styled.p`
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #e0e0e0;
+`;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContent = styled(InfoCard)`
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-height: 90vh; /* Limita a altura do modal */
+  overflow-y: auto; /* Adiciona scroll se o conteúdo for muito grande */
+`;
+
+export const CloseModalButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #333;
+  }
+`;
+
+export const PublicProfileSocialLink = styled(SocialButton)`
+  margin: 0.5rem;
+  width: auto;
+  min-width: 120px;
+  background-color: #555; /* Cor padrão para links de contato */
+  color: white;
+
+  &:hover {
+    background-color: #333;
+  }
+
+  &.linkedin {
+    background-color: #0077b5;
+    &:hover {
+      background-color: #005f99;
+    }
+  }
+  &.github {
+    background-color: #333;
+    &:hover {
+      background-color: #222;
+    }
+  }
+  &.email {
+    background-color: #d44638;
+    &:hover {
+      background-color: #b3392c;
+    }
+  }
+`;
+
+export const PublicProfileHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
+
+export const PublicProfileInfoSection = styled.div`
+  width: 100%;
+  margin-bottom: 1.5rem;
+  text-align: left;
+`;
+
+export const PublicProfileSectionTitle = styled.h4`
+  font-size: 1.1rem;
+  color: #007bff;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+`;
+
+export const PublicProfileDetail = styled.p`
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+`;

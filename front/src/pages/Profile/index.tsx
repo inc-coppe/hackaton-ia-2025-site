@@ -1,3 +1,4 @@
+// index.tsx
 import React, {
   useEffect,
   useState,
@@ -5,7 +6,14 @@ import React, {
   KeyboardEvent,
   FormEvent,
 } from "react";
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+// Adicionado FaRegUser para ícone de perfil na busca, FaExternalLink para links
+import {
+  FaLinkedin,
+  FaGithub,
+  FaEnvelope,
+  FaSearch,
+  FaExternalLinkAlt,
+} from "react-icons/fa";
 import { IoClose, IoPencil } from "react-icons/io5";
 
 import {
@@ -28,10 +36,6 @@ import {
   TagsContainer,
   TagPill,
   CloseIcon,
-  ConnectionsInfoContainer,
-  ConnectionStat,
-  ConnectionNumber,
-  ConnectionLabel,
   EditButton,
   FormRow,
   FormLabel,
@@ -40,15 +44,36 @@ import {
   FormTextarea,
   ActionButtonsContainer,
   SaveButton,
-  CancelButton,
   FormError,
+  SearchInputContainer,
+  SearchField,
+  SearchButton,
+  UserResultsContainer,
+  UserCard,
+  UserAvatar,
+  UserDisplayName,
+  UserDetailText,
+  UserTagsContainer,
+  UserTagPill,
+  NoResultsMessage,
+  // Novos imports para o modal de perfil público
+  ModalOverlay,
+  ModalContent,
+  CloseModalButton,
+  PublicProfileSocialLink,
+  PublicProfileHeader,
+  PublicProfileInfoSection,
+  PublicProfileSectionTitle,
+  PublicProfileDetail,
 } from "./style";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { FaRegUser } from "react-icons/fa6";
 
+// Definindo a interface para os dados do perfil do USUÁRIO LOGADO
 interface UserProfileData {
   email: string;
-  user_name: string;
+  user_name: string; // Corresponde a 'name' do CustomUser no backend
   user_profile_picture_url: string;
   full_name: string | null;
   birth_date: string | null;
@@ -63,11 +88,24 @@ interface UserProfileData {
   special_needs: string | null;
   motivation: string[];
   accepted_terms: boolean;
-  share_contacts: boolean;
+  share_contacts: boolean; // Importante para controlar a visibilidade do email/telefone
   tags: string[];
-  followers_count: number;
-  following_count: number;
+  followers_count: number; // Mantenha para o perfil próprio, mas será desconsiderado na busca
+  following_count: number; // Mantenha para o perfil próprio, mas será desconsiderado na busca
   form_completed?: boolean;
+}
+
+// Interface para os resultados da busca (UserSearchSerializer)
+interface SearchUserData {
+  user_id: number;
+  user_name: string;
+  full_name: string | null;
+  profile_picture_url: string;
+  area_of_expertise: string | null;
+  tags: string[];
+  linkedin_profile: string | null; // Adicionado
+  github_profile: string | null; // Adicionado
+  email: string | null; // Adicionado, será null se share_contacts for false
 }
 
 const EDUCATION_CHOICES = [
@@ -96,6 +134,16 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchUserData[] | null>(
+    null,
+  );
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+
+  // Estado para controlar o modal de perfil público
+  const [selectedUser, setSelectedUser] = useState<SearchUserData | null>(null);
 
   const fetchUserProfile = async () => {
     const token = localStorage.getItem("access_token");
@@ -130,7 +178,9 @@ function Profile() {
   }, []);
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    e: ChangeChangeEvemChangeEventType<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value, type } = e.target;
 
@@ -163,13 +213,13 @@ function Profile() {
     const token = localStorage.getItem("access_token");
     if (!userProfile || !token) return;
 
-    const profileDataToUpdate: any = {
+    const profileDataToUpdate: Partial<UserProfileData> = {
       ...editableProfile,
       tags,
     };
 
-    // Log data being sent
-    console.log("Data being sent to update profile:", profileDataToUpdate);
+    const user_name_to_send = profileDataToUpdate.user_name;
+    delete profileDataToUpdate.user_name;
 
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
@@ -177,7 +227,9 @@ function Profile() {
     delete profileDataToUpdate.followers_count;
     delete profileDataToUpdate.following_count;
     delete profileDataToUpdate.form_completed;
+    // @ts-ignore
     delete profileDataToUpdate.created_at;
+    // @ts-ignore
     delete profileDataToUpdate.updated_at;
 
     try {
@@ -187,7 +239,10 @@ function Profile() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(profileDataToUpdate),
+        body: JSON.stringify({
+          ...profileDataToUpdate,
+          user_name: user_name_to_send,
+        }),
       });
 
       const responseData = await response.json();
@@ -257,8 +312,9 @@ function Profile() {
   };
 
   const handleAddTag = () => {
-    if (newTag && !tags.includes(newTag)) {
-      const newTagsList = [...tags, newTag];
+    const trimmedTag = newTag.trim();
+    if (trimmedTag && !tags.includes(trimmedTag)) {
+      const newTagsList = [...tags, trimmedTag];
       setNewTag("");
       if (isEditing) {
         setTags(newTagsList);
@@ -293,6 +349,88 @@ function Profile() {
       setFormErrors({});
     }
     setIsEditing(!isEditing);
+  };
+
+  // Funções para a busca de usuários
+  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchUsers = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!searchTerm.trim()) {
+      setSearchResults(null);
+      return;
+    }
+
+    setSearchLoading(true);
+    setSearchError(null);
+    setSearchResults(null);
+
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      setSearchError("Token de acesso não encontrado para realizar a busca.");
+      setSearchLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/users/search/?search=${encodeURIComponent(searchTerm)}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      if (response.ok) {
+        const data: SearchUserData[] = await response.json();
+        setSearchResults(data);
+      } else {
+        const errorData = await response.json();
+        setSearchError(
+          errorData.detail || "Falha ao buscar usuários. Tente novamente.",
+        );
+        setSearchResults([]);
+      }
+    } catch (err) {
+      console.error("Erro na busca de usuários:", err);
+      setSearchError("Ocorreu um erro de rede ao buscar usuários.");
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+
+  // Funções para o modal de perfil público
+  const openUserProfileModal = async (userId: number) => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      alert("Você precisa estar logado para ver perfis.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/users/${userId}/profile/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      if (response.ok) {
+        const data: SearchUserData = await response.json();
+        setSelectedUser(data); // Define o usuário para ser exibido no modal
+      } else {
+        const errorData = await response.json();
+        alert(
+          `Erro ao carregar perfil: ${errorData.detail || "Perfil não encontrado."}`,
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao buscar perfil para modal:", error);
+      alert("Erro de rede ao carregar o perfil.");
+    }
+  };
+
+  const closeUserProfileModal = () => {
+    setSelectedUser(null); // Limpa o usuário selecionado para fechar o modal
   };
 
   if (loading) return <p>Carregando perfil...</p>;
@@ -503,6 +641,18 @@ function Profile() {
                   onChange={handleInputChange}
                 />
               </FormRow>
+              <FormRow>
+                <FormLabel htmlFor="share_contacts">
+                  <input
+                    type="checkbox"
+                    id="share_contacts"
+                    name="share_contacts"
+                    checked={editableProfile.share_contacts || false}
+                    onChange={handleInputChange}
+                  />
+                  Compartilhar contatos (email, telefone) no perfil público
+                </FormLabel>
+              </FormRow>
               <ActionButtonsContainer>
                 <SaveButton type="submit">Salvar Alterações</SaveButton>
               </ActionButtonsContainer>
@@ -547,38 +697,202 @@ function Profile() {
 
               <InfoCard>
                 <TextContent>
-                  <CardTitle>/CONEXÕES</CardTitle>
+                  <CardTitle>/PROCURE USUÁRIOS</CardTitle>
                   <TextBlock>
                     <CardBodyText>
-                      Use esta área para se conectar com outros participantes do
-                      evento.
+                      Encontre outros participantes por nome de usuário, nome
+                      completo, área de especialidade ou tags para expandir sua
+                      rede.
                     </CardBodyText>
                     <CardBodyText secondary>
-                      Você pode visualizar perfis, trocar contatos e construir
-                      sua rede com quem também está nessa jornada de inovação.
+                      Clique no perfil para ver detalhes de contato!
                     </CardBodyText>
                   </TextBlock>
                 </TextContent>
-                <ConnectionsInfoContainer>
-                  <ConnectionStat>
-                    <ConnectionNumber>
-                      {userProfile.following_count}
-                    </ConnectionNumber>
-                    <ConnectionLabel>seguindo</ConnectionLabel>
-                  </ConnectionStat>
-                  <ConnectionStat>
-                    <ConnectionNumber>
-                      {userProfile.followers_count}
-                    </ConnectionNumber>
-                    <ConnectionLabel>seguidores</ConnectionLabel>
-                  </ConnectionStat>
-                </ConnectionsInfoContainer>
+                <form onSubmit={handleSearchUsers} style={{ width: "100%" }}>
+                  <SearchInputContainer>
+                    <SearchField
+                      type="text"
+                      placeholder="Buscar por nome, área ou tags..."
+                      value={searchTerm}
+                      onChange={handleSearchTermChange}
+                    />
+                    <SearchButton type="submit" disabled={searchLoading}>
+                      {searchLoading ? (
+                        "Buscando..."
+                      ) : (
+                        <>
+                          <FaSearch /> Buscar
+                        </>
+                      )}
+                    </SearchButton>
+                  </SearchInputContainer>
+                </form>
+
+                {searchError && <FormError>{searchError}</FormError>}
+
+                {searchResults && searchResults.length > 0 && (
+                  <UserResultsContainer>
+                    {searchResults.map((user) => (
+                      <UserCard
+                        key={user.user_id}
+                        onClick={() => openUserProfileModal(user.user_id)}
+                      >
+                        <UserAvatar
+                          src={user.profile_picture_url || undefined}
+                          alt={`Foto de perfil de ${user.user_name}`}
+                        />
+                        <UserDisplayName>{user.user_name}</UserDisplayName>
+                        {user.full_name && (
+                          <UserDetailText>{user.full_name}</UserDetailText>
+                        )}
+                        {user.area_of_expertise && (
+                          <UserDetailText>
+                            {user.area_of_expertise}
+                          </UserDetailText>
+                        )}
+                        {user.tags && user.tags.length > 0 && (
+                          <UserTagsContainer>
+                            {user.tags.map((tag) => (
+                              <UserTagPill key={tag}>{tag}</UserTagPill>
+                            ))}
+                          </UserTagsContainer>
+                        )}
+                        {/* Removido o botão de seguir */}
+                        <AddButton
+                          style={{ marginTop: "1rem", width: "auto" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openUserProfileModal(user.user_id);
+                          }}
+                        >
+                          <FaRegUser style={{ marginRight: "0.5rem" }} /> Ver
+                          Perfil
+                        </AddButton>
+                      </UserCard>
+                    ))}
+                  </UserResultsContainer>
+                )}
+
+                {searchResults &&
+                  searchResults.length === 0 &&
+                  !searchLoading &&
+                  !searchError && (
+                    <NoResultsMessage>
+                      Nenhum usuário encontrado com o termo de busca "
+                      {searchTerm}".
+                    </NoResultsMessage>
+                  )}
+                {searchResults === null &&
+                  !searchLoading &&
+                  !searchError &&
+                  searchTerm === "" && (
+                    <NoResultsMessage>
+                      Digite algo na barra de busca acima para encontrar
+                      usuários.
+                    </NoResultsMessage>
+                  )}
               </InfoCard>
             </>
           )}
         </PageContent>
       </PerfilContainer>
       <Footer />
+
+      {/* Modal de Perfil Público */}
+      {selectedUser && (
+        <ModalOverlay onClick={closeUserProfileModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <CloseModalButton onClick={closeUserProfileModal}>
+              <IoClose />
+            </CloseModalButton>
+            <PublicProfileHeader>
+              <UserAvatar
+                src={selectedUser.profile_picture_url || undefined}
+                alt={`Foto de perfil de ${selectedUser.user_name}`}
+              />
+              <UserDisplayName>{selectedUser.user_name}</UserDisplayName>
+              {selectedUser.full_name && (
+                <UserDetailText>{selectedUser.full_name}</UserDetailText>
+              )}
+              {selectedUser.area_of_expertise && (
+                <UserDetailText>
+                  {selectedUser.area_of_expertise}
+                </UserDetailText>
+              )}
+            </PublicProfileHeader>
+
+            {selectedUser.tags && selectedUser.tags.length > 0 && (
+              <PublicProfileInfoSection>
+                <PublicProfileSectionTitle>
+                  Tags de Interesse
+                </PublicProfileSectionTitle>
+                <UserTagsContainer>
+                  {selectedUser.tags.map((tag) => (
+                    <UserTagPill key={tag}>{tag}</UserTagPill>
+                  ))}
+                </UserTagsContainer>
+              </PublicProfileInfoSection>
+            )}
+
+            <PublicProfileInfoSection>
+              <PublicProfileSectionTitle>Contatos</PublicProfileSectionTitle>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: "0.8rem",
+                }}
+              >
+                {selectedUser.linkedin_profile && (
+                  <PublicProfileSocialLink
+                    href={selectedUser.linkedin_profile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="linkedin"
+                  >
+                    <FaLinkedin /> LinkedIn{" "}
+                    <FaExternalLinkAlt
+                      size="0.8em"
+                      style={{ marginLeft: "0.3em" }}
+                    />
+                  </PublicProfileSocialLink>
+                )}
+                {selectedUser.github_profile && (
+                  <PublicProfileSocialLink
+                    href={selectedUser.github_profile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="github"
+                  >
+                    <FaGithub /> GitHub{" "}
+                    <FaExternalLinkAlt
+                      size="0.8em"
+                      style={{ marginLeft: "0.3em" }}
+                    />
+                  </PublicProfileSocialLink>
+                )}
+                {selectedUser.email /* Só mostra o email se o backend o enviou */ && (
+                  <PublicProfileSocialLink
+                    href={`mailto:${selectedUser.email}`}
+                    className="email"
+                  >
+                    <FaEnvelope /> Email
+                  </PublicProfileSocialLink>
+                )}
+                {!selectedUser.linkedin_profile &&
+                  !selectedUser.github_profile &&
+                  !selectedUser.email && (
+                    <PublicProfileDetail>
+                      Nenhum contato público disponível.
+                    </PublicProfileDetail>
+                  )}
+              </div>
+            </PublicProfileInfoSection>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </>
   );
 }
