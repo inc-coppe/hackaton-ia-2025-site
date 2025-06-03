@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Img from "../../assets/planejamento dias hackathon 2.png";
+
 import {
   PageWrapper,
   HighlightSection,
@@ -13,6 +15,7 @@ import {
   ArticleTitle,
   ArticleSubtitle,
   ArticleParagraph,
+  StyledImage,
 } from "./style";
 
 const regulamentoData = [
@@ -179,7 +182,8 @@ const Regulamento = () => {
           {regulamentoData.map((info, index) => (
             <ArticleSection key={index}>
               <ArticleTitle>{info.titulo}</ArticleTitle>
-              <ArticleSubtitle>{info.subtitulo}</ArticleSubtitle>
+              {info.subtitulo && <ArticleSubtitle>{info.subtitulo}</ArticleSubtitle>}
+                            
               {Array.isArray(info.body) ? (
                 info.body.map((paragrafo, idx) => (
                   <ArticleParagraph key={idx}>{paragrafo}</ArticleParagraph>
@@ -187,6 +191,9 @@ const Regulamento = () => {
               ) : (
                 <ArticleParagraph>{info.body}</ArticleParagraph>
               )}
+              
+              
+              {index === 6 && <StyledImage src={Img} alt="imagem cronograma"/>}
             </ArticleSection>
           ))}
         </ContentContainer>

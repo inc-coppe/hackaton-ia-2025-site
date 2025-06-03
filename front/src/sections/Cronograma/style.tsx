@@ -7,7 +7,7 @@ export const Container = styled.div`
   background: linear-gradient(58.59deg, #2e2989 41.91%, #53167f 100%);
   justify-content: center;
   position: relative; /* Ensure overlay is positioned relative to this container */
-  height: 150vh; /* This should be enough to make space for the overlay */
+  height: 130vh; /* This should be enough to make space for the overlay */
 
   @media (max-width: 28rem) {
     /* min-height: 280vh;  essa linha fazia com que sempre ocupasse muito mais espaço que o necessário */
