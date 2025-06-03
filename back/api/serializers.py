@@ -23,8 +23,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class BaseUserSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField()
-    followers_count = serializers.SerializerMethodField()
-    following_count = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
@@ -34,8 +32,6 @@ class BaseUserSerializer(serializers.ModelSerializer):
             "name",
             "profile_picture",
             "profile_picture_url",
-            "followers_count",
-            "following_count",
         ]
         read_only_fields = fields
 
@@ -48,12 +44,6 @@ class BaseUserSerializer(serializers.ModelSerializer):
                 f"{request.scheme}://{request.get_host()}/api/profile-picture/{obj.id}/"
             )
         return obj.profile_picture
-
-    def get_followers_count(self, obj):
-        return obj.followers.count()
-
-    def get_following_count(self, obj):
-        return obj.following.count()
 
 
 class UserDetailSerializer(BaseUserSerializer):
@@ -69,7 +59,6 @@ class UserDetailSerializer(BaseUserSerializer):
     area_of_expertise = serializers.CharField(
         source="userprofile.area_of_expertise", read_only=True, allow_null=True
     )
-    is_followed_by_request_user = serializers.SerializerMethodField()
 
     class Meta(BaseUserSerializer.Meta):
         fields = BaseUserSerializer.Meta.fields + [
@@ -77,34 +66,25 @@ class UserDetailSerializer(BaseUserSerializer):
             "github_profile",
             "tags",
             "area_of_expertise",
-            "is_followed_by_request_user",
         ]
         read_only_fields = fields
-
-    def get_is_followed_by_request_user(self, obj):
-        request_obj = self.context.get("request", None)
-        if request_obj and hasattr(request_obj, "user") and request_obj.user:
-            if getattr(request_obj.user, "is_authenticated", False):
-                return obj.followers.filter(id=request_obj.user.id).exists()
-        return False
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source="user.email", read_only=True)
-    # Removido 'user_name' da lista de campos para entrada,
-    # pois é um campo derivado do User e não deve ser enviado diretamente na criação do perfil.
-    # Será adicionado de volta em to_representation para fins de saída.
     user_profile_picture_url = serializers.SerializerMethodField(read_only=True)
     education_level_display = serializers.CharField(
         source="get_education_level_display", read_only=True
     )
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
+    user_name = serializers.CharField(source="user.name", read_only=True)
 
     class Meta:
         model = UserProfile
         fields = [
             "email",
+            "user_name",
             "user_profile_picture_url",
             "full_name",
             "birth_date",
@@ -136,6 +116,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "education_level_display",
             "followers_count",
             "following_count",
+            "user_name",
         ]
 
     def get_user_profile_picture_url(self, obj):
@@ -154,18 +135,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return obj.user.following.count()
 
     def validate_full_name(self, value):
+        if self.partial and value is None:
+            return self.instance.full_name
         if value is not None and len(value.strip()) < 2:
             raise serializers.ValidationError("O nome completo é muito curto.")
         return value.strip() if value else None
 
-    # O campo 'user_name' não é um campo direto no UserProfile,
-    # então a validação para ele não é necessária aqui.
-    # def validate_user_name(self, value):
-    #     if not value or not value.strip():
-    #         raise serializers.ValidationError("Nome de usuário é obrigatório.")
-    #     return value.strip()
-
     def validate_accepted_terms(self, value):
+        if self.partial and value is None:
+            return self.instance.accepted_terms
         if not value:
             raise serializers.ValidationError(
                 "Você deve aceitar os termos para continuar."
@@ -173,6 +151,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_motivation(self, value):
+        if self.partial and value is None:
+            return self.instance.motivation
         if not isinstance(value, list) or not value:
             raise serializers.ValidationError(
                 "A motivação é obrigatória e deve ser uma lista."
@@ -186,6 +166,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_birth_date(self, value):
+        if self.partial and value is None:
+            return self.instance.birth_date
         if value is None:
             raise serializers.ValidationError("Data de nascimento é obrigatória.")
         if value > timezone.now().date():
@@ -200,6 +182,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_institution(self, value):
+        if self.partial and value is None:
+            return self.instance.institution
         if value is None or not value.strip():
             raise serializers.ValidationError("Instituição é obrigatória.")
         value = value.strip()
@@ -210,6 +194,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_area_of_expertise(self, value):
+        if self.partial and value is None:
+            return self.instance.area_of_expertise
         if value is None or not value.strip():
             raise serializers.ValidationError("Área de especialidade é obrigatória.")
         value = value.strip()
@@ -220,6 +206,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_education_level(self, value):
+        if self.partial and value is None:
+            return self.instance.education_level
         if value is None or not value.strip():
             raise serializers.ValidationError("Nível de escolaridade é obrigatório.")
         valid_choices = [choice[0] for choice in UserProfile.EDUCATION_CHOICES]
@@ -274,72 +262,61 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        # A validação `is_creating` não é estritamente necessária aqui se a view já impede a criação duplicada
-        # mas mantém a consistência das validações de campo obrigatórias para criação.
         errors = {}
 
-        if not data.get("accepted_terms", False):
+        if not self.instance:
+            if not data.get("accepted_terms", False):
+                errors["accepted_terms"] = "Você deve aceitar os termos para continuar."
+        elif "accepted_terms" in data and not data["accepted_terms"]:
             errors["accepted_terms"] = "Você deve aceitar os termos para continuar."
 
-        required_fields_map = {
-            "full_name": "Nome completo",
-            "birth_date": "Data de nascimento",
-            "education_level": "Nível de escolaridade",
-            "institution": "Instituição",
-            "area_of_expertise": "Área de especialidade",
-            "motivation": "Motivação",
-        }
-        for field_name, display_name in required_fields_map.items():
-            field_value = data.get(field_name)
-            is_empty_list = isinstance(field_value, list) and not field_value
-            is_empty_string = isinstance(field_value, str) and not field_value.strip()
-            is_none = field_value is None
-
-            if is_none or is_empty_string or is_empty_list:
-                errors[field_name] = (
-                    f"{display_name} é obrigatório(a) e não pode estar vazio(a)."
+        if not self.instance:
+            required_fields_map_for_creation = {
+                "full_name": "Nome completo",
+                "birth_date": "Data de nascimento",
+                "education_level": "Nível de escolaridade",
+                "institution": "Instituição",
+                "area_of_expertise": "Área de especialidade",
+                "motivation": "Motivação",
+            }
+            for field_name, display_name in required_fields_map_for_creation.items():
+                field_value = data.get(field_name)
+                is_empty_list = isinstance(field_value, list) and not field_value
+                is_empty_string = (
+                    isinstance(field_value, str) and not field_value.strip()
                 )
+                is_none = field_value is None
+
+                if is_none or is_empty_string or is_empty_list:
+                    errors[field_name] = (
+                        f"{display_name} é obrigatório(a) e não pode estar vazio(a)."
+                    )
 
         if errors:
             raise serializers.ValidationError(errors)
         return data
 
     def create(self, validated_data):
-        # A view 'create_profile' já passa 'user=request.user' para serializer.save().
-        # O método .create() do serializador automaticamente recebe o usuário via **kwargs.
-        user = validated_data.pop("user", None)  # Remove 'user' de validated_data
+        user = validated_data.pop("user", None)
 
         if not user:
-            # Isso deve ser tratado pela permissão IsAuthenticated, mas é uma segurança extra.
             raise serializers.ValidationError(
                 {"detail": "User not provided for profile creation."}
             )
 
-        # Verifique se um perfil já existe para este usuário
         if UserProfile.objects.filter(user=user).exists():
             raise serializers.ValidationError(
                 {"detail": "Profile already exists for this user."}
             )
 
-        # Cria o UserProfile associando-o ao usuário
         user_profile = UserProfile.objects.create(user=user, **validated_data)
-        user_profile.form_completed = (
-            True  # Garante que o form_completed seja True na criação
-        )
-        user_profile.save()  # Salva explicitamente para garantir o form_completed
+        user_profile.form_completed = True
+        user_profile.save()
         return user_profile
 
     def update(self, instance, validated_data):
-        # Atualização do nome do usuário associado
-        user_name = validated_data.pop(
-            "user_name", None
-        )  # Pega o user_name se presente na entrada
-        if user_name:
-            user = instance.user
-            user.name = user_name
-            user.save(update_fields=["name"])
+        validated_data.pop("user_name", None)
 
-        # Atualiza os campos do perfil
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
@@ -351,7 +328,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        # Adiciona 'user_name' de volta aqui para representação (saída)
         ret["user_name"] = instance.user.name
         if instance.birth_date and ret.get("birth_date"):
             ret["birth_date"] = instance.birth_date.strftime("%Y-%m-%d")
@@ -371,32 +347,28 @@ class UserProfileTagsUpdateSerializer(serializers.ModelSerializer):
         return value
 
 
-class PublicUserProfileSerializer(serializers.ModelSerializer):
+class UserSearchSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(source="user.id", read_only=True)
-    name = serializers.CharField(source="user.name", read_only=True)
+    user_name = serializers.CharField(source="user.name", read_only=True)
     profile_picture_url = serializers.SerializerMethodField(read_only=True)
-    followers_count = serializers.SerializerMethodField()
-    following_count = serializers.SerializerMethodField()
-    is_followed_by_request_user = serializers.SerializerMethodField()
-    education_level_display = serializers.CharField(
-        source="get_education_level_display", read_only=True
-    )
+
+    # Corrigido: Removido 'source' redundante
+    linkedin_profile = serializers.URLField(read_only=True, allow_null=True)
+    github_profile = serializers.URLField(read_only=True, allow_null=True)
+    email = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
         fields = [
             "user_id",
-            "name",
+            "user_name",
             "profile_picture_url",
             "full_name",
-            "linkedin_profile",
-            "github_profile",
             "area_of_expertise",
             "tags",
-            "education_level_display",
-            "followers_count",
-            "following_count",
-            "is_followed_by_request_user",
+            "linkedin_profile",
+            "github_profile",
+            "email",
         ]
         read_only_fields = fields
 
@@ -409,15 +381,7 @@ class PublicUserProfileSerializer(serializers.ModelSerializer):
             return f"{request.scheme}://{request.get_host()}/api/profile-picture/{user.id}/"
         return user.profile_picture
 
-    def get_followers_count(self, obj):
-        return obj.user.followers.count()
-
-    def get_following_count(self, obj):
-        return obj.user.following.count()
-
-    def get_is_followed_by_request_user(self, obj):
-        request_obj = self.context.get("request", None)
-        if request_obj and hasattr(request_obj, "user") and request_obj.user:
-            if getattr(request_obj.user, "is_authenticated", False):
-                return obj.user.followers.filter(id=request_obj.user.id).exists()
-        return False
+    def get_email(self, obj):
+        if obj.share_contacts:
+            return obj.user.email
+        return None

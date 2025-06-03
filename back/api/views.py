@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from rest_framework import status, generics, views as drf_views
+from rest_framework import status, generics, views as drf_views, filters
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -16,7 +16,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_auth_requests
-from allauth.socialaccount.models import SocialToken, SocialAccount
 import requests as ext_requests
 from .models import CustomUser, UserProfile
 from .serializers import (
@@ -24,8 +23,8 @@ from .serializers import (
     UserDetailSerializer,
     UserProfileSerializer,
     UserProfileTagsUpdateSerializer,
-    PublicUserProfileSerializer,
     BaseUserSerializer,
+    UserSearchSerializer,  # Importa UserSearchSerializer
 )
 
 logger = logging.getLogger(__name__)
@@ -58,9 +57,6 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
         if created:
-            # Ao criar o perfil, atribua o full_name ao nome do usuário, se disponível
-            # Ou, se o user já tiver um nome, use-o como default.
-            # O full_name é o campo do perfil, o name é o campo do usuário.
             profile.full_name = self.request.user.name if self.request.user.name else ""
             profile.save()
         return profile
@@ -70,21 +66,13 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
 
     def perform_update(self, serializer):
         try:
-            # O 'user_name' foi adicionado como um campo de representação no serializador
-            # para fins de saída. Para atualizar o nome do usuário, você precisa
-            # lidar com isso separadamente, pois 'user_name' não é um campo direto no UserProfile.
-            # O frontend deve enviar 'name' se for para atualizar o nome do CustomUser.
-            # Se o frontend está enviando 'user_name', ele deve ser mapeado para 'name' do User.
-
-            # Se o frontend está enviando 'user_name' para atualizar o nome do CustomUser:
             user_name_from_data = self.request.data.get("user_name")
-            if user_name_from_data is not None:  # Verifica se o campo foi enviado
+            if user_name_from_data is not None:
                 user = self.request.user
-                if user.name != user_name_from_data:  # Evita salvar desnecessariamente
+                if user.name != user_name_from_data:
                     user.name = user_name_from_data
                     user.save(update_fields=["name"])
 
-            # Salva o perfil. O serializador já lidará com os campos do UserProfile.
             serializer.save()
 
         except Exception as e:
@@ -95,20 +83,15 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
         partial = kwargs.pop("partial", False)
         instance = self.get_object()
 
-        # Cria serializer com os dados da requisição
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
 
-        # Valida serializador
         serializer.is_valid(raise_exception=True)
 
-        # Realiza a atualização
         self.perform_update(serializer)
 
-        # Obtém a instância fresca (atualizada)
         instance.refresh_from_db()
         instance.user.refresh_from_db()
 
-        # Retorna os dados atualizados
         return Response(self.get_serializer(instance).data)
 
     def partial_update(self, request, *args, **kwargs):
@@ -119,13 +102,19 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
 @login_required
 def google_login_callback(request):
     user = request.user
-    social_account = SocialAccount.objects.filter(user=user, provider="google").first()
-    if not social_account:
-        return redirect(
-            os.getenv("FRONTEND_URL", "http://localhost:5173")
-            + "/login/callback/?error=NoSocialAccount"
-        )
     try:
+        # Assumindo que allauth.socialaccount.models.SocialToken e SocialAccount ainda são usados para Google Login
+        # Se você removeu allauth, esta seção pode precisar de ajuste.
+        from allauth.socialaccount.models import SocialToken, SocialAccount
+
+        social_account = SocialAccount.objects.filter(
+            user=user, provider="google"
+        ).first()
+        if not social_account:
+            return redirect(
+                os.getenv("FRONTEND_URL", "http://localhost:5173")
+                + "/login/callback/?error=NoSocialAccount"
+            )
         token = SocialToken.objects.get(account=social_account)
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
@@ -137,11 +126,6 @@ def google_login_callback(request):
         return redirect(
             os.getenv("FRONTEND_URL", "http://localhost:5173")
             + f"/login/callback/?access_token={access_token}&refresh_token={str(refresh)}"
-        )
-    except SocialToken.DoesNotExist:
-        return redirect(
-            os.getenv("FRONTEND_URL", "http://localhost:5173")
-            + "/login/callback/?error=NoGoogleToken"
         )
     except Exception as e:
         logger.error(f"Error in google_login_callback: {str(e)}")
@@ -272,19 +256,12 @@ def create_profile(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    # Adicionamos o usuário ao contexto do serializador.
-    # Isso permite que o método create do serializador acesse request.user.
     serializer = UserProfileSerializer(
         data=request.data, context={"request": request, "user": request.user}
     )
 
     if serializer.is_valid():
-        # O user agora é passado para o .create() do serializador via validated_data
-        # ou pode ser acessado via self.context no serializador.
-        # Estamos passando explicitamente o 'user' para que o serializador o utilize.
-        serializer.save(
-            user=request.user
-        )  # Já está definido form_completed=True no serializer.create
+        serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -319,86 +296,10 @@ class UserProfileUpdateView(generics.UpdateAPIView):
 
 class UserPublicProfileView(generics.RetrieveAPIView):
     queryset = UserProfile.objects.select_related("user").all()
-    serializer_class = PublicUserProfileSerializer
+    serializer_class = UserSearchSerializer  # Confirmado: Usando UserSearchSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = "user__id"
     lookup_url_kwarg = "user_id"
-
-    def get_serializer_context(self):
-        return {"request": self.request}
-
-
-class FollowUserView(drf_views.APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
-
-    def post(self, request, user_id):
-        user_to_follow = get_object_or_404(User, id=user_id)
-        current_user = request.user
-
-        if current_user == user_to_follow:
-            return Response(
-                {"detail": "You cannot follow yourself."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        if current_user.following.filter(id=user_to_follow.id).exists():
-            return Response(
-                {"detail": "You are already following this user."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        current_user.following.add(user_to_follow)
-        return Response(
-            {"detail": f"You are now following {user_to_follow.name}."},
-            status=status.HTTP_200_OK,
-        )
-
-
-class UnfollowUserView(drf_views.APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
-
-    def post(self, request, user_id):
-        user_to_unfollow = get_object_or_404(User, id=user_id)
-        current_user = request.user
-
-        if not current_user.following.filter(id=user_to_unfollow.id).exists():
-            return Response(
-                {"detail": "You are not following this user."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        current_user.following.remove(user_to_unfollow)
-        return Response(
-            {"detail": f"You have unfollowed {user_to_unfollow.name}."},
-            status=status.HTTP_200_OK,
-        )
-
-
-class UserFollowingListView(generics.ListAPIView):
-    serializer_class = BaseUserSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
-
-    def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        user = get_object_or_404(User, id=user_id)
-        return user.following.all()
-
-    def get_serializer_context(self):
-        return {"request": self.request}
-
-
-class UserFollowersListView(generics.ListAPIView):
-    serializer_class = BaseUserSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
-
-    def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        user = get_object_or_404(User, id=user_id)
-        return user.followers.all()
 
     def get_serializer_context(self):
         return {"request": self.request}
@@ -412,3 +313,16 @@ def list_profiles(request):
         profiles, many=True, context={"request": request}
     )
     return Response(serializer.data)
+
+
+class UserSearchView(generics.ListAPIView):
+    queryset = UserProfile.objects.select_related("user").all()
+    serializer_class = UserSearchSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    filter_backends = [filters.SearchFilter]
+
+    search_fields = ["user__name", "full_name", "tags", "area_of_expertise"]
+
+    def get_serializer_context(self):
+        return {"request": self.request}
