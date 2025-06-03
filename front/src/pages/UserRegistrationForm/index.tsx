@@ -119,6 +119,7 @@ const UserRegistrationForm: React.FC = () => {
           },
           body: JSON.stringify({
             ...values,
+            // Certifique-se de que a data está no formato 'YYYY-MM-DD' para o backend
             birth_date: dayjs(values.birth_date).format("YYYY-MM-DD"),
           }),
         },
@@ -130,7 +131,13 @@ const UserRegistrationForm: React.FC = () => {
         showDiscordModal();
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.detail || "Erro ao criar perfil");
+        // Exibe mensagens de erro detalhadas do backend, se houver
+        const errorMessage = errorData.detail
+          ? errorData.detail
+          : typeof errorData === "object"
+            ? Object.values(errorData).flat().join(", ")
+            : "Erro ao criar perfil. Tente novamente.";
+        throw new Error(errorMessage);
       }
     } catch (error) {
       message.error(
@@ -290,7 +297,7 @@ const UserRegistrationForm: React.FC = () => {
               },
             ]}
           >
-            <Input placeholder="(99) 99999-9999" />
+            <Input placeholder="21999999999" />
           </Form.Item>
 
           <Form.Item

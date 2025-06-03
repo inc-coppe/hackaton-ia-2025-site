@@ -58,7 +58,10 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
         if created:
-            profile.full_name = self.request.user.name
+            # Ao criar o perfil, atribua o full_name ao nome do usuário, se disponível
+            # Ou, se o user já tiver um nome, use-o como default.
+            # O full_name é o campo do perfil, o name é o campo do usuário.
+            profile.full_name = self.request.user.name if self.request.user.name else ""
             profile.save()
         return profile
 
@@ -67,16 +70,21 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
 
     def perform_update(self, serializer):
         try:
-            # Get the user_name from request data
-            user_name = self.request.data.get("user_name")
+            # O 'user_name' foi adicionado como um campo de representação no serializador
+            # para fins de saída. Para atualizar o nome do usuário, você precisa
+            # lidar com isso separadamente, pois 'user_name' não é um campo direto no UserProfile.
+            # O frontend deve enviar 'name' se for para atualizar o nome do CustomUser.
+            # Se o frontend está enviando 'user_name', ele deve ser mapeado para 'name' do User.
 
-            if user_name:
-                # Update user name directly
+            # Se o frontend está enviando 'user_name' para atualizar o nome do CustomUser:
+            user_name_from_data = self.request.data.get("user_name")
+            if user_name_from_data is not None:  # Verifica se o campo foi enviado
                 user = self.request.user
-                user.name = user_name
-                user.save(update_fields=["name"])
+                if user.name != user_name_from_data:  # Evita salvar desnecessariamente
+                    user.name = user_name_from_data
+                    user.save(update_fields=["name"])
 
-            # Save the profile
+            # Salva o perfil. O serializador já lidará com os campos do UserProfile.
             serializer.save()
 
         except Exception as e:
@@ -87,20 +95,20 @@ class MyUserProfileView(generics.RetrieveUpdateAPIView):
         partial = kwargs.pop("partial", False)
         instance = self.get_object()
 
-        # Create serializer with request data
+        # Cria serializer com os dados da requisição
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
 
-        # Validate serializer
+        # Valida serializador
         serializer.is_valid(raise_exception=True)
 
-        # Perform update
+        # Realiza a atualização
         self.perform_update(serializer)
 
-        # Get fresh instance
+        # Obtém a instância fresca (atualizada)
         instance.refresh_from_db()
         instance.user.refresh_from_db()
 
-        # Return updated data
+        # Retorna os dados atualizados
         return Response(self.get_serializer(instance).data)
 
     def partial_update(self, request, *args, **kwargs):
@@ -263,9 +271,20 @@ def create_profile(request):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
-    serializer = UserProfileSerializer(data=request.data, context={"request": request})
+
+    # Adicionamos o usuário ao contexto do serializador.
+    # Isso permite que o método create do serializador acesse request.user.
+    serializer = UserProfileSerializer(
+        data=request.data, context={"request": request, "user": request.user}
+    )
+
     if serializer.is_valid():
-        serializer.save(user=request.user, form_completed=True)
+        # O user agora é passado para o .create() do serializador via validated_data
+        # ou pode ser acessado via self.context no serializador.
+        # Estamos passando explicitamente o 'user' para que o serializador o utilize.
+        serializer.save(
+            user=request.user
+        )  # Já está definido form_completed=True no serializer.create
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
