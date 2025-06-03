@@ -91,7 +91,7 @@ class UserDetailSerializer(BaseUserSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source="user.email", read_only=True)
-    user_name = serializers.CharField(source="user.name", required=False)
+    user_name = serializers.CharField(source="user.name")
     user_profile_picture_url = serializers.SerializerMethodField(read_only=True)
     education_level_display = serializers.CharField(
         source="get_education_level_display", read_only=True
@@ -158,15 +158,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value.strip() if value else None
 
     def validate_user_name(self, value):
-        if value is not None and len(value.strip()) < 2:
-            raise serializers.ValidationError(
-                "O nome de usuário (exibição) é muito curto."
-            )
-        if value is not None and len(value.strip()) > 150:
-            raise serializers.ValidationError(
-                "O nome de usuário (exibição) é muito longo."
-            )
-        return value.strip() if value else None
+        if not value or not value.strip():
+            raise serializers.ValidationError("Nome de usuário é obrigatório.")
+        return value.strip()
 
     def validate_accepted_terms(self, value):
         if not value:
@@ -315,51 +309,27 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return user_profile
 
     def update(self, instance, validated_data):
-        custom_user = instance.user
-        user_name_updated_successfully = False
+        user_data = validated_data.pop("user", None)
+        if user_data and isinstance(user_data, dict):
+            user = instance.user
+            if "name" in user_data:
+                user.name = user_data["name"]
+                user.save(update_fields=["name"])
 
-        if "user_name" in validated_data:
-            new_user_name_value = validated_data.pop("user_name")
-            if custom_user.name != new_user_name_value:
-                custom_user.name = new_user_name_value
-                try:
-                    custom_user.save(update_fields=["name"])
-                    reloaded_user = CustomUser.objects.get(pk=custom_user.pk)
-                    if reloaded_user.name == new_user_name_value:
-                        user_name_updated_successfully = True
-                        instance.user = reloaded_user  # Garante que a instância do perfil use o usuário atualizado
-                except Exception:
-                    pass  # Idealmente, logar erro aqui
+        # Update the profile fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
 
-        profile_fields_actually_changed = False
-        for field_name, value in validated_data.items():
-            if hasattr(instance, field_name) and field_name != "user":
-                if getattr(instance, field_name) != value:
-                    setattr(instance, field_name, value)
-                    profile_fields_actually_changed = True
-
-        original_form_completed_status = instance.form_completed
-        if profile_fields_actually_changed or (
-            user_name_updated_successfully and not instance.form_completed
-        ):
-            instance.form_completed = True
-
-        if (
-            profile_fields_actually_changed
-            or instance.form_completed != original_form_completed_status
-        ):
-            instance.save()
-        elif (
-            user_name_updated_successfully
-            and not profile_fields_actually_changed
-            and instance.form_completed == original_form_completed_status
-        ):
-            pass  # UserProfile não precisou ser salvo novamente se apenas user_name mudou e form_completed já estava ok
+        instance.refresh_from_db()
+        instance.user.refresh_from_db()
 
         return instance
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
+        # Ensure we're getting the latest user name
+        ret["user_name"] = instance.user.name
         if instance.birth_date and ret.get("birth_date"):
             ret["birth_date"] = instance.birth_date.strftime("%Y-%m-%d")
         return ret

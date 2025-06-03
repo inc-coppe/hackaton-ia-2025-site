@@ -168,6 +168,9 @@ function Profile() {
       tags,
     };
 
+    // Log data being sent
+    console.log("Data being sent to update profile:", profileDataToUpdate);
+
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
     delete profileDataToUpdate.education_level_display;
@@ -186,8 +189,12 @@ function Profile() {
         },
         body: JSON.stringify(profileDataToUpdate),
       });
+
+      const responseData = await response.json();
+      console.log("Response from profile update:", responseData);
+
       if (response.ok) {
-        const updatedData: UserProfileData = await response.json();
+        const updatedData: UserProfileData = responseData;
         setUserProfile(updatedData);
         setEditableProfile({ ...updatedData });
         setTags(updatedData.tags || []);
@@ -195,20 +202,21 @@ function Profile() {
         setFormErrors({});
         alert("Perfil atualizado com sucesso!");
       } else {
-        const errorData = await response.json();
-        if (errorData && typeof errorData === "object") {
+        if (responseData && typeof responseData === "object") {
           const backendErrors: Record<string, string> = {};
-          for (const key in errorData) {
-            if (Array.isArray(errorData[key])) {
-              backendErrors[key] = errorData[key].join(" ");
+          for (const key in responseData) {
+            if (Array.isArray(responseData[key])) {
+              backendErrors[key] = responseData[key].join(" ");
             } else {
-              backendErrors[key] = String(errorData[key]);
+              backendErrors[key] = String(responseData[key]);
             }
           }
           setFormErrors(backendErrors);
         }
         alert(
-          `Falha ao atualizar o perfil: ${errorData.detail || JSON.stringify(errorData)}`,
+          `Falha ao atualizar o perfil: ${
+            responseData.detail || JSON.stringify(responseData)
+          }`,
         );
       }
     } catch (error) {
@@ -303,7 +311,9 @@ function Profile() {
             alt={`Foto de perfil de ${displayProfile.user_name}`}
           />
           <TitleContainer>
-            <UserName>{displayProfile.user_name}</UserName>
+            <UserName>
+              {displayProfile.user_name || userProfile.user_name}
+            </UserName>
             <ButtonsContainer>
               {isEditing ? (
                 <EditButton onClick={toggleEditMode}>
