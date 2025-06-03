@@ -91,7 +91,9 @@ class UserDetailSerializer(BaseUserSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source="user.email", read_only=True)
-    user_name = serializers.CharField(source="user.name")
+    # Removido 'user_name' da lista de campos para entrada,
+    # pois é um campo derivado do User e não deve ser enviado diretamente na criação do perfil.
+    # Será adicionado de volta em to_representation para fins de saída.
     user_profile_picture_url = serializers.SerializerMethodField(read_only=True)
     education_level_display = serializers.CharField(
         source="get_education_level_display", read_only=True
@@ -103,7 +105,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = [
             "email",
-            "user_name",
             "user_profile_picture_url",
             "full_name",
             "birth_date",
@@ -157,10 +158,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("O nome completo é muito curto.")
         return value.strip() if value else None
 
-    def validate_user_name(self, value):
-        if not value or not value.strip():
-            raise serializers.ValidationError("Nome de usuário é obrigatório.")
-        return value.strip()
+    # O campo 'user_name' não é um campo direto no UserProfile,
+    # então a validação para ele não é necessária aqui.
+    # def validate_user_name(self, value):
+    #     if not value or not value.strip():
+    #         raise serializers.ValidationError("Nome de usuário é obrigatório.")
+    #     return value.strip()
 
     def validate_accepted_terms(self, value):
         if not value:
@@ -244,7 +247,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             value = value.strip()
             if value.endswith("/"):
                 value = value[:-1]
-            if not re.match(r"^https?://(?:www\.)?linkedin\.com/in/[\w.-]+/?$", value):
+            if not re.match(
+                r"^https?:\/\/(?:www\.)?linkedin\.com/in/[\w.-]+/?$", value
+            ):
                 raise serializers.ValidationError(
                     "URL do LinkedIn inválida. Deve ser como 'https://linkedin.com/in/username'."
                 )
@@ -269,54 +274,72 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        is_creating = not self.instance
+        # A validação `is_creating` não é estritamente necessária aqui se a view já impede a criação duplicada
+        # mas mantém a consistência das validações de campo obrigatórias para criação.
         errors = {}
 
-        if is_creating:
-            if not data.get("accepted_terms", False):
-                errors["accepted_terms"] = "Você deve aceitar os termos para continuar."
+        if not data.get("accepted_terms", False):
+            errors["accepted_terms"] = "Você deve aceitar os termos para continuar."
 
-            required_fields_map = {
-                "full_name": "Nome completo",
-                "birth_date": "Data de nascimento",
-                "education_level": "Nível de escolaridade",
-                "institution": "Instituição",
-                "area_of_expertise": "Área de especialidade",
-                "motivation": "Motivação",
-            }
-            for field_name, display_name in required_fields_map.items():
-                field_value = data.get(field_name)
-                is_empty_list = isinstance(field_value, list) and not field_value
-                is_empty_string = (
-                    isinstance(field_value, str) and not field_value.strip()
+        required_fields_map = {
+            "full_name": "Nome completo",
+            "birth_date": "Data de nascimento",
+            "education_level": "Nível de escolaridade",
+            "institution": "Instituição",
+            "area_of_expertise": "Área de especialidade",
+            "motivation": "Motivação",
+        }
+        for field_name, display_name in required_fields_map.items():
+            field_value = data.get(field_name)
+            is_empty_list = isinstance(field_value, list) and not field_value
+            is_empty_string = isinstance(field_value, str) and not field_value.strip()
+            is_none = field_value is None
+
+            if is_none or is_empty_string or is_empty_list:
+                errors[field_name] = (
+                    f"{display_name} é obrigatório(a) e não pode estar vazio(a)."
                 )
-                is_none = field_value is None
-
-                if is_none or is_empty_string or is_empty_list:
-                    errors[field_name] = (
-                        f"{display_name} é obrigatório(a) e não pode estar vazio(a)."
-                    )
 
         if errors:
             raise serializers.ValidationError(errors)
         return data
 
     def create(self, validated_data):
-        validated_data.pop("user_name", None)
-        validated_data["form_completed"] = True
-        user_profile = UserProfile(**validated_data)
-        user_profile.save()
+        # A view 'create_profile' já passa 'user=request.user' para serializer.save().
+        # O método .create() do serializador automaticamente recebe o usuário via **kwargs.
+        user = validated_data.pop("user", None)  # Remove 'user' de validated_data
+
+        if not user:
+            # Isso deve ser tratado pela permissão IsAuthenticated, mas é uma segurança extra.
+            raise serializers.ValidationError(
+                {"detail": "User not provided for profile creation."}
+            )
+
+        # Verifique se um perfil já existe para este usuário
+        if UserProfile.objects.filter(user=user).exists():
+            raise serializers.ValidationError(
+                {"detail": "Profile already exists for this user."}
+            )
+
+        # Cria o UserProfile associando-o ao usuário
+        user_profile = UserProfile.objects.create(user=user, **validated_data)
+        user_profile.form_completed = (
+            True  # Garante que o form_completed seja True na criação
+        )
+        user_profile.save()  # Salva explicitamente para garantir o form_completed
         return user_profile
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop("user", None)
-        if user_data and isinstance(user_data, dict):
+        # Atualização do nome do usuário associado
+        user_name = validated_data.pop(
+            "user_name", None
+        )  # Pega o user_name se presente na entrada
+        if user_name:
             user = instance.user
-            if "name" in user_data:
-                user.name = user_data["name"]
-                user.save(update_fields=["name"])
+            user.name = user_name
+            user.save(update_fields=["name"])
 
-        # Update the profile fields
+        # Atualiza os campos do perfil
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
@@ -328,7 +351,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        # Ensure we're getting the latest user name
+        # Adiciona 'user_name' de volta aqui para representação (saída)
         ret["user_name"] = instance.user.name
         if instance.birth_date and ret.get("birth_date"):
             ret["birth_date"] = instance.birth_date.strftime("%Y-%m-%d")
@@ -396,5 +419,5 @@ class PublicUserProfileSerializer(serializers.ModelSerializer):
         request_obj = self.context.get("request", None)
         if request_obj and hasattr(request_obj, "user") and request_obj.user:
             if getattr(request_obj.user, "is_authenticated", False):
-                return obj.followers.filter(id=request_obj.user.id).exists()
+                return obj.user.followers.filter(id=request_obj.user.id).exists()
         return False
