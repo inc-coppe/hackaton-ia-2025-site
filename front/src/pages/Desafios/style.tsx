@@ -256,8 +256,8 @@ export const ImagemWrapper = styled.div`
   max-width: 31.625rem; /* Desktop: 506px */
 
   img {
-    width: 100%;
-    height: auto;
+    width: 31.625rem;
+    height: 16.875rem;
     object-fit: cover;
     border-radius: 0.5rem; /* 8px */
     display: block;
@@ -280,4 +280,5 @@ export const ImagemWrapper = styled.div`
 
 export const TextNextToMedia = styled.div`
   flex-grow: 1;
+  padding-left: 1rem;
 `;

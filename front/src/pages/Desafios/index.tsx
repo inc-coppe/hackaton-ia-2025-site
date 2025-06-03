@@ -25,48 +25,64 @@ import {
   TextNextToMedia,
 } from "./style";
 
+import Img_predicao_faltas from "../../assets/imagem desafio - Modelo Preditivo para Faltas em Consultas.png";
+import Img_desafio_regulacao_IA_RAG from "../../assets/imagem desafio - Automatizando a Regulação com IA e RAG.png";
+import Img_desafio_triagem_automatica from "../../assets/imagem desafio - Protótipo de Triagem Automática com IA para Regulação em Saúde.png";
+
+const cardData = [
+    { id: 1, image: Img_predicao_faltas },
+    { id: 2, image: Img_desafio_regulacao_IA_RAG },
+    { id: 3, image: Img_desafio_triagem_automatica },
+  ];
+
 // Seus dados mockados (mantidos como no seu exemplo)
 const desafios_menu = [
-  "Otimização de Rotas de Entrega com IA",
-  "Detecção Precoce de Doenças em Plantas",
-  "Chatbot Inteligente para Suporte ao Cliente",
+  "Modelo Preditivo para Faltas em Consultas",
+  "Automatizando a Regulação com IA e RAG",
+  "Protótipo de Triagem Automática com IA para Regulação em Saúde",
   // ... (restante dos itens do menu)
 ];
 
 const desafios_explicados = [
   {
-    id: "desafio-rotas",
-    titulo: "Otimização de Rotas de Entrega com IA",
-    sugerido_por: "LOGÍSTICA BRASIL S.A.",
+    image: Img_predicao_faltas,
+    id: "predicao-faltas",
+    titulo: "Modelo Preditivo para Faltas em Consultas",
+    sugerido_por: "Secretaria da Prefeitura do Rio.",
     descricao: [
-      "Desenvolver um sistema que utilize inteligência artificial para otimizar as rotas de uma frota de veículos de entrega, considerando variáveis como tráfego em tempo real, janelas de entrega, capacidade dos veículos e custos operacionais. O objetivo é reduzir o tempo total de percurso, o consumo de combustível e as emissões de CO2, aumentando a eficiência e a satisfação do cliente.",
+      "Este desafio faz parte da trilha 1 - Análise de Séries Temporais. Nesta trilha, o foco está em explorar dados históricos para identificar padrões, tendências e sazonalidades que possam auxiliar na previsão de eventos futuros. A capacidade de antecipar comportamentos é essencial para otimizar recursos e aprimorar o planejamento estratégico em diversas áreas do Sistema Único de Saúde (SUS), garantindo uma gestão mais eficiente e proativa.",
       // Este segundo parágrafo só será usado se textoAoLadoDaImagem não existir e imagem for true
       // Ou se imagem for false, ele será o segundo parágrafo normal.
-      "A solução deve apresentar uma interface clara para o gestor da frota e, idealmente, fornecer feedback em tempo real para os motoristas.",
+      "O primeiro desafio desta trilha propõe o desenvolvimento de um modelo que preveja a taxa de não comparecimento de pacientes agendados para consultas, utilizando dados históricos de agendamentos e comparecimentos. A solução contribuirá para minimizar desperdícios de recursos e melhorar a organização da agenda médica, beneficiando tanto os profissionais de saúde quanto os pacientes.",
     ],
     imagem: true,
     textoAoLadoDaImagem:
-      "A plataforma deverá permitir o cadastro de novos pontos de entrega e a reconfiguração dinâmica das rotas em caso de imprevistos, como acidentes ou bloqueios de vias. A escalabilidade para um grande número de veículos e entregas é um diferencial importante.",
+      "O primeiro desafio desta trilha propõe o desenvolvimento de um modelo que preveja a taxa de não comparecimento de pacientes agendados para consultas, utilizando dados históricos de agendamentos e comparecimentos. A solução contribuirá para minimizar desperdícios de recursos e melhorar a organização da agenda médica, beneficiando tanto os profissionais de saúde quanto os pacientes.",
   },
   {
-    id: "desafio-plantas",
-    titulo: "Detecção Precoce de Doenças em Plantas",
-    sugerido_por: "AGROTECH SOLUTIONS",
+    image: Img_desafio_regulacao_IA_RAG,
+    id: "desafio-regulacao-IA-RAG",
+    titulo: "Automatizando a Regulação com IA e RAG",
+    sugerido_por: "Secretaria da Prefeitura do Rio.",
     descricao: [
-      "Criar uma solução baseada em IA, preferencialmente utilizando visão computacional, para identificar sinais precoces de doenças e pragas em plantações agrícolas a partir de imagens capturadas por drones ou smartphones. O sistema deve classificar o tipo de problema e, se possível, indicar o nível de infestação, auxiliando agricultores na tomada de decisão rápida para tratamento e minimização de perdas.",
-      "Considerar a variação de iluminação, tipos de cultura e a qualidade das imagens como desafios a serem superados. A interface deve ser intuitiva para usuários com pouca familiaridade tecnológica.",
+      "Desafio da trilha 2 - Aplicações com Recuperação e Geração de Conteúdo (RAG). Nesta trilha, o desafio é criar soluções que combinem inteligência artificial com técnicas de recuperação de informações, formando sistemas capazes de consultar bases de dados e gerar respostas precisas e contextualizadas. A técnica conhecida como Retrieval-Augmented Generation (RAG) integra duas etapas: a recuperação de informações relevantes a partir de bancos de dados ou documentos estruturados, seguida pela geração de textos, explicações ou decisões utilizando modelos de linguagem como o GPT. Essa abordagem potencializa a tomada de decisão automatizada e qualifica a interação com sistemas inteligentes.",
     ],
-    imagem: false,
+    imagem: true,
+    textoAoLadoDaImagem:
+      "O primeiro desafio desta trilha propõe a construção de um assistente de regulação que, ao receber uma solicitação médica, consulte automaticamente os dados do paciente e o histórico do sistema. A partir dessas informações, o assistente deve indicar se a solicitação está completa e em conformidade com os protocolos clínicos do SUS, otimizando o fluxo de regulação e garantindo maior segurança e eficiência no atendimento.",
   },
   {
-    id: "desafio-chatbot",
-    titulo: "Chatbot Inteligente para Suporte",
-    sugerido_por: "CLIENT CARE INC.",
+    image: Img_desafio_triagem_automatica,
+    id: "desafio-triagem-automatica",
+    titulo: "Protótipo de Triagem Automática com IA para Regulação em Saúde",
+    sugerido_por: "Secretaria da Prefeitura do Rio.",
     descricao: [
-      "Desenvolver um chatbot avançado para atendimento ao cliente, capaz de compreender linguagem natural, resolver problemas comuns e escalar para atendentes humanos de forma eficiente quando necessário.",
+      "Este desafio faz parte da Trilha 3 – Criação de um Novo Sistema de Regulação com IA. Nesta trilha, o objetivo é repensar e modernizar o Sistema de Regulação em Saúde por meio do uso de inteligência artificial, incluindo a geração automatizada de código. O atual Sistema de Regulação, fundamental para organizar o acesso da população a consultas especializadas, exames e cirurgias, enfrenta diversos desafios: desde a necessidade de priorizar pacientes conforme critérios clínicos até a gestão eficiente das filas e a comunicação entre unidades de saúde. O SISREG, principal sistema utilizado atualmente, possui limitações importantes, como uma interface pouco intuitiva, baixa automação e dificuldades de integração com outros sistemas, como prontuários eletrônicos. A proposta desta trilha é superar essas barreiras, construindo soluções mais eficientes, integradas e inteligentes.",
       "O chatbot deve aprender com interações passadas e ser personalizável para diferentes segmentos de negócio.",
     ],
-    imagem: false,
+    imagem: true,
+    textoAoLadoDaImagem:
+      "O primeiro desafio desta trilha propõe o desenvolvimento de um protótipo funcional de um módulo de triagem automática com IA, capaz de classificar a prioridade das solicitações médicas com base em critérios clínicos, dados históricos e diretrizes do SUS. Além disso, espera-se que parte do código desse módulo seja gerada com o apoio de ferramentas de inteligência artificial, demonstrando o potencial da IA não apenas na tomada de decisão clínica, mas também na aceleração e otimização do próprio desenvolvimento de sistemas.",
   },
   // ... mais desafios
 ];
@@ -197,7 +213,7 @@ const Desafios = () => {
                     <ChallengeMediaLayout>
                       <ImagemWrapper>
                         <img
-                          src={`https://picsum.photos/506/270`}
+                          src={info.image}
                           alt={`Imagem para ${info.titulo}`}
                         />
                       </ImagemWrapper>
