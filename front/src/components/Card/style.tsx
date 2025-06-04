@@ -20,12 +20,11 @@ export const CardContainer = styled.div`
 export const CardImage = styled.img`
   width: 6.25rem; // 100px
   height: 6.25rem; // 100px
-  border-radius: 50%;
-  object-fit: cover;
-  border: 0.125rem solid #0f0f21; // 2px
   flex: none;
   order: 0;
   flex-grow: 0;
+  object-fit: contain;
+
 
   @media (max-width: 28rem) {
     width: 6.25rem; // 100px
