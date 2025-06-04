@@ -1,5 +1,5 @@
-*.sqlite3
-# output filetypes
+back/db.sqlite3 
+#output filetypes
 *.csv
 *env
 
