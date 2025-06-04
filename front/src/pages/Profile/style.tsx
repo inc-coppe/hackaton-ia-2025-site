@@ -19,6 +19,15 @@ export const ProfileBanner = styled.header`
   gap: ${pxToRem(40)};
   width: 100%;
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
+
+  @media (max-width: 48rem) {
+    flex-direction: column;
+    padding: ${pxToRem(146)} 1.5rem 0;
+    align-items: flex-start;
+    gap: ${pxToRem(24)};
+    width: 100%;
+
+  }
 `;
 
 export const ProfileImage = styled.img`
@@ -26,6 +35,13 @@ export const ProfileImage = styled.img`
   height: ${pxToRem(200)};
   border-radius: ${pxToRem(8)};
   object-fit: cover;
+
+  @media (max-width: 48rem) {
+    width: ${pxToRem(100)};
+    height: ${pxToRem(100)};
+    border-radius: ${pxToRem(4)};
+
+  }
 `;
 
 export const TitleContainer = styled.div`
@@ -35,6 +51,10 @@ export const TitleContainer = styled.div`
   align-items: flex-start;
   gap: ${pxToRem(24)};
   width: ${pxToRem(896)};
+  @media (max-width: 48rem) {
+    width: 100%;
+
+  }
 `;
 
 export const UserName = styled.h1`
@@ -45,6 +65,11 @@ export const UserName = styled.h1`
   line-height: ${pxToRem(61)};
   color: #ffffff;
   margin: 0;
+
+  @media (max-width: 48rem) {
+    font-size: ${pxToRem(32)};
+    line-height: 100%;
+  }
 `;
 
 export const ButtonsContainer = styled.div`
@@ -52,6 +77,12 @@ export const ButtonsContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: ${pxToRem(16)};
+
+  @media (max-width: 48rem) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 3.75rem;
+  }
 `;
 
 export const SocialButton = styled.a`
@@ -91,10 +122,14 @@ export const PageContent = styled.main`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: ${pxToRem(40)} 0rem ${pxToRem(120)};
+  padding: ${pxToRem(40)} 1rem ${pxToRem(120)};
   gap: ${pxToRem(40)};
   max-width: ${pxToRem(1200)};
   width: 100%;
+  @media (max-width: 48rem) {
+    flex-direction: column;
+    max-width: 100%;
+  }
 `;
 
 export const InfoCard = styled.div`
@@ -110,6 +145,11 @@ export const InfoCard = styled.div`
     580,
   )}; /* Based on Figma, may need adjustment with flex-grow */
   min-height: ${pxToRem(220)}; /* Minimum height for consistency */
+  @media (max-width: 48rem) {
+    flex-grow: 0;
+    width: 100%;
+    padding: ${pxToRem(32)} 1rem;
+  }
 `;
 
 export const TextContent = styled.div`
@@ -143,6 +183,8 @@ export const CardBodyText = styled.p<{ secondary?: boolean }>`
   margin: 0;
   color: ${({ secondary }) =>
     secondary ? "rgba(15, 15, 33, 0.6)" : "#0F0F21"};
+
+  
 `;
 
 export const AddTagContainer = styled.div`
@@ -171,6 +213,11 @@ export const TagInput = styled.input`
     outline: none;
     border-color: #3161e8;
   }
+
+  @media (max-width: 48rem) {
+    padding: ${pxToRem(4)} 0.5rem;
+    width: 100%;
+  }
 `;
 
 export const AddButton = styled.button`
@@ -193,6 +240,11 @@ export const AddButton = styled.button`
 
   &:hover {
     background-color: #2e2989;
+  }
+
+  @media (max-width: 48rem) {
+    padding: ${pxToRem(8)} ${pxToRem(10)};
+
   }
 `;
 
@@ -473,6 +525,8 @@ export const UserResultsContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-top: 1.5rem;
+
+  width: 100%;
 `;
 
 export const UserCard = styled(InfoCard)`
@@ -484,6 +538,10 @@ export const UserCard = styled(InfoCard)`
   text-align: center;
 
   width: 32.25rem; // Contando com paddig que está no InfoCard, este é o tamanho que deve ser para não quebrar
+  @media (max-width: 48rem) {
+    width: 100%;
+    
+  }
 `;
 
 export const UserAvatar = styled(ProfileImage)`
@@ -532,6 +590,7 @@ export const FollowButton = styled(AddButton)`
   &:hover {
     background-color: ${(props) => (props.isFollowing ? "#c82333" : "#218838")};
   }
+  
 `;
 
 export const NoResultsMessage = styled.p`
