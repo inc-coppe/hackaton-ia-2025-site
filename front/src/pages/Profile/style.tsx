@@ -482,6 +482,8 @@ export const UserCard = styled(InfoCard)`
   align-items: center;
   padding: 1.5rem;
   text-align: center;
+
+  width: 32.25rem; // Contando com paddig que está no InfoCard, este é o tamanho que deve ser para não quebrar
 `;
 
 export const UserAvatar = styled(ProfileImage)`
