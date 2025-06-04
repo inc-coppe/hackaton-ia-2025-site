@@ -72,9 +72,8 @@ export const HomePageContainer = styled.div`
   padding-bottom: 12.5rem;
   margin-top: 4rem;
 
-  @media (max-width: 48rem) {
-    min-height: 90vh; /*Define como múnimo sendo 90vh mas se for maior ele se ajusta automaticamente */
-    height: auto;
+  @media (max-width: 48rem) { 
+    max-height: 115vh;
     padding: 0;
     flex-direction: column;
     justify-content: flex-start;
