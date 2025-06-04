@@ -4,13 +4,14 @@ export const LoginContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0;
   gap: 18.75rem; // 300px
   width: 100%;
   height: 58.375rem; // 934px
   background: #110249;
   overflow: hidden;
+
 `;
 
 export const LoginCard = styled.div`
@@ -22,24 +23,20 @@ export const LoginCard = styled.div`
   gap: 4rem; // 64px
   position: absolute;
   width: 49.83625rem; // 797.38px
-  height: 21.3125rem; // 341px
-  left: 50%;
+  height: 21.3125rem; // 341px  
   top: 15.375rem; // 246px
-  transform: translateX(-50%);
   background: #ffffff;
   border-radius: 0.5rem; // 8px
 
   @media (max-width: 50rem) {
     /* Sobrescreve para o estilo mobile */
     flex-direction: column;
-    width: 354px;
+    width: auto;
     height: 470px;
     padding: 24px 16px;
     gap: 32px;
-    left: 18px;
-    top: 106px;
+    top: 106px;    
     border-radius: 8px;
-    transform: none;
   }
 `;
 
