@@ -31,7 +31,7 @@ export const HighlightTextContainer = styled.div`
   align-items: flex-start;
   gap: 2rem;
   width: 100%;
-  max-width: 81rem;
+  //max-width: 81rem;
 
   @media (max-width: 48rem) {
     gap: 2rem;
@@ -67,7 +67,7 @@ export const HighlightMainTitle = styled.h1`
   color: #ffffff;
   margin: 0;
 
-  width: 70%;
+  
 
   @media (max-width: 48rem) {
     font-size: 2rem;
@@ -368,4 +368,12 @@ export const ActionButtonText = styled.span`
   line-height: 0.9375rem;
   text-transform: uppercase;
   color: #3161e8;
+`;
+
+export const MainTitleContainer = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: -1rem;
 `;

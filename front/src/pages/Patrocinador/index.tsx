@@ -28,7 +28,8 @@ import {
   BenefitBox,
   BenefitBoxTitle,
   ActionButton, // Componente de botão reutilizado
-  ActionButtonText, // Texto do botão reutilizado
+  ActionButtonText,
+  MainTitleContainer, // Texto do botão reutilizado
 } from "./style";
 import b1 from "../../assets/b1.png";
 import b2 from "../../assets/b2.png";
@@ -98,9 +99,14 @@ function Sponsor() {
               <HighlightPreamble>
                 IMPULSIONE TALENTOS, CONSTRUA O FUTURO E DEIXE A SUA MARCA.
               </HighlightPreamble>
-              <HighlightMainTitle>
-                QUEM APOIA A INOVAÇÃO, MOVE O MUNDO.
-              </HighlightMainTitle>
+              <MainTitleContainer>
+                <HighlightMainTitle>
+                  QUEM APOIA A INOVAÇÃO,
+                </HighlightMainTitle>
+                <HighlightMainTitle>
+                  MOVE O MUNDO.
+                </HighlightMainTitle>
+              </MainTitleContainer>
             </HighlightTitleGroup>
             <HighlightDescription>
               O Hackathon de IA é mais que um evento: é uma jornada coletiva
