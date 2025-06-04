@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 3.75rem 6.25rem 7rem;
+  padding: 7.5rem 6.25rem 7.5rem;
   background: linear-gradient(243.99deg, #2e2989 32.82%, #3161e8 100.02%);
   width: 100%;
   
