@@ -7,6 +7,7 @@ export const PageContainer = styled.div`
   align-items: center;
   width: 100%;
   background: #ffffff;
+  padding-bottom: 10rem;
 `;
 
 // --- Seção de Destaque (Topo com Gradiente) ---

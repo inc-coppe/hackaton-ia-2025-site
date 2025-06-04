@@ -6,6 +6,7 @@ export const DesafiosPageContainer = styled.div`
   align-items: center; /* Centraliza os blocos de conteúdo principais */
   background: #ffffff;
   width: 100%;
+  padding-bottom: 10rem;
 `;
 
 export const DesafiosIntroContainer = styled.section`
@@ -252,11 +253,12 @@ export const ChallengeMediaLayout = styled.div`
 
 export const ImagemWrapper = styled.div`
   flex-shrink: 0;
-  width: 50%; /* Ajustável */
-  max-width: 31.625rem; /* Desktop: 506px */
+  width: auto; /* Ajustável */
+  //max-width: 31.625rem; /* Desktop: 506px */
 
   img {
-    width: 31.625rem;
+    width: auto;
+    max-width: 22.625rem;
     height: 16.875rem;
     object-fit: cover;
     border-radius: 0.5rem; /* 8px */

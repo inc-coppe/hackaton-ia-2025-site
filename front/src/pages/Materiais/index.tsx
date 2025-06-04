@@ -29,30 +29,30 @@ import {
 const materialChapters = [
   {
     id: "introducao-ia",
-    menuTitle: "Introdução à IA",
-    chapterTitle: "_TÍTULO DO CAPÍTULO: INTRODUÇÃO À IA",
-    author: "POR [NOME DO CRIADOR DO CONTEÚDO]",
+    menuTitle: "Em Breve",
+    chapterTitle: "Em Breve",
+    author: "",
     description1:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    videoAvailable: true,
+      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+    videoAvailable: false,
     description2:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "",
     subsections: [
       {
-        title: "Subtítulo da Seção 1.1",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        title: "",
+        text: "",
       },
     ],
   },
   {
     id: "fundamentos-ml",
-    menuTitle: "Fundamentos de Machine Learning",
-    chapterTitle: "_TÍTULO DO CAPÍTULO: FUNDAMENTOS DE ML",
-    author: "POR [OUTRO CRIADOR]",
+    menuTitle: "Em Breve",
+    chapterTitle: "Em Breve",
+    author: "",
     description1:
-      "Aprenda os conceitos básicos de Machine Learning, algoritmos e como eles funcionam.",
-    videoAvailable: true,
-    description2: "Mais detalhes e exemplos práticos serão abordados.",
+      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+    videoAvailable: false,
+    description2: "",
     subsections: [],
   },
   // Adicione mais capítulos aqui conforme necessário
@@ -135,8 +135,8 @@ function Materials() {
             <HighlightDescription>
               Antes do hackathon começar, você tem acesso a uma seleção de
               materiais exclusivos — webinars, trilhas de estudo e guias
-              práticos — desenvolvidos com o apoio de [COLOCAR AQUI O NOME DAS
-              EMPRESAS], grandes nomes da tecnologia e da pesquisa.
+              práticos — desenvolvidos com o apoio de grandes
+              empresas.
             </HighlightDescription>
           </HighlightTextWrapper>
         </HighlightSection>

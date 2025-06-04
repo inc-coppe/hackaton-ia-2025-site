@@ -37,9 +37,9 @@ const cardData = [
 
 // Seus dados mockados (mantidos como no seu exemplo)
 const desafios_menu = [
-  "Modelo Preditivo para Faltas em Consultas",
-  "Automatizando a Regulação com IA e RAG",
-  "Protótipo de Triagem Automática com IA para Regulação em Saúde",
+  "Em Breve",
+  "Em Breve",
+  "Em Breve",
   // ... (restante dos itens do menu)
 ];
 
@@ -47,42 +47,41 @@ const desafios_explicados = [
   {
     image: Img_predicao_faltas,
     id: "predicao-faltas",
-    titulo: "Modelo Preditivo para Faltas em Consultas",
-    sugerido_por: "Secretaria da Prefeitura do Rio.",
+    titulo: "Em Breve",
+    sugerido_por: "",
     descricao: [
-      "Este desafio faz parte da trilha 1 - Análise de Séries Temporais. Nesta trilha, o foco está em explorar dados históricos para identificar padrões, tendências e sazonalidades que possam auxiliar na previsão de eventos futuros. A capacidade de antecipar comportamentos é essencial para otimizar recursos e aprimorar o planejamento estratégico em diversas áreas do Sistema Único de Saúde (SUS), garantindo uma gestão mais eficiente e proativa.",
+      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
       // Este segundo parágrafo só será usado se textoAoLadoDaImagem não existir e imagem for true
       // Ou se imagem for false, ele será o segundo parágrafo normal.
-      "O primeiro desafio desta trilha propõe o desenvolvimento de um modelo que preveja a taxa de não comparecimento de pacientes agendados para consultas, utilizando dados históricos de agendamentos e comparecimentos. A solução contribuirá para minimizar desperdícios de recursos e melhorar a organização da agenda médica, beneficiando tanto os profissionais de saúde quanto os pacientes.",
+      "",
     ],
-    imagem: true,
+    imagem: false,
     textoAoLadoDaImagem:
-      "O primeiro desafio desta trilha propõe o desenvolvimento de um modelo que preveja a taxa de não comparecimento de pacientes agendados para consultas, utilizando dados históricos de agendamentos e comparecimentos. A solução contribuirá para minimizar desperdícios de recursos e melhorar a organização da agenda médica, beneficiando tanto os profissionais de saúde quanto os pacientes.",
+      "",
   },
   {
     image: Img_desafio_regulacao_IA_RAG,
     id: "desafio-regulacao-IA-RAG",
-    titulo: "Automatizando a Regulação com IA e RAG",
-    sugerido_por: "Secretaria da Prefeitura do Rio.",
+    titulo: "Em Breve",
+    sugerido_por: "",
     descricao: [
-      "Desafio da trilha 2 - Aplicações com Recuperação e Geração de Conteúdo (RAG). Nesta trilha, o desafio é criar soluções que combinem inteligência artificial com técnicas de recuperação de informações, formando sistemas capazes de consultar bases de dados e gerar respostas precisas e contextualizadas. A técnica conhecida como Retrieval-Augmented Generation (RAG) integra duas etapas: a recuperação de informações relevantes a partir de bancos de dados ou documentos estruturados, seguida pela geração de textos, explicações ou decisões utilizando modelos de linguagem como o GPT. Essa abordagem potencializa a tomada de decisão automatizada e qualifica a interação com sistemas inteligentes.",
+      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
     ],
-    imagem: true,
+    imagem: false,
     textoAoLadoDaImagem:
-      "O primeiro desafio desta trilha propõe a construção de um assistente de regulação que, ao receber uma solicitação médica, consulte automaticamente os dados do paciente e o histórico do sistema. A partir dessas informações, o assistente deve indicar se a solicitação está completa e em conformidade com os protocolos clínicos do SUS, otimizando o fluxo de regulação e garantindo maior segurança e eficiência no atendimento.",
+      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
   },
   {
     image: Img_desafio_triagem_automatica,
     id: "desafio-triagem-automatica",
-    titulo: "Protótipo de Triagem Automática com IA para Regulação em Saúde",
-    sugerido_por: "Secretaria da Prefeitura do Rio.",
+    titulo: "Em Breve",
+    sugerido_por: "",
     descricao: [
-      "Este desafio faz parte da Trilha 3 – Criação de um Novo Sistema de Regulação com IA. Nesta trilha, o objetivo é repensar e modernizar o Sistema de Regulação em Saúde por meio do uso de inteligência artificial, incluindo a geração automatizada de código. O atual Sistema de Regulação, fundamental para organizar o acesso da população a consultas especializadas, exames e cirurgias, enfrenta diversos desafios: desde a necessidade de priorizar pacientes conforme critérios clínicos até a gestão eficiente das filas e a comunicação entre unidades de saúde. O SISREG, principal sistema utilizado atualmente, possui limitações importantes, como uma interface pouco intuitiva, baixa automação e dificuldades de integração com outros sistemas, como prontuários eletrônicos. A proposta desta trilha é superar essas barreiras, construindo soluções mais eficientes, integradas e inteligentes.",
-      "O chatbot deve aprender com interações passadas e ser personalizável para diferentes segmentos de negócio.",
+      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
     ],
-    imagem: true,
+    imagem: false,
     textoAoLadoDaImagem:
-      "O primeiro desafio desta trilha propõe o desenvolvimento de um protótipo funcional de um módulo de triagem automática com IA, capaz de classificar a prioridade das solicitações médicas com base em critérios clínicos, dados históricos e diretrizes do SUS. Além disso, espera-se que parte do código desse módulo seja gerada com o apoio de ferramentas de inteligência artificial, demonstrando o potencial da IA não apenas na tomada de decisão clínica, mas também na aceleração e otimização do próprio desenvolvimento de sistemas.",
+      "",
   },
   // ... mais desafios
 ];
@@ -230,7 +229,7 @@ const Desafios = () => {
 
                   {/* Se NÃO for um desafio com imagem, renderiza o restante da descrição (se houver) */}
                   {!info.imagem &&
-                    Array.isArray(info.descricao) &&
+                    Array.isArray(info.descricao) && info.descricao.length <1 &&
                     info.descricao.slice(info.imagem ? 1 : 0).map(
                       (
                         paragrafo,
