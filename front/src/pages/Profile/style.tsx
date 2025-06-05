@@ -26,7 +26,6 @@ export const ProfileBanner = styled.header`
     align-items: flex-start;
     gap: ${pxToRem(24)};
     width: 100%;
-
   }
 `;
 
@@ -40,7 +39,6 @@ export const ProfileImage = styled.img`
     width: ${pxToRem(100)};
     height: ${pxToRem(100)};
     border-radius: ${pxToRem(4)};
-
   }
 `;
 
@@ -53,7 +51,6 @@ export const TitleContainer = styled.div`
   width: ${pxToRem(896)};
   @media (max-width: 48rem) {
     width: 100%;
-
   }
 `;
 
@@ -183,8 +180,6 @@ export const CardBodyText = styled.p<{ secondary?: boolean }>`
   margin: 0;
   color: ${({ secondary }) =>
     secondary ? "rgba(15, 15, 33, 0.6)" : "#0F0F21"};
-
-  
 `;
 
 export const AddTagContainer = styled.div`
@@ -244,7 +239,6 @@ export const AddButton = styled.button`
 
   @media (max-width: 48rem) {
     padding: ${pxToRem(8)} ${pxToRem(10)};
-
   }
 `;
 
@@ -540,7 +534,6 @@ export const UserCard = styled(InfoCard)`
   width: 32.25rem; // Contando com paddig que está no InfoCard, este é o tamanho que deve ser para não quebrar
   @media (max-width: 48rem) {
     width: 100%;
-    
   }
 `;
 
@@ -590,7 +583,6 @@ export const FollowButton = styled(AddButton)`
   &:hover {
     background-color: ${(props) => (props.isFollowing ? "#c82333" : "#218838")};
   }
-  
 `;
 
 export const NoResultsMessage = styled.p`
