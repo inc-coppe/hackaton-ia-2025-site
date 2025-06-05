@@ -86,6 +86,7 @@ class UserProfile(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="userprofile"
     )
     full_name = models.CharField(max_length=255)
+    cpf = models.CharField(max_length=11, unique=True, null=True, blank=True)
     birth_date = models.DateField()
     linkedin_profile = models.URLField(max_length=255, blank=True, null=True)
     github_profile = models.URLField(max_length=255, blank=True, null=True)

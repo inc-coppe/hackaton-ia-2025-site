@@ -1,4 +1,3 @@
-// index.tsx
 import React, {
   useEffect,
   useState,

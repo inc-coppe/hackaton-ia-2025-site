@@ -36,6 +36,7 @@ const MOTIVATION_OPTIONS = [
 
 interface UserProfileFormData {
   full_name: string;
+  cpf?: string | null;
   birth_date: string;
   linkedin_profile?: string;
   github_profile?: string;
@@ -66,21 +67,44 @@ const UserRegistrationForm: React.FC = () => {
   }, [navigate]);
 
   const checkFormCompletion = async () => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("access_token");
       const response = await fetch("http://localhost:8000/api/profile/check/", {
+        method: "GET",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await response.json();
 
+      if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        navigate("/login");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new TypeError("Received non-JSON response from server");
+      }
+
+      const data = await response.json();
       if (data.form_completed) {
         setCurrentStep(1);
         showDiscordModal();
       }
     } catch (error) {
       console.error("Error checking form completion:", error);
+      message.error("Erro ao verificar status do formulário");
     }
   };
 
@@ -90,13 +114,11 @@ const UserRegistrationForm: React.FC = () => {
       content: "Você será redirecionado para o Discord do Hackathon.",
       okText: "Ir para o Discord",
       onOk: () => {
-        // Open Discord in new tab
         window.open(
           "https://discord.gg/2MBgjqHn",
           "_blank",
           "noopener,noreferrer",
         );
-        // Redirect to home page or dashboard
         navigate("/");
       },
       maskClosable: false,
@@ -107,8 +129,22 @@ const UserRegistrationForm: React.FC = () => {
 
   const onFinish = async (values: UserProfileFormData) => {
     setLoading(true);
+
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("access_token");
+      const formattedValues = {
+        ...values,
+        cpf: values.cpf ? values.cpf.replace(/\D/g, "") : null,
+        birth_date: values.birth_date
+          ? dayjs(values.birth_date).format("YYYY-MM-DD")
+          : null,
+      };
+
       const response = await fetch(
         "http://localhost:8000/api/profile/create/",
         {
@@ -117,34 +153,42 @@ const UserRegistrationForm: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            ...values,
-            // Certifique-se de que a data está no formato 'YYYY-MM-DD' para o backend
-            birth_date: dayjs(values.birth_date).format("YYYY-MM-DD"),
-          }),
+          body: JSON.stringify(formattedValues),
         },
       );
 
-      if (response.ok) {
-        message.success("Perfil criado com sucesso!");
-        setCurrentStep(1);
-        showDiscordModal();
-      } else {
-        const errorData = await response.json();
-        // Exibe mensagens de erro detalhadas do backend, se houver
-        const errorMessage = errorData.detail
-          ? errorData.detail
-          : typeof errorData === "object"
-            ? Object.values(errorData).flat().join(", ")
-            : "Erro ao criar perfil. Tente novamente.";
-        throw new Error(errorMessage);
+      if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        navigate("/login");
+        return;
       }
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new TypeError("Received non-JSON response from server");
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.detail || "Erro ao criar perfil. Tente novamente.",
+        );
+      }
+
+      await response.json();
+      message.success("Perfil criado com sucesso!");
+      setCurrentStep(1);
+      showDiscordModal();
     } catch (error) {
-      message.error(
-        error instanceof Error
-          ? error.message
-          : "Erro ao criar perfil. Tente novamente.",
-      );
+      if (error instanceof TypeError) {
+        message.error("Erro de comunicação com o servidor");
+      } else {
+        message.error(
+          error instanceof Error
+            ? error.message
+            : "Erro ao criar perfil. Tente novamente.",
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -175,6 +219,7 @@ const UserRegistrationForm: React.FC = () => {
           layout="vertical"
           onFinish={onFinish}
           requiredMark={false}
+          validateTrigger={["onBlur", "onChange"]}
         >
           <Form.Item
             name="full_name"
@@ -186,8 +231,67 @@ const UserRegistrationForm: React.FC = () => {
               },
             ]}
           >
-            <Input placeholder="Seu nome completo" />
+            <Input placeholder="Seu nome completo" maxLength={100} />
           </Form.Item>
+
+          <Form.Item
+            name="cpf"
+            label="CPF (opcional)"
+            validateTrigger={["onChange", "onBlur"]}
+            rules={[
+              {
+                validator: async (_, value) => {
+                  if (!value) return Promise.resolve();
+
+                  const cleaned = value.replace(/\D/g, "");
+
+                  if (cleaned.length > 0 && cleaned.length < 11) {
+                    return Promise.reject("CPF incompleto");
+                  }
+
+                  if (cleaned.length === 11) {
+                    if (/^(\d)\1{10}$/.test(cleaned)) {
+                      return Promise.reject("CPF inválido");
+                    }
+
+                    let sum = 0;
+                    for (let i = 0; i < 9; i++) {
+                      sum += parseInt(cleaned.charAt(i)) * (10 - i);
+                    }
+                    let digit = 11 - (sum % 11);
+                    if (digit >= 10) digit = 0;
+                    if (digit !== parseInt(cleaned.charAt(9))) {
+                      return Promise.reject("CPF inválido");
+                    }
+
+                    sum = 0;
+                    for (let i = 0; i < 10; i++) {
+                      sum += parseInt(cleaned.charAt(i)) * (11 - i);
+                    }
+                    digit = 11 - (sum % 11);
+                    if (digit >= 10) digit = 0;
+                    if (digit !== parseInt(cleaned.charAt(10))) {
+                      return Promise.reject("CPF inválido");
+                    }
+                  }
+
+                  return Promise.resolve();
+                },
+              },
+            ]}
+            getValueFromEvent={(e) => {
+              const value = e?.target?.value;
+              if (!value) return "";
+              return value.replace(/\D/g, "");
+            }}
+          >
+            <Input
+              placeholder="Digite apenas números"
+              maxLength={11}
+              className="cpf-input"
+            />
+          </Form.Item>
+
           <Form.Item
             name="birth_date"
             label="Data de Nascimento"
@@ -199,6 +303,9 @@ const UserRegistrationForm: React.FC = () => {
               style={{ width: "100%" }}
               format="DD/MM/YYYY"
               placeholder="Selecione sua data de nascimento"
+              disabledDate={(current) => {
+                return current && current > dayjs().endOf("day");
+              }}
             />
           </Form.Item>
 
@@ -207,7 +314,10 @@ const UserRegistrationForm: React.FC = () => {
             label="Instituição"
             rules={[{ required: true, message: "Informe sua instituição" }]}
           >
-            <Input placeholder="Onde você trabalha ou estuda?" />
+            <Input
+              placeholder="Onde você trabalha ou estuda?"
+              maxLength={100}
+            />
           </Form.Item>
 
           <Form.Item
@@ -235,6 +345,7 @@ const UserRegistrationForm: React.FC = () => {
               <Option value="PDI">Pós-Doutorado Incompleto</Option>
             </Select>
           </Form.Item>
+
           <SocialInputContainer>
             <Form.Item
               name="github_profile"
@@ -287,6 +398,7 @@ const UserRegistrationForm: React.FC = () => {
               />
             </Form.Item>
           </SocialInputContainer>
+
           <Form.Item
             name="phone"
             label="Telefone para contato"
@@ -297,7 +409,7 @@ const UserRegistrationForm: React.FC = () => {
               },
             ]}
           >
-            <Input placeholder="21999999999" />
+            <Input placeholder="21999999999" maxLength={11} />
           </Form.Item>
 
           <Form.Item
@@ -310,7 +422,10 @@ const UserRegistrationForm: React.FC = () => {
               },
             ]}
           >
-            <Input placeholder="Ex: Saúde, TI, Dados, Design, etc." />
+            <Input
+              placeholder="Ex: Saúde, TI, Dados, Design, etc."
+              maxLength={100}
+            />
           </Form.Item>
 
           <Form.Item
@@ -327,6 +442,7 @@ const UserRegistrationForm: React.FC = () => {
             <Input.TextArea
               placeholder="Informe se você possui alguma necessidade especial para participação"
               rows={4}
+              maxLength={500}
             />
           </Form.Item>
 
