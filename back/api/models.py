@@ -4,7 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
-from django.conf import settings
+from django.db.utils import settings
 
 
 class CustomUserManager(BaseUserManager):
@@ -82,8 +82,9 @@ class UserProfile(models.Model):
         ("HACKATHON", "O fato de ser um Hackathon e poder desenvolver uma solução"),
     ]
 
+    # CORREÇÃO: Referenciar a classe CustomUser diretamente, pois ela já foi definida acima.
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="userprofile"
+        CustomUser, on_delete=models.CASCADE, related_name="userprofile"
     )
     full_name = models.CharField(max_length=255)
     cpf = models.CharField(max_length=11, unique=True, null=True, blank=True)
