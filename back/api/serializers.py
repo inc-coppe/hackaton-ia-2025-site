@@ -87,6 +87,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "user_name",
             "user_profile_picture_url",
             "full_name",
+            "cpf",
             "birth_date",
             "linkedin_profile",
             "github_profile",
@@ -133,6 +134,44 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_following_count(self, obj):
         return obj.user.following.count()
+
+    def validate_cpf(self, value):
+        # Handle None values
+        if value is None:
+            return None
+
+        # Handle empty strings
+        if not value or value.strip() == "":
+            return None
+
+        # Remove any non-digit characters
+        cpf = "".join(filter(str.isdigit, str(value)))
+
+        # If empty after cleaning, return None
+        if not cpf:
+            return None
+
+        # Check if CPF has 11 digits
+        if len(cpf) != 11:
+            raise serializers.ValidationError("CPF deve conter 11 dígitos.")
+
+        # Check if all digits are the same
+        if len(set(cpf)) == 1:
+            raise serializers.ValidationError("CPF inválido.")
+
+        # Validate first digit
+        sum_of_products = sum(int(a) * b for a, b in zip(cpf[0:9], range(10, 1, -1)))
+        expected_digit = (sum_of_products * 10 % 11) % 10
+        if int(cpf[9]) != expected_digit:
+            raise serializers.ValidationError("CPF inválido.")
+
+        # Validate second digit
+        sum_of_products = sum(int(a) * b for a, b in zip(cpf[0:10], range(11, 1, -1)))
+        expected_digit = (sum_of_products * 10 % 11) % 10
+        if int(cpf[10]) != expected_digit:
+            raise serializers.ValidationError("CPF inválido.")
+
+        return cpf
 
     def validate_full_name(self, value):
         if self.partial and value is None:

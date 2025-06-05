@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Space, MenuProps } from "antd"; // Importar MenuProps para tipagem
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, SearchOutlined } from "@ant-design/icons";
 import LogoHackaton from "../../assets/Logo.png";
 import {
   HeaderContainer,
@@ -130,11 +130,11 @@ const Header = () => {
   const AuthSection = ({ isMobile = false }) =>
     user ? (
       <UserContainer onClick={handleUserClick} $isMobile={isMobile}>
+        <SearchOutlined style={{ color: "white", fontSize: "1.5rem" }} />
         <ProfilePicture
           src={user.profile_picture_url}
           alt={`${user.name}'s profile`}
         />
-        <UserName>{user.name.split(" ")[0]}</UserName>
       </UserContainer>
     ) : (
       <AuthContainer $isMobile={isMobile}>
@@ -194,10 +194,6 @@ const Header = () => {
             </Dropdown>
           </NavSection>
           <AuthSection isMobile />
-          <TimestampContainer>
-            <Timestamp>2025-05-28 22:42:41 UTC</Timestamp>
-            <UserInfo>Login: franciscoflorencio</UserInfo>
-          </TimestampContainer>
         </MobileMenuContent>
       </MobileNavigation>
     </HeaderContainer>

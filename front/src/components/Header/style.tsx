@@ -183,7 +183,7 @@ export const SignUpButton = styled(LoginButton)`
 export const UserContainer = styled.div<{ $isMobile?: boolean }>`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 2.25rem;
   padding: 0.75rem 1rem;
   border-radius: ${({ $isMobile }) => ($isMobile ? "0.2rem" : "2rem")};
   cursor: pointer;
@@ -203,7 +203,6 @@ export const UserContainer = styled.div<{ $isMobile?: boolean }>`
 export const ProfilePicture = styled.img`
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
   object-fit: cover;
   border: 2px solid transparent;
   transition: border-color 0.2s ease;
