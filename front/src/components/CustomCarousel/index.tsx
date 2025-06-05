@@ -19,11 +19,11 @@ import { ArrowRightOutlined } from "@ant-design/icons";
 
 const HorizontalCarousel = () => {
   const cardData = [
-    { id: 1, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido."}, 
+    { id: 1, sugerido_por: "" , titulo: "Em Breve", descricao: "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!"}, 
     
-    { id: 2, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido. Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido. Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." }, 
+    { id: 2, sugerido_por: "" , titulo: "Em Breve", descricao: "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!" }, 
     
-    { id: 3, sugerido_por: "NOME DE QUEM SUGERIU O DESAFIO" , titulo: "_Titulo do Desafio", descricao: "Uma descrição breve do que é. Aqui pode ser um texto mais comprido e com um ellipsis caso seja realmente longo, mas o ideal é ser um tanto resumido." },
+    { id: 3, sugerido_por: "" , titulo: "Em Breve", descricao: "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!" },
   
     
   ];

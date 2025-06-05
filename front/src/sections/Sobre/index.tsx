@@ -1,9 +1,9 @@
 import React from "react";
 import Card from "../../components/Card";
 import { SobreContainer, Text, Line, Body, Title } from "./style";
-import Img1 from "../../assets/branco.png";
-import Img2 from "../../assets/branco.png";
-import Img3 from "../../assets/branco.png";
+import Img1 from "../../assets/Vector (1).png";
+import Img2 from "../../assets/Subtract (2).png";
+import Img3 from "../../assets/Subtract.png";
 
 const SobrePage = () => {
   return (
