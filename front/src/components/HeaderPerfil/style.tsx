@@ -409,3 +409,67 @@ export const PesquisaBody = styled.div`
   color: #0F0F2199;
 `;
 
+export const ProfileImage = styled.img`
+  width: 12.5rem;
+  height: 12.5rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+
+  @media (max-width: 48rem) {
+    width: 6.25rem;
+    height: 6.25rem;
+    border-radius: 0.25rem;
+  }
+`;
+export const AvatarPesquisado = styled(ProfileImage)`
+  width: 3.125rem;
+  height: 3.125rem;
+`;
+
+export const UsuarioDisplayNome = styled.div`
+  font-family: "Nunito Sans";
+  font-weight: 700;
+  font-size: 1.125rem; /* Desktop: 20px */
+  line-height: 100%; /* Desktop: 24px */
+  color: #000000;
+`;
+
+export const InfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem;
+  gap: 2.5rem;
+  flex-grow: 1;
+  background: rgba(193, 208, 248, 0.2);
+  border-radius: 0.5rem;
+  width: 36.25rem; /* Based on Figma, may need adjustment with flex-grow */
+  min-height: 13.75rem; /* Minimum height for consistency */
+  @media (max-width: 48rem) {
+    flex-grow: 0;
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+`;
+
+export const UsuarioCard = styled(InfoCard)`
+  // Reutilizando InfoCard para o estilo base
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  text-align: center;
+
+  height: 3.125rem;
+  width: 100%; // Contando com paddig que está no InfoCard, este é o tamanho que deve ser para não quebrar
+  @media (max-width: 48rem) {
+    width: 100%;
+  }
+`;
+export const UsuarioPesquisadoContainer = styled.div`
+  display: row;
+  gap: 1rem;
+  padding-top: 3rem;
+
+  width: 100%;
+`;
