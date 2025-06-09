@@ -96,7 +96,7 @@ const AuthSection = ({
         <Link to="/login">LOGIN</Link>
       </LoginButton>
       <SignUpButton $isMobile={isMobile}>
-        <Link to="/login">INSCREVA-SE</Link>
+        <Link to="/register">INSCREVA-SE</Link>
       </SignUpButton>
     </AuthContainer>
   );
