@@ -35,7 +35,7 @@ import c5 from "../../assets/c5.png";
 import c6 from "../../assets/c6.png";
 import c7 from "../../assets/c7.png";
 import c8 from "../../assets/c8.png";
-import c9 from "../../assets/c9.png";
+import c9 from "../../assets/ca2_logo_resized (1).png";
 
 import { Flex } from "antd";
 import { Link } from "react-router-dom";

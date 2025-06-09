@@ -38,19 +38,19 @@ const Aquecimento = () => {
       <Frame>
         {/* Cards de Seção */}
         <SectionCardComponent
-          title=""
-          subtitle="Em Breve"
-          description="Uma descrição breve do que é."
+          title="Em Breve"
+          subtitle="Você poderá acessar todas as informações por aqui."
+          description=""
         />
         <SectionCardComponent
-          title=""
-          subtitle="Em Breve"
-          description="Uma descrição breve do que é."
+          title="Em Breve"
+          subtitle="Você poderá acessar todas as informações por aqui."
+          description=""
         />
         <SectionCardComponent
-          title=""
-          subtitle="Em Breve"
-          description="Uma descrição breve do que é."
+          title="Em Breve"
+          subtitle="Você poderá acessar todas as informações por aqui."
+          description=""
         />
         {/* Botão */}
         <Button>
