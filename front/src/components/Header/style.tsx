@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+const pxToRem = (px: number) => `${px / 16}rem`;
+
 export const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
@@ -263,30 +265,318 @@ export const BurgerButton = styled.button<{ $isOpen: boolean }>`
   }
 `;
 
-export const TimestampContainer = styled.div`
-  position: absolute;
-  bottom: 1.5rem;
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  justify-content: flex-end;
+  align-items: flex-start;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: flex;
+`;
+
+export const TelaBranca = styled.div`
   display: flex;
   flex-direction: column;
+  width: 50vw;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 1024px) {
+    width: 70vw;
+  }
+
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
+`;
+
+export const BuscaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  gap: 1.5rem;
+`;
+
+export const BuscaTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+`;
+
+export const LupaWrapper = styled.img`
+  max-width: 2rem;
+  max-height: 2rem;
+`;
+
+export const XWrapper = styled.img`
+  max-width: 1.5rem;
+  max-height: 1.5rem;
+`;
+
+export const BotaoX = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: black;
+  padding: 0;
+  display: flex;
   align-items: center;
+  justify-content: center;
+`;
+
+export const BotaoLupa = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BuscaPrincipalContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const PesquisaTitulo = styled.div`
+  font-family: "Montserrat";
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 100%;
+  color: #000000;
+`;
+
+export const BuscaBodyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  padding: 0 1.5rem;
 `;
 
-export const Timestamp = styled.p`
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-  text-align: center;
+export const PesquisaSubTitulo = styled.div`
+  font-family: "Nunito Sans";
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #0f0f21;
 `;
 
-export const UserInfo = styled.p`
+export const PesquisaBody = styled.div`
+  font-family: "Nunito Sans";
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #0f0f2199;
+`;
+
+// --- ESTILOS MOVIDOS DE PROFILE.STYLE.TSX ---
+
+export const SearchInputContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+`;
+
+export const SearchField = styled.input`
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  flex-grow: 1;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    border-color: #007bff;
+  }
+
+  &::placeholder {
+    color: #a0a0a0;
+  }
+`;
+
+export const AddButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: ${pxToRem(8)} ${pxToRem(20)};
+  gap: ${pxToRem(8)};
+  height: ${pxToRem(42)};
+  border-radius: ${pxToRem(4)};
+  background-color: #3161e8;
+  border: none;
+  cursor: pointer;
   font-family: "Montserrat", sans-serif;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
+  font-weight: 700;
+  font-size: ${pxToRem(15)};
+  text-transform: uppercase;
+  color: #ffffff;
+
+  &:hover {
+    background-color: #2e2989;
+  }
+`;
+
+export const SearchButton = styled(AddButton)`
+  height: auto;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #007bff;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+`;
+
+export const FormError = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-size: ${pxToRem(14)};
+  color: red;
+  margin-top: ${pxToRem(4)};
+`;
+
+export const UserResultsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+`;
+
+export const InfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: ${pxToRem(32)};
+  gap: ${pxToRem(24)};
+  background: rgba(193, 208, 248, 0.2);
+  border-radius: ${pxToRem(8)};
+  width: 100%;
+`;
+
+export const UserCard = styled(InfoCard)`
+  align-items: center;
+  padding: 1.5rem;
   text-align: center;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export const UserAvatar = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const UserDisplayName = styled.h3`
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 0.5rem;
+`;
+
+export const UserDetailText = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 0.3rem;
+`;
+
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: ${pxToRem(16)};
+  align-self: stretch;
+`;
+
+export const UserTagsContainer = styled(TagsContainer)`
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: ${pxToRem(8)};
+`;
+
+export const CloseIcon = styled.button`
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+`;
+
+export const TagPill = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: ${pxToRem(8)} ${pxToRem(12)};
+  gap: ${pxToRem(12)};
+  background: #2e2989;
+  border-radius: ${pxToRem(4)};
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(16)};
+`;
+
+export const UserTagPill = styled(TagPill)`
+  background-color: #e2f0ff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  cursor: default;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.6rem;
+  gap: 0;
+
+  ${CloseIcon} {
+    display: none;
+  }
+`;
+
+export const NoResultsMessage = styled.p`
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #e0e0e0;
 `;

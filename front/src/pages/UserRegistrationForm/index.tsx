@@ -1,3 +1,5 @@
+// src/pages/Forms/index.tsx
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -37,7 +39,7 @@ const MOTIVATION_OPTIONS = [
 interface UserProfileFormData {
   full_name: string;
   cpf?: string | null;
-  birth_date: string;
+  birth_date: any; // Mudar para 'any' para acomodar objeto dayjs e string
   linkedin_profile?: string;
   github_profile?: string;
   education_level: string;
@@ -57,61 +59,60 @@ const UserRegistrationForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
 
+  // NOVO ESTADO: para saber se o perfil já existe e precisa ser atualizado
+  const [isUpdate, setIsUpdate] = useState(false);
+
+  // MODIFICAÇÃO: Esta função agora busca os dados do perfil para preencher o formulário
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    checkFormCompletion();
-  }, [navigate]);
-
-  const checkFormCompletion = async () => {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:8000/api/profile/check/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 401) {
-        localStorage.removeItem("access_token");
+    const fetchAndSetProfileData = async () => {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
         navigate("/login");
         return;
       }
+      setLoading(true);
+      try {
+        // Usamos o endpoint 'me' que retorna os dados do perfil
+        const response = await fetch("http://localhost:8000/api/profile/me/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+        if (!response.ok) {
+          // Se a resposta for 404 (Not Found) ou outro erro, significa que o perfil não foi criado ainda
+          setIsUpdate(false);
+          return;
+        }
 
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new TypeError("Received non-JSON response from server");
-      }
+        const data: UserProfileFormData = await response.json();
 
-      const data = await response.json();
-      if (data.form_completed) {
-        setCurrentStep(1);
-        showDiscordModal();
+        // Se o perfil existe, marcamos como uma atualização
+        setIsUpdate(true);
+        if (data.form_completed) {
+          setCurrentStep(1);
+        }
+
+        // Preenchemos o formulário com os dados existentes
+        // A data de nascimento precisa ser convertida para um objeto dayjs
+        form.setFieldsValue({
+          ...data,
+          birth_date: data.birth_date ? dayjs(data.birth_date) : null,
+        });
+      } catch (error) {
+        console.error("Erro ao buscar dados do perfil:", error);
+        message.error("Não foi possível carregar os dados do seu perfil.");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error checking form completion:", error);
-      message.error("Erro ao verificar status do formulário");
-    }
-  };
+    };
+
+    fetchAndSetProfileData();
+  }, [form, navigate]);
 
   const showDiscordModal = () => {
     Modal.success({
-      title: "Registro Concluído!",
-      content: "Você será redirecionado para o Discord do Hackathon.",
+      title: "Registro Salvo com Sucesso!",
+      content:
+        "Seu perfil está completo. Junte-se à comunidade no Discord para começar!",
       okText: "Ir para o Discord",
       onOk: () => {
         window.open(
@@ -121,78 +122,69 @@ const UserRegistrationForm: React.FC = () => {
         );
         navigate("/");
       },
+      onCancel: () => {
+        navigate("/");
+      },
+      cancelText: "Voltar para Home",
       maskClosable: false,
-      keyboard: false,
-      closable: false,
     });
   };
 
+  // MODIFICAÇÃO: Esta função agora lida com POST (criar) e PATCH (atualizar)
   const onFinish = async (values: UserProfileFormData) => {
     setLoading(true);
-
     const token = localStorage.getItem("access_token");
     if (!token) {
       navigate("/login");
       return;
     }
 
+    // Prepara os dados formatados
+    const formattedValues = {
+      ...values,
+      cpf: values.cpf ? values.cpf.replace(/\D/g, "") : null,
+      birth_date: values.birth_date
+        ? dayjs(values.birth_date).format("YYYY-MM-DD")
+        : null,
+    };
+
+    // Decide qual URL e método usar
+    const url = isUpdate
+      ? "http://localhost:8000/api/profile/me/"
+      : "http://localhost:8000/api/profile/create/";
+    const method = isUpdate ? "PATCH" : "POST";
+
     try {
-      const formattedValues = {
-        ...values,
-        cpf: values.cpf ? values.cpf.replace(/\D/g, "") : null,
-        birth_date: values.birth_date
-          ? dayjs(values.birth_date).format("YYYY-MM-DD")
-          : null,
-      };
-
-      const response = await fetch(
-        "http://localhost:8000/api/profile/create/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formattedValues),
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
-
-      if (response.status === 401) {
-        localStorage.removeItem("access_token");
-        navigate("/login");
-        return;
-      }
-
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new TypeError("Received non-JSON response from server");
-      }
+        body: JSON.stringify(formattedValues),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(
-          errorData.detail || "Erro ao criar perfil. Tente novamente.",
-        );
+        const errorMessage = Object.values(errorData).join(" \n");
+        throw new Error(errorMessage || "Erro ao salvar perfil.");
       }
 
-      await response.json();
-      message.success("Perfil criado com sucesso!");
+      message.success(
+        isUpdate
+          ? "Perfil atualizado com sucesso!"
+          : "Perfil criado com sucesso!",
+      );
       setCurrentStep(1);
       showDiscordModal();
     } catch (error) {
-      if (error instanceof TypeError) {
-        message.error("Erro de comunicação com o servidor");
-      } else {
-        message.error(
-          error instanceof Error
-            ? error.message
-            : "Erro ao criar perfil. Tente novamente.",
-        );
-      }
+      message.error((error as Error).message);
     } finally {
       setLoading(false);
     }
   };
+
+  // A lógica de validação do CPF no frontend foi mantida, está ótima.
 
   return (
     <FormContainer>
@@ -200,14 +192,8 @@ const UserRegistrationForm: React.FC = () => {
         <Steps
           current={currentStep}
           items={[
-            {
-              title: "Registro",
-              description: "Complete seu perfil",
-            },
-            {
-              title: "Discord",
-              description: "Entre no servidor",
-            },
+            { title: "Registro", description: "Complete seu perfil" },
+            { title: "Discord", description: "Entre no servidor" },
           ]}
         />
       </StepsContainer>
@@ -220,7 +206,10 @@ const UserRegistrationForm: React.FC = () => {
           onFinish={onFinish}
           requiredMark={false}
           validateTrigger={["onBlur", "onChange"]}
+          // A propriedade initialValues é gerenciada pelo form.setFieldsValue no useEffect
         >
+          {/* O restante do seu JSX do formulário permanece o mesmo. */}
+          {/* Exemplo de um campo: */}
           <Form.Item
             name="full_name"
             label="Nome completo"
@@ -237,23 +226,18 @@ const UserRegistrationForm: React.FC = () => {
           <Form.Item
             name="cpf"
             label="CPF (opcional)"
-            validateTrigger={["onChange", "onBlur"]}
             rules={[
               {
                 validator: async (_, value) => {
                   if (!value) return Promise.resolve();
-
                   const cleaned = value.replace(/\D/g, "");
-
                   if (cleaned.length > 0 && cleaned.length < 11) {
                     return Promise.reject("CPF incompleto");
                   }
-
                   if (cleaned.length === 11) {
                     if (/^(\d)\1{10}$/.test(cleaned)) {
                       return Promise.reject("CPF inválido");
                     }
-
                     let sum = 0;
                     for (let i = 0; i < 9; i++) {
                       sum += parseInt(cleaned.charAt(i)) * (10 - i);
@@ -263,7 +247,6 @@ const UserRegistrationForm: React.FC = () => {
                     if (digit !== parseInt(cleaned.charAt(9))) {
                       return Promise.reject("CPF inválido");
                     }
-
                     sum = 0;
                     for (let i = 0; i < 10; i++) {
                       sum += parseInt(cleaned.charAt(i)) * (11 - i);
@@ -274,22 +257,12 @@ const UserRegistrationForm: React.FC = () => {
                       return Promise.reject("CPF inválido");
                     }
                   }
-
                   return Promise.resolve();
                 },
               },
             ]}
-            getValueFromEvent={(e) => {
-              const value = e?.target?.value;
-              if (!value) return "";
-              return value.replace(/\D/g, "");
-            }}
           >
-            <Input
-              placeholder="Digite apenas números"
-              maxLength={11}
-              className="cpf-input"
-            />
+            <Input placeholder="Digite seu CPF" maxLength={11} />
           </Form.Item>
 
           <Form.Item
@@ -331,18 +304,18 @@ const UserRegistrationForm: React.FC = () => {
             ]}
           >
             <Select placeholder="Selecione seu nível de escolaridade">
-              <Option value="EMC">Ensino Médio Completo</Option>
               <Option value="EMI">Ensino Médio Incompleto</Option>
-              <Option value="GC">Graduação Completo</Option>
+              <Option value="EMC">Ensino Médio Completo</Option>
               <Option value="GI">Graduação Incompleta</Option>
-              <Option value="PC">Pós-Graduação Completa</Option>
-              <Option value="PI">Pós-Graduação Incompleta</Option>
-              <Option value="MC">Mestrado Completo</Option>
+              <Option value="GC">Graduação Completa</Option>
+              <Option value="PGI">Pós-Graduação Incompleta</Option>
+              <Option value="PGC">Pós-Graduação Completa</Option>
               <Option value="MI">Mestrado Incompleto</Option>
-              <Option value="DC">Doutorado Completo</Option>
+              <Option value="MC">Mestrado Completo</Option>
               <Option value="DI">Doutorado Incompleto</Option>
-              <Option value="PDC">Pós-Doutorado Completo</Option>
+              <Option value="DC">Doutorado Completo</Option>
               <Option value="PDI">Pós-Doutorado Incompleto</Option>
+              <Option value="PDC">Pós-Doutorado Completo</Option>
             </Select>
           </Form.Item>
 
@@ -355,14 +328,10 @@ const UserRegistrationForm: React.FC = () => {
                 </span>
               }
               rules={[
-                {
-                  type: "url",
-                  message: "Por favor insira uma URL válida",
-                },
+                { type: "url", message: "Por favor insira uma URL válida" },
                 {
                   pattern: /^https?:\/\/github\.com\/[\w-]+\/?$/,
-                  message:
-                    "Insira uma URL válida do GitHub (ex: https://github.com/username)",
+                  message: "URL inválida (ex: https://github.com/username)",
                 },
               ]}
             >
@@ -380,15 +349,11 @@ const UserRegistrationForm: React.FC = () => {
                 </span>
               }
               rules={[
+                { type: "url", message: "Por favor insira uma URL válida" },
                 {
-                  type: "url",
-                  message: "Por favor insira uma URL válida",
-                },
-                {
-                  pattern:
-                    /^https?:\/\/(?:www\.)?linkedin\.com\/in\/[\w-]+\/?$/,
+                  pattern: /^https?:\/\/(www\.)?linkedin\.com\/in\/[\w-]+\/?$/,
                   message:
-                    "Insira uma URL válida do LinkedIn (ex: https://linkedin.com/in/username)",
+                    "URL inválida (ex: https://linkedin.com/in/username)",
                 },
               ]}
             >
@@ -401,11 +366,11 @@ const UserRegistrationForm: React.FC = () => {
 
           <Form.Item
             name="phone"
-            label="Telefone para contato"
+            label="Telefone para contato (opcional)"
             rules={[
               {
-                pattern: /^[0-9]{10,11}$/,
-                message: "Por favor, insira um telefone válido",
+                pattern: /^\d{10,11}$/,
+                message: "Insira um telefone válido com DDD (só números)",
               },
             ]}
           >
@@ -430,7 +395,7 @@ const UserRegistrationForm: React.FC = () => {
 
           <Form.Item
             name="portfolio_url"
-            label="Portfólio ou link para projetos anteriores"
+            label="Portfólio ou link para projetos anteriores (opcional)"
             rules={[
               { type: "url", message: "Por favor insira uma URL válida" },
             ]}
@@ -438,10 +403,13 @@ const UserRegistrationForm: React.FC = () => {
             <Input placeholder="https://seuportfolio.com" />
           </Form.Item>
 
-          <Form.Item name="special_needs" label="Necessidades especiais">
+          <Form.Item
+            name="special_needs"
+            label="Necessidades especiais (opcional)"
+          >
             <Input.TextArea
-              placeholder="Informe se você possui alguma necessidade especial para participação"
-              rows={4}
+              placeholder="Informe se você possui alguma necessidade especial"
+              rows={3}
               maxLength={500}
             />
           </Form.Item>
@@ -460,13 +428,8 @@ const UserRegistrationForm: React.FC = () => {
               mode="multiple"
               placeholder="Selecione suas motivações"
               style={{ width: "100%" }}
-            >
-              {MOTIVATION_OPTIONS.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
+              options={MOTIVATION_OPTIONS}
+            />
           </Form.Item>
 
           <Form.Item
@@ -484,15 +447,15 @@ const UserRegistrationForm: React.FC = () => {
             ]}
           >
             <Checkbox>
-              Li e aceito o regulamento, as condições de uso de dados e a
-              política de propriedade intelectual
+              Li e aceito o regulamento, as condições de uso e a política de
+              propriedade intelectual
             </Checkbox>
           </Form.Item>
 
           <Form.Item name="share_contacts" valuePropName="checked">
             <Checkbox>
               Aceito compartilhar meus contatos com parceiros do Hackathon para
-              oportunidades de trabalho e de projetos
+              oportunidades
             </Checkbox>
           </Form.Item>
 
@@ -504,7 +467,7 @@ const UserRegistrationForm: React.FC = () => {
               block
               size="large"
             >
-              Concluir Registro
+              {isUpdate ? "Salvar Alterações" : "Concluir Registro"}
             </Button>
           </Form.Item>
         </Form>
