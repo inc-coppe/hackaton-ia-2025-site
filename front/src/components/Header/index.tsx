@@ -2,6 +2,8 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Space, MenuProps } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import { FaSearch, FaRegUser } from "react-icons/fa";
+import { IoArrowBack } from "react-icons/io5";
 import LogoHackaton from "../../assets/Logo.png";
 import img from "../../assets/Lupa.png";
 import img2 from "../../assets/Fechar.png";
@@ -46,8 +48,11 @@ import {
   UserTagPill,
   NoResultsMessage,
   AddButton,
+  MobileSearchContainer,
+  MobileSearchHeader,
+  ExitSearchButton,
+  AuthPlaceholder,
 } from "./style";
-import { FaSearch, FaRegUser } from "react-icons/fa";
 
 interface User {
   id: string;
@@ -71,15 +76,21 @@ interface SearchUserData {
 const AuthSection = ({
   isMobile = false,
   user,
+  authLoading,
   onUserClick,
   onSearchClick,
 }: {
   isMobile?: boolean;
   user: User | null;
+  authLoading: boolean;
   onUserClick: () => void;
   onSearchClick: () => void;
-}) =>
-  user ? (
+}) => {
+  if (authLoading) {
+    return <AuthPlaceholder />;
+  }
+
+  return user ? (
     <UserContainer $isMobile={isMobile}>
       <BotaoLupa onClick={onSearchClick}>
         <LupaWrapper src={img} alt="Buscar Participantes" />
@@ -100,6 +111,7 @@ const AuthSection = ({
       </SignUpButton>
     </AuthContainer>
   );
+};
 
 const sponsorItems: MenuProps["items"] = [
   { key: "1", label: <Link to="/patrocinador">Nossos Patrocinadores</Link> },
@@ -122,12 +134,114 @@ const sponsorItems: MenuProps["items"] = [
   },
 ];
 
+const SearchInterface = (props: {
+  searchTerm: string;
+  onSearchTermChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSearchSubmit: (e: FormEvent) => void;
+  searchLoading: boolean;
+  searchError: string | null;
+  searchResults: SearchUserData[] | null;
+  onUserProfileClick: (userId: number) => void;
+}) => (
+  <>
+    <BuscaBodyContainer>
+      <PesquisaSubTitulo>
+        Toda jornada é melhor quando é compartilhada.
+      </PesquisaSubTitulo>
+      <PesquisaBody>
+        Busque por nomes ou interesses e descubra pessoas.
+      </PesquisaBody>
+    </BuscaBodyContainer>
+
+    <form onSubmit={props.onSearchSubmit} style={{ width: "100%" }}>
+      <SearchInputContainer>
+        <SearchField
+          type="text"
+          placeholder="Buscar por nome, área ou tags..."
+          value={props.searchTerm}
+          onChange={props.onSearchTermChange}
+          autoFocus
+        />
+        <SearchButton type="submit" disabled={props.searchLoading}>
+          {props.searchLoading ? (
+            "Buscando..."
+          ) : (
+            <div
+              style={{
+                padding: "0rem 0rem",
+                display: "flex",
+                alignItems: "center",
+                fontSize: "0.9rem",
+              }}
+            >
+              <FaSearch /> Buscar
+            </div>
+          )}
+        </SearchButton>
+      </SearchInputContainer>
+    </form>
+
+    {props.searchError && <FormError>{props.searchError}</FormError>}
+
+    <UserResultsContainer>
+      {props.searchResults &&
+        props.searchResults.length > 0 &&
+        props.searchResults.map((foundUser) => (
+          <UserCard
+            key={foundUser.user_id}
+            onClick={() => props.onUserProfileClick(foundUser.user_id)}
+          >
+            <UserAvatar
+              src={foundUser.profile_picture_url || undefined}
+              alt={`Foto de ${foundUser.user_name}`}
+            />
+            <UserDisplayName>{foundUser.user_name}</UserDisplayName>
+            {foundUser.full_name && (
+              <UserDetailText>{foundUser.full_name}</UserDetailText>
+            )}
+            {foundUser.tags && foundUser.tags.length > 0 && (
+              <UserTagsContainer>
+                {foundUser.tags.map((tag) => (
+                  <UserTagPill key={tag}>{tag}</UserTagPill>
+                ))}
+              </UserTagsContainer>
+            )}
+            <AddButton
+              style={{ marginTop: "1rem", width: "auto" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                props.onUserProfileClick(foundUser.user_id);
+              }}
+            >
+              <FaRegUser style={{ marginRight: "0.5rem" }} /> Ver Perfil
+            </AddButton>
+          </UserCard>
+        ))}
+    </UserResultsContainer>
+
+    {props.searchResults?.length === 0 && !props.searchLoading && (
+      <NoResultsMessage>
+        Nenhum usuário encontrado com o termo "{props.searchTerm}".
+      </NoResultsMessage>
+    )}
+    {props.searchResults === null &&
+      !props.searchLoading &&
+      !props.searchError && (
+        <NoResultsMessage>
+          Digite algo para encontrar outros participantes.
+        </NoResultsMessage>
+      )}
+  </>
+);
+
 const Header = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const navigate = useNavigate();
 
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
+  const [isMobileSearchActive, setIsMobileSearchActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<SearchUserData[] | null>(
     null,
@@ -135,54 +249,68 @@ const Header = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
 
-  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
-  };
-
   const handleSearchUsers = async (e: FormEvent) => {
     e.preventDefault();
     if (!searchTerm.trim()) {
       setSearchResults(null);
       return;
     }
-
     setSearchLoading(true);
     setSearchError(null);
     setSearchResults(null);
-
     const token = localStorage.getItem("access_token");
     if (!token) {
-      setSearchError("Token de acesso não encontrado para realizar a busca.");
+      setSearchError("Token de acesso não encontrado.");
       setSearchLoading(false);
       return;
     }
-
     try {
       const response = await fetch(
-        `http://localhost:8000/api/users/search/?search=${encodeURIComponent(
-          searchTerm,
-        )}`,
+        `http://localhost:8000/api/users/search/?search=${encodeURIComponent(searchTerm)}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
       if (response.ok) {
-        const data: SearchUserData[] = await response.json();
-        setSearchResults(data);
+        setSearchResults(await response.json());
       } else {
         const errorData = await response.json();
         setSearchError(errorData.detail || "Falha ao buscar usuários.");
         setSearchResults([]);
       }
     } catch (err) {
-      console.error("Erro na busca de usuários:", err);
-      setSearchError("Ocorreu um erro de rede ao buscar usuários.");
+      setSearchError("Ocorreu um erro de rede.");
     } finally {
       setSearchLoading(false);
     }
   };
 
+  const cleanUpSearch = () => {
+    setSearchTerm("");
+    setSearchResults(null);
+    setSearchError(null);
+  };
+
   const openUserProfile = (userId: number) => {
-    setIsSearchModalOpen(false);
+    setIsDesktopSearchOpen(false);
+    setIsMobileSearchActive(false);
+    cleanUpSearch();
     navigate(`/profile/${userId}`);
+  };
+
+  const openMobileSearch = () => {
+    setIsMenuOpen(false);
+    setIsMobileSearchActive(true);
+  };
+
+  const closeMobileSearch = () => {
+    setIsMobileSearchActive(false);
+    cleanUpSearch();
+  };
+
+  const closeDesktopSearch = () => {
+    setIsDesktopSearchOpen(false);
+    cleanUpSearch();
   };
 
   useEffect(() => {
@@ -202,7 +330,11 @@ const Header = () => {
           }
         } catch (error) {
           console.error("Error fetching user:", error);
+        } finally {
+          setAuthLoading(false);
         }
+      } else {
+        setAuthLoading(false);
       }
     };
     fetchUser();
@@ -213,16 +345,7 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeSearchModal = () => {
-    setIsSearchModalOpen(false);
-    setSearchTerm("");
-    setSearchResults(null);
-    setSearchError(null);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const NavigationLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => (
     <>
@@ -257,23 +380,20 @@ const Header = () => {
         <Link to="/">
           <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
         </Link>
-
         <NavigationContainer>
           <NavigationLinks />
         </NavigationContainer>
-
         <AuthSection
           user={user}
+          authLoading={authLoading}
           onUserClick={handleUserClick}
-          onSearchClick={() => setIsSearchModalOpen(true)}
+          onSearchClick={() => setIsDesktopSearchOpen(true)}
         />
-
         <BurgerButton onClick={toggleMenu} $isOpen={isMenuOpen}>
           <span />
           <span />
           <span />
         </BurgerButton>
-
         <MobileNavigation $isOpen={isMenuOpen}>
           <MobileMenuContent>
             <NavSection>
@@ -282,110 +402,58 @@ const Header = () => {
             <AuthSection
               isMobile
               user={user}
+              authLoading={authLoading}
               onUserClick={handleUserClick}
-              onSearchClick={() => setIsSearchModalOpen(true)}
+              onSearchClick={openMobileSearch}
             />
           </MobileMenuContent>
         </MobileNavigation>
       </HeaderContainer>
 
-      {isSearchModalOpen && (
-        <Overlay onClick={closeSearchModal}>
+      {isDesktopSearchOpen && (
+        <Overlay onClick={closeDesktopSearch}>
           <TelaBranca onClick={(e) => e.stopPropagation()}>
             <BuscaContainer>
               <BuscaPrincipalContainer>
                 <PesquisaTitulo>/BUSCAR</PesquisaTitulo>
-                <BotaoX onClick={closeSearchModal}>
+                <BotaoX onClick={closeDesktopSearch}>
                   <XWrapper src={img2} alt="Fechar" />
                 </BotaoX>
               </BuscaPrincipalContainer>
-
               <BuscaTextContainer>
-                <BuscaBodyContainer>
-                  <PesquisaSubTitulo>
-                    Toda jornada é melhor quando é compartilhada.
-                  </PesquisaSubTitulo>
-                  <PesquisaBody>
-                    Busque por nomes ou interesses e descubra pessoas.
-                  </PesquisaBody>
-                </BuscaBodyContainer>
-
-                <form onSubmit={handleSearchUsers} style={{ width: "100%" }}>
-                  <SearchInputContainer>
-                    <SearchField
-                      type="text"
-                      placeholder="Buscar por nome, área ou tags..."
-                      value={searchTerm}
-                      onChange={handleSearchTermChange}
-                      autoFocus
-                    />
-                    <SearchButton type="submit" disabled={searchLoading}>
-                      {searchLoading ? (
-                        "Buscando..."
-                      ) : (
-                        <>
-                          <FaSearch /> Buscar
-                        </>
-                      )}
-                    </SearchButton>
-                  </SearchInputContainer>
-                </form>
-
-                {searchError && <FormError>{searchError}</FormError>}
-
-                <UserResultsContainer>
-                  {searchResults &&
-                    searchResults.length > 0 &&
-                    searchResults.map((foundUser) => (
-                      <UserCard
-                        key={foundUser.user_id}
-                        onClick={() => openUserProfile(foundUser.user_id)}
-                      >
-                        <UserAvatar
-                          src={foundUser.profile_picture_url || undefined}
-                          alt={`Foto de ${foundUser.user_name}`}
-                        />
-                        <UserDisplayName>{foundUser.user_name}</UserDisplayName>
-                        {foundUser.full_name && (
-                          <UserDetailText>{foundUser.full_name}</UserDetailText>
-                        )}
-                        {foundUser.tags && foundUser.tags.length > 0 && (
-                          <UserTagsContainer>
-                            {foundUser.tags.map((tag) => (
-                              <UserTagPill key={tag}>{tag}</UserTagPill>
-                            ))}
-                          </UserTagsContainer>
-                        )}
-                        <AddButton
-                          style={{ marginTop: "1rem", width: "auto" }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openUserProfile(foundUser.user_id);
-                          }}
-                        >
-                          <FaRegUser style={{ marginRight: "0.5rem" }} /> Ver
-                          Perfil
-                        </AddButton>
-                      </UserCard>
-                    ))}
-                </UserResultsContainer>
-
-                {searchResults &&
-                  searchResults.length === 0 &&
-                  !searchLoading && (
-                    <NoResultsMessage>
-                      Nenhum usuário encontrado com o termo "{searchTerm}".
-                    </NoResultsMessage>
-                  )}
-                {searchResults === null && !searchLoading && !searchError && (
-                  <NoResultsMessage>
-                    Digite algo para encontrar outros participantes.
-                  </NoResultsMessage>
-                )}
+                <SearchInterface
+                  searchTerm={searchTerm}
+                  onSearchTermChange={handleSearchTermChange}
+                  onSearchSubmit={handleSearchUsers}
+                  searchLoading={searchLoading}
+                  searchError={searchError}
+                  searchResults={searchResults}
+                  onUserProfileClick={openUserProfile}
+                />
               </BuscaTextContainer>
             </BuscaContainer>
           </TelaBranca>
         </Overlay>
+      )}
+
+      {isMobileSearchActive && (
+        <MobileSearchContainer>
+          <MobileSearchHeader>
+            <ExitSearchButton onClick={closeMobileSearch}>
+              <IoArrowBack />
+            </ExitSearchButton>
+            <PesquisaTitulo>Buscar Participantes</PesquisaTitulo>
+          </MobileSearchHeader>
+          <SearchInterface
+            searchTerm={searchTerm}
+            onSearchTermChange={handleSearchTermChange}
+            onSearchSubmit={handleSearchUsers}
+            searchLoading={searchLoading}
+            searchError={searchError}
+            searchResults={searchResults}
+            onUserProfileClick={openUserProfile}
+          />
+        </MobileSearchContainer>
       )}
     </>
   );

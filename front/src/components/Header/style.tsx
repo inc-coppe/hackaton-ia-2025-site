@@ -214,14 +214,6 @@ export const ProfilePicture = styled.img`
   }
 `;
 
-export const UserName = styled.span`
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #ffffff;
-  text-transform: uppercase;
-`;
-
 export const BurgerButton = styled.button<{ $isOpen: boolean }>`
   display: none;
 
@@ -352,12 +344,12 @@ export const BuscaPrincipalContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const PesquisaTitulo = styled.div`
-  font-family: "Montserrat";
+export const PesquisaTitulo = styled.h2`
+  font-family: "Montserrat", sans-serif;
   font-weight: 900;
-  font-size: 2rem;
-  line-height: 100%;
+  font-size: 1.5rem;
   color: #000000;
+  margin: 0;
 `;
 
 export const BuscaBodyContainer = styled.div`
@@ -366,28 +358,27 @@ export const BuscaBodyContainer = styled.div`
   gap: 0.5rem;
 `;
 
-export const PesquisaSubTitulo = styled.div`
-  font-family: "Nunito Sans";
+export const PesquisaSubTitulo = styled.p`
+  font-family: "Nunito Sans", sans-serif;
   font-weight: 500;
   font-size: 1rem;
-  line-height: 1.25rem;
   color: #0f0f21;
+  margin: 0;
 `;
 
-export const PesquisaBody = styled.div`
-  font-family: "Nunito Sans";
+export const PesquisaBody = styled.p`
+  font-family: "Nunito Sans", sans-serif;
   font-weight: 500;
   font-size: 1rem;
-  line-height: 1.25rem;
   color: #0f0f2199;
+  margin: 0;
 `;
-
-// --- ESTILOS MOVIDOS DE PROFILE.STYLE.TSX ---
 
 export const SearchInputContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  marin-top: 1rem;
   align-items: center;
+  gap: 1rem;
   width: 100%;
 `;
 
@@ -406,6 +397,10 @@ export const SearchField = styled.input`
 
   &::placeholder {
     color: #a0a0a0;
+  }
+
+  @media (max-width: 30rem) {
+    padding: 0.6rem 0.5rem;
   }
 `;
 
@@ -579,4 +574,49 @@ export const NoResultsMessage = styled.p`
   background-color: #f9f9f9;
   border-radius: 8px;
   border: 1px dashed #e0e0e0;
+`;
+
+export const MobileSearchContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;
+`;
+
+export const MobileSearchHeader = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+`;
+
+export const ExitSearchButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #333;
+
+  @media (max-width: 30rem) {
+    padding: 0rem 0rem;
+  }
+`;
+
+export const AuthPlaceholder = styled.div`
+  width: 180px;
+  height: 38px;
+  @media (max-width: 28rem) {
+    width: 100%;
+  }
 `;
