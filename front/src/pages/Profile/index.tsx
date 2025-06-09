@@ -5,9 +5,9 @@ import React, {
   KeyboardEvent,
   FormEvent,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
-import { IoClose, IoPencil } from "react-icons/io5";
-
+import { IoClose, IoPencil, IoLogOutOutline } from "react-icons/io5";
 import {
   PerfilContainer,
   ProfileBanner,
@@ -36,6 +36,7 @@ import {
   ActionButtonsContainer,
   SaveButton,
   FormError,
+  LogoutButton,
 } from "./style";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -90,12 +91,12 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const navigate = useNavigate();
 
   const fetchUserProfile = async () => {
     const token = localStorage.getItem("access_token");
     if (!token) {
-      setError("Token de acesso não encontrado.");
-      setLoading(false);
+      navigate("/login");
       return;
     }
     try {
@@ -121,7 +122,7 @@ function Profile() {
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, [navigate]);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -265,9 +266,15 @@ function Profile() {
     setIsEditing(!isEditing);
   };
 
+  const handleLogout = () => {
+    navigate("/logout");
+  };
+
   if (loading) return <p>Carregando perfil...</p>;
-  if (error || !userProfile)
-    return <p>{error || "Não foi possível carregar o perfil."}</p>;
+  if (error || !userProfile) {
+    navigate("/login");
+    return null;
+  }
 
   const displayProfile = isEditing ? editableProfile : userProfile;
 
@@ -290,9 +297,14 @@ function Profile() {
                   Cancelar Edição
                 </EditButton>
               ) : (
-                <EditButton onClick={toggleEditMode}>
-                  <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
-                </EditButton>
+                <>
+                  <EditButton onClick={toggleEditMode}>
+                    <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
+                  </EditButton>
+                  <LogoutButton onClick={handleLogout}>
+                    <IoLogOutOutline style={{ marginRight: "0.5rem" }} /> Sair
+                  </LogoutButton>
+                </>
               )}
               {displayProfile.linkedin_profile && !isEditing && (
                 <SocialButton
