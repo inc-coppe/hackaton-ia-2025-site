@@ -5,7 +5,8 @@ import React, {
   KeyboardEvent,
   FormEvent,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 import { IoClose, IoPencil, IoLogOutOutline } from "react-icons/io5";
 import {
@@ -42,6 +43,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 interface UserProfileData {
+  user_id?: number;
   email: string;
   user_name: string;
   user_profile_picture_url: string;
@@ -81,6 +83,9 @@ const EDUCATION_CHOICES = [
 ];
 
 function Profile() {
+  const { userId } = useParams<{ userId: string }>();
+  const navigate = useNavigate();
+
   const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
   const [editableProfile, setEditableProfile] = useState<
     Partial<UserProfileData>
@@ -91,68 +96,78 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const navigate = useNavigate();
-
-  const fetchUserProfile = async () => {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:8000/api/profile/me/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.ok) {
-        const data: UserProfileData = await response.json();
-        setUserProfile(data);
-        setEditableProfile({ ...data });
-        setTags(data.tags || []);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.detail || "Falha ao buscar os dados do perfil.");
-      }
-    } catch (err) {
-      setError("Ocorreu um erro de rede.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [isMyProfile, setIsMyProfile] = useState(false);
 
   useEffect(() => {
+    const getMyId = (): number | null => {
+      const token = localStorage.getItem("access_token");
+      if (!token) return null;
+      try {
+        const decoded: { user_id: number } = jwtDecode(token);
+        return decoded.user_id;
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const myId = getMyId();
+    const viewingMyOwnProfile =
+      !userId || (myId !== null && Number(userId) === myId);
+    setIsMyProfile(viewingMyOwnProfile);
+
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      const endpoint = viewingMyOwnProfile
+        ? "http://localhost:8000/api/profile/me/"
+        : `http://localhost:8000/api/users/${userId}/profile/`;
+
+      try {
+        const response = await fetch(endpoint, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUserProfile(data);
+          setEditableProfile({ ...data });
+          setTags(data.tags || []);
+        } else {
+          const errorData = await response.json();
+          setError(errorData.detail || "Falha ao buscar dados do perfil.");
+        }
+      } catch (err) {
+        setError("Ocorreu um erro de rede.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchUserProfile();
-  }, [navigate]);
+  }, [userId, navigate]);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target;
-    if (type === "checkbox") {
-      const { checked } = e.target as HTMLInputElement;
-      setEditableProfile((prev) => ({ ...prev, [name]: checked }));
-    } else {
-      setEditableProfile((prev) => ({ ...prev, [name]: value }));
-    }
+    const isCheckbox = type === "checkbox";
+    setEditableProfile((prev) => ({
+      ...prev,
+      [name]: isCheckbox ? (e.target as HTMLInputElement).checked : value,
+    }));
     if (formErrors[name]) {
       setFormErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
-  const validateForm = () => {
-    const errors: Record<string, string> = {};
-    if (!editableProfile.user_name?.trim())
-      errors.user_name = "Nome de usuário é obrigatório.";
-    if (!editableProfile.full_name?.trim())
-      errors.full_name = "Nome completo é obrigatório.";
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
   const handleUpdateProfile = async (e: FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
-
     const token = localStorage.getItem("access_token");
     if (!userProfile || !token) return;
 
@@ -160,7 +175,6 @@ function Profile() {
       ...editableProfile,
       tags,
     };
-
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
 
@@ -173,9 +187,7 @@ function Profile() {
         },
         body: JSON.stringify(profileDataToUpdate),
       });
-
       const responseData = await response.json();
-
       if (response.ok) {
         setUserProfile(responseData);
         setEditableProfile({ ...responseData });
@@ -185,24 +197,20 @@ function Profile() {
         alert("Perfil atualizado com sucesso!");
       } else {
         alert(
-          `Falha ao atualizar o perfil: ${
-            responseData.detail || JSON.stringify(responseData)
-          }`,
+          `Falha ao atualizar: ${responseData.detail || JSON.stringify(responseData)}`,
         );
       }
     } catch (error) {
-      console.error("Erro ao atualizar perfil:", error);
       alert("Erro de rede ao atualizar o perfil.");
     }
   };
 
   const handleUpdateTagsOnly = async (newTagsList: string[]) => {
     const token = localStorage.getItem("access_token");
-    if (!userProfile || !token) return;
+    if (!isMyProfile || !token) return;
 
     const originalTags = [...tags];
     setTags(newTagsList);
-
     try {
       const response = await fetch("http://localhost:8000/api/profile/me/", {
         method: "PATCH",
@@ -212,11 +220,7 @@ function Profile() {
         },
         body: JSON.stringify({ tags: newTagsList }),
       });
-      if (response.ok) {
-        const updatedData: UserProfileData = await response.json();
-        setUserProfile((prev) => ({ ...prev!, tags: updatedData.tags }));
-        setEditableProfile((prev) => ({ ...prev, tags: updatedData.tags }));
-      } else {
+      if (!response.ok) {
         setTags(originalTags);
         alert("Não foi possível salvar suas tags.");
       }
@@ -229,25 +233,13 @@ function Profile() {
   const handleAddTag = () => {
     const trimmedTag = newTag.trim();
     if (trimmedTag && !tags.includes(trimmedTag)) {
-      const newTagsList = [...tags, trimmedTag];
+      handleUpdateTagsOnly([...tags, trimmedTag]);
       setNewTag("");
-      if (isEditing) {
-        setTags(newTagsList);
-        setEditableProfile((prev) => ({ ...prev, tags: newTagsList }));
-      } else {
-        handleUpdateTagsOnly(newTagsList);
-      }
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    const newTagsList = tags.filter((tag) => tag !== tagToRemove);
-    if (isEditing) {
-      setTags(newTagsList);
-      setEditableProfile((prev) => ({ ...prev, tags: newTagsList }));
-    } else {
-      handleUpdateTagsOnly(newTagsList);
-    }
+    handleUpdateTagsOnly(tags.filter((tag) => tag !== tagToRemove));
   };
 
   const handleInputKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -257,24 +249,11 @@ function Profile() {
     }
   };
 
-  const toggleEditMode = () => {
-    if (isEditing && userProfile) {
-      setEditableProfile({ ...userProfile });
-      setTags(userProfile.tags || []);
-      setFormErrors({});
-    }
-    setIsEditing(!isEditing);
-  };
-
-  const handleLogout = () => {
-    navigate("/logout");
-  };
+  const toggleEditMode = () => setIsEditing(!isEditing);
+  const handleLogout = () => navigate("/logout");
 
   if (loading) return <p>Carregando perfil...</p>;
-  if (error || !userProfile) {
-    navigate("/login");
-    return null;
-  }
+  if (error || !userProfile) return <p>{error || "Perfil não encontrado."}</p>;
 
   const displayProfile = isEditing ? editableProfile : userProfile;
 
@@ -288,15 +267,14 @@ function Profile() {
             alt={`Foto de ${displayProfile.user_name}`}
           />
           <TitleContainer>
-            <UserName>
-              {displayProfile.user_name || userProfile.user_name}
-            </UserName>
+            <UserName>{displayProfile.user_name}</UserName>
             <ButtonsContainer>
-              {isEditing ? (
+              {isMyProfile && isEditing && (
                 <EditButton onClick={toggleEditMode}>
                   Cancelar Edição
                 </EditButton>
-              ) : (
+              )}
+              {isMyProfile && !isEditing && (
                 <>
                   <EditButton onClick={toggleEditMode}>
                     <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
@@ -306,7 +284,7 @@ function Profile() {
                   </LogoutButton>
                 </>
               )}
-              {displayProfile.linkedin_profile && !isEditing && (
+              {displayProfile.linkedin_profile && (
                 <SocialButton
                   href={displayProfile.linkedin_profile}
                   target="_blank"
@@ -315,7 +293,7 @@ function Profile() {
                   <FaLinkedin /> <span>LinkedIn</span>
                 </SocialButton>
               )}
-              {displayProfile.github_profile && !isEditing && (
+              {displayProfile.github_profile && (
                 <SocialButton
                   href={displayProfile.github_profile}
                   target="_blank"
@@ -324,7 +302,7 @@ function Profile() {
                   <FaGithub /> <span>GitHub</span>
                 </SocialButton>
               )}
-              {!isEditing && (
+              {displayProfile.email && (
                 <SocialButton href={`mailto:${displayProfile.email}`}>
                   <FaEnvelope /> <span>Email</span>
                 </SocialButton>
@@ -332,9 +310,8 @@ function Profile() {
             </ButtonsContainer>
           </TitleContainer>
         </ProfileBanner>
-
         <PageContent>
-          {isEditing ? (
+          {isMyProfile && isEditing ? (
             <InfoCard
               as="form"
               onSubmit={handleUpdateProfile}
@@ -352,9 +329,6 @@ function Profile() {
                   value={editableProfile.user_name || ""}
                   onChange={handleInputChange}
                 />
-                {formErrors.user_name && (
-                  <FormError>{formErrors.user_name}</FormError>
-                )}
               </FormRow>
               <FormRow>
                 <FormLabel htmlFor="full_name">Nome Completo:</FormLabel>
@@ -365,9 +339,6 @@ function Profile() {
                   value={editableProfile.full_name || ""}
                   onChange={handleInputChange}
                 />
-                {formErrors.full_name && (
-                  <FormError>{formErrors.full_name}</FormError>
-                )}
               </FormRow>
               <FormRow>
                 <FormLabel htmlFor="linkedin_profile">
@@ -428,21 +399,16 @@ function Profile() {
               </ActionButtonsContainer>
             </InfoCard>
           ) : (
-            <>
-              <InfoCard>
-                <TextContent>
-                  <CardTitle>/INTERESSES</CardTitle>
-                  <TextBlock>
-                    <CardBodyText>
-                      Adicione tags para destacar seus interesses e
-                      conhecimentos.
-                    </CardBodyText>
-                    <CardBodyText secondary>
-                      Elas facilitam conexões com pessoas que compartilham dos
-                      mesmos temas.
-                    </CardBodyText>
-                  </TextBlock>
-                </TextContent>
+            <InfoCard>
+              <TextContent>
+                <CardTitle>/INTERESSES</CardTitle>
+                <TextBlock>
+                  <CardBodyText>
+                    Estes são os interesses e conhecimentos do usuário.
+                  </CardBodyText>
+                </TextBlock>
+              </TextContent>
+              {isMyProfile && (
                 <AddTagContainer>
                   <TagInput
                     type="text"
@@ -453,18 +419,20 @@ function Profile() {
                   />
                   <AddButton onClick={handleAddTag}>Adicionar</AddButton>
                 </AddTagContainer>
-                <TagsContainer>
-                  {tags.map((tag) => (
-                    <TagPill key={tag}>
-                      <span>{tag}</span>
+              )}
+              <TagsContainer>
+                {tags.map((tag) => (
+                  <TagPill key={tag}>
+                    <span>{tag}</span>
+                    {isMyProfile && (
                       <CloseIcon onClick={() => handleRemoveTag(tag)}>
                         <IoClose />
                       </CloseIcon>
-                    </TagPill>
-                  ))}
-                </TagsContainer>
-              </InfoCard>
-            </>
+                    )}
+                  </TagPill>
+                ))}
+              </TagsContainer>
+            </InfoCard>
           )}
         </PageContent>
       </PerfilContainer>

@@ -7,7 +7,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
 import Profile from "./pages/Profile";
@@ -23,11 +22,6 @@ function Logout() {
   localStorage.clear();
   window.location.href = "/";
   return null;
-}
-
-function RegisterAndLogout() {
-  localStorage.clear();
-  return <Register />;
 }
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -109,17 +103,17 @@ function App() {
             </PublicOnlyRoute>
           }
         />
-        <Route
-          path="/register"
-          element={
-            <PublicOnlyRoute>
-              <RegisterAndLogout />
-            </PublicOnlyRoute>
-          }
-        />
         <Route path="/logout" element={<Logout />} />
         <Route
           path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:userId"
           element={
             <ProtectedRoute>
               <Profile />
