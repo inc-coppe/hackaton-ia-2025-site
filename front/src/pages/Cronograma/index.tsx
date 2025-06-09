@@ -1,5 +1,4 @@
-import Header from "../../components/Header";
-import HeaderPerfil from "../../components/HeaderPerfil";
+import HeaderPerfil from "../../components/Header";
 import Footer from "../../components/Footer";
 
 import {
@@ -23,13 +22,13 @@ const eventos_pre = [
   {
     dataLugar: "01/09 a 29/09 • Online",
     titulo: "_Treinamento NVIDIA",
-    descricao: "Online para todos os inscritos lhes fornecendo uma base técnica sobre os desfios a serem solucionados.",
+    descricao:
+      "Online para todos os inscritos lhes fornecendo uma base técnica sobre os desfios a serem solucionados.",
   },
   {
     dataLugar: "",
     titulo: "_Seleção de candidatos",
-    descricao:
-      "Baseada na análise de currículos e desempenho no treinamento. ",
+    descricao: "Baseada na análise de currículos e desempenho no treinamento. ",
   },
   {
     dataLugar: "",
@@ -48,7 +47,8 @@ const eventos_sex = [
   {
     dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
     titulo: "_Abertura oficial",
-    descricao: "Apresentação inicial com os principais parceiros do objetivo do evento.",
+    descricao:
+      "Apresentação inicial com os principais parceiros do objetivo do evento.",
   },
   {
     dataLugar: "19H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
@@ -59,8 +59,7 @@ const eventos_sex = [
   {
     dataLugar: "21H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
     titulo: "_Ideação",
-    descricao:
-      "Encontro das equipes para o começo do processo de ideação. ",
+    descricao: "Encontro das equipes para o começo do processo de ideação. ",
   },
 ];
 
@@ -68,13 +67,13 @@ const eventos_sab = [
   {
     dataLugar: "Manhã • PORTO MARAVALLEY (RJ), DISCORD (SP)",
     titulo: "_ Discussão de abordagens",
-    descricao: "Exploração de estratégias e abordagens com o suporte de mentores especializados.",
+    descricao:
+      "Exploração de estratégias e abordagens com o suporte de mentores especializados.",
   },
   {
     dataLugar: "",
     titulo: "_Desenvolvimento",
-    descricao:
-      "Avanço no desenvolvimento das soluções. ",
+    descricao: "Avanço no desenvolvimento das soluções. ",
   },
   {
     dataLugar: "Tarde • PORTO MARAVALLEY (RJ), DISCORD (SP)",
@@ -85,23 +84,19 @@ const eventos_sab = [
   {
     dataLugar: "",
     titulo: "_Desenvolvimento",
-    descricao:
-      "Avanço no desenvolvimento das soluções. ",
+    descricao: "Avanço no desenvolvimento das soluções. ",
   },
   {
     dataLugar: "Noite • PORTO MARAVALLEY (RJ), DISCORD (SP)",
     titulo: "_Desenvolvimento",
-    descricao:
-      "Avanço no desenvolvimento das soluções. ",
+    descricao: "Avanço no desenvolvimento das soluções. ",
   },
   {
     dataLugar: "",
     titulo: "_Checkpoint",
-    descricao:
-      "Checkpoint para avaliação do progesso e ajustes necessários. ",
+    descricao: "Checkpoint para avaliação do progesso e ajustes necessários. ",
   },
 ];
-
 
 const eventos_dom = [
   {
@@ -118,8 +113,7 @@ const eventos_dom = [
   {
     dataLugar: "17H30 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
     titulo: "_Avaliação",
-    descricao:
-      "Processo de avaliação das soluções apresentadas ",
+    descricao: "Processo de avaliação das soluções apresentadas ",
   },
   {
     dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
@@ -130,11 +124,9 @@ const eventos_dom = [
   {
     dataLugar: "",
     titulo: "_Checkpoint",
-    descricao:
-      "Checkpoint para avaliação do progesso e ajustes necessários. ",
+    descricao: "Checkpoint para avaliação do progesso e ajustes necessários. ",
   },
 ];
-
 
 const Cronograma = () => {
   return (
@@ -151,16 +143,16 @@ const Cronograma = () => {
           a criar, colaborar e brilhar com sua solução.
         </TitleBody>
       </CronogramaIntroContainer>
-      
+
       <CronogramaBodyContainer>
         <PreDivisionText>
           Confira a agenda e já vai se preparando para aproveitar cada passo
           dessa experiência.
         </PreDivisionText>
-        
+
         <CronogramaTitle>/Pré-evento</CronogramaTitle>
 
-        <CronogramaDayContainer>          
+        <CronogramaDayContainer>
           {eventos_pre.map((evento, index) => (
             <EventoContainer key={index}>
               <DataLugarText>{evento.dataLugar}</DataLugarText>
@@ -170,10 +162,8 @@ const Cronograma = () => {
                   <Circle />
                   {evento.titulo}
                 </EventoTitle>
-              
 
                 <EventoBody>{evento.descricao}</EventoBody>
-            
               </InfoBodyContainer>
             </EventoContainer>
           ))}
@@ -195,7 +185,7 @@ const Cronograma = () => {
             </EventoContainer>
           ))}
         </CronogramaDayContainer>
-                
+
         <CronogramaTitle>/sábado, 18/10</CronogramaTitle>
 
         <CronogramaDayContainer>
@@ -236,3 +226,4 @@ const Cronograma = () => {
 };
 
 export default Cronograma;
+

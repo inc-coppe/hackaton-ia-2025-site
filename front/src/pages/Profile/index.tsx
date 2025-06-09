@@ -5,14 +5,7 @@ import React, {
   KeyboardEvent,
   FormEvent,
 } from "react";
-// Adicionado FaRegUser para ícone de perfil na busca, FaExternalLink para links
-import {
-  FaLinkedin,
-  FaGithub,
-  FaEnvelope,
-  FaSearch,
-  FaExternalLinkAlt,
-} from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 import { IoClose, IoPencil } from "react-icons/io5";
 
 import {
@@ -40,39 +33,16 @@ import {
   FormLabel,
   FormInput,
   FormSelect,
-  FormTextarea,
   ActionButtonsContainer,
   SaveButton,
   FormError,
-  SearchInputContainer,
-  SearchField,
-  SearchButton,
-  UserResultsContainer,
-  UserCard,
-  UserAvatar,
-  UserDisplayName,
-  UserDetailText,
-  UserTagsContainer,
-  UserTagPill,
-  NoResultsMessage,
-  // Novos imports para o modal de perfil público
-  ModalOverlay,
-  ModalContent,
-  CloseModalButton,
-  PublicProfileSocialLink,
-  PublicProfileHeader,
-  PublicProfileInfoSection,
-  PublicProfileSectionTitle,
-  PublicProfileDetail,
 } from "./style";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import { FaRegUser } from "react-icons/fa6";
 
-// Definindo a interface para os dados do perfil do USUÁRIO LOGADO
 interface UserProfileData {
   email: string;
-  user_name: string; // Corresponde a 'name' do CustomUser no backend
+  user_name: string;
   user_profile_picture_url: string;
   full_name: string | null;
   birth_date: string | null;
@@ -87,24 +57,11 @@ interface UserProfileData {
   special_needs: string | null;
   motivation: string[];
   accepted_terms: boolean;
-  share_contacts: boolean; // Importante para controlar a visibilidade do email/telefone
+  share_contacts: boolean;
   tags: string[];
-  followers_count: number; // Mantenha para o perfil próprio, mas será desconsiderado na busca
-  following_count: number; // Mantenha para o perfil próprio, mas será desconsiderado na busca
+  followers_count: number;
+  following_count: number;
   form_completed?: boolean;
-}
-
-// Interface para os resultados da busca (UserSearchSerializer)
-interface SearchUserData {
-  user_id: number;
-  user_name: string;
-  full_name: string | null;
-  profile_picture_url: string;
-  area_of_expertise: string | null;
-  tags: string[];
-  linkedin_profile: string | null; // Adicionado
-  github_profile: string | null; // Adicionado
-  email: string | null; // Adicionado, será null se share_contacts for false
 }
 
 const EDUCATION_CHOICES = [
@@ -133,16 +90,6 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchUserData[] | null>(
-    null,
-  );
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [searchError, setSearchError] = useState<string | null>(null);
-
-  // Estado para controlar o modal de perfil público
-  const [selectedUser, setSelectedUser] = useState<SearchUserData | null>(null);
 
   const fetchUserProfile = async () => {
     const token = localStorage.getItem("access_token");
@@ -177,12 +124,9 @@ function Profile() {
   }, []);
 
   const handleInputChange = (
-    e: ChangeChangeEvemChangeEventType<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target;
-
     if (type === "checkbox") {
       const { checked } = e.target as HTMLInputElement;
       setEditableProfile((prev) => ({ ...prev, [name]: checked }));
@@ -197,10 +141,9 @@ function Profile() {
   const validateForm = () => {
     const errors: Record<string, string> = {};
     if (!editableProfile.user_name?.trim())
-      errors.user_name = "Nome de usuário (exibição) é obrigatório.";
+      errors.user_name = "Nome de usuário é obrigatório.";
     if (!editableProfile.full_name?.trim())
       errors.full_name = "Nome completo é obrigatório.";
-
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -217,19 +160,8 @@ function Profile() {
       tags,
     };
 
-    const user_name_to_send = profileDataToUpdate.user_name;
-    delete profileDataToUpdate.user_name;
-
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
-    delete profileDataToUpdate.education_level_display;
-    delete profileDataToUpdate.followers_count;
-    delete profileDataToUpdate.following_count;
-    delete profileDataToUpdate.form_completed;
-    // @ts-ignore
-    delete profileDataToUpdate.created_at;
-    // @ts-ignore
-    delete profileDataToUpdate.updated_at;
 
     try {
       const response = await fetch("http://localhost:8000/api/profile/me/", {
@@ -238,35 +170,19 @@ function Profile() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          ...profileDataToUpdate,
-          user_name: user_name_to_send,
-        }),
+        body: JSON.stringify(profileDataToUpdate),
       });
 
       const responseData = await response.json();
-      console.log("Response from profile update:", responseData);
 
       if (response.ok) {
-        const updatedData: UserProfileData = responseData;
-        setUserProfile(updatedData);
-        setEditableProfile({ ...updatedData });
-        setTags(updatedData.tags || []);
+        setUserProfile(responseData);
+        setEditableProfile({ ...responseData });
+        setTags(responseData.tags || []);
         setIsEditing(false);
         setFormErrors({});
         alert("Perfil atualizado com sucesso!");
       } else {
-        if (responseData && typeof responseData === "object") {
-          const backendErrors: Record<string, string> = {};
-          for (const key in responseData) {
-            if (Array.isArray(responseData[key])) {
-              backendErrors[key] = responseData[key].join(" ");
-            } else {
-              backendErrors[key] = String(responseData[key]);
-            }
-          }
-          setFormErrors(backendErrors);
-        }
         alert(
           `Falha ao atualizar o perfil: ${
             responseData.detail || JSON.stringify(responseData)
@@ -301,11 +217,10 @@ function Profile() {
         setEditableProfile((prev) => ({ ...prev, tags: updatedData.tags }));
       } else {
         setTags(originalTags);
-        alert("Não foi possível salvar suas tags. Tente novamente.");
+        alert("Não foi possível salvar suas tags.");
       }
     } catch (error) {
       setTags(originalTags);
-      console.error("Erro ao atualizar tags:", error);
       alert("Erro de rede ao atualizar as tags.");
     }
   };
@@ -350,88 +265,6 @@ function Profile() {
     setIsEditing(!isEditing);
   };
 
-  // Funções para a busca de usuários
-  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSearchUsers = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!searchTerm.trim()) {
-      setSearchResults(null);
-      return;
-    }
-
-    setSearchLoading(true);
-    setSearchError(null);
-    setSearchResults(null);
-
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      setSearchError("Token de acesso não encontrado para realizar a busca.");
-      setSearchLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/users/search/?search=${encodeURIComponent(searchTerm)}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      if (response.ok) {
-        const data: SearchUserData[] = await response.json();
-        setSearchResults(data);
-      } else {
-        const errorData = await response.json();
-        setSearchError(
-          errorData.detail || "Falha ao buscar usuários. Tente novamente.",
-        );
-        setSearchResults([]);
-      }
-    } catch (err) {
-      console.error("Erro na busca de usuários:", err);
-      setSearchError("Ocorreu um erro de rede ao buscar usuários.");
-    } finally {
-      setSearchLoading(false);
-    }
-  };
-
-  // Funções para o modal de perfil público
-  const openUserProfileModal = async (userId: number) => {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      alert("Você precisa estar logado para ver perfis.");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/users/${userId}/profile/`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      if (response.ok) {
-        const data: SearchUserData = await response.json();
-        setSelectedUser(data); // Define o usuário para ser exibido no modal
-      } else {
-        const errorData = await response.json();
-        alert(
-          `Erro ao carregar perfil: ${errorData.detail || "Perfil não encontrado."}`,
-        );
-      }
-    } catch (error) {
-      console.error("Erro ao buscar perfil para modal:", error);
-      alert("Erro de rede ao carregar o perfil.");
-    }
-  };
-
-  const closeUserProfileModal = () => {
-    setSelectedUser(null); // Limpa o usuário selecionado para fechar o modal
-  };
-
   if (loading) return <p>Carregando perfil...</p>;
   if (error || !userProfile)
     return <p>{error || "Não foi possível carregar o perfil."}</p>;
@@ -445,7 +278,7 @@ function Profile() {
         <ProfileBanner>
           <ProfileImage
             src={displayProfile.user_profile_picture_url || undefined}
-            alt={`Foto de perfil de ${displayProfile.user_name}`}
+            alt={`Foto de ${displayProfile.user_name}`}
           />
           <TitleContainer>
             <UserName>
@@ -535,9 +368,6 @@ function Profile() {
                   value={editableProfile.linkedin_profile || ""}
                   onChange={handleInputChange}
                 />
-                {formErrors.linkedin_profile && (
-                  <FormError>{formErrors.linkedin_profile}</FormError>
-                )}
               </FormRow>
               <FormRow>
                 <FormLabel htmlFor="github_profile">
@@ -550,9 +380,6 @@ function Profile() {
                   value={editableProfile.github_profile || ""}
                   onChange={handleInputChange}
                 />
-                {formErrors.github_profile && (
-                  <FormError>{formErrors.github_profile}</FormError>
-                )}
               </FormRow>
               <FormRow>
                 <FormLabel htmlFor="area_of_expertise">
@@ -565,9 +392,6 @@ function Profile() {
                   value={editableProfile.area_of_expertise || ""}
                   onChange={handleInputChange}
                 />
-                {formErrors.area_of_expertise && (
-                  <FormError>{formErrors.area_of_expertise}</FormError>
-                )}
               </FormRow>
               <FormRow>
                 <FormLabel htmlFor="education_level">
@@ -586,71 +410,6 @@ function Profile() {
                     </option>
                   ))}
                 </FormSelect>
-                {formErrors.education_level && (
-                  <FormError>{formErrors.education_level}</FormError>
-                )}
-              </FormRow>
-              <FormRow>
-                <FormLabel htmlFor="institution">
-                  Instituição de Ensino:
-                </FormLabel>
-                <FormInput
-                  type="text"
-                  id="institution"
-                  name="institution"
-                  value={editableProfile.institution || ""}
-                  onChange={handleInputChange}
-                />
-                {formErrors.institution && (
-                  <FormError>{formErrors.institution}</FormError>
-                )}
-              </FormRow>
-              <FormRow>
-                <FormLabel htmlFor="phone">Telefone:</FormLabel>
-                <FormInput
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={editableProfile.phone || ""}
-                  onChange={handleInputChange}
-                />
-                {formErrors.phone && <FormError>{formErrors.phone}</FormError>}
-              </FormRow>
-              <FormRow>
-                <FormLabel htmlFor="portfolio_url">URL do Portfólio:</FormLabel>
-                <FormInput
-                  type="url"
-                  id="portfolio_url"
-                  name="portfolio_url"
-                  value={editableProfile.portfolio_url || ""}
-                  onChange={handleInputChange}
-                />
-                {formErrors.portfolio_url && (
-                  <FormError>{formErrors.portfolio_url}</FormError>
-                )}
-              </FormRow>
-              <FormRow>
-                <FormLabel htmlFor="special_needs">
-                  Necessidades Especiais (opcional):
-                </FormLabel>
-                <FormTextarea
-                  id="special_needs"
-                  name="special_needs"
-                  value={editableProfile.special_needs || ""}
-                  onChange={handleInputChange}
-                />
-              </FormRow>
-              <FormRow>
-                <FormLabel htmlFor="share_contacts">
-                  <input
-                    type="checkbox"
-                    id="share_contacts"
-                    name="share_contacts"
-                    checked={editableProfile.share_contacts || false}
-                    onChange={handleInputChange}
-                  />
-                  Compartilhar contatos (email, telefone) no perfil público
-                </FormLabel>
               </FormRow>
               <ActionButtonsContainer>
                 <SaveButton type="submit">Salvar Alterações</SaveButton>
@@ -663,8 +422,8 @@ function Profile() {
                   <CardTitle>/INTERESSES</CardTitle>
                   <TextBlock>
                     <CardBodyText>
-                      Adicione tags ao seu perfil para destacar seus interesses,
-                      conhecimentos ou áreas que quer explorar durante o evento.
+                      Adicione tags para destacar seus interesses e
+                      conhecimentos.
                     </CardBodyText>
                     <CardBodyText secondary>
                       Elas facilitam conexões com pessoas que compartilham dos
@@ -693,205 +452,11 @@ function Profile() {
                   ))}
                 </TagsContainer>
               </InfoCard>
-
-              <InfoCard>
-                <TextContent>
-                  <CardTitle>/PROCURE USUÁRIOS</CardTitle>
-                  <TextBlock>
-                    <CardBodyText>
-                      Encontre outros participantes por nome de usuário, nome
-                      completo, área de especialidade ou tags para expandir sua
-                      rede.
-                    </CardBodyText>
-                    <CardBodyText secondary>
-                      Clique no perfil para ver detalhes de contato!
-                    </CardBodyText>
-                  </TextBlock>
-                </TextContent>
-                <form onSubmit={handleSearchUsers} style={{ width: "100%" }}>
-                  <SearchInputContainer>
-                    <SearchField
-                      type="text"
-                      placeholder="Buscar por nome, área ou tags..."
-                      value={searchTerm}
-                      onChange={handleSearchTermChange}
-                    />
-                    <SearchButton type="submit" disabled={searchLoading}>
-                      {searchLoading ? (
-                        "Buscando..."
-                      ) : (
-                        <>
-                          <FaSearch /> Buscar
-                        </>
-                      )}
-                    </SearchButton>
-                  </SearchInputContainer>
-                </form>
-
-                {searchError && <FormError>{searchError}</FormError>}
-
-                {searchResults && searchResults.length > 0 && (
-                  <UserResultsContainer>
-                    {searchResults.map((user) => (
-                      <UserCard
-                        key={user.user_id}
-                        onClick={() => openUserProfileModal(user.user_id)}
-                      >
-                        <UserAvatar
-                          src={user.profile_picture_url || undefined}
-                          alt={`Foto de perfil de ${user.user_name}`}
-                        />
-                        <UserDisplayName>{user.user_name}</UserDisplayName>
-                        {user.full_name && (
-                          <UserDetailText>{user.full_name}</UserDetailText>
-                        )}
-                        {user.area_of_expertise && (
-                          <UserDetailText>
-                            {user.area_of_expertise}
-                          </UserDetailText>
-                        )}
-                        {user.tags && user.tags.length > 0 && (
-                          <UserTagsContainer>
-                            {user.tags.map((tag) => (
-                              <UserTagPill key={tag}>{tag}</UserTagPill>
-                            ))}
-                          </UserTagsContainer>
-                        )}
-                        {/* Removido o botão de seguir */}
-                        <AddButton
-                          style={{ marginTop: "1rem", width: "auto" }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openUserProfileModal(user.user_id);
-                          }}
-                        >
-                          <FaRegUser style={{ marginRight: "0.5rem" }} /> Ver
-                          Perfil
-                        </AddButton>
-                      </UserCard>
-                    ))}
-                  </UserResultsContainer>
-                )}
-
-                {searchResults &&
-                  searchResults.length === 0 &&
-                  !searchLoading &&
-                  !searchError && (
-                    <NoResultsMessage>
-                      Nenhum usuário encontrado com o termo de busca "
-                      {searchTerm}".
-                    </NoResultsMessage>
-                  )}
-                {searchResults === null &&
-                  !searchLoading &&
-                  !searchError &&
-                  searchTerm === "" && (
-                    <NoResultsMessage>
-                      Digite algo na barra de busca acima para encontrar
-                      usuários.
-                    </NoResultsMessage>
-                  )}
-              </InfoCard>
             </>
           )}
         </PageContent>
       </PerfilContainer>
       <Footer />
-
-      {/* Modal de Perfil Público */}
-      {selectedUser && (
-        <ModalOverlay onClick={closeUserProfileModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <CloseModalButton onClick={closeUserProfileModal}>
-              <IoClose />
-            </CloseModalButton>
-            <PublicProfileHeader>
-              <UserAvatar
-                src={selectedUser.profile_picture_url || undefined}
-                alt={`Foto de perfil de ${selectedUser.user_name}`}
-              />
-              <UserDisplayName>{selectedUser.user_name}</UserDisplayName>
-              {selectedUser.full_name && (
-                <UserDetailText>{selectedUser.full_name}</UserDetailText>
-              )}
-              {selectedUser.area_of_expertise && (
-                <UserDetailText>
-                  {selectedUser.area_of_expertise}
-                </UserDetailText>
-              )}
-            </PublicProfileHeader>
-
-            {selectedUser.tags && selectedUser.tags.length > 0 && (
-              <PublicProfileInfoSection>
-                <PublicProfileSectionTitle>
-                  Tags de Interesse
-                </PublicProfileSectionTitle>
-                <UserTagsContainer>
-                  {selectedUser.tags.map((tag) => (
-                    <UserTagPill key={tag}>{tag}</UserTagPill>
-                  ))}
-                </UserTagsContainer>
-              </PublicProfileInfoSection>
-            )}
-
-            <PublicProfileInfoSection>
-              <PublicProfileSectionTitle>Contatos</PublicProfileSectionTitle>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  gap: "0.8rem",
-                }}
-              >
-                {selectedUser.linkedin_profile && (
-                  <PublicProfileSocialLink
-                    href={selectedUser.linkedin_profile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="linkedin"
-                  >
-                    <FaLinkedin /> LinkedIn{" "}
-                    <FaExternalLinkAlt
-                      size="0.8em"
-                      style={{ marginLeft: "0.3em" }}
-                    />
-                  </PublicProfileSocialLink>
-                )}
-                {selectedUser.github_profile && (
-                  <PublicProfileSocialLink
-                    href={selectedUser.github_profile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="github"
-                  >
-                    <FaGithub /> GitHub{" "}
-                    <FaExternalLinkAlt
-                      size="0.8em"
-                      style={{ marginLeft: "0.3em" }}
-                    />
-                  </PublicProfileSocialLink>
-                )}
-                {selectedUser.email /* Só mostra o email se o backend o enviou */ && (
-                  <PublicProfileSocialLink
-                    href={`mailto:${selectedUser.email}`}
-                    className="email"
-                  >
-                    <FaEnvelope /> Email
-                  </PublicProfileSocialLink>
-                )}
-                {!selectedUser.linkedin_profile &&
-                  !selectedUser.github_profile &&
-                  !selectedUser.email && (
-                    <PublicProfileDetail>
-                      Nenhum contato público disponível.
-                    </PublicProfileDetail>
-                  )}
-              </div>
-            </PublicProfileInfoSection>
-          </ModalContent>
-        </ModalOverlay>
-      )}
     </>
   );
 }
