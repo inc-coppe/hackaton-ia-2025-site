@@ -698,3 +698,30 @@ export const PublicProfileDetail = styled.p`
   color: #444;
   margin-bottom: 0.5rem;
 `;
+
+export const LogoutButton = styled.button`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 8px;
+  height: 48px;
+  background-color: transparent;
+  border: 2px solid #ff4d4f;
+  border-radius: 2px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-transform: uppercase;
+  color: #ff4d4f;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #ff4d4f;
+    color: #ffffff;
+  }
+`;
