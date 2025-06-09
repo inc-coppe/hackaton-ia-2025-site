@@ -302,11 +302,11 @@ export const TextNextToMedia = styled.div`
 export const PontoDesafio = ({ texto }: { texto: string }) => {
   // Divide o texto no primeiro ":"
   const [titulo, ...resto] = texto.split(/:(.+)/); // pega apenas o primeiro ":"
-  const textoAposPonto = resto.join(":"); // em caso de múltiplos ":" após o primeiro
+  const textoAposPonto = resto; // em caso de múltiplos ":" após o primeiro
 
   return (
     <div style={{ paddingLeft: "1.5rem", marginBottom: "0.5rem" }}>
-      <ChallengeParagraph style={{ fontSize: "1.15rem" }}>
+      <ChallengeParagraph >
         <span style={{ marginRight: "0.5rem" }}>●</span>
         <strong>{titulo.trim()}:</strong> {textoAposPonto}
       </ChallengeParagraph>
