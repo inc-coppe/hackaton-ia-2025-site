@@ -103,6 +103,14 @@ export const DesafiosBodyContainer = styled.main`
   }
 `;
 
+export const PreDivisionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  
+
+`;
+
 export const PreDivisionText = styled.p`
   /* Abaixo, reunimos todas as sugestões... */
   font-family: "Nunito Sans", sans-serif;
@@ -185,6 +193,8 @@ export const ConteudoDesafiosContainer = styled.section`
   flex-direction: column;
   flex-grow: 1; /* Ocupa o espaço restante */
   gap: 7.5rem; /* Desktop: 120px (espaçamento entre seções de desafio) */
+
+  
 
   @media (max-width: 48rem) {
     gap: 3.75rem; /* Mobile: 60px */
@@ -288,3 +298,20 @@ export const TextNextToMedia = styled.div`
     padding-left: 0;
   }
 `;
+
+export const PontoDesafio = ({ texto }: { texto: string }) => {
+  // Divide o texto no primeiro ":"
+  const [titulo, ...resto] = texto.split(/:(.+)/); // pega apenas o primeiro ":"
+  const textoAposPonto = resto; // em caso de múltiplos ":" após o primeiro
+
+  return (
+    <div style={{ paddingLeft: "1.5rem", marginBottom: "0.5rem" }}>
+      <ChallengeParagraph >
+        <span style={{ marginRight: "0.5rem" }}>●</span>
+        <strong>{titulo.trim()}:</strong> {textoAposPonto}
+      </ChallengeParagraph>
+    </div>
+  );
+};
+
+
