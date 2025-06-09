@@ -1,0 +1,11 @@
+django
+dotenv
+django_rest_framework
+django_cors_headers
+django-allauth
+requests
+djangorestframework-jwt
+django-cryptography
+djangorestframework-simplejwt
+google-apis-oauth-django
+django-google-auth
