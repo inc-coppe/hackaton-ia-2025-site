@@ -1,4 +1,5 @@
 import Header from "../../components/Header";
+import HeaderPerfil from "../../components/HeaderPerfil";
 import Footer from "../../components/Footer";
 
 import {
@@ -138,7 +139,7 @@ const eventos_dom = [
 const Cronograma = () => {
   return (
     <>
-      <Header />
+      <HeaderPerfil />
       <CronogramaIntroContainer>
         <SubTitle>cada etapa importa:</SubTitle>
 

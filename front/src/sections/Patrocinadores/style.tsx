@@ -154,6 +154,7 @@ export const SponsorsContainer = styled.div`
   position: relative;
   z-index: 1;
   margin-top: -1rem; // Pull the sponsors section up slightly
+  
 
   @media (max-width: 28rem) {
     
@@ -161,6 +162,10 @@ export const SponsorsContainer = styled.div`
     width:100%;
     margin-top: -0.5rem;
   }
+`;
+
+export const SponsorsContainerDefinidos = styled.div`
+  display: none;
 `;
 
 export const SponsorLogo = styled.div<{ imageUrl: string }>`
@@ -199,3 +204,4 @@ export const TierTitle = styled.h4`
     width: 100%;
   }
 `;
+

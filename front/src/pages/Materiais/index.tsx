@@ -33,7 +33,7 @@ const materialChapters = [
     chapterTitle: "Em Breve",
     author: "",
     description1:
-      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+      "Aqui você encontrará acesso a todos os materiais do programa: webinars, trilhas de estudo e guias práticos. Estamos finalizando os últimos detalhes para oferecer a melhor experiência possível — volte em breve para conferir!",
     videoAvailable: false,
     description2:
       "",
@@ -44,17 +44,17 @@ const materialChapters = [
       },
     ],
   },
-  {
+  /*{
     id: "fundamentos-ml",
     menuTitle: "Em Breve",
     chapterTitle: "Em Breve",
     author: "",
     description1:
-      "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+      "Aqui você encontrará acesso a todos os materiais do programa: webinars, trilhas de estudo e guias práticos. Estamos finalizando os últimos detalhes para oferecer a melhor experiência possível — volte em breve para conferir!",
     videoAvailable: false,
     description2: "",
     subsections: [],
-  },
+  },*/
   // Adicione mais capítulos aqui conforme necessário
 ];
 

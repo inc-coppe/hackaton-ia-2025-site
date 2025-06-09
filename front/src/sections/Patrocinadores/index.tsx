@@ -10,6 +10,8 @@ import {
   TierTitle,
   SponsorLogoContainer,
   Resize,
+  SponsorsContainerDefinidos,
+
 } from "./style";
 import SponsorCard from "../../components/SponsorCard";
 import apoio1 from "../../assets/apoio1.png";
@@ -79,52 +81,53 @@ const SponsorsSection: React.FC = () => {
       </SponsorButton>
 
       <SponsorsContainer>
-        <TierTitle>OURO</TierTitle>
-        <SponsorLogoContainer>
-          {[1, 2, 3].map((index) => (
-            <SponsorCard
-              key={index}
-              imageUrl=""
-              title={`Patrocinador Ouro ${index}`}
-              isLoading
-            />
-          ))}
-        </SponsorLogoContainer>
+        <SponsorsContainerDefinidos>
+          <TierTitle>OURO</TierTitle>
+          <SponsorLogoContainer>
+            {[1, 2, 3].map((index) => (
+              <SponsorCard
+                key={index}
+                imageUrl=""
+                title={`Patrocinador Ouro ${index}`}
+                isLoading
+              />
+            ))}
+          </SponsorLogoContainer>
 
-        <TierTitle>PRATA</TierTitle>
-        <SponsorLogoContainer>
-          {[1, 2, 3, 4, 5].map((index) => (
-            <SponsorCard
-              key={index}
-              imageUrl=""
-              title={`Patrocinador Prata ${index}`}
-              isLoading
-            />
-          ))}
-        </SponsorLogoContainer>
+          <TierTitle>PRATA</TierTitle>
+          <SponsorLogoContainer>
+            {[1, 2, 3, 4, 5].map((index) => (
+              <SponsorCard
+                key={index}
+                imageUrl=""
+                title={`Patrocinador Prata ${index}`}
+                isLoading
+              />
+            ))}
+          </SponsorLogoContainer>
 
-        <TierTitle>BRONZE</TierTitle>
-        <SponsorLogoContainer>
-          {[1, 2, 3, 4, 5].map((index) => (
-            <SponsorCard
-              key={index}
-              imageUrl=""
-              title={`Patrocinador Bronze ${index}`}
-              isLoading
-            />
-          ))}
-        </SponsorLogoContainer>
-
-        <TierTitle>APOIO</TierTitle>
-        <SponsorLogoContainer>
-          {sponsorsData.apoio.map((sponsor, index) => (
-            <SponsorCard
-              key={index}
-              imageUrl={sponsor.image}
-              title={sponsor.title}
-            />
-          ))}
-        </SponsorLogoContainer>
+          <TierTitle>BRONZE</TierTitle>
+          <SponsorLogoContainer>
+            {[1, 2, 3, 4, 5].map((index) => (
+              <SponsorCard
+                key={index}
+                imageUrl=""
+                title={`Patrocinador Bronze ${index}`}
+                isLoading
+              />
+            ))}
+          </SponsorLogoContainer>
+        </SponsorsContainerDefinidos>
+          <TierTitle>APOIO</TierTitle>
+          <SponsorLogoContainer>
+            {sponsorsData.apoio.map((sponsor, index) => (
+              <SponsorCard
+                key={index}
+                imageUrl={sponsor.image}
+                title={sponsor.title}
+              />
+            ))}
+          </SponsorLogoContainer>
 
         <TierTitle>REALIZAÇÃO</TierTitle>
         <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
