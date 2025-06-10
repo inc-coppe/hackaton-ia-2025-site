@@ -53,6 +53,7 @@ import {
   ExitSearchButton,
   AuthPlaceholder,
 } from "./style";
+import Column from "antd/es/table/Column";
 
 interface User {
   id: string;
@@ -114,25 +115,17 @@ const AuthSection = ({
 };
 
 const sponsorItems: MenuProps["items"] = [
-  { key: "1", label: <Link to="/patrocinador">Nossos Patrocinadores</Link> },
-  { type: "divider" },
+  { key: "1", label: <Link to="/patrocinador">PATROCINADORES DO EVENTO</Link>, },
   {
     key: "2",
     label: (
       <a target="_blank" rel="noopener noreferrer" href="#">
-        Patrocinador 2
-      </a>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="#">
-        Patrocinador 3
+        SEJA UM PATROCINADOR
       </a>
     ),
   },
 ];
+
 
 const SearchInterface = (props: {
   searchTerm: string;
@@ -313,6 +306,10 @@ const Header = () => {
     cleanUpSearch();
   };
 
+  const handleClickPatrocinador = () => {
+    navigate("/", { state: { scrollTo: "secao-patrocinadores" } });
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("access_token");
@@ -364,12 +361,23 @@ const Header = () => {
       <NavLink to="/regulamento" onClick={onLinkClick}>
         Regulamento
       </NavLink>
-      <Dropdown menu={{ items: sponsorItems }} trigger={["hover"]}>
+      <Dropdown
+        trigger={["hover"]} dropdownRender={() => (
+          <div style={{ backgroundColor: "#110249E5", borderRadius: 8, padding: "1.5rem 2rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem"}}>
+            <a href="/patrocinador" style={{ display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif"}}>
+              PATROCINADORES DO EVENTO
+            </a>
+            
+            <button onClick={handleClickPatrocinador} style={{background: "none", border: "none", display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif", textAlign: "left", width: "100%", padding: 0, margin: 0}}>
+              SEJA UM PATROCINADOR
+            </button>
+          </div>
+        )}>
         <NavButton type="button">
           <Space>
             Patrocinadores <DownOutlined />
           </Space>
-        </NavButton>
+       </NavButton>
       </Dropdown>
     </>
   );

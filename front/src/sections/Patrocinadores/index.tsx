@@ -11,6 +11,7 @@ import {
   SponsorLogoContainer,
   Resize,
   SponsorsContainerDefinidos,
+  Section,
 
 } from "./style";
 import SponsorCard from "../../components/SponsorCard";
@@ -60,6 +61,7 @@ const sponsorsData = {
 
 const SponsorsSection: React.FC = () => {
   return (
+    <Section id="secao-patrocinadores">
     <Container>
       <Resize>
         <SectionSubtitle>
@@ -141,6 +143,7 @@ const SponsorsSection: React.FC = () => {
         </SponsorLogoContainer>
       </SponsorsContainer>
     </Container>
+    </Section>
   );
 };
 
