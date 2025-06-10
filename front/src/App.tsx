@@ -95,14 +95,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route
-          path="/login"
-          element={
-            <PublicOnlyRoute>
-              <Login />
-            </PublicOnlyRoute>
-          }
-        />
+        <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route
           path="/profile"
@@ -120,46 +113,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/cronograma"
-          element={
-            <ProtectedRoute>
-              <Cronograma />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/regulamento"
-          element={
-            <ProtectedRoute>
-              <Regulamento />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/desafios"
-          element={
-            <ProtectedRoute>
-              <Desafios />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/patrocinador"
-          element={
-            <ProtectedRoute>
-              <Patrocinador />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/materiais"
-          element={
-            <ProtectedRoute>
-              <Materiais />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/cronograma" element={<Cronograma />} />
+        <Route path="/regulamento" element={<Regulamento />} />
+        <Route path="/desafios" element={<Desafios />} />
+        <Route path="/patrocinador" element={<Patrocinador />} />
+        <Route path="/materiais" element={<Materiais />} />
         <Route
           path="/complete-profile"
           element={
