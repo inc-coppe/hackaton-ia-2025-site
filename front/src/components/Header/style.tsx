@@ -43,6 +43,12 @@ export const MobileNavigation = styled.div<{ $isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     position: fixed;
+
+    align-items: flex-start;
+    padding-left: 1.5rem;
+    text-align: left;
+    gap: 1.25rem;
+    
     top: 4rem;
     left: 0;
     width: 100%;
@@ -52,6 +58,20 @@ export const MobileNavigation = styled.div<{ $isOpen: boolean }>`
     transition: transform 0.3s ease-in-out;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+
+    & a, & button {
+      text-align: left !important;
+      margin: 0;
+      padding: 0;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: "Montserrat", sans-serif;
+      display: block;
+      width: 100%;
+    }
 
     &::-webkit-scrollbar {
       width: 0.5rem;
@@ -121,6 +141,8 @@ export const NavButton = styled.button<{ $isMobile?: boolean }>`
   cursor: pointer;
   transition: color 0.2s ease;
   padding: 0;
+
+  position: relative;
 
   &:hover {
     color: #c1d0f8;

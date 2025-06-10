@@ -55,6 +55,8 @@ import {
 } from "./style";
 import Column from "antd/es/table/Column";
 
+const eMobile = window.innerWidth <= 768;
+
 interface User {
   id: string;
   name: string;
@@ -344,6 +346,8 @@ const Header = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const NavigationLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => (
     <>
       <NavLink to="/" onClick={onLinkClick}>
@@ -362,8 +366,8 @@ const Header = () => {
         Regulamento
       </NavLink>
       <Dropdown
-        trigger={["hover"]} dropdownRender={() => (
-          <div style={{ backgroundColor: "#110249E5", borderRadius: 8, padding: "1.5rem 2rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem"}}>
+        trigger={[eMobile ? "click" : "hover"]} onOpenChange={(open) => setIsDropdownOpen(open)} dropdownRender={() => (
+          <div style={{ top: "100%", backgroundColor: "#110249E5", borderRadius: 8, padding: "1.5rem 2rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "3rem"}}>
             <a href="/patrocinador" style={{ display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif"}}>
               PATROCINADORES DO EVENTO
             </a>
@@ -373,12 +377,13 @@ const Header = () => {
             </button>
           </div>
         )}>
-        <NavButton type="button">
+        <NavButton type="button" onClick={() => setIsDropdownOpen((prev) => !prev)}>
           <Space>
             Patrocinadores <DownOutlined />
           </Space>
        </NavButton>
       </Dropdown>
+
     </>
   );
 
@@ -406,6 +411,7 @@ const Header = () => {
           <MobileMenuContent>
             <NavSection>
               <NavigationLinks onLinkClick={toggleMenu} />
+        
             </NavSection>
             <AuthSection
               isMobile
