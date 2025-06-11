@@ -74,16 +74,14 @@ function Login() {
             </TextContent>
             {error && <ErrorMessage>{error}</ErrorMessage>}
 
-            <GoogleButtonWrapper>
-              <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleFailure}
-                theme="filled_white"
-                size="large"
-                shape="rectangular"
-                locale="en"
-              />
-            </GoogleButtonWrapper>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleFailure}
+              theme="filled_white"
+              size="large"
+              shape="rectangular"
+              locale="en"
+            />
           </TextContainer>
           <Logo src={LogoHackaton} alt="Hackathon IA 2025" />
         </LoginCard>
