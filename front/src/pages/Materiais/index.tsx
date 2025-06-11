@@ -29,14 +29,29 @@ import {
 const materialChapters = [
   {
     id: "introducao-ia",
-    menuTitle: "Em Breve",
-    chapterTitle: "Em Breve",
+    menuTitle: "Trilha 1",
+    chapterTitle: "Data Science",
     author: "",
     description1:
       "Aqui você encontrará acesso a todos os materiais do programa: webinars, trilhas de estudo e guias práticos. Estamos finalizando os últimos detalhes para oferecer a melhor experiência possível — volte em breve para conferir!",
     videoAvailable: false,
-    description2:
-      "",
+    description2: "",
+    subsections: [
+      {
+        title: "",
+        text: "",
+      },
+    ],
+  },
+  {
+    id: "introducao-ia",
+    menuTitle: "Trilha 2",
+    chapterTitle: "Agentes de IA e RAG",
+    author: "",
+    description1:
+      "Aqui você encontrará acesso a todos os materiais do programa: webinars, trilhas de estudo e guias práticos. Estamos finalizando os últimos detalhes para oferecer a melhor experiência possível — volte em breve para conferir!",
+    videoAvailable: false,
+    description2: "",
     subsections: [
       {
         title: "",
@@ -98,26 +113,26 @@ const ScrollTracker: React.FC<ScrollTrackerProps> = ({
 
 function Materials() {
   const MateriaisRefs = useRef<(HTMLElement | null)[]>([]);
-    const [activeIndex, setActiveIndex] = useState(0);
-  
-    const handleClick = (index: number) => {
-      // ... (lógica do handleClick - sem alterações)
-      const sectionRef = MateriaisRefs.current[index];
-      const headerOffset = 80;
-      if (sectionRef) {
-        const elementPosition =
-          sectionRef.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - headerOffset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    };
+  const [activeIndex, setActiveIndex] = useState(0);
 
-    const menuData = materialChapters.map((material, index) => ({
-      id: material.id || `material-${index}`,
-      title: materialChapters[index] || material.menuTitle,
+  const handleClick = (index: number) => {
+    // ... (lógica do handleClick - sem alterações)
+    const sectionRef = MateriaisRefs.current[index];
+    const headerOffset = 80;
+    if (sectionRef) {
+      const elementPosition =
+        sectionRef.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const menuData = materialChapters.map((material, index) => ({
+    id: material.id || `material-${index}`,
+    title: materialChapters[index] || material.menuTitle,
   }));
 
   return (
@@ -129,14 +144,13 @@ function Materials() {
             <HighlightTitleGroup>
               <HighlightPreamble>AQUECIMENTO!</HighlightPreamble>
               <HighlightTitle>
-                TUDO O QUE É PRECISO PARA CHEGAR COM CONFIANÇA.
+                SUA PREPARAÇÃO PARA CHEGAR COM CONFIANÇA.
               </HighlightTitle>
             </HighlightTitleGroup>
             <HighlightDescription>
               Antes do hackathon começar, você tem acesso a uma seleção de
               materiais exclusivos — webinars, trilhas de estudo e guias
-              práticos — desenvolvidos com o apoio de grandes
-              empresas.
+              práticos — desenvolvidos com o apoio de grandes empresas.
             </HighlightDescription>
           </HighlightTextWrapper>
         </HighlightSection>
@@ -162,11 +176,11 @@ function Materials() {
 
             <ContentArea>
               {materialChapters.map((chapter, index) => (
-                <ChapterSectionWrapper 
-                  key={chapter.id || index} 
+                <ChapterSectionWrapper
+                  key={chapter.id || index}
                   id={chapter.id || `desafio-${index}`}
                   ref={(el) => (MateriaisRefs.current[index] = el)}
-                  >                                    
+                >
                   <ChapterTitleWrapper>
                     <ChapterTitle>{chapter.chapterTitle}</ChapterTitle>
                     <ChapterAuthor>{chapter.author}</ChapterAuthor>
@@ -186,8 +200,8 @@ function Materials() {
                 </ChapterSectionWrapper>
               ))}
             </ContentArea>
-          
-          <ScrollTracker
+
+            <ScrollTracker
               MateriaisRefs={MateriaisRefs}
               setActiveIndex={setActiveIndex}
             />
