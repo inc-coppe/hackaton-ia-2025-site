@@ -157,12 +157,12 @@ export const CardTitulo = styled.p`
   line-height: ${pxToRem(25)};
   letter-spacing: 0;
   color: #FFFFFF;
-  width: ${pxToRem(456)};
-  height: ${pxToRem(25)};
   margin: 0;
 
   @media (max-width: 28rem) {
-    margin-bottom: 0.35rem;   
+    margin-bottom: 0.35rem; 
+    word-break: break-word;
+    white-space: normal; 
   }
   
 `;
