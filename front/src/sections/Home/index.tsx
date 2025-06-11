@@ -114,7 +114,7 @@ const HomePage = () => {
           <SubtitleLeft>RIO DE JANEIRO:</SubtitleLeft>
           <SmallerTitleLeft>PRESENCIAL NO PORTO MARAVALLEY</SmallerTitleLeft>
         </PlaceContainerLeft>
-        <PlaceContainerRight>
+        <PlaceContainerRight style={{ display: "None" }}>
           <SubtitleRight>SÃO PAULO:</SubtitleRight>
           <SmallerTitleRight>ONLINE COM COORDENAÇÃO DA USP</SmallerTitleRight>
         </PlaceContainerRight>

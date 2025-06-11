@@ -16,16 +16,33 @@ import {
   SetaWrapper,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
 
 const HorizontalCarousel = () => {
   const cardData = [
-    { id: 1, sugerido_por: "" , titulo: "Em Breve", descricao: "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!"}, 
-    
-    { id: 2, sugerido_por: "" , titulo: "Em Breve", descricao: "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!" }, 
-    
-    { id: 3, sugerido_por: "" , titulo: "Em Breve", descricao: "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!" },
-  
-    
+    {
+      id: 1,
+      sugerido_por: "",
+      titulo: "Em Breve",
+      descricao:
+        "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+    },
+
+    {
+      id: 2,
+      sugerido_por: "",
+      titulo: "Em Breve",
+      descricao:
+        "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+    },
+
+    {
+      id: 3,
+      sugerido_por: "",
+      titulo: "Em Breve",
+      descricao:
+        "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+    },
   ];
 
   const wrapperRef = useRef(null);
@@ -33,7 +50,7 @@ const HorizontalCarousel = () => {
 
   const scrollToIndex = (index) => {
     if (wrapperRef.current) {
-      const cardWidth = wrapperRef.current.offsetWidth ;
+      const cardWidth = wrapperRef.current.offsetWidth;
       wrapperRef.current.scrollLeft = index * cardWidth;
       setCurrentPage(index);
     }
@@ -47,11 +64,11 @@ const HorizontalCarousel = () => {
             <CardHeaderSeta>
               <CardSugerido>{item.sugerido_por}</CardSugerido>
               <SetaWrapper>
-                <SetaIcon src = {setaIcon} alt="Seta"/>
+                <SetaIcon src={setaIcon} alt="Seta" />
               </SetaWrapper>
             </CardHeaderSeta>
             <CardTitulo>{item.titulo}</CardTitulo>
-            <CardDescricao>{item.descricao}</CardDescricao> 
+            <CardDescricao>{item.descricao}</CardDescricao>
           </CardItem>
         ))}
       </CardsWrapper>
@@ -75,15 +92,18 @@ const HorizontalCarousel = () => {
       </PageControl>
 
       <ButtonWrapper>
-        
-        <LinkButton href="#desafios">
-          Conheça todos os desafios
-          <ArrowRightOutlined />
-        </LinkButton>
+        <NavLink
+          to="/desafios"
+          style={{ inherit: "None", textDecoration: "None" }}
+        >
+          <LinkButton>
+            Conheça todos os desafios
+            <ArrowRightOutlined />
+          </LinkButton>
+        </NavLink>
       </ButtonWrapper>
     </CarouselContainer>
   );
 };
 
 export default HorizontalCarousel;
-
