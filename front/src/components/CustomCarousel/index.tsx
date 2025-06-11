@@ -16,35 +16,36 @@ import {
   SetaWrapper,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const HorizontalCarousel = () => {
   const cardData = [
     {
       id: 1,
       sugerido_por: "",
-      titulo: "Em Breve",
+      titulo: "Análise Preditiva e Gestão de Recursos em Saúde",
       descricao:
-        "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+        "Construa modelos capazes de prever faltas em consultas, superlotação e sobrecarga de recursos na saúde pública. O objetivo é antecipar demandas e otimizar a alocação de recursos.",
     },
 
     {
       id: 2,
       sugerido_por: "",
-      titulo: "Em Breve",
+      titulo: "RAG e Diálogo com Dados em Linguagem Natural",
       descricao:
-        "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+        "Desenvolva sistemas que usem RAG e linguagem natural para transformar dados em respostas claras, apoiando decisões na saúde com inteligência, transparência e usabilidade.",
     },
 
     {
       id: 3,
       sugerido_por: "",
-      titulo: "Em Breve",
+      titulo: "Desafio Aberto – Explorando Desafios Emergentes",
       descricao:
-        "Aqui você encontrará a descrição completa deste desafio. Estamos preparando tudo para garantir uma experiência incrível — volte em breve para conferir!",
+        "Explore o Data Lake da Saúde do Rio de Janeiro para descobrir padrões, propor soluções inéditas e inovar além dos desafios propostos. Um convite à criatividade e à investigação de problemas latentes na saúde pública.",
     },
   ];
 
+  const navigate = useNavigate();
   const wrapperRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -56,10 +57,31 @@ const HorizontalCarousel = () => {
     }
   };
 
+
+  const handleClickDesafioDesafio = (index: number) => {
+    navigate("/desafios", { state: { scrollTo: `scroll-desafio-${index}` } });
+  };
+
   return (
     <CarouselContainer>
       <CardsWrapper ref={wrapperRef}>
-        {cardData.map((item) => (
+        {cardData.map((item, index) => (
+          <button
+              onClick={() => handleClickDesafioDesafio(index)}
+              style={{
+                background: "none",
+                border: "none",
+                display: "block",
+                color: "#ffffff",
+                fontWeight: 700,
+                fontSize: "0.9rem",
+                fontFamily: "Montserrat, sans-serif",
+                textAlign: "left",
+                width: "100%",
+                padding: 0,
+                margin: 0,
+              }}
+            >
           <CardItem key={item.id}>
             <CardHeaderSeta>
               <CardSugerido>{item.sugerido_por}</CardSugerido>
@@ -70,6 +92,7 @@ const HorizontalCarousel = () => {
             <CardTitulo>{item.titulo}</CardTitulo>
             <CardDescricao>{item.descricao}</CardDescricao>
           </CardItem>
+          </button>
         ))}
       </CardsWrapper>
 

@@ -314,4 +314,6 @@ export const PontoDesafio = ({ texto }: { texto: string }) => {
   );
 };
 
-
+export const Section = styled.section`
+  scroll-margin-top: 4.5rem; /* ajuste esse valor conforme a altura do seu header */
+`;

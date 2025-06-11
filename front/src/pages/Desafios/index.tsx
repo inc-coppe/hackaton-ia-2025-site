@@ -25,7 +25,9 @@ import {
   TextNextToMedia,
   PontoDesafio,
   PreDivisionContainer,
+  Section,
 } from "./style";
+import { useLocation } from "react-router-dom";
 
 import Img_predicao_faltas from "../../assets/imagem desafio - Modelo Preditivo para Faltas em Consultas.png";
 import Img_desafio_regulacao_IA_RAG from "../../assets/imagem desafio - Automatizando a Regulação com IA e RAG.png";
@@ -144,6 +146,18 @@ const ScrollTracker: React.FC<ScrollTrackerProps> = ({
 };
 
 const Desafios = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const el = document.getElementById(location.state.scrollTo);
+      if (el) {
+        // scroll suave
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   const challengesRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -167,8 +181,11 @@ const Desafios = () => {
     title: desafios_menu[index] || desafio.titulo,
   }));
 
+
   return (
+    
     <>
+
       <Header />
       <DesafiosPageContainer>
         <DesafiosIntroContainer>
@@ -218,6 +235,7 @@ const Desafios = () => {
 
             <ConteudoDesafiosContainer>
               {desafios_explicados.map((info, index) => (
+                <Section id={`scroll-desafio-${index}`} key={`section-${index}`}>
                 <ChallengeItemContainer
                   key={info.id || index}
                   id={info.id || `desafio-${index}`}
@@ -293,6 +311,7 @@ const Desafios = () => {
                     )}
                   {/* E assim por diante para info.descricao[2], etc., se necessário */}
                 </ChallengeItemContainer>
+                </Section>
               ))}
             </ConteudoDesafiosContainer>
             <ScrollTracker
@@ -304,6 +323,7 @@ const Desafios = () => {
       </DesafiosPageContainer>
       <Footer />
     </>
+
   );
 };
 
