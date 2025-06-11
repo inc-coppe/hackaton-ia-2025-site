@@ -11,7 +11,6 @@ export const LoginContainer = styled.div`
   height: 58.375rem; // 934px
   background: #110249;
   overflow: hidden;
-
 `;
 
 export const LoginCard = styled.div`
@@ -23,7 +22,7 @@ export const LoginCard = styled.div`
   gap: 4rem; // 64px
   position: absolute;
   width: 49.83625rem; // 797.38px
-  height: 21.3125rem; // 341px  
+  height: 21.3125rem; // 341px
   top: 15.375rem; // 246px
   background: #ffffff;
   border-radius: 0.5rem; // 8px
@@ -35,7 +34,7 @@ export const LoginCard = styled.div`
     height: 470px;
     padding: 24px 16px;
     gap: 32px;
-    top: 106px;    
+    top: 106px;
     border-radius: 8px;
   }
 `;

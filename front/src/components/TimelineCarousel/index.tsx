@@ -15,12 +15,10 @@ import Img3 from "../../assets/Dia2.png";
 import Img4 from "../../assets/Pré mobile.png";
 import Img5 from "../../assets/Dia 1 mobile.png";
 import Img6 from "../../assets/Dia 2 mobile.png";
-
+import { NavLink } from "react-router-dom";
 
 const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const isMobile = window.matchMedia("(max-width: 48rem)").matches;
-
-
 
 const HorizontalCarousel = () => {
   const cardData = [
@@ -39,7 +37,7 @@ const HorizontalCarousel = () => {
 
   const scrollToIndex = (index) => {
     if (wrapperRef.current) {
-      const cardWidth = wrapperRef.current.offsetWidth ; // Largura do card + margem
+      const cardWidth = wrapperRef.current.offsetWidth; // Largura do card + margem
       wrapperRef.current.scrollLeft = index * cardWidth;
       setCurrentPage(index);
     }
@@ -53,9 +51,6 @@ const HorizontalCarousel = () => {
             <img src={item.image} alt={`Image ${item.id}`} />
           </CardItem>
         ))}
-
-        
-
       </CardsWrapper>
 
       <PageControl>
@@ -78,10 +73,15 @@ const HorizontalCarousel = () => {
 
       <ButtonWrapper>
         <div />
-        <LinkButton href="#desafios">
-          CONFIRA O CRONOGRAMA COMPLETO
-          <ArrowRightOutlined />
-        </LinkButton>
+        <NavLink
+          to="/cronograma"
+          style={{ inherit: "None", textDecoration: "None" }}
+        >
+          <LinkButton>
+            CONFIRA O CRONOGRAMA COMPLETO
+            <ArrowRightOutlined />
+          </LinkButton>
+        </NavLink>
       </ButtonWrapper>
     </CarouselContainer>
   );

@@ -117,7 +117,7 @@ const AuthSection = ({
 };
 
 const sponsorItems: MenuProps["items"] = [
-  { key: "1", label: <Link to="/patrocinador">PATROCINADORES DO EVENTO</Link>, },
+  { key: "1", label: <Link to="/patrocinador">PATROCINADORES DO EVENTO</Link> },
   {
     key: "2",
     label: (
@@ -127,7 +127,6 @@ const sponsorItems: MenuProps["items"] = [
     ),
   },
 ];
-
 
 const SearchInterface = (props: {
   searchTerm: string;
@@ -366,24 +365,55 @@ const Header = () => {
         Regulamento
       </NavLink>
       <Dropdown
-        trigger={[eMobile ? "click" : "hover"]} onOpenChange={(open) => setIsDropdownOpen(open)} dropdownRender={() => (
-          <div style={{ top: "100%", backgroundColor: "#110249E5", borderRadius: 8, padding: "1.5rem 2rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "3rem"}}>
-            <a href="/patrocinador" style={{ display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif"}}>
-              PATROCINADORES DO EVENTO
-            </a>
-            
-            <button onClick={handleClickPatrocinador} style={{background: "none", border: "none", display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif", textAlign: "left", width: "100%", padding: 0, margin: 0}}>
+        trigger={[eMobile ? "click" : "hover"]}
+        onOpenChange={(open) => setIsDropdownOpen(open)}
+        dropdownRender={() => (
+          <div
+            style={{
+              top: "100%",
+              backgroundColor: "#110249E5",
+              borderRadius: 8,
+              padding: "1.5rem 2rem 1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+              marginBottom: "3rem",
+            }}
+          >
+            <NavLink to="/patrocinador" onClick={onLinkClick}>
               SEJA UM PATROCINADOR
+            </NavLink>
+
+            <button
+              onClick={handleClickPatrocinador}
+              style={{
+                background: "none",
+                border: "none",
+                display: "block",
+                color: "#ffffff",
+                fontWeight: 700,
+                fontSize: "0.9rem",
+                fontFamily: "Montserrat, sans-serif",
+                textAlign: "left",
+                width: "100%",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              PATROCINADORES DO EVENTO
             </button>
           </div>
-        )}>
-        <NavButton type="button" onClick={() => setIsDropdownOpen((prev) => !prev)}>
+        )}
+      >
+        <NavButton
+          type="button"
+          onClick={() => setIsDropdownOpen((prev) => !prev)}
+        >
           <Space>
             Patrocinadores <DownOutlined />
           </Space>
-       </NavButton>
+        </NavButton>
       </Dropdown>
-
     </>
   );
 
@@ -411,7 +441,6 @@ const Header = () => {
           <MobileMenuContent>
             <NavSection>
               <NavigationLinks onLinkClick={toggleMenu} />
-        
             </NavSection>
             <AuthSection
               isMobile
