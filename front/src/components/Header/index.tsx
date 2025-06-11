@@ -53,6 +53,9 @@ import {
   ExitSearchButton,
   AuthPlaceholder,
 } from "./style";
+import Column from "antd/es/table/Column";
+
+const eMobile = window.innerWidth <= 768;
 
 interface User {
   id: string;
@@ -114,25 +117,17 @@ const AuthSection = ({
 };
 
 const sponsorItems: MenuProps["items"] = [
-  { key: "1", label: <Link to="/patrocinador">Nossos Patrocinadores</Link> },
-  { type: "divider" },
+  { key: "1", label: <Link to="/patrocinador">PATROCINADORES DO EVENTO</Link>, },
   {
     key: "2",
     label: (
       <a target="_blank" rel="noopener noreferrer" href="#">
-        Patrocinador 2
-      </a>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="#">
-        Patrocinador 3
+        SEJA UM PATROCINADOR
       </a>
     ),
   },
 ];
+
 
 const SearchInterface = (props: {
   searchTerm: string;
@@ -313,6 +308,10 @@ const Header = () => {
     cleanUpSearch();
   };
 
+  const handleClickPatrocinador = () => {
+    navigate("/", { state: { scrollTo: "secao-patrocinadores" } });
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("access_token");
@@ -347,6 +346,8 @@ const Header = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const NavigationLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => (
     <>
       <NavLink to="/" onClick={onLinkClick}>
@@ -364,13 +365,25 @@ const Header = () => {
       <NavLink to="/regulamento" onClick={onLinkClick}>
         Regulamento
       </NavLink>
-      <Dropdown menu={{ items: sponsorItems }} trigger={["hover"]}>
-        <NavButton type="button">
+      <Dropdown
+        trigger={[eMobile ? "click" : "hover"]} onOpenChange={(open) => setIsDropdownOpen(open)} dropdownRender={() => (
+          <div style={{ top: "100%", backgroundColor: "#110249E5", borderRadius: 8, padding: "1.5rem 2rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "3rem"}}>
+            <a href="/patrocinador" style={{ display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif"}}>
+              PATROCINADORES DO EVENTO
+            </a>
+            
+            <button onClick={handleClickPatrocinador} style={{background: "none", border: "none", display: "block", color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif", textAlign: "left", width: "100%", padding: 0, margin: 0}}>
+              SEJA UM PATROCINADOR
+            </button>
+          </div>
+        )}>
+        <NavButton type="button" onClick={() => setIsDropdownOpen((prev) => !prev)}>
           <Space>
             Patrocinadores <DownOutlined />
           </Space>
-        </NavButton>
+       </NavButton>
       </Dropdown>
+
     </>
   );
 
@@ -398,6 +411,7 @@ const Header = () => {
           <MobileMenuContent>
             <NavSection>
               <NavigationLinks onLinkClick={toggleMenu} />
+        
             </NavSection>
             <AuthSection
               isMobile
