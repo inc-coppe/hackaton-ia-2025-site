@@ -32,7 +32,7 @@ import c2 from "../../assets/c2.png";
 import c3 from "../../assets/c3.png";
 import c4 from "../../assets/c4.png";
 import c5 from "../../assets/c5.png";
-import c6 from "../../assets/c6.png";
+import c6 from "../../assets/c6.png"; //maravalley
 import c7 from "../../assets/c7.png";
 import c8 from "../../assets/c8.png";
 import c9 from "../../assets/ca2_logo_resized (1).png";
