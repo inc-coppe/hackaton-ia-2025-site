@@ -121,11 +121,7 @@ const eventos_dom = [
     descricao:
       "Encerramento oficial do evento e premiação das melhores soluções. ",
   },
-  {
-    dataLugar: "",
-    titulo: "_Checkpoint",
-    descricao: "Checkpoint para avaliação do progesso e ajustes necessários. ",
-  },
+
 ];
 
 const Cronograma = () => {
