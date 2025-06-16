@@ -89,6 +89,7 @@ export const Frame = styled.div`
 
   @media (max-width: 48rem) {
     width: 100%; /* Ocupa 100% da largura da coluna */
+    height: auto;
     /* REMOVIDO: height: 38.125rem; */
   }
 `;

@@ -288,3 +288,7 @@ export const ChapterSubtitleTitle = styled.h4`
 `;
 
 export const ChapterDescription = styled.p``;
+
+export const Section = styled.section`
+  scroll-margin-top: 4.5rem; /* ajuste esse valor conforme a altura do seu header */
+`;

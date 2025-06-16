@@ -24,7 +24,9 @@ import {
   ChapterSubtitleSection,
   ChapterSubtitleTitle,
   ChapterSubParagraph,
+  Section,
 } from "./style";
+import { useLocation } from "react-router-dom";
 
 // Mock de dados para os capítulos/seções
 const materialChapters = [
@@ -125,6 +127,8 @@ const materialChapters = [
   // Adicione mais capítulos aqui conforme necessário
 ];
 
+const remToPx = (rem: number) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+
 interface ScrollTrackerProps {
   MateriaisRefs: React.MutableRefObject<(HTMLElement | null)[]>;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -164,8 +168,29 @@ const ScrollTracker: React.FC<ScrollTrackerProps> = ({
 };
 
 function Materials() {
+  const location = useLocation();
   const MateriaisRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+  const scrollToId = location.state?.scrollTo;
+  if (scrollToId) {
+    const element = document.getElementById(scrollToId);
+    if (element) {
+      const remOffset = 5; // exemplo: 5rem
+      const headerOffset = remToPx(remOffset);
+       // ajuste conforme a altura real do seu menu
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }
+}, [location]);
+  
 
   const handleClick = (index: number) => {
     // ... (lógica do handleClick - sem alterações)
@@ -186,6 +211,13 @@ function Materials() {
     id: material.id || `material-${index}`,
     title: materialChapters[index] || material.menuTitle,
   }));
+
+  const getSectionIndex = (title: string): number => {
+    if (title === "Webinar de Rapids") return 1;
+    if (title === "RAG") return 2;
+    if (title === "Material CrewAI") return 3;
+    return 0;
+  };
 
   return (
     <>
@@ -243,15 +275,26 @@ function Materials() {
                   {chapter.description2 && (
                     <ChapterParagraph>{chapter.description2}</ChapterParagraph>
                   )}
-                  {chapter.subsections?.map((sub, subIndex) => (
-                    <ChapterSubtitleSection key={subIndex}>
-                      <ChapterSubtitleTitle>{sub.title}</ChapterSubtitleTitle>
-                      {sub.text?.map((sub) => (
-                        <ChapterSubParagraph>{sub}</ChapterSubParagraph>
-                      ))}
-                  </ChapterSubtitleSection>
-                  ))}
+                  {chapter.subsections?.map((sub, subIndex) => {
+                    const isTarget =
+                      sub.title === "Webinar de Rapids" ||
+                      sub.title === "RAG" ||
+                      sub.title === "Material CrewAI";
+
+                    return (
+                      <ChapterSubtitleSection
+                        key={subIndex}
+                        id={isTarget ? `scroll-material-${getSectionIndex(sub.title)}` : undefined}
+                      >
+                        <ChapterSubtitleTitle>{sub.title}</ChapterSubtitleTitle>
+                        {sub.text?.map((subText, textIndex) => (
+                          <ChapterSubParagraph key={textIndex}>{subText}</ChapterSubParagraph>
+                        ))}
+                      </ChapterSubtitleSection>
+                    );
+                  })}
                 </ChapterSectionWrapper>
+
               ))}
             </ContentArea>
 

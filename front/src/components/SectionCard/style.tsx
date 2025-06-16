@@ -39,6 +39,7 @@ export const CardContent = styled.div`
 
   @media (max-width: 28rem) {
     width: 100%;///*Era 17.375rem (78px) */
+    height: auto;
   }
 `;
 
@@ -112,7 +113,7 @@ export const CardDescription = styled.p<{ $isSecondCard?: boolean }>`
   margin: 0;
 
   @media (max-width: 28rem) {
-    height: ${(props) =>
+    /*height: ${(props) =>
       props.$isSecondCard ? "7.5rem" : "1.25rem"}; // 120px or 20px
-  }
+  }*/
 `;
