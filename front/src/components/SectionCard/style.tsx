@@ -8,8 +8,9 @@ export const SectionCard = styled.div<{ $isSecondCard?: boolean }>`
   gap: 0.75rem; // 12px
   width: 100%; // Changed from fixed width to 100%
   max-width: 38.5rem; // 616px as max-width instead
-  height: ${(props) =>
+  /*height: ${(props) =>
     props.$isSecondCard ? "10.688rem" : "8.188rem"}; // 171px or 131px
+  */
   background: #ffffff;
   border-radius: 0.5rem; // 8px
 

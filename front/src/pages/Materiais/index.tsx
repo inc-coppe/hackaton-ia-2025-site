@@ -89,7 +89,7 @@ const materialChapters = [
         ]
       },
       {
-        title: "Webminar de Agentic AI",
+        title: "RAG",
         text: ['A técnica de Retrieval-Augmented Generation (RAG) representa um avanço importante na inteligência artificial ao combinar modelos de linguagem com mecanismos de recuperação de informações relevantes a partir de grandes bases de dados. Essa abordagem permite que os agentes não apenas gerem respostas baseadas no que "sabem" internamente, mas também consultem dados externos atualizados e específicos, ampliando sua capacidade de oferecer respostas precisas e contextualizadas.',
 
         "Nesta seção, disponibilizamos links para cursos da NVIDIA que exploram os fundamentos e aplicações práticas do RAG, proporcionando uma base sólida para quem deseja entender como integrar essa técnica em projetos de IA avançada. Os conteúdos são ideais para quem quer aprofundar o conhecimento e aplicar RAG em desafios reais, incluindo os do hackathon.",

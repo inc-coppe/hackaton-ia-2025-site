@@ -38,19 +38,19 @@ const Aquecimento = () => {
       <Frame>
         {/* Cards de Seção */}
         <SectionCardComponent
-          title="Em Breve"
-          subtitle="Você poderá acessar todas as informações por aqui."
-          description=""
+          title="Webinar de Rapids"
+          subtitle="Webinar de Rapids"
+          description="Descubra como acelerar pipelines de Data Science usando GPUs com as bibliotecas open source do Rapids. Veja como essa tecnologia se integra a ferramentas populares e potencializa o desempenho em projetos analíticos."
         />
         <SectionCardComponent
-          title="Em Breve"
-          subtitle="Você poderá acessar todas as informações por aqui."
-          description=""
+          title="Agentic AI"
+          subtitle="RAG"
+          description="Entenda como a técnica de Retrieval-Augmented Generation amplia a capacidade dos agentes de IA ao combinar geração de linguagem com recuperação de informações externas."
         />
         <SectionCardComponent
-          title="Em Breve"
-          subtitle="Você poderá acessar todas as informações por aqui."
-          description=""
+          title="Agentic AI"
+          subtitle="Material CrewAI"
+          description="Aprenda como coordenar equipes de agentes autônomos com o curso da CrewAI, que mostra na prática como integrar múltiplos LLMs em fluxos de trabalho complexos."
         />
         {/* Botão */}
         <Button>
