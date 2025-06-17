@@ -148,3 +148,15 @@ export const SectionSubtitle = styled.h3`
   }
 `;
 
+export const LinkButton = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.938rem;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  cursor: pointer;
+`;

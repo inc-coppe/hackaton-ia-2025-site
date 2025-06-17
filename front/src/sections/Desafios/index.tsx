@@ -12,7 +12,9 @@ import {
   SectionSubtitle,
   Title,
   Body,
+  LinkButton,
 } from "./style";
+import { ButtonWrapper} from "../../components/CustomCarousel/style";
 
 const Aquecimento = () => {
   // Renomeei para refletir o conteúdo
@@ -117,9 +119,19 @@ const Aquecimento = () => {
         </button>
 
         {/* Botão */}
-        <Button>
-          ACESSE TODOS OS MATERIAIS <ArrowRightOutlined />
-        </Button>
+        <ButtonWrapper>
+          <NavLink
+            to="/materiais"
+            style={{ inherit: "None", textDecoration: "None" }}
+          >
+          
+            <LinkButton>
+              ACESSE TODOS OS MATERIAIS 
+              <ArrowRightOutlined />
+            </LinkButton>
+          </NavLink>
+        </ButtonWrapper>
+        
       </Frame>
     </Container>
   );
