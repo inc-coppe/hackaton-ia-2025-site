@@ -235,6 +235,21 @@ export const ChapterParagraph = styled.p`
   }
 `;
 
+export const ChapterSubParagraph = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem; /* Desktop: 20px */
+  line-height: 1.5rem; /* Desktop: 24px */
+  color: rgba(15, 15, 33, 0.6);
+
+
+  @media (max-width: 48rem) {
+    font-size: 1rem; /* Mobile: 16px */
+    line-height: 1.25rem; /* Mobile: 20px */
+  }
+`;
+
+
 export const VideoPlaceholder = styled.div`
   width: 100%;
   max-width: 50rem; /* Desktop: 800px */
@@ -260,10 +275,11 @@ export const ChapterSubtitleSection = styled.div`
 export const ChapterSubtitleTitle = styled.h4`
   font-family: "Nunito Sans", sans-serif;
   font-weight: 700;
-  font-size: 1.125rem; /* Desktop: 18px */
+  font-size: 1.25rem; /* Desktop: 18px */
   line-height: 1.5625rem; /* Desktop: 25px */
   color: #0f0f21;
   margin: 0;
+  padding-bottom: 0.1rem;
 
   @media (max-width: 48rem) {
     font-size: 1rem; /* Mobile: 16px */
@@ -272,3 +288,7 @@ export const ChapterSubtitleTitle = styled.h4`
 `;
 
 export const ChapterDescription = styled.p``;
+
+export const Section = styled.section`
+  scroll-margin-top: 4.5rem; /* ajuste esse valor conforme a altura do seu header */
+`;

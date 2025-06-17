@@ -1,6 +1,7 @@
 import HeaderPerfil from "../../components/Header";
 import Footer from "../../components/Footer";
-
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import {
   PreDivisionText,
   Circle,
@@ -121,14 +122,20 @@ const eventos_dom = [
     descricao:
       "Encerramento oficial do evento e premiação das melhores soluções. ",
   },
-  {
-    dataLugar: "",
-    titulo: "_Checkpoint",
-    descricao: "Checkpoint para avaliação do progesso e ajustes necessários. ",
-  },
+
 ];
 
 const Cronograma = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+  
+    if (location.state?.scrollTarget === "top") {
+        // Scrolla até o topo da página
+        window.scrollTo({ top: 0});
+    }
+  }, [location]);
+  
   return (
     <>
       <HeaderPerfil />

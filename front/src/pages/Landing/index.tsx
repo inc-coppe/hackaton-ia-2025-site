@@ -22,6 +22,11 @@ const Landing = () => {
         el.scrollIntoView({ behavior: "smooth" });
       }
     }
+
+    if (location.state?.scrollTarget === "top") {
+        // Scrolla até o topo da página
+        window.scrollTo({ top: 0});
+    }
   }, [location]);
   
   return (
@@ -29,8 +34,10 @@ const Landing = () => {
       <Header />
       <HomePage />
       <SobrePage />
+      
       <Cronograma />
       <Problemas />
+
       <Desafios />
       <CTA />
       <Patrocinadores />

@@ -7,7 +7,7 @@ export const Container = styled.div`
   background: linear-gradient(58.59deg, #2e2989 41.91%, #53167f 100%);
   justify-content: center;
   position: relative; /* Ensure overlay is positioned relative to this container */
-  height: 130vh; /* This should be enough to make space for the overlay */
+  height: auto; /* This should be enough to make space for the overlay */
 
   @media (max-width: 28rem) {
     /* min-height: 280vh;  essa linha fazia com que sempre ocupasse muito mais espaço que o necessário */
@@ -26,7 +26,7 @@ export const WhiteOverlay = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 22%; /* Adjust the height to cover the desired portion - estava 29*/
+  height: 20%; /* Adjust the height to cover the desired portion - estava 29*/
   background-color: white;
   z-index: 0; /* Make sure it stays below the content but above the background */
 
@@ -37,13 +37,25 @@ export const WhiteOverlay = styled.div`
 
 // Wrapper for margin around the content
 export const Margin = styled.div`
-  margin: 7.5rem;
+  padding: 1rem 7.5rem 0;
   position: relative; /* Ensure content remains above the overlay */
   z-index: 1; /* Ensure content is above the white overlay */
 
   @media (max-width: 28rem) {
     margin: 0;
     padding: 0rem 1.5rem;
+  }
+`;
+
+export const ContainerCarousel = styled.div`
+  padding-bottom: 1rem;
+  padding-left: 7.5rem;
+  position: relative; /* Ensure content remains above the overlay */
+  z-index: 1; /* Ensure content is above the white overlay */
+
+  @media (max-width: 28rem) {
+    margin: 0;
+    padding: 0rem 1rem;
   }
 `;
 

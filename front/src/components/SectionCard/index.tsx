@@ -1,5 +1,6 @@
 import React from "react";
 import setaIcon from "../../assets/seta_figma_preta.png";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   SectionCard,
   CardContent,
@@ -25,8 +26,9 @@ const SectionCardComponent: React.FC<SectionCardProps> = ({
   description,
   isSecondCard = false,
 }) => {
+
   return (
-    <SectionCard $isSecondCard={isSecondCard}>
+    <SectionCard $isSecondCard={isSecondCard}>     
       <CardContent>
         <CardHeaderSeta>
           <CardTitle>{title}</CardTitle>
@@ -41,6 +43,7 @@ const SectionCardComponent: React.FC<SectionCardProps> = ({
           {description}
         </CardDescription>
       </CardContent>
+
     </SectionCard>
   );
 };

@@ -6,6 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start; /*Trocado para ajustar a disposição dos textos - era center*/ 
 
+  overflow-x: hidden;
+
   /* LINHA CORRIGIDA ABAIXO */
   padding: 7.5rem; /* Trocamos 'margin' por 'padding' */
 
