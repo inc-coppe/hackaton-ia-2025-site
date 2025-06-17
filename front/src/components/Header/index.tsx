@@ -349,19 +349,24 @@ const Header = () => {
 
   const NavigationLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => (
     <>
-      <NavLink to="/" onClick={onLinkClick}>
+      <NavLink to="/" onClick={onLinkClick} 
+        state={{ scrollTarget: "top" }}>
         Início
       </NavLink>
-      <NavLink to="/cronograma" onClick={onLinkClick}>
+      <NavLink to="/cronograma" onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}>
         Cronograma
       </NavLink>
-      <NavLink to="/desafios" onClick={onLinkClick}>
+      <NavLink to="/desafios" onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}>
         Desafios
       </NavLink>
-      <NavLink to="/materiais" onClick={onLinkClick}>
+      <NavLink to="/materiais" onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}>
         Materiais
       </NavLink>
-      <NavLink to="/regulamento" onClick={onLinkClick}>
+      <NavLink to="/regulamento" onClick={onLinkClick} // fazer agora
+        state={{ scrollTarget: "top" }}>
         Regulamento
       </NavLink>
       <Dropdown

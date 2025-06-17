@@ -26,12 +26,12 @@ const Footer = () => {
         </LogoSection>
 
         <LinksSection>
-          <StyledNavLink to="/">Início</StyledNavLink>
-          <StyledNavLink to="/cronograma">Cronograma</StyledNavLink>
-          <StyledNavLink to="/desafios">Desafios</StyledNavLink>
-          <StyledNavLink to="/materiais">Materiais</StyledNavLink>
-          <StyledNavLink to="/regulamento">Regulamento</StyledNavLink>
-          <StyledNavLink to="/patrocinador">Patrocinadores</StyledNavLink>
+          <StyledNavLink to="/" state={{ scrollTarget: "top" }}> Início</StyledNavLink>
+          <StyledNavLink to="/cronograma" state={{ scrollTarget: "top" }}>Cronograma</StyledNavLink>
+          <StyledNavLink to="/desafios" state={{ scrollTarget: "top" }}>Desafios</StyledNavLink>
+          <StyledNavLink to="/materiais" state={{ scrollTarget: "top" }}>Materiais</StyledNavLink>
+          <StyledNavLink to="/regulamento" state={{ scrollTarget: "top" }}>Regulamento</StyledNavLink>
+          <StyledNavLink to="/patrocinador" state={{ scrollTarget: "top" }}>Patrocinadores</StyledNavLink>
         </LinksSection>
 
         <RealizacaoSection>
