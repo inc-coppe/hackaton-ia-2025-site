@@ -1,6 +1,9 @@
 import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 import {
   SponsorContainer,
   HighlightSection,
@@ -84,10 +87,18 @@ const ctaBenefitsData = [
 
 function Sponsor() {
   // const navigate = useNavigate(); // Não usado atualmente
+  const location = useLocation();
 
   const handleContact = () => {
     window.location.href = "mailto:contato@contato.com.br"; // Ou formulário de contato
   };
+
+  useEffect(() => {
+    if (location.state?.scrollTarget === "top") {
+        // Scrolla até o topo da página
+        window.scrollTo({ top: 0});
+    }
+  }, [location]);
 
   return (
     <>

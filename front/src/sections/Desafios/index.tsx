@@ -123,6 +123,7 @@ const Aquecimento = () => {
           <NavLink
             to="/materiais"
             style={{ inherit: "None", textDecoration: "None" }}
+            state={{ scrollTarget: "top" }}
           >
           
             <LinkButton>

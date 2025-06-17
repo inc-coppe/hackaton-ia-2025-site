@@ -76,6 +76,7 @@ const HorizontalCarousel = () => {
         <NavLink
           to="/cronograma"
           style={{ inherit: "None", textDecoration: "None" }}
+          state={{ scrollTarget: "top" }}
         >
           <LinkButton>
             CONFIRA O CRONOGRAMA COMPLETO

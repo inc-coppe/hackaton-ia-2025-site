@@ -29,6 +29,8 @@ import realizacao2 from "../../assets/cietec preto.png";
 import realizacao3 from "../../assets/realizacao3.png";
 import realizacao4 from "../../assets/realizacao4.png";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { ButtonWrapper, LinkButton } from "../../components/CustomCarousel/style";
+import { NavLink } from "react-router-dom";
 
 const sponsorsData = {
   ouro: [],
@@ -77,10 +79,19 @@ const SponsorsSection: React.FC = () => {
         </SectionText>
       </Resize>
 
-      <SponsorButton>
-        SEJA PATROCINADOR
-        <ArrowRightOutlined />
-      </SponsorButton>
+      <ButtonWrapper>
+        <NavLink
+          to="/patrocinador"
+          style={{ inherit: "None", textDecoration: "None" }}
+          state={{ scrollTarget: "top" }}>
+      
+          <LinkButton>        
+            SEJA PATROCINADOR
+            <ArrowRightOutlined />
+          </LinkButton>
+
+        </NavLink>
+      </ButtonWrapper>
 
       <SponsorsContainer>
         <SponsorsContainerDefinidos>
