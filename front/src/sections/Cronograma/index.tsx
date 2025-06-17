@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Margin, WhiteOverlay } from "./style";
+import { Container, ContainerCarousel, Margin, WhiteOverlay } from "./style";
 import TimelineCarousel from "../../components/TimelineCarousel";
 import { Title } from "../Cronograma/style";
 
@@ -9,8 +9,10 @@ const Cronograma = () => {
       <WhiteOverlay /> {/* White overlay at the bottom */}
       <Margin>
         <Title>PREPARE-SE PARA CADA MOMENTO.</Title>
-        <TimelineCarousel />
       </Margin>
+      <ContainerCarousel>
+        <TimelineCarousel />
+      </ContainerCarousel>
     </Container>
   );
 };

@@ -16,7 +16,7 @@ export const CardsWrapper = styled.div`
   -ms-overflow-style: none; /* IE/Edge */
   padding-bottom: ${pxToRem(16)};
 
-  width: 110%;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
@@ -63,6 +63,15 @@ export const CardItem = styled.div`
     user-drag: none; /* Impede o arrasto em navegadores mais modernos */
     border-radius: ${pxToRem(8)};
   
+  }
+
+`;
+
+export const ContainerButton = styled.div`
+  padding: 0 7.5rem;
+
+  @media (max-width: 28rem) {
+    padding: 0 0;
   }
 
 `;

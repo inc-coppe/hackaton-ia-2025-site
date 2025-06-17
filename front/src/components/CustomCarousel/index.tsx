@@ -118,7 +118,6 @@ const HorizontalCarousel = () => {
         <NavLink
           to="/desafios"
           style={{ inherit: "None", textDecoration: "None" }}
-          state={{ scrollTarget: "top" }}
         >
           <LinkButton>
             Conheça todos os desafios

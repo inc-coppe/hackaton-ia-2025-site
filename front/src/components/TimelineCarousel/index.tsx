@@ -7,6 +7,7 @@ import {
   LinkButton,
   PageControl,
   Dot,
+  ContainerButton,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import Img1 from "../../assets/Pre.png";
@@ -45,6 +46,7 @@ const HorizontalCarousel = () => {
 
   return (
     <CarouselContainer>
+      
       <CardsWrapper ref={wrapperRef}>
         {displayedCards.map((item) => (
           <CardItem key={item.id}>
@@ -70,20 +72,21 @@ const HorizontalCarousel = () => {
           />
         ))}
       </PageControl>
-
-      <ButtonWrapper>
-        <div />
-        <NavLink
-          to="/cronograma"
-          style={{ inherit: "None", textDecoration: "None" }}
-          state={{ scrollTarget: "top" }}
-        >
-          <LinkButton>
-            CONFIRA O CRONOGRAMA COMPLETO
-            <ArrowRightOutlined />
-          </LinkButton>
-        </NavLink>
-      </ButtonWrapper>
+      <ContainerButton>
+        <ButtonWrapper>
+          <div />
+          <NavLink
+            to="/cronograma"
+            style={{ inherit: "None", textDecoration: "None" }}
+            state={{ scrollTarget: "top" }}
+          >
+            <LinkButton>
+              CONFIRA O CRONOGRAMA COMPLETO
+              <ArrowRightOutlined />
+            </LinkButton>
+          </NavLink>
+        </ButtonWrapper>
+      </ContainerButton>
     </CarouselContainer>
   );
 };

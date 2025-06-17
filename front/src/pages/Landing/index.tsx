@@ -34,8 +34,10 @@ const Landing = () => {
       <Header />
       <HomePage />
       <SobrePage />
+      
       <Cronograma />
       <Problemas />
+
       <Desafios />
       <CTA />
       <Patrocinadores />
