@@ -9,6 +9,7 @@ from .views import (
     MyUserProfileView,
     UserPublicProfileView,
     UserSearchView,
+    ProfilePictureUploadView,
 )
 
 urlpatterns = [
@@ -29,4 +30,9 @@ urlpatterns = [
         name="user_public_profile",
     ),
     path("users/search/", UserSearchView.as_view(), name="user_search"),
+    path(
+        "profile/upload-picture/",
+        ProfilePictureUploadView.as_view(),
+        name="profile_picture_upload",
+    ),
 ]

@@ -207,6 +207,9 @@ CACHES = {
     }
 }
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 # For production, you might want to use Redis or Memcached instead:
 # CACHES = {
 #     'default': {

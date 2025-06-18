@@ -9,11 +9,18 @@ from django.contrib.auth import get_user_model
 from rest_framework import status, generics, filters
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_auth_requests
 import requests as ext_requests
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
+
+
 from .models import UserProfile
 from .serializers import (
     UserRegistrationSerializer,
@@ -94,6 +101,19 @@ def serve_profile_picture(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if not user.profile_picture:
         return HttpResponseBadRequest("No profile picture URL.")
+
+    if user.profile_picture.startswith("/media/"):
+        local_file_path = os.path.join(
+            settings.MEDIA_ROOT, user.profile_picture.replace(settings.MEDIA_URL, "")
+        )
+        if os.path.exists(local_file_path):
+            with open(local_file_path, "rb") as f:
+                return HttpResponse(
+                    f.read(), content_type=f"image/{local_file_path.split('.')[-1]}"
+                )
+        else:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
     try:
         response = ext_requests.get(user.profile_picture, stream=True, timeout=5)
         response.raise_for_status()
@@ -140,4 +160,49 @@ class UserSearchView(generics.ListAPIView):
     serializer_class = UserSearchSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
-    search_fields = ["user__name", "full_name", "tags", "area_of_expertise"]
+    search_fields = [
+        "user__name",
+        "full_name",
+        "organization",
+        "institution",
+        "area_of_expertise",
+        "tags",
+    ]
+
+
+class ProfilePictureUploadView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        if "profile_picture" not in request.FILES:
+            return Response(
+                {"detail": "No image file provided."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        image_file = request.FILES["profile_picture"]
+        user = request.user
+
+        filename, ext = os.path.splitext(image_file.name)
+        file_path = os.path.join(
+            "profile_pics", f"{user.id}_{filename}_{os.urandom(4).hex()}{ext}"
+        )
+
+        try:
+            saved_path = default_storage.save(file_path, ContentFile(image_file.read()))
+
+            image_url = default_storage.url(saved_path)
+
+            user.profile_picture = image_url
+            user.save()
+
+            return Response(
+                {"profile_picture_url": image_url}, status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            logger.error(f"Error uploading profile picture for user {user.id}: {e}")
+            return Response(
+                {"detail": f"Failed to upload image: {e}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
