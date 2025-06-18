@@ -140,4 +140,11 @@ class UserSearchView(generics.ListAPIView):
     serializer_class = UserSearchSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
-    search_fields = ["user__name", "full_name", "tags", "area_of_expertise"]
+    search_fields = [
+        "user__name",
+        "full_name",
+        "organization",
+        "institution",
+        "area_of_expertise",
+        "tags",
+    ]

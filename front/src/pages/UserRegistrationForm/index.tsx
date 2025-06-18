@@ -1,5 +1,3 @@
-// src/pages/Forms/index.tsx
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -39,9 +37,10 @@ const MOTIVATION_OPTIONS = [
 interface UserProfileFormData {
   full_name: string;
   cpf?: string | null;
-  birth_date: any; // Mudar para 'any' para acomodar objeto dayjs e string
-  linkedin_profile?: string;
-  github_profile?: string;
+  birth_date: any;
+  organization?: string;
+  linkedin_profile: string;
+  github_profile: string;
   education_level: string;
   institution: string;
   phone?: string;
@@ -59,10 +58,8 @@ const UserRegistrationForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
 
-  // NOVO ESTADO: para saber se o perfil já existe e precisa ser atualizado
   const [isUpdate, setIsUpdate] = useState(false);
 
-  // MODIFICAÇÃO: Esta função agora busca os dados do perfil para preencher o formulário
   useEffect(() => {
     const fetchAndSetProfileData = async () => {
       const token = localStorage.getItem("access_token");
@@ -72,27 +69,22 @@ const UserRegistrationForm: React.FC = () => {
       }
       setLoading(true);
       try {
-        // Usamos o endpoint 'me' que retorna os dados do perfil
         const response = await fetch("http://localhost:8000/api/profile/me/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!response.ok) {
-          // Se a resposta for 404 (Not Found) ou outro erro, significa que o perfil não foi criado ainda
           setIsUpdate(false);
           return;
         }
 
         const data: UserProfileFormData = await response.json();
 
-        // Se o perfil existe, marcamos como uma atualização
         setIsUpdate(true);
         if (data.form_completed) {
           setCurrentStep(1);
         }
 
-        // Preenchemos o formulário com os dados existentes
-        // A data de nascimento precisa ser convertida para um objeto dayjs
         form.setFieldsValue({
           ...data,
           birth_date: data.birth_date ? dayjs(data.birth_date) : null,
@@ -130,7 +122,6 @@ const UserRegistrationForm: React.FC = () => {
     });
   };
 
-  // MODIFICAÇÃO: Esta função agora lida com POST (criar) e PATCH (atualizar)
   const onFinish = async (values: UserProfileFormData) => {
     setLoading(true);
     const token = localStorage.getItem("access_token");
@@ -139,7 +130,6 @@ const UserRegistrationForm: React.FC = () => {
       return;
     }
 
-    // Prepara os dados formatados
     const formattedValues = {
       ...values,
       cpf: values.cpf ? values.cpf.replace(/\D/g, "") : null,
@@ -148,7 +138,6 @@ const UserRegistrationForm: React.FC = () => {
         : null,
     };
 
-    // Decide qual URL e método usar
     const url = isUpdate
       ? "http://localhost:8000/api/profile/me/"
       : "http://localhost:8000/api/profile/create/";
@@ -184,8 +173,6 @@ const UserRegistrationForm: React.FC = () => {
     }
   };
 
-  // A lógica de validação do CPF no frontend foi mantida, está ótima.
-
   return (
     <FormContainer>
       <StepsContainer>
@@ -206,10 +193,7 @@ const UserRegistrationForm: React.FC = () => {
           onFinish={onFinish}
           requiredMark={false}
           validateTrigger={["onBlur", "onChange"]}
-          // A propriedade initialValues é gerenciada pelo form.setFieldsValue no useEffect
         >
-          {/* O restante do seu JSX do formulário permanece o mesmo. */}
-          {/* Exemplo de um campo: */}
           <Form.Item
             name="full_name"
             label="Nome completo"
@@ -220,7 +204,7 @@ const UserRegistrationForm: React.FC = () => {
               },
             ]}
           >
-            <Input placeholder="Seu nome completo" maxLength={100} />
+            <Input placeholder="Seu nome completo" maxLength={255} />
           </Form.Item>
 
           <Form.Item
@@ -282,28 +266,34 @@ const UserRegistrationForm: React.FC = () => {
             />
           </Form.Item>
 
+          <Form.Item name="organization" label="Organização (opcional)">
+            <Input placeholder="Nome da sua organização" maxLength={255} />
+          </Form.Item>
+
           <Form.Item
             name="institution"
-            label="Instituição"
-            rules={[{ required: true, message: "Informe sua instituição" }]}
+            label="Instituição de ensino"
+            rules={[
+              { required: true, message: "Informe sua instituição de ensino" },
+            ]}
           >
             <Input
-              placeholder="Onde você trabalha ou estuda?"
-              maxLength={100}
+              placeholder="Nome da sua instituição de ensino"
+              maxLength={255}
             />
           </Form.Item>
 
           <Form.Item
             name="education_level"
-            label="Nível de Escolaridade"
+            label="Selecione a sua maior titulação"
             rules={[
               {
                 required: true,
-                message: "Selecione seu nível de escolaridade",
+                message: "Por favor, selecione sua maior titulação",
               },
             ]}
           >
-            <Select placeholder="Selecione seu nível de escolaridade">
+            <Select placeholder="Selecione a sua maior titulação">
               <Option value="EMI">Ensino Médio Incompleto</Option>
               <Option value="EMC">Ensino Médio Completo</Option>
               <Option value="GI">Graduação Incompleta</Option>
@@ -328,6 +318,10 @@ const UserRegistrationForm: React.FC = () => {
                 </span>
               }
               rules={[
+                {
+                  required: true,
+                  message: "Por favor, insira seu perfil do GitHub",
+                },
                 { type: "url", message: "Por favor insira uma URL válida" },
                 {
                   pattern: /^https?:\/\/github\.com\/[\w-]+\/?$/,
@@ -349,6 +343,10 @@ const UserRegistrationForm: React.FC = () => {
                 </span>
               }
               rules={[
+                {
+                  required: true,
+                  message: "Por favor, insira seu perfil do LinkedIn",
+                },
                 { type: "url", message: "Por favor insira uma URL válida" },
                 {
                   pattern: /^https?:\/\/(www\.)?linkedin\.com\/in\/[\w-]+\/?$/,
@@ -389,7 +387,7 @@ const UserRegistrationForm: React.FC = () => {
           >
             <Input
               placeholder="Ex: Saúde, TI, Dados, Design, etc."
-              maxLength={100}
+              maxLength={255}
             />
           </Form.Item>
 
@@ -452,7 +450,22 @@ const UserRegistrationForm: React.FC = () => {
             </Checkbox>
           </Form.Item>
 
-          <Form.Item name="share_contacts" valuePropName="checked">
+          <Form.Item
+            name="share_contacts"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(
+                        new Error(
+                          "Você deve aceitar compartilhar seus contatos",
+                        ),
+                      ),
+              },
+            ]}
+          >
             <Checkbox>
               Aceito compartilhar meus contatos com parceiros do Hackathon para
               oportunidades

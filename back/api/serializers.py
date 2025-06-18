@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from django.utils import timezone
 from .models import CustomUser, UserProfile
-import re
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -59,6 +57,12 @@ class UserDetailSerializer(BaseUserSerializer):
     area_of_expertise = serializers.CharField(
         source="userprofile.area_of_expertise", read_only=True, allow_null=True
     )
+    organization = serializers.CharField(
+        source="userprofile.organization", read_only=True, allow_null=True
+    )
+    institution = serializers.CharField(
+        source="userprofile.institution", read_only=True, allow_null=True
+    )
 
     class Meta(BaseUserSerializer.Meta):
         fields = BaseUserSerializer.Meta.fields + [
@@ -66,6 +70,8 @@ class UserDetailSerializer(BaseUserSerializer):
             "github_profile",
             "tags",
             "area_of_expertise",
+            "organization",
+            "institution",
         ]
         read_only_fields = fields
 
@@ -89,7 +95,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "user_name",
             "user_profile_picture_url",
             "full_name",
+            "cpf",
             "birth_date",
+            "organization",
             "linkedin_profile",
             "github_profile",
             "education_level",
@@ -151,6 +159,12 @@ class PublicProfileDetailSerializer(serializers.ModelSerializer):
         source="user.profile_picture", read_only=True
     )
     email = serializers.SerializerMethodField()
+    organization = serializers.CharField(
+        source="organization", read_only=True, allow_null=True
+    )
+    institution = serializers.CharField(
+        source="institution", read_only=True, allow_null=True
+    )
 
     class Meta:
         model = UserProfile
@@ -164,6 +178,8 @@ class PublicProfileDetailSerializer(serializers.ModelSerializer):
             "area_of_expertise",
             "tags",
             "email",
+            "organization",
+            "institution",
         ]
         read_only_fields = fields
 
@@ -187,6 +203,8 @@ class UserSearchSerializer(serializers.ModelSerializer):
             "user_name",
             "profile_picture_url",
             "full_name",
+            "organization",
+            "institution",
             "area_of_expertise",
             "tags",
         ]

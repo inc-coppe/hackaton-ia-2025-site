@@ -4,7 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
-from django.db.utils import settings
+from django.conf import settings
 
 
 class CustomUserManager(BaseUserManager):
@@ -63,16 +63,16 @@ class UserProfile(models.Model):
     EDUCATION_CHOICES = [
         ("EMI", "Ensino Médio Incompleto"),
         ("EMC", "Ensino Médio Completo"),
-        ("GC", "Graduação Completa"),
         ("GI", "Graduação Incompleta"),
-        ("PGC", "Pós-Graduação Completa"),
+        ("GC", "Graduação Completa"),
         ("PGI", "Pós-Graduação Incompleta"),
-        ("MC", "Mestrado Completo"),
+        ("PGC", "Pós-Graduação Completa"),
         ("MI", "Mestrado Incompleto"),
-        ("DC", "Doutorado Completo"),
+        ("MC", "Mestrado Completo"),
         ("DI", "Doutorado Incompleto"),
-        ("PDC", "Pós-Doutorado Completo"),
+        ("DC", "Doutorado Completo"),
         ("PDI", "Pós-Doutorado Incompleto"),
+        ("PDC", "Pós-Doutorado Completo"),
     ]
     MOTIVATION_CHOICES = [
         ("PARTNERS", "Encontro com grandes parceiros"),
@@ -82,17 +82,17 @@ class UserProfile(models.Model):
         ("HACKATHON", "O fato de ser um Hackathon e poder desenvolver uma solução"),
     ]
 
-    # CORREÇÃO: Referenciar a classe CustomUser diretamente, pois ela já foi definida acima.
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name="userprofile"
     )
     full_name = models.CharField(max_length=255)
     cpf = models.CharField(max_length=11, unique=True, null=True, blank=True)
     birth_date = models.DateField()
-    linkedin_profile = models.URLField(max_length=255, blank=True, null=True)
-    github_profile = models.URLField(max_length=255, blank=True, null=True)
-    education_level = models.CharField(max_length=3, choices=EDUCATION_CHOICES)
+    organization = models.CharField(max_length=255, blank=True, null=True)
     institution = models.CharField(max_length=255)
+    education_level = models.CharField(max_length=3, choices=EDUCATION_CHOICES)
+    github_profile = models.URLField(max_length=255, default="")  # Added default
+    linkedin_profile = models.URLField(max_length=255, default="")  # Added default
     phone = models.CharField(max_length=20, blank=True, null=True)
     area_of_expertise = models.CharField(max_length=255)
     portfolio_url = models.URLField(max_length=255, blank=True, null=True)
