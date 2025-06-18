@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.conf import settings
 from .models import CustomUser, UserProfile
 
 
@@ -31,16 +32,16 @@ class BaseUserSerializer(serializers.ModelSerializer):
             "profile_picture",
             "profile_picture_url",
         ]
-        read_only_fields = fields
+        read_only_fields = ["id", "email", "profile_picture_url"]
 
     def get_profile_picture_url(self, obj):
         if not obj.profile_picture:
             return None
         request = self.context.get("request")
         if request:
-            return (
-                f"{request.scheme}://{request.get_host()}/api/profile-picture/{obj.id}/"
-            )
+            if obj.profile_picture.startswith("http"):
+                return obj.profile_picture
+            return f"{request.scheme}://{request.get_host()}{obj.profile_picture}"
         return obj.profile_picture
 
 
@@ -73,19 +74,29 @@ class UserDetailSerializer(BaseUserSerializer):
             "organization",
             "institution",
         ]
-        read_only_fields = fields
+        read_only_fields = BaseUserSerializer.Meta.read_only_fields + [
+            "linkedin_profile",
+            "github_profile",
+            "tags",
+            "area_of_expertise",
+            "organization",
+            "institution",
+        ]
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(source="user.email", read_only=True)
-    user_profile_picture_url = serializers.SerializerMethodField(read_only=True)
+    email = serializers.EmailField(read_only=True)
+    user_name = serializers.CharField(required=False, allow_blank=True)
+    user_profile_picture = serializers.URLField(
+        required=False, allow_null=True, allow_blank=True
+    )
+    user_profile_picture_url = serializers.SerializerMethodField()
     education_level_display = serializers.CharField(
         source="get_education_level_display", read_only=True
     )
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
-    user_name = serializers.CharField(source="user.name", read_only=True)
-    user_id = serializers.IntegerField(source="user.id", read_only=True)
+    user_id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = UserProfile
@@ -94,6 +105,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "email",
             "user_name",
             "user_profile_picture_url",
+            "user_profile_picture",
             "full_name",
             "cpf",
             "birth_date",
@@ -123,17 +135,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "education_level_display",
             "followers_count",
             "following_count",
-            "user_name",
         ]
 
     def get_user_profile_picture_url(self, obj):
-        user = obj.user
-        if not user.profile_picture:
+        if not obj.user.profile_picture:
             return None
         request = self.context.get("request")
         if request:
-            return f"{request.scheme}://{request.get_host()}/api/profile-picture/{user.id}/"
-        return user.profile_picture
+            if obj.user.profile_picture.startswith("http"):
+                return obj.user.profile_picture
+            return f"{request.scheme}://{request.get_host()}{obj.user.profile_picture}"
+        return obj.user.profile_picture
 
     def get_followers_count(self, obj):
         return obj.user.followers.count()
@@ -141,30 +153,40 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def get_following_count(self, obj):
         return obj.user.following.count()
 
-    def update(self, instance, validated_data):
-        user_name_from_data = validated_data.pop("user_name", None)
-        if user_name_from_data is not None:
-            user = instance.user
-            if user.name != user_name_from_data:
-                user.name = user_name_from_data
-                user.save(update_fields=["name"])
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["email"] = instance.user.email
+        ret["user_name"] = instance.user.name
+        ret["user_id"] = instance.user.id
+        return ret
 
-        return super().update(instance, validated_data)
+    def update(self, instance, validated_data):
+        user = instance.user
+        user_name = validated_data.pop("user_name", None)
+        user_profile_picture = validated_data.pop("user_profile_picture", None)
+
+        if user_name is not None:
+            user.name = user_name
+            user.save()
+
+        if user_profile_picture is not None:
+            user.profile_picture = user_profile_picture
+            user.save()
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
 
 
 class PublicProfileDetailSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(source="user.id", read_only=True)
-    user_name = serializers.CharField(source="user.name", read_only=True)
-    user_profile_picture_url = serializers.URLField(
-        source="user.profile_picture", read_only=True
-    )
+    user_id = serializers.IntegerField(read_only=True)
+    user_name = serializers.CharField(read_only=True)
+    user_profile_picture_url = serializers.URLField(read_only=True)
     email = serializers.SerializerMethodField()
-    organization = serializers.CharField(
-        source="organization", read_only=True, allow_null=True
-    )
-    institution = serializers.CharField(
-        source="institution", read_only=True, allow_null=True
-    )
+    organization = serializers.CharField(read_only=True, allow_null=True)
+    institution = serializers.CharField(read_only=True, allow_null=True)
 
     class Meta:
         model = UserProfile
@@ -190,11 +212,9 @@ class PublicProfileDetailSerializer(serializers.ModelSerializer):
 
 
 class UserSearchSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(source="user.id", read_only=True)
-    user_name = serializers.CharField(source="user.name", read_only=True)
-    profile_picture_url = serializers.URLField(
-        source="user.profile_picture", read_only=True
-    )
+    user_id = serializers.IntegerField(read_only=True)
+    user_name = serializers.CharField(read_only=True)
+    profile_picture_url = serializers.URLField(read_only=True)
 
     class Meta:
         model = UserProfile

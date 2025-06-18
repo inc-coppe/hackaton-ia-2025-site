@@ -91,8 +91,8 @@ class UserProfile(models.Model):
     organization = models.CharField(max_length=255, blank=True, null=True)
     institution = models.CharField(max_length=255)
     education_level = models.CharField(max_length=3, choices=EDUCATION_CHOICES)
-    github_profile = models.URLField(max_length=255, default="")  # Added default
-    linkedin_profile = models.URLField(max_length=255, default="")  # Added default
+    github_profile = models.URLField(max_length=255, default="")
+    linkedin_profile = models.URLField(max_length=255, default="")
     phone = models.CharField(max_length=20, blank=True, null=True)
     area_of_expertise = models.CharField(max_length=255)
     portfolio_url = models.URLField(max_length=255, blank=True, null=True)

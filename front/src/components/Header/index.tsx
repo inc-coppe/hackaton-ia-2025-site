@@ -53,7 +53,6 @@ import {
   ExitSearchButton,
   AuthPlaceholder,
 } from "./style";
-import Column from "antd/es/table/Column";
 
 const eMobile = window.innerWidth <= 768;
 
@@ -61,6 +60,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  profile_picture: string;
   profile_picture_url: string;
 }
 
@@ -99,7 +99,7 @@ const AuthSection = ({
         <LupaWrapper src={img} alt="Buscar Participantes" />
       </BotaoLupa>
       <ProfilePicture
-        src={user.profile_picture_url}
+        src={user.profile_picture || user.profile_picture_url}
         alt={`${user.name}'s profile`}
         onClick={onUserClick}
       />
@@ -116,124 +116,10 @@ const AuthSection = ({
   );
 };
 
-const sponsorItems: MenuProps["items"] = [
-  { key: "1", label: <Link to="/patrocinador">PATROCINADORES DO EVENTO</Link> },
-  {
-    key: "2",
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="#">
-        SEJA UM PATROCINADOR
-      </a>
-    ),
-  },
-];
-
-const SearchInterface = (props: {
-  searchTerm: string;
-  onSearchTermChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSearchSubmit: (e: FormEvent) => void;
-  searchLoading: boolean;
-  searchError: string | null;
-  searchResults: SearchUserData[] | null;
-  onUserProfileClick: (userId: number) => void;
-}) => (
-  <>
-    <BuscaBodyContainer>
-      <PesquisaSubTitulo>
-        Toda jornada é melhor quando é compartilhada.
-      </PesquisaSubTitulo>
-      <PesquisaBody>
-        Busque por nomes ou interesses e descubra pessoas.
-      </PesquisaBody>
-    </BuscaBodyContainer>
-
-    <form onSubmit={props.onSearchSubmit} style={{ width: "100%" }}>
-      <SearchInputContainer>
-        <SearchField
-          type="text"
-          placeholder="Buscar por nome, área ou tags..."
-          value={props.searchTerm}
-          onChange={props.onSearchTermChange}
-          autoFocus
-        />
-        <SearchButton type="submit" disabled={props.searchLoading}>
-          {props.searchLoading ? (
-            "Buscando..."
-          ) : (
-            <div
-              style={{
-                padding: "0rem 0rem",
-                display: "flex",
-                alignItems: "center",
-                fontSize: "0.9rem",
-              }}
-            >
-              <FaSearch /> Buscar
-            </div>
-          )}
-        </SearchButton>
-      </SearchInputContainer>
-    </form>
-
-    {props.searchError && <FormError>{props.searchError}</FormError>}
-
-    <UserResultsContainer>
-      {props.searchResults &&
-        props.searchResults.length > 0 &&
-        props.searchResults.map((foundUser) => (
-          <UserCard
-            key={foundUser.user_id}
-            onClick={() => props.onUserProfileClick(foundUser.user_id)}
-          >
-            <UserAvatar
-              src={foundUser.profile_picture_url || undefined}
-              alt={`Foto de ${foundUser.user_name}`}
-            />
-            <UserDisplayName>{foundUser.user_name}</UserDisplayName>
-            {foundUser.full_name && (
-              <UserDetailText>{foundUser.full_name}</UserDetailText>
-            )}
-            {foundUser.tags && foundUser.tags.length > 0 && (
-              <UserTagsContainer>
-                {foundUser.tags.map((tag) => (
-                  <UserTagPill key={tag}>{tag}</UserTagPill>
-                ))}
-              </UserTagsContainer>
-            )}
-            <AddButton
-              style={{ marginTop: "1rem", width: "auto" }}
-              onClick={(e) => {
-                e.stopPropagation();
-                props.onUserProfileClick(foundUser.user_id);
-              }}
-            >
-              <FaRegUser style={{ marginRight: "0.5rem" }} /> Ver Perfil
-            </AddButton>
-          </UserCard>
-        ))}
-    </UserResultsContainer>
-
-    {props.searchResults?.length === 0 && !props.searchLoading && (
-      <NoResultsMessage>
-        Nenhum usuário encontrado com o termo "{props.searchTerm}".
-      </NoResultsMessage>
-    )}
-    {props.searchResults === null &&
-      !props.searchLoading &&
-      !props.searchError && (
-        <NoResultsMessage>
-          Digite algo para encontrar outros participantes.
-        </NoResultsMessage>
-      )}
-  </>
-);
-
 const Header = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
-  const navigate = useNavigate();
-
   const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
   const [isMobileSearchActive, setIsMobileSearchActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -242,9 +128,41 @@ const Header = () => {
   );
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        try {
+          const response = await fetch("http://localhost:8000/api/auth/user/", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUser({
+              ...data,
+              profile_picture_url:
+                data.profile_picture ||
+                `http://localhost:8000/api/profile-picture/${data.id}/`,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        } finally {
+          setAuthLoading(false);
+        }
+      } else {
+        setAuthLoading(false);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
+
   const handleSearchUsers = async (e: FormEvent) => {
     e.preventDefault();
     if (!searchTerm.trim()) {
@@ -254,12 +172,14 @@ const Header = () => {
     setSearchLoading(true);
     setSearchError(null);
     setSearchResults(null);
+
     const token = localStorage.getItem("access_token");
     if (!token) {
       setSearchError("Token de acesso não encontrado.");
       setSearchLoading(false);
       return;
     }
+
     try {
       const response = await fetch(
         `http://localhost:8000/api/users/search/?search=${encodeURIComponent(searchTerm)}`,
@@ -292,6 +212,13 @@ const Header = () => {
     navigate(`/profile/${userId}`);
   };
 
+  const handleUserClick = () => {
+    navigate("/profile");
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   const openMobileSearch = () => {
     setIsMenuOpen(false);
     setIsMobileSearchActive(true);
@@ -311,62 +238,37 @@ const Header = () => {
     navigate("/", { state: { scrollTo: "secao-patrocinadores" } });
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("access_token");
-      if (token) {
-        try {
-          const response = await fetch("http://localhost:8000/api/auth/user/", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (response.ok) {
-            const data = await response.json();
-            const profileUrl = data.id
-              ? `http://localhost:8000/api/profile-picture/${data.id}/`
-              : "";
-            setUser({ ...data, profile_picture_url: profileUrl });
-          }
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        } finally {
-          setAuthLoading(false);
-        }
-      } else {
-        setAuthLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
-
-  const handleUserClick = () => {
-    navigate("/profile");
-    setIsMenuOpen(false);
-  };
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const NavigationLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => (
     <>
-      <NavLink to="/" onClick={onLinkClick} 
-        state={{ scrollTarget: "top" }}>
+      <NavLink to="/" onClick={onLinkClick} state={{ scrollTarget: "top" }}>
         Início
       </NavLink>
-      <NavLink to="/cronograma" onClick={onLinkClick}
-        state={{ scrollTarget: "top" }}>
+      <NavLink
+        to="/cronograma"
+        onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}
+      >
         Cronograma
       </NavLink>
-      <NavLink to="/desafios" onClick={onLinkClick}
-        state={{ scrollTarget: "top" }}>
+      <NavLink
+        to="/desafios"
+        onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}
+      >
         Desafios
       </NavLink>
-      <NavLink to="/materiais" onClick={onLinkClick}
-        state={{ scrollTarget: "top" }}>
+      <NavLink
+        to="/materiais"
+        onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}
+      >
         Materiais
       </NavLink>
-      <NavLink to="/regulamento" onClick={onLinkClick} // fazer agora
-        state={{ scrollTarget: "top" }}>
+      <NavLink
+        to="/regulamento"
+        onClick={onLinkClick}
+        state={{ scrollTarget: "top" }}
+      >
         Regulamento
       </NavLink>
       <Dropdown
@@ -388,7 +290,6 @@ const Header = () => {
             <NavLink to="/patrocinador" onClick={onLinkClick}>
               SEJA UM PATROCINADOR
             </NavLink>
-
             <button
               onClick={handleClickPatrocinador}
               style={{
@@ -506,5 +407,104 @@ const Header = () => {
     </>
   );
 };
+
+const SearchInterface = (props: {
+  searchTerm: string;
+  onSearchTermChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSearchSubmit: (e: FormEvent) => void;
+  searchLoading: boolean;
+  searchError: string | null;
+  searchResults: SearchUserData[] | null;
+  onUserProfileClick: (userId: number) => void;
+}) => (
+  <>
+    <BuscaBodyContainer>
+      <PesquisaSubTitulo>
+        Toda jornada é melhor quando é compartilhada.
+      </PesquisaSubTitulo>
+      <PesquisaBody>
+        Busque por nomes ou interesses e descubra pessoas.
+      </PesquisaBody>
+    </BuscaBodyContainer>
+
+    <form onSubmit={props.onSearchSubmit} style={{ width: "100%" }}>
+      <SearchInputContainer>
+        <SearchField
+          type="text"
+          placeholder="Buscar por nome, área ou tags..."
+          value={props.searchTerm}
+          onChange={props.onSearchTermChange}
+          autoFocus
+        />
+        <SearchButton type="submit" disabled={props.searchLoading}>
+          {props.searchLoading ? (
+            "Buscando..."
+          ) : (
+            <div
+              style={{
+                padding: "0rem 0rem",
+                display: "flex",
+                alignItems: "center",
+                fontSize: "0.9rem",
+              }}
+            >
+              <FaSearch /> Buscar
+            </div>
+          )}
+        </SearchButton>
+      </SearchInputContainer>
+    </form>
+
+    {props.searchError && <FormError>{props.searchError}</FormError>}
+
+    <UserResultsContainer>
+      {props.searchResults?.length > 0 &&
+        props.searchResults.map((foundUser) => (
+          <UserCard
+            key={foundUser.user_id}
+            onClick={() => props.onUserProfileClick(foundUser.user_id)}
+          >
+            <UserAvatar
+              src={foundUser.profile_picture_url || undefined}
+              alt={`Foto de ${foundUser.user_name}`}
+            />
+            <UserDisplayName>{foundUser.user_name}</UserDisplayName>
+            {foundUser.full_name && (
+              <UserDetailText>{foundUser.full_name}</UserDetailText>
+            )}
+            {foundUser.tags?.length > 0 && (
+              <UserTagsContainer>
+                {foundUser.tags.map((tag) => (
+                  <UserTagPill key={tag}>{tag}</UserTagPill>
+                ))}
+              </UserTagsContainer>
+            )}
+            <AddButton
+              style={{ marginTop: "1rem", width: "auto" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                props.onUserProfileClick(foundUser.user_id);
+              }}
+            >
+              <FaRegUser style={{ marginRight: "0.5rem" }} /> Ver Perfil
+            </AddButton>
+          </UserCard>
+        ))}
+    </UserResultsContainer>
+
+    {props.searchResults?.length === 0 && !props.searchLoading && (
+      <NoResultsMessage>
+        Nenhum usuário encontrado com o termo "{props.searchTerm}".
+      </NoResultsMessage>
+    )}
+    {props.searchResults === null &&
+      !props.searchLoading &&
+      !props.searchError && (
+        <NoResultsMessage>
+          Digite algo para encontrar outros participantes.
+        </NoResultsMessage>
+      )}
+  </>
+);
 
 export default Header;
