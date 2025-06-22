@@ -4,15 +4,17 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
   FormEvent,
+  useRef,
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaEnvelope, FaCamera } from "react-icons/fa";
 import { IoClose, IoPencil, IoLogOutOutline } from "react-icons/io5";
 import {
   PerfilContainer,
   ProfileBanner,
-  ProfileImage,
+  ProfileImage as StyledProfileImage,
+  EditPhotoButton,
   TitleContainer,
   UserName,
   ButtonsContainer,
@@ -50,6 +52,7 @@ interface UserProfileData {
   email: string;
   user_name: string;
   user_profile_picture_url: string;
+  google_profile_picture_url?: string;
   full_name: string | null;
   birth_date: string | null;
   linkedin_profile: string | null;
@@ -72,22 +75,73 @@ interface UserProfileData {
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
-const getBase64 = (img: FileType, callback: (url: string) => void) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result as string));
-  reader.readAsDataURL(img);
+const ProfileImage: React.FC<{
+  src?: string;
+  googleSrc?: string;
+  alt: string;
+  showEdit?: boolean;
+  onEditClick?: () => void;
+  uploading?: boolean;
+}> = ({ src, googleSrc, alt, showEdit, onEditClick, uploading }) => {
+  const [error, setError] = useState(false);
+  const defaultAvatar = "/default-avatar.png";
+  let imageUrl = src || googleSrc || defaultAvatar;
+  if (error) imageUrl = defaultAvatar;
+
+  return (
+    <div style={{ position: "relative", width: "180px", height: "180px" }}>
+      <StyledProfileImage
+        src={imageUrl}
+        alt={alt}
+        onError={() => setError(true)}
+        style={{
+          width: "180px",
+          height: "180px",
+          objectFit: "cover",
+          border: "2px solid var(--text-color-light)",
+        }}
+      />
+      {showEdit && (
+        <EditPhotoButton
+          type="button"
+          onClick={onEditClick}
+          aria-label="Mudar foto de perfil"
+          title="Mudar foto de perfil"
+        >
+          {uploading ? <LoadingOutlined /> : <FaCamera />}
+        </EditPhotoButton>
+      )}
+    </div>
+  );
 };
 
 const beforeUpload = (file: FileType) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
   if (!isJpgOrPng) {
     message.error("Você só pode enviar arquivos JPG/PNG!");
+    return false;
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
     message.error("A imagem deve ter menos de 2MB!");
+    return false;
   }
-  return isJpgOrPng && isLt2M;
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(img.src);
+      if (img.width < 200 || img.height < 200) {
+        message.error("A imagem deve ter pelo menos 200x200 pixels!");
+        reject(false);
+      }
+      resolve(true);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(img.src);
+      reject(false);
+    };
+  });
 };
 
 const EDUCATION_CHOICES = [
@@ -122,6 +176,10 @@ function Profile() {
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState<string | undefined>();
+  const [googleProfileImageUrl, setGoogleProfileImageUrl] = useState<
+    string | undefined
+  >();
+  const uploadInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const getMyId = (): number | null => {
@@ -164,6 +222,9 @@ function Profile() {
           setEditableProfile({ ...data });
           setTags(data.tags || []);
           setProfileImageUrl(data.user_profile_picture_url || undefined);
+          setGoogleProfileImageUrl(
+            data.google_profile_picture_url || undefined,
+          );
         } else {
           const errorData = await response.json();
           setError(errorData.detail || "Falha ao buscar dados do perfil.");
@@ -202,8 +263,6 @@ function Profile() {
       tags,
     };
 
-    // Send user_name and user_profile_picture directly as top-level fields
-    // The serializer will know how to map them to the related User model
     if (editableProfile.user_name !== undefined) {
       profileDataToUpdate.user_name = editableProfile.user_name;
     }
@@ -211,10 +270,9 @@ function Profile() {
       profileDataToUpdate.user_profile_picture = profileImageUrl;
     }
 
-    // Remove fields that should not be sent directly or are computed/read-only by the API
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
-    // Don't delete user_name and user_profile_picture here, as they are explicitly passed above
+    delete profileDataToUpdate.google_profile_picture_url;
 
     try {
       const response = await fetch("http://localhost:8000/api/profile/me/", {
@@ -231,6 +289,9 @@ function Profile() {
         setEditableProfile({ ...responseData });
         setTags(responseData.tags || []);
         setProfileImageUrl(responseData.user_profile_picture_url || undefined);
+        setGoogleProfileImageUrl(
+          responseData.google_profile_picture_url || undefined,
+        );
         setIsEditing(false);
         setFormErrors({});
         message.success("Perfil atualizado com sucesso!");
@@ -297,6 +358,9 @@ function Profile() {
     if (isEditing) {
       setEditableProfile({ ...userProfile! });
       setProfileImageUrl(userProfile!.user_profile_picture_url || undefined);
+      setGoogleProfileImageUrl(
+        userProfile!.google_profile_picture_url || undefined,
+      );
     }
     setIsEditing(!isEditing);
     setFormErrors({});
@@ -308,35 +372,52 @@ function Profile() {
     navigate("/login");
   };
 
-  const handleImageUploadChange: UploadProps["onChange"] = (info) => {
-    if (info.file.status === "uploading") {
-      setUploadingImage(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      const response = info.file.response;
-      if (response && response.profile_picture_url) {
-        setProfileImageUrl(response.profile_picture_url);
-        message.success(
-          `${info.file.name} imagem de perfil enviada com sucesso!`,
-        );
-      } else {
-        message.error(`Falha ao carregar imagem de perfil.`);
-      }
-      setUploadingImage(false);
-    } else if (info.file.status === "error") {
-      setUploadingImage(false);
-      message.error(`${info.file.name} falha no envio da imagem.`);
-      console.error("Upload Error:", info.file.error);
-    }
+  // --- Custom Charming Photo Upload ---
+
+  const handleEditPhotoClick = () => {
+    uploadInputRef.current?.click();
   };
 
-  const uploadButton = (
-    <button style={{ border: 0, background: "none" }} type="button">
-      {uploadingImage ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </button>
-  );
+  const handleFileInputChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    // Validate image
+    const valid = await beforeUpload(file as FileType);
+    if (!valid) return;
+
+    setUploadingImage(true);
+    try {
+      const token = localStorage.getItem("access_token");
+      const formData = new FormData();
+      formData.append("profile_picture", file);
+      const response = await fetch(
+        "http://localhost:8000/api/profile/upload-picture/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        },
+      );
+      const data = await response.json();
+      if (response.ok && data.profile_picture_url) {
+        setProfileImageUrl(data.profile_picture_url);
+        message.success("Imagem de perfil atualizada com sucesso!");
+      } else {
+        message.error(data.detail || "Falha ao carregar imagem de perfil.");
+      }
+    } catch (error) {
+      message.error("Erro ao enviar imagem de perfil.");
+    } finally {
+      setUploadingImage(false);
+      if (uploadInputRef.current) {
+        uploadInputRef.current.value = ""; // Reset input
+      }
+    }
+  };
 
   if (loading) return <p>Carregando perfil...</p>;
   if (error || !userProfile) return <p>{error || "Perfil não encontrado."}</p>;
@@ -349,48 +430,28 @@ function Profile() {
       <PerfilContainer>
         <ProfileBanner>
           {isMyProfile && isEditing ? (
-            <Upload
-              name="profile_picture"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              action="http://localhost:8000/api/profile/upload-picture/"
-              beforeUpload={beforeUpload}
-              onChange={handleImageUploadChange}
-              headers={{
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-              }}
-              style={{
-                width: "180px",
-                height: "180px",
-                borderRadius: "50%",
-                overflow: "hidden",
-                position: "relative",
-                border: "2px solid var(--text-color-light)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                marginBottom: "1rem",
-              }}
-            >
-              {profileImageUrl ? (
-                <img
-                  src={profileImageUrl}
-                  alt="Foto de Perfil"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
+            <>
+              <ProfileImage
+                src={profileImageUrl}
+                googleSrc={googleProfileImageUrl}
+                alt="Foto de Perfil"
+                showEdit
+                onEditClick={handleEditPhotoClick}
+                uploading={uploadingImage}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                ref={uploadInputRef}
+                onChange={handleFileInputChange}
+                aria-label="Enviar nova foto de perfil"
+              />
+            </>
           ) : (
             <ProfileImage
-              src={profileImageUrl || undefined}
+              src={profileImageUrl}
+              googleSrc={googleProfileImageUrl}
               alt={`Foto de ${displayProfile.user_name}`}
             />
           )}

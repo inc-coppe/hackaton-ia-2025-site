@@ -32,7 +32,6 @@ export const ProfileBanner = styled.header`
 export const ProfileImage = styled.img`
   width: ${pxToRem(200)};
   height: ${pxToRem(200)};
-  border-radius: ${pxToRem(8)};
   object-fit: cover;
 
   @media (max-width: 48rem) {
@@ -723,5 +722,30 @@ export const LogoutButton = styled.button`
   &:hover {
     background-color: #ff4d4f;
     color: #ffffff;
+  }
+`;
+
+export const EditPhotoButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #fff;
+  color: #6c2bd7;
+  border-radius: 50%;
+  border: 2px solid #6c2bd7;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  &:hover {
+    background: #6c2bd7;
+    color: #fff;
   }
 `;

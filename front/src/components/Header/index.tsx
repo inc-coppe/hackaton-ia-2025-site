@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Space, MenuProps } from "antd";
+import { Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { FaSearch, FaRegUser } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
@@ -62,6 +62,7 @@ interface User {
   email: string;
   profile_picture: string;
   profile_picture_url: string;
+  google_profile_picture_url?: string;
 }
 
 interface SearchUserData {
@@ -75,6 +76,19 @@ interface SearchUserData {
   github_profile: string | null;
   email: string | null;
 }
+
+const getAvatarUrl = (user: User | null): string => {
+  if (!user) return "/default-avatar.png";
+  if (user.profile_picture_url) return user.profile_picture_url;
+  if (
+    user.profile_picture &&
+    user.profile_picture.startsWith("http") &&
+    user.profile_picture.includes("googleusercontent")
+  )
+    return user.profile_picture;
+  if (user.google_profile_picture_url) return user.google_profile_picture_url;
+  return "/default-avatar.png";
+};
 
 const AuthSection = ({
   isMobile = false,
@@ -99,9 +113,12 @@ const AuthSection = ({
         <LupaWrapper src={img} alt="Buscar Participantes" />
       </BotaoLupa>
       <ProfilePicture
-        src={user.profile_picture || user.profile_picture_url}
+        src={getAvatarUrl(user)}
         alt={`${user.name}'s profile`}
         onClick={onUserClick}
+        style={{
+          cursor: "pointer",
+        }}
       />
     </UserContainer>
   ) : (
@@ -131,6 +148,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Refetch user on mount and whenever the profile page triggers a change (using a storage event)
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("access_token");
@@ -144,8 +162,8 @@ const Header = () => {
             setUser({
               ...data,
               profile_picture_url:
-                data.profile_picture ||
-                `http://localhost:8000/api/profile-picture/${data.id}/`,
+                data.profile_picture_url || data.profile_picture || "",
+              google_profile_picture_url: data.google_profile_picture_url,
             });
           }
         } catch (error) {
@@ -157,7 +175,17 @@ const Header = () => {
         setAuthLoading(false);
       }
     };
+
     fetchUser();
+
+    // Listen for profile image update event (using localStorage)
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "profile_picture_updated") {
+        fetchUser();
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) =>

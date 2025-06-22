@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+import uuid
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
@@ -19,7 +20,8 @@ import requests as ext_requests
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
-
+from PIL import Image
+from io import BytesIO
 
 from .models import UserProfile
 from .serializers import (
@@ -80,7 +82,9 @@ def google_login(request):
         )
         if not created:
             user.name = name
-            user.profile_picture = profile_picture
+            # Only replace if user doesn't have a local uploaded image
+            if not user.profile_picture or user.profile_picture.startswith("http"):
+                user.profile_picture = profile_picture
             user.save()
 
         refresh = RefreshToken.for_user(user)
@@ -100,27 +104,26 @@ def google_login(request):
 def serve_profile_picture(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if not user.profile_picture:
-        return HttpResponseBadRequest("No profile picture URL.")
-
+        return HttpResponseBadRequest("No profile picture.")
     if user.profile_picture.startswith("/media/"):
         local_file_path = os.path.join(
             settings.MEDIA_ROOT, user.profile_picture.replace(settings.MEDIA_URL, "")
         )
         if os.path.exists(local_file_path):
             with open(local_file_path, "rb") as f:
-                return HttpResponse(
-                    f.read(), content_type=f"image/{local_file_path.split('.')[-1]}"
-                )
+                ext = os.path.splitext(local_file_path)[1][1:] or "jpeg"
+                return HttpResponse(f.read(), content_type=f"image/{ext}")
         else:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-
-    try:
-        response = ext_requests.get(user.profile_picture, stream=True, timeout=5)
-        response.raise_for_status()
-        content_type = response.headers.get("Content-Type", "image/jpeg")
-        return HttpResponse(response.content, content_type=content_type)
-    except ext_requests.exceptions.RequestException as e:
-        return HttpResponse(status=status.HTTP_503_SERVICE_UNAVAILABLE)
+    if user.profile_picture.startswith("http"):
+        try:
+            response = ext_requests.get(user.profile_picture, stream=True, timeout=5)
+            response.raise_for_status()
+            content_type = response.headers.get("Content-Type", "image/jpeg")
+            return HttpResponse(response.content, content_type=content_type)
+        except ext_requests.exceptions.RequestException:
+            return HttpResponse(status=status.HTTP_503_SERVICE_UNAVAILABLE)
+    return HttpResponseBadRequest("Profile picture not found.")
 
 
 @api_view(["POST"])
@@ -180,28 +183,43 @@ class ProfilePictureUploadView(APIView):
                 {"detail": "No image file provided."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
         image_file = request.FILES["profile_picture"]
-        user = request.user
-
-        filename, ext = os.path.splitext(image_file.name)
-        file_path = os.path.join(
-            "profile_pics", f"{user.id}_{filename}_{os.urandom(4).hex()}{ext}"
-        )
-
         try:
-            saved_path = default_storage.save(file_path, ContentFile(image_file.read()))
-
-            image_url = default_storage.url(saved_path)
-
-            user.profile_picture = image_url
-            user.save()
-
+            img = Image.open(image_file)
+            img.verify()
+        except Exception:
             return Response(
-                {"profile_picture_url": image_url}, status=status.HTTP_200_OK
+                {"detail": "Invalid image file."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            img = Image.open(image_file)
+            if img.mode != "RGB":
+                img = img.convert("RGB")
+            max_size = (800, 800)
+            img.thumbnail(max_size, Image.LANCZOS)
+            buffer = BytesIO()
+            img.save(buffer, format="JPEG", quality=85, optimize=True)
+            buffer.seek(0)
+            filename = f"profile_{request.user.id}_{uuid.uuid4().hex[:8]}.jpg"
+            file_path = default_storage.save(
+                f"profile_pics/{filename}", ContentFile(buffer.read())
+            )
+            profile_picture_url = (
+                f"{settings.MEDIA_URL}{file_path}"
+                if not file_path.startswith("http")
+                else file_path
+            )
+            request.user.profile_picture = profile_picture_url
+            request.user.save()
+            return Response(
+                {"profile_picture_url": profile_picture_url},
+                status=status.HTTP_200_OK,
             )
         except Exception as e:
-            logger.error(f"Error uploading profile picture for user {user.id}: {e}")
+            logger.error(
+                f"Error uploading profile picture for user {request.user.id}: {e}"
+            )
             return Response(
                 {"detail": f"Failed to upload image: {e}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
