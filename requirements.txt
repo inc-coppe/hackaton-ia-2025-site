@@ -9,3 +9,4 @@ django-cryptography
 djangorestframework-simplejwt
 google-apis-oauth-django
 django-google-auth
+Pillow

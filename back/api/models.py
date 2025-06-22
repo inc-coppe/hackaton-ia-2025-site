@@ -37,21 +37,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255)
     profile_picture = models.URLField(blank=True, null=True)
-
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-
     following = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name="followers",
         blank=True,
         symmetrical=False,
     )
-
     objects = CustomUserManager()
-
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["name"]
 
@@ -81,7 +77,6 @@ class UserProfile(models.Model):
         ("UFRJ", "Vontade de interagir mais com a UFRJ"),
         ("HACKATHON", "O fato de ser um Hackathon e poder desenvolver uma solução"),
     ]
-
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name="userprofile"
     )
