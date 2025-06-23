@@ -2,7 +2,8 @@ import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
+import { LinkButton } from "../../components/TimelineCarousel/style";
 
 import {
   SponsorContainer,
@@ -128,9 +129,17 @@ function Sponsor() {
               econômico duradouro.
             </HighlightDescription>
             <HighlightButtonContainer>
-              <ActionButton onClick={handleContact}>
-                <ActionButtonText>QUERO PATROCINAR</ActionButtonText>
-              </ActionButton>
+              <LinkButton
+                  as="a"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSd9hIGGNXmNJPO00E-tZOQBG9Bf0USTtbRQfBS-VnMGh76wpg/viewform?usp=header"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                <ActionButton>
+                  <ActionButtonText>Quero Patrocinar</ActionButtonText>
+                </ActionButton>
+                
+              </LinkButton>
             </HighlightButtonContainer>
           </HighlightTextContainer>
         </HighlightSection>
@@ -187,11 +196,18 @@ function Sponsor() {
                 ))}
               </BenefitsContainer>
             </CTAWrapper>
-            <ActionButton onClick={handleContact}>
-              {" "}
-              {/* Botão centralizado por padrão pelo align-items do CTAContainer */}
-              <ActionButtonText>QUERO PATROCINAR</ActionButtonText>
-            </ActionButton>
+            
+            <LinkButton
+                  as="a"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSd9hIGGNXmNJPO00E-tZOQBG9Bf0USTtbRQfBS-VnMGh76wpg/viewform?usp=header"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                <ActionButton>
+                  <ActionButtonText>Quero Patrocinar</ActionButtonText>
+                </ActionButton>
+                
+            </LinkButton>
           </CTAContainer>
         </CTASection>
       </SponsorContainer>
