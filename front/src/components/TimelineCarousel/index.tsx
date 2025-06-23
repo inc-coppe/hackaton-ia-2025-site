@@ -10,12 +10,15 @@ import {
   ContainerButton,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import Img1 from "../../assets/Pre.png";
-import Img2 from "../../assets/Dia1.png";
-import Img3 from "../../assets/Dia2.png";
-import Img4 from "../../assets/Pré mobile.png";
-import Img5 from "../../assets/Dia 1 mobile.png";
-import Img6 from "../../assets/Dia 2 mobile.png";
+import Img1 from "../../assets/Pré-cronograma.png";
+import Img2 from "../../assets/Dia 1-cronograma.png";
+import Img3 from "../../assets/Dia 2-cronograma.png";
+import Img4 from "../../assets/Dia 3-cronograma.png";
+
+import Img5 from "../../assets/Pré-cronograma-mobile.png";
+import Img6 from "../../assets/Dia 1-cronograma-mobile.png";
+import Img7 from "../../assets/Dia 2-cronograma-mobile.png";
+import Img8 from "../../assets/Dia 3-cronograma-mobile.png";
 import { NavLink } from "react-router-dom";
 
 const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -26,12 +29,14 @@ const HorizontalCarousel = () => {
     { id: 1, image: Img1 },
     { id: 2, image: Img2 },
     { id: 3, image: Img3 },
-    { id: 4, image: Img4 },
+    { id: 4, image: Img4},
     { id: 5, image: Img5 },
     { id: 6, image: Img6 },
+    { id: 7, image: Img7 },
+    { id: 8, image: Img8 },
   ];
 
-  const displayedCards = isMobile ? cardData.slice(3, 6) : cardData.slice(0, 3);
+  const displayedCards = isMobile ? cardData.slice(4, 8) : cardData.slice(0, 4);
 
   const wrapperRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
