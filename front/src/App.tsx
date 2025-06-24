@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -30,62 +30,101 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
   const token = localStorage.getItem("access_token");
 
-  useEffect(() => {
+  const checkProfileStatus = useCallback(async () => {
+    console.log("ProtectedRoute: checkProfileStatus called. Token:", !!token);
     if (!token) {
       setIsLoading(false);
       return;
     }
 
-    const checkStatus = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/api/profile/check/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
+    try {
+      const response = await fetch("http://localhost:8000/api/profile/check/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("ProtectedRoute: /api/profile/check/ response:", data);
+        setIsProfileComplete(data.form_completed);
+      } else {
+        console.error(
+          "ProtectedRoute: Failed to fetch profile status",
+          response.status,
         );
-        if (response.ok) {
-          const data = await response.json();
-          setIsProfileComplete(data.form_completed);
-        } else {
-          setIsProfileComplete(false);
-        }
-      } catch (error) {
-        console.error("Failed to check profile status", error);
         setIsProfileComplete(false);
-      } finally {
-        setIsLoading(false);
       }
-    };
-
-    checkStatus();
+    } catch (error) {
+      console.error(
+        "ProtectedRoute: Network error checking profile status",
+        error,
+      );
+      setIsProfileComplete(false);
+    } finally {
+      setIsLoading(false);
+    }
   }, [token]);
 
+  useEffect(() => {
+    console.log("ProtectedRoute: useEffect triggered.");
+    checkProfileStatus();
+  }, [checkProfileStatus]);
+
+  const handleProfileComplete = useCallback(() => {
+    console.log(
+      "ProtectedRoute: handleProfileComplete triggered by child form. Setting isProfileComplete to TRUE.",
+    );
+    setIsProfileComplete(true);
+  }, []);
+
+  console.log(
+    `ProtectedRoute: Render cycle: isLoading=${isLoading}, isProfileComplete=${isProfileComplete}, pathname=${location.pathname}`,
+  );
+
   if (isLoading) {
+    console.log("ProtectedRoute: Rendering loading state.");
     return <p>Carregando...</p>;
   }
 
   if (!token) {
+    console.log("ProtectedRoute: No token found, redirecting to /login.");
     return <Navigate to="/login" replace />;
   }
 
   if (!isProfileComplete) {
+    console.log("ProtectedRoute: Profile is NOT complete.");
     if (location.pathname !== "/complete-profile") {
+      console.log(
+        "ProtectedRoute: Not on /complete-profile, redirecting to /complete-profile.",
+      );
       return <Navigate to="/complete-profile" replace />;
     }
+    console.log(
+      "ProtectedRoute: On /complete-profile, rendering UserRegistrationForm.",
+    );
+    return React.cloneElement(children, {
+      onProfileComplete: handleProfileComplete,
+    });
   } else {
+    console.log("ProtectedRoute: Profile IS complete.");
     if (location.pathname === "/complete-profile") {
+      console.log(
+        "ProtectedRoute: On /complete-profile with completed profile, redirecting to /profile.",
+      );
       return <Navigate to="/profile" replace />;
     }
+    console.log(
+      "ProtectedRoute: Profile complete, rendering children normally.",
+    );
+    return children;
   }
-
-  return children;
 };
 
 const PublicOnlyRoute = ({ children }: { children: JSX.Element }) => {
   const token = localStorage.getItem("access_token");
   if (token) {
-    return <Navigate to="/profile" replace />;
+    console.log(
+      "PublicOnlyRoute: Token found, redirecting to root to re-evaluate protected routes.",
+    );
+    return <Navigate to="/" replace />; // Redirect to root so ProtectedRoute can handle
   }
   return children;
 };
@@ -95,6 +134,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        {/* Use PublicOnlyRoute for login/register to prevent logged-in users from seeing them */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Login />} />
         <Route path="/logout" element={<Logout />} />

@@ -268,8 +268,10 @@ function Profile() {
     if (editableProfile.user_name !== undefined) {
       profileDataToUpdate.user_name = editableProfile.user_name;
     }
-    if (profileImageUrl !== undefined) {
+    if (profileImageUrl && !profileImageUrl.startsWith("http")) {
       profileDataToUpdate.user_profile_picture = profileImageUrl;
+    } else {
+      delete profileDataToUpdate.user_profile_picture;
     }
 
     delete profileDataToUpdate.email;
@@ -295,7 +297,6 @@ function Profile() {
           responseData.google_profile_picture_url || undefined,
         );
         setIsEditing(false);
-        setFormErrors({});
         message.success("Perfil atualizado com sucesso!");
       } else {
         message.error(
@@ -374,8 +375,6 @@ function Profile() {
     navigate("/login");
   };
 
-  // --- Custom Charming Photo Upload ---
-
   const handleEditPhotoClick = () => {
     uploadInputRef.current?.click();
   };
@@ -385,7 +384,6 @@ function Profile() {
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    // Validate image
     const valid = await beforeUpload(file as FileType);
     if (!valid) return;
 
@@ -407,7 +405,17 @@ function Profile() {
       const data = await response.json();
       if (response.ok && data.profile_picture_url) {
         setProfileImageUrl(data.profile_picture_url);
+        setUserProfile((prev) =>
+          prev
+            ? {
+                ...prev,
+                user_profile_picture_url: data.profile_picture_url,
+                google_profile_picture_url: undefined,
+              }
+            : null,
+        );
         message.success("Imagem de perfil atualizada com sucesso!");
+        localStorage.setItem("profile_picture_updated", Date.now().toString());
       } else {
         message.error(data.detail || "Falha ao carregar imagem de perfil.");
       }
@@ -416,7 +424,7 @@ function Profile() {
     } finally {
       setUploadingImage(false);
       if (uploadInputRef.current) {
-        uploadInputRef.current.value = ""; // Reset input
+        uploadInputRef.current.value = "";
       }
     }
   };
@@ -454,8 +462,8 @@ function Profile() {
             </>
           ) : (
             <ProfileImage
-              src={profileImageUrl}
-              googleSrc={googleProfileImageUrl}
+              src={displayProfile.user_profile_picture_url || undefined}
+              googleSrc={displayProfile.google_profile_picture_url || undefined}
               alt={`Foto de ${displayProfile.user_name}`}
             />
           )}

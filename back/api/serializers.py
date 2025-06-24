@@ -145,7 +145,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "user_id",
             "email",
             "user_profile_picture_url",
-            "form_completed",
             "education_level_display",
             "followers_count",
             "following_count",
@@ -202,9 +201,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class PublicProfileDetailSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(read_only=True)
-    user_name = serializers.CharField(read_only=True)
-    user_profile_picture_url = serializers.URLField(read_only=True)
+    user_id = serializers.IntegerField(source="user.id", read_only=True)
+    user_name = serializers.CharField(source="user.name", read_only=True)
+    user_profile_picture_url = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     organization = serializers.CharField(read_only=True, allow_null=True)
     institution = serializers.CharField(read_only=True, allow_null=True)
@@ -239,13 +238,25 @@ class PublicProfileDetailSerializer(serializers.ModelSerializer):
             and obj.user.profile_picture.startswith("http")
             and "googleusercontent" in obj.user.profile_picture
         ):
+            return obj.profile_picture
+        return None
+
+    def get_user_profile_picture_url(self, obj):
+        request = self.context.get("request")
+        if obj.user.profile_picture:
+            if obj.user.profile_picture.startswith("http"):
+                return obj.user.profile_picture
+            if request:
+                return (
+                    f"{request.scheme}://{request.get_host()}{obj.user.profile_picture}"
+                )
             return obj.user.profile_picture
         return None
 
 
 class UserSearchSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(read_only=True)
-    user_name = serializers.CharField(read_only=True)
+    user_id = serializers.IntegerField(source="user.id", read_only=True)
+    user_name = serializers.CharField(source="user.name", read_only=True)
     profile_picture_url = serializers.SerializerMethodField()
     google_profile_picture_url = serializers.SerializerMethodField()
 

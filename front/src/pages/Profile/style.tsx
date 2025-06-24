@@ -492,22 +492,50 @@ export const ActionButtonsContainer = styled.div`
   width: 100%;
 `;
 
-export const SaveButton = styled(AddButton)`
+export const SaveButton = styled.button`
   /* Reutiliza estilo do AddButton */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: ${pxToRem(8)} ${pxToRem(20)};
+  gap: ${pxToRem(8)};
+  height: ${pxToRem(42)};
+  border-radius: ${pxToRem(4)};
   background-color: #3161e8;
+  border: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(15)};
+  text-transform: uppercase;
   color: #ffffff;
   &:hover {
     background-color: #2e2989;
   }
 `;
 
-export const CancelButton = styled(AddButton)`
+export const CancelButton = styled.button`
   /* Reutiliza estilo do AddButton */
-  background-color: #transparent; /* Ou uma cor cinza clara */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: ${pxToRem(8)} ${pxToRem(20)};
+  gap: ${pxToRem(8)};
+  height: ${pxToRem(42)};
+  border-radius: ${pxToRem(4)};
+  background-color: transparent;
   color: #3161e8;
   border: ${pxToRem(1)} solid #3161e8;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(15)};
+  text-transform: uppercase;
+
   &:hover {
-    background-color: #e9ecef; /* Um cinza muito claro para hover */
+    background-color: #e9ecef;
   }
 `;
 
@@ -583,24 +611,38 @@ export const UserResultsContainer = styled.div`
   width: 100%;
 `;
 
-export const UserCard = styled(InfoCard)`
-  // Reutilizando InfoCard para o estilo base
+export const UserCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
   text-align: center;
+  background: rgba(193, 208, 248, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 
-  width: 32.25rem; // Contando com paddig que está no InfoCard, este é o tamanho que deve ser para não quebrar
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  width: 32.25rem;
   @media (max-width: 48rem) {
     width: 100%;
   }
 `;
 
-export const UserAvatar = styled(ProfileImage)`
+export const UserAvatar = styled.img`
   width: 80px;
   height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
   margin-bottom: 1rem;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export const UserDisplayName = styled.h3`
@@ -615,34 +657,31 @@ export const UserDetailText = styled.p`
   margin-bottom: 0.3rem;
 `;
 
-export const UserTagsContainer = styled(TagsContainer)`
+export const UserTagsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 1rem;
+  align-self: stretch;
   justify-content: center;
   margin-top: 0.5rem;
 `;
 
-export const UserTagPill = styled(TagPill)`
+export const UserTagPill = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  gap: 0;
   background-color: #e2f0ff;
   color: #007bff;
   border: 1px solid #007bff;
-  cursor: default;
+  border-radius: 4px;
   font-size: 0.85rem;
-  padding: 0.3rem 0.6rem;
-
-  ${CloseIcon} {
-    display: none; /* Não permite remover tags em perfis de outros usuários */
-  }
-`;
-
-export const FollowButton = styled(AddButton)`
-  // Reutilizando AddButton para o estilo base
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  background-color: ${(props) => (props.isFollowing ? "#dc3545" : "#28a745")};
-
-  &:hover {
-    background-color: ${(props) => (props.isFollowing ? "#c82333" : "#218838")};
-  }
+  cursor: default;
 `;
 
 export const NoResultsMessage = styled.p`
@@ -669,7 +708,7 @@ export const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-export const ModalContent = styled(InfoCard)`
+export const ModalContent = styled.div`
   background: white;
   padding: 2.5rem;
   border-radius: 12px;
@@ -681,8 +720,8 @@ export const ModalContent = styled(InfoCard)`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-height: 90vh; /* Limita a altura do modal */
-  overflow-y: auto; /* Adiciona scroll se o conteúdo for muito grande */
+  max-height: 90vh;
+  overflow-y: auto;
 `;
 
 export const CloseModalButton = styled.button`
@@ -701,12 +740,30 @@ export const CloseModalButton = styled.button`
   }
 `;
 
-export const PublicProfileSocialLink = styled(SocialButton)`
+export const PublicProfileSocialLink = styled.a`
   margin: 0.5rem;
   width: auto;
   min-width: 120px;
-  background-color: #555; /* Cor padrão para links de contato */
+  background-color: #555;
   color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  gap: 8px;
+  height: 48px;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 
   &:hover {
     background-color: #333;
