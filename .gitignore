@@ -2,6 +2,9 @@
 *.csv
 *env
 
+#database files
+*.sqlite3
+
 # Python gitignore
 __pycache__/
 *.py[cod]
