@@ -10,6 +10,25 @@ export const PerfilContainer = styled.div`
   background: #ffffff;
 `;
 
+export const EditButtonWrapper = styled.div`
+  display: flex;
+  
+  gap: 1rem;
+  order: 2;
+
+  @media (max-width: 48rem) {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-direction: row; /* mantém lado a lado */
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    order: 3;
+  }
+`;
+
 export const ProfileBanner = styled.header`
   display: flex;
   flex-direction: row;
@@ -25,9 +44,29 @@ export const ProfileBanner = styled.header`
     padding: ${pxToRem(146)} 1.5rem 0;
     align-items: flex-start;
     gap: ${pxToRem(24)};
-    width: 100%;
+
   }
 `;
+
+export const ProfileImageWrapper = styled.div`
+  width: ${pxToRem(100)};
+  height: ${pxToRem(100)};
+  border-radius: ${pxToRem(4)};
+  overflow: hidden;
+
+  @media (min-width: 48rem) {
+    width: ${pxToRem(200)};
+    height: ${pxToRem(200)};
+    border-radius: ${pxToRem(8)};
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 
 export const ProfileImage = styled.img`
   width: ${pxToRem(200)};
@@ -99,6 +138,9 @@ export const SocialButton = styled.a`
   text-transform: uppercase;
   color: #ffffff;
   text-decoration: none;
+
+  order: 1;
+
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
@@ -111,6 +153,21 @@ export const SocialButton = styled.a`
   svg {
     width: ${pxToRem(24)};
     height: ${pxToRem(24)};
+  }
+  @media (max-width: 48rem) {
+    order: 1;
+  }
+`;
+
+export const SocialButtonFake = styled.div`
+  box-sizing: border-box;
+  display: none;
+  flex-direction: row;
+  
+
+  
+  @media (max-width: 48rem) {
+    order: 1;
   }
 `;
 
@@ -345,6 +402,10 @@ export const EditButton = styled.button`
   &:hover {
     background-color: #2e2989;
     color: #ffffff;
+  }
+  
+  @media (max-width: 48rem) {
+    order: 3;
   }
 `;
 
@@ -722,6 +783,10 @@ export const LogoutButton = styled.button`
   &:hover {
     background-color: #ff4d4f;
     color: #ffffff;
+  }
+
+  @media (max-width: 48rem) {
+    order: 3;
   }
 `;
 

@@ -395,14 +395,22 @@ export const PesquisaBody = styled.p`
   font-size: 1rem;
   color: #0f0f2199;
   margin: 0;
+
+  @media (max-width: 30rem) {
+    padding-bottom: 0.5rem;
+  }
 `;
 
 export const SearchInputContainer = styled.div`
   display: flex;
-  marin-top: 1rem;
+  margin-top: 1rem;
   align-items: center;
   gap: 1rem;
   width: 100%;
+  @media (max-width: 30rem) {
+    padding-bottom: 0.5rem;
+
+  }
 `;
 
 export const SearchField = styled.input`
@@ -478,6 +486,10 @@ export const UserResultsContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   width: 100%;
+
+  @media (max-width: 30rem) {
+    gap: 1rem;
+  }
 `;
 
 export const InfoCard = styled.div`

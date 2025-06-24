@@ -40,6 +40,8 @@ import {
   SaveButton,
   FormError,
   LogoutButton,
+  ProfileImageWrapper,
+  EditButtonWrapper,
 } from "./style";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -431,14 +433,16 @@ function Profile() {
         <ProfileBanner>
           {isMyProfile && isEditing ? (
             <>
-              <ProfileImage
-                src={profileImageUrl}
-                googleSrc={googleProfileImageUrl}
-                alt="Foto de Perfil"
-                showEdit
-                onEditClick={handleEditPhotoClick}
-                uploading={uploadingImage}
-              />
+              <ProfileImageWrapper>
+                <ProfileImage
+                  src={profileImageUrl}
+                  googleSrc={googleProfileImageUrl}
+                  alt="Foto de Perfil"
+                  showEdit
+                  onEditClick={handleEditPhotoClick}
+                  uploading={uploadingImage}
+                />
+                </ProfileImageWrapper>
               <input
                 type="file"
                 accept="image/*"
@@ -466,12 +470,16 @@ function Profile() {
               )}
               {isMyProfile && !isEditing && (
                 <>
-                  <EditButton onClick={toggleEditMode}>
-                    <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
-                  </EditButton>
-                  <LogoutButton onClick={handleLogout}>
-                    <IoLogOutOutline style={{ marginRight: "0.5rem" }} /> Sair
-                  </LogoutButton>
+                  <EditButtonWrapper>
+                    <EditButton onClick={toggleEditMode}>
+                      <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
+                    </EditButton>
+                  
+                    <LogoutButton onClick={handleLogout}>
+                      <IoLogOutOutline style={{ marginRight: "0.5rem" }} /> Sair
+                    </LogoutButton>
+                  </EditButtonWrapper>
+                  
                 </>
               )}
               {displayProfile.linkedin_profile && (
