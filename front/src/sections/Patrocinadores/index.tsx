@@ -24,6 +24,7 @@ import apoio6 from "../../assets/maravalley p.png";
 import apoio7 from "../../assets/apoio7.png";
 import apoio8 from "../../assets/apoio8.png";
 import apoio9 from "../../assets/apoio9.png";
+import apoio10 from "../../assets/aws logo.png";
 import realizacao1 from "../../assets/realizacao1.png";
 import realizacao2 from "../../assets/cietec preto.png";
 import realizacao3 from "../../assets/realizacao3.png";
@@ -49,6 +50,7 @@ const sponsorsData = {
     { image: apoio7, title: "WOW Aceleradora de Startups" },
     { image: apoio8, title: "EloGroup" },
     { image: apoio9, title: "CA² Consulting" },
+    { image: apoio10, title: "AWS"}
   ],
   realizacao: [
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },

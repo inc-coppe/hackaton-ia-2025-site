@@ -36,13 +36,14 @@ import c6 from "../../assets/maravalley_resized_120x60.png"; //maravalley
 import c7 from "../../assets/c7.png";
 import c8 from "../../assets/c8.png";
 import c9 from "../../assets/ca2_logo_resized (1).png";
+import c10 from "../../assets/logo_carousel_gray_60px.png";
 
 import { Flex } from "antd";
 import { Link } from "react-router-dom";
 import AnimatedBlobs from "../../components/AnimatedBlobs";
 
 const HomePage = () => {
-  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9];
+  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10];
   const allImages = [...carouselImages, ...carouselImages];
 
   const [isMobile, setIsMobile] = useState(false);
