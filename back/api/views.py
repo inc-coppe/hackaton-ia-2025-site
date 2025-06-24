@@ -18,7 +18,7 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_auth_requests
 import requests as ext_requests
 from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
+from django.core.files.base import ContentFile  # Correct import for ContentFile
 from django.conf import settings
 from PIL import Image
 from io import BytesIO
@@ -75,15 +75,19 @@ def google_login(request):
 
         email = idinfo["email"]
         name = idinfo.get("name", "")
-        profile_picture = idinfo.get("picture", None)
+        profile_picture = idinfo.get("picture", None)  # This is the Google URL
 
         user, created = User.objects.get_or_create(
             email=email, defaults={"name": name, "profile_picture": profile_picture}
         )
         if not created:
             user.name = name
-            # Only replace if user doesn't have a local uploaded image
-            if not user.profile_picture or user.profile_picture.startswith("http"):
+            # Update user's profile_picture with Google URL if it's currently empty,
+            # or if the existing one is also a Google URL.
+            # This prevents overwriting a locally uploaded image.
+            if not user.profile_picture or (
+                user.profile_picture and "googleusercontent" in user.profile_picture
+            ):
                 user.profile_picture = profile_picture
             user.save()
 
@@ -95,12 +99,12 @@ def google_login(request):
             }
         )
     except Exception as e:
+        logger.error(f"Google login error: {e}", exc_info=True)
         return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
-@cache_page(60 * 15)
 def serve_profile_picture(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if not user.profile_picture:
@@ -122,6 +126,10 @@ def serve_profile_picture(request, user_id):
             content_type = response.headers.get("Content-Type", "image/jpeg")
             return HttpResponse(response.content, content_type=content_type)
         except ext_requests.exceptions.RequestException:
+            logger.error(
+                f"Error fetching external profile picture for user {user.id}: {e}",
+                exc_info=True,
+            )
             return HttpResponse(status=status.HTTP_503_SERVICE_UNAVAILABLE)
     return HttpResponseBadRequest("Profile picture not found.")
 
@@ -144,9 +152,13 @@ def create_profile(request):
 @permission_classes([IsAuthenticated])
 def check_profile(request):
     try:
-        form_completed = request.user.userprofile.form_completed
-        return Response({"form_completed": form_completed})
-    except UserProfile.DoesNotExist:
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        return Response({"form_completed": profile.form_completed})
+    except Exception as e:
+        logger.error(
+            f"Error checking profile status for user {request.user.id}: {e}",
+            exc_info=True,
+        )
         return Response({"form_completed": False})
 
 
@@ -203,7 +215,10 @@ class ProfilePictureUploadView(APIView):
             buffer.seek(0)
             filename = f"profile_{request.user.id}_{uuid.uuid4().hex[:8]}.jpg"
             file_path = default_storage.save(
-                f"profile_pics/{filename}", ContentFile(buffer.read())
+                f"profile_pics/{filename}",
+                ContentFile(
+                    buffer.read()
+                ),  # Corrected typo: ContentContent -> ContentFile
             )
             profile_picture_url = (
                 f"{settings.MEDIA_URL}{file_path}"

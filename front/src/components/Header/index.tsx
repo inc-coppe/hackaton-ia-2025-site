@@ -60,8 +60,8 @@ interface User {
   id: string;
   name: string;
   email: string;
-  profile_picture: string;
-  profile_picture_url: string;
+  profile_picture?: string;
+  profile_picture_url?: string;
   google_profile_picture_url?: string;
 }
 
@@ -70,6 +70,7 @@ interface SearchUserData {
   user_name: string;
   full_name: string | null;
   profile_picture_url: string;
+  google_profile_picture_url?: string;
   area_of_expertise: string | null;
   tags: string[];
   linkedin_profile: string | null;
@@ -77,16 +78,10 @@ interface SearchUserData {
   email: string | null;
 }
 
-const getAvatarUrl = (user: User | null): string => {
+const getAvatarUrl = (user: User | SearchUserData | null): string => {
   if (!user) return "/default-avatar.png";
-  if (user.profile_picture_url) return user.profile_picture_url;
-  if (
-    user.profile_picture &&
-    user.profile_picture.startsWith("http") &&
-    user.profile_picture.includes("googleusercontent")
-  )
-    return user.profile_picture;
   if (user.google_profile_picture_url) return user.google_profile_picture_url;
+  if (user.profile_picture_url) return user.profile_picture_url;
   return "/default-avatar.png";
 };
 
@@ -148,7 +143,6 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Refetch user on mount and whenever the profile page triggers a change (using a storage event)
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("access_token");
@@ -161,24 +155,26 @@ const Header = () => {
             const data = await response.json();
             setUser({
               ...data,
-              profile_picture_url:
-                data.profile_picture_url || data.profile_picture || "",
+              profile_picture_url: data.profile_picture_url,
               google_profile_picture_url: data.google_profile_picture_url,
             });
           }
         } catch (error) {
-          console.error("Error fetching user:", error);
+          console.error("Header: Error fetching user:", error);
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          setUser(null);
         } finally {
           setAuthLoading(false);
         }
       } else {
         setAuthLoading(false);
+        setUser(null);
       }
     };
 
     fetchUser();
 
-    // Listen for profile image update event (using localStorage)
     const onStorage = (e: StorageEvent) => {
       if (e.key === "profile_picture_updated") {
         fetchUser();
@@ -221,6 +217,7 @@ const Header = () => {
         setSearchResults([]);
       }
     } catch (err) {
+      console.error("Header: Search request error:", err);
       setSearchError("Ocorreu um erro de rede.");
     } finally {
       setSearchLoading(false);
@@ -493,7 +490,7 @@ const SearchInterface = (props: {
             onClick={() => props.onUserProfileClick(foundUser.user_id)}
           >
             <UserAvatar
-              src={foundUser.profile_picture_url || undefined}
+              src={getAvatarUrl(foundUser)}
               alt={`Foto de ${foundUser.user_name}`}
             />
             <UserDisplayName>{foundUser.user_name}</UserDisplayName>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { Dropdown } from 'antd';
+import { Dropdown } from "antd";
 
 const pxToRem = (px: number) => `${px / 16}rem`;
 
@@ -48,7 +48,7 @@ export const MobileNavigation = styled.div<{ $isOpen: boolean }>`
     padding-left: 1.5rem;
     text-align: left;
     gap: 1.25rem;
-    
+
     top: 4rem;
     left: 0;
     width: 100%;
@@ -59,7 +59,8 @@ export const MobileNavigation = styled.div<{ $isOpen: boolean }>`
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
-    & a, & button {
+    & a,
+    & button {
       text-align: left !important;
       margin: 0;
       padding: 0;
@@ -643,4 +644,3 @@ export const AuthPlaceholder = styled.div`
     width: 100%;
   }
 `;
-
