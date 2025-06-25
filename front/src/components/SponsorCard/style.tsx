@@ -32,8 +32,8 @@ export const LogoContainer = styled.div`
   border-radius: 8px 8px 0 0;
 
   img {
-    width: 182px;
-    height: 91px;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
   }
 
@@ -42,8 +42,8 @@ export const LogoContainer = styled.div`
     padding: 0 16px;
 
     img {
-      width: 127px;
-      height: 63.5px;
+      max-width: 100%;
+      max-height: 100%;
     }
   }
 `;
