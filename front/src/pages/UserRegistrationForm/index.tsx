@@ -52,7 +52,13 @@ interface UserProfileFormData {
   share_contacts: boolean;
 }
 
-const UserRegistrationForm: React.FC = () => {
+interface UserRegistrationFormProps {
+  onProfileComplete?: () => void;
+}
+
+const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
+  onProfileComplete,
+}) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -78,11 +84,15 @@ const UserRegistrationForm: React.FC = () => {
           return;
         }
 
-        const data: UserProfileFormData = await response.json();
+        const data: UserProfileFormData & { form_completed: boolean } =
+          await response.json();
 
         setIsUpdate(true);
         if (data.form_completed) {
           setCurrentStep(1);
+          if (onProfileComplete) {
+            onProfileComplete(); // Notify ProtectedRoute immediately
+          }
         }
 
         form.setFieldsValue({
@@ -90,7 +100,10 @@ const UserRegistrationForm: React.FC = () => {
           birth_date: data.birth_date ? dayjs(data.birth_date) : null,
         });
       } catch (error) {
-        console.error("Erro ao buscar dados do perfil:", error);
+        console.error(
+          "UserRegistrationForm: Erro ao buscar dados do perfil:",
+          error,
+        );
         message.error("Não foi possível carregar os dados do seu perfil.");
       } finally {
         setLoading(false);
@@ -98,7 +111,7 @@ const UserRegistrationForm: React.FC = () => {
     };
 
     fetchAndSetProfileData();
-  }, [form, navigate]);
+  }, [form, navigate, onProfileComplete]);
 
   const showDiscordModal = () => {
     Modal.success({
@@ -112,12 +125,12 @@ const UserRegistrationForm: React.FC = () => {
           "_blank",
           "noopener,noreferrer",
         );
-        navigate("/");
+        navigate("/profile"); // Redirect to profile page after completing form
       },
       onCancel: () => {
-        navigate("/");
+        navigate("/profile"); // Redirect to profile page if user cancels
       },
-      cancelText: "Voltar para Home",
+      cancelText: "Ir para o Perfil",
       maskClosable: false,
     });
   };
@@ -136,6 +149,7 @@ const UserRegistrationForm: React.FC = () => {
       birth_date: values.birth_date
         ? dayjs(values.birth_date).format("YYYY-MM-DD")
         : null,
+      form_completed: true,
     };
 
     const url = isUpdate
@@ -165,8 +179,12 @@ const UserRegistrationForm: React.FC = () => {
           : "Perfil criado com sucesso!",
       );
       setCurrentStep(1);
+      if (onProfileComplete) {
+        onProfileComplete(); // Crucial: Notify parent ProtectedRoute
+      }
       showDiscordModal();
     } catch (error) {
+      console.error("UserRegistrationForm: Erro ao salvar perfil:", error);
       message.error((error as Error).message);
     } finally {
       setLoading(false);

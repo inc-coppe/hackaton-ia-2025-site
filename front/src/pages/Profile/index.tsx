@@ -46,7 +46,7 @@ import {
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { Upload, message } from "antd";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import type { GetProp, UploadProps } from "antd";
 
 interface UserProfileData {
@@ -89,18 +89,15 @@ const ProfileImage: React.FC<{
   const defaultAvatar = "/default-avatar.png";
   let imageUrl = src || googleSrc || defaultAvatar;
   if (error) imageUrl = defaultAvatar;
-
   return (
-    <div style={{ position: "relative", width: "180px", height: "180px" }}>
+    <ProfileImageWrapper>
       <StyledProfileImage
         src={imageUrl}
         alt={alt}
         onError={() => setError(true)}
         style={{
-          width: "180px",
-          height: "180px",
-          objectFit: "cover",
-          border: "2px solid var(--text-color-light)",
+          opacity: uploading ? 0.7 : 1,
+          filter: uploading ? "blur(1px)" : "none",
         }}
       />
       {showEdit && (
@@ -113,7 +110,7 @@ const ProfileImage: React.FC<{
           {uploading ? <LoadingOutlined /> : <FaCamera />}
         </EditPhotoButton>
       )}
-    </div>
+    </ProfileImageWrapper>
   );
 };
 
@@ -164,7 +161,6 @@ const EDUCATION_CHOICES = [
 function Profile() {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
-
   const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
   const [editableProfile, setEditableProfile] = useState<
     Partial<UserProfileData>
@@ -194,26 +190,21 @@ function Profile() {
         return null;
       }
     };
-
     const myId = getMyId();
     const viewingMyOwnProfile =
       !userId || (myId !== null && Number(userId) === myId);
     setIsMyProfile(viewingMyOwnProfile);
-
     const fetchUserProfile = async () => {
       const token = localStorage.getItem("access_token");
       if (!token) {
         navigate("/login");
         return;
       }
-
       setLoading(true);
       setError(null);
-
       const endpoint = viewingMyOwnProfile
         ? "http://localhost:8000/api/profile/me/"
         : `http://localhost:8000/api/users/${userId}/profile/`;
-
       try {
         const response = await fetch(endpoint, {
           headers: { Authorization: `Bearer ${token}` },
@@ -237,7 +228,6 @@ function Profile() {
         setLoading(false);
       }
     };
-
     fetchUserProfile();
   }, [userId, navigate]);
 
@@ -259,23 +249,21 @@ function Profile() {
     e.preventDefault();
     const token = localStorage.getItem("access_token");
     if (!userProfile || !token) return;
-
     const profileDataToUpdate: Partial<UserProfileData> = {
       ...editableProfile,
       tags,
     };
-
     if (editableProfile.user_name !== undefined) {
       profileDataToUpdate.user_name = editableProfile.user_name;
     }
-    if (profileImageUrl !== undefined) {
+    if (profileImageUrl && !profileImageUrl.startsWith("http")) {
       profileDataToUpdate.user_profile_picture = profileImageUrl;
+    } else {
+      delete profileDataToUpdate.user_profile_picture;
     }
-
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
     delete profileDataToUpdate.google_profile_picture_url;
-
     try {
       const response = await fetch("http://localhost:8000/api/profile/me/", {
         method: "PATCH",
@@ -295,7 +283,6 @@ function Profile() {
           responseData.google_profile_picture_url || undefined,
         );
         setIsEditing(false);
-        setFormErrors({});
         message.success("Perfil atualizado com sucesso!");
       } else {
         message.error(
@@ -310,7 +297,6 @@ function Profile() {
   const handleUpdateTagsOnly = async (newTagsList: string[]) => {
     const token = localStorage.getItem("access_token");
     if (!isMyProfile || !token) return;
-
     const originalTags = [...tags];
     setTags(newTagsList);
     try {
@@ -374,8 +360,6 @@ function Profile() {
     navigate("/login");
   };
 
-  // --- Custom Charming Photo Upload ---
-
   const handleEditPhotoClick = () => {
     uploadInputRef.current?.click();
   };
@@ -385,10 +369,8 @@ function Profile() {
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    // Validate image
     const valid = await beforeUpload(file as FileType);
     if (!valid) return;
-
     setUploadingImage(true);
     try {
       const token = localStorage.getItem("access_token");
@@ -407,7 +389,17 @@ function Profile() {
       const data = await response.json();
       if (response.ok && data.profile_picture_url) {
         setProfileImageUrl(data.profile_picture_url);
+        setUserProfile((prev) =>
+          prev
+            ? {
+                ...prev,
+                user_profile_picture_url: data.profile_picture_url,
+                google_profile_picture_url: undefined,
+              }
+            : null,
+        );
         message.success("Imagem de perfil atualizada com sucesso!");
+        localStorage.setItem("profile_picture_updated", Date.now().toString());
       } else {
         message.error(data.detail || "Falha ao carregar imagem de perfil.");
       }
@@ -416,7 +408,7 @@ function Profile() {
     } finally {
       setUploadingImage(false);
       if (uploadInputRef.current) {
-        uploadInputRef.current.value = ""; // Reset input
+        uploadInputRef.current.value = "";
       }
     }
   };
@@ -431,35 +423,36 @@ function Profile() {
       <Header />
       <PerfilContainer>
         <ProfileBanner>
-          {isMyProfile && isEditing ? (
-            <>
-              <ProfileImageWrapper>
-                <ProfileImage
-                  src={profileImageUrl}
-                  googleSrc={googleProfileImageUrl}
-                  alt="Foto de Perfil"
-                  showEdit
-                  onEditClick={handleEditPhotoClick}
-                  uploading={uploadingImage}
-                />
-                </ProfileImageWrapper>
-              <input
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                ref={uploadInputRef}
-                onChange={handleFileInputChange}
-                aria-label="Enviar nova foto de perfil"
-              />
-            </>
-          ) : (
-            <ProfileImage
-              src={profileImageUrl}
-              googleSrc={googleProfileImageUrl}
-              alt={`Foto de ${displayProfile.user_name}`}
+          <ProfileImage
+            src={
+              isMyProfile && isEditing
+                ? profileImageUrl
+                : displayProfile.user_profile_picture_url || undefined
+            }
+            googleSrc={
+              isMyProfile && isEditing
+                ? googleProfileImageUrl
+                : displayProfile.google_profile_picture_url || undefined
+            }
+            alt={
+              isMyProfile && isEditing
+                ? "Foto de Perfil"
+                : `Foto de ${displayProfile.user_name}`
+            }
+            showEdit={isMyProfile && isEditing}
+            onEditClick={handleEditPhotoClick}
+            uploading={uploadingImage}
+          />
+          {isMyProfile && isEditing && (
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              ref={uploadInputRef}
+              onChange={handleFileInputChange}
+              aria-label="Enviar nova foto de perfil"
             />
           )}
-
           <TitleContainer>
             <UserName>{displayProfile.user_name}</UserName>
             <ButtonsContainer>
@@ -469,18 +462,14 @@ function Profile() {
                 </EditButton>
               )}
               {isMyProfile && !isEditing && (
-                <>
-                  <EditButtonWrapper>
-                    <EditButton onClick={toggleEditMode}>
-                      <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
-                    </EditButton>
-                  
-                    <LogoutButton onClick={handleLogout}>
-                      <IoLogOutOutline style={{ marginRight: "0.5rem" }} /> Sair
-                    </LogoutButton>
-                  </EditButtonWrapper>
-                  
-                </>
+                <EditButtonWrapper>
+                  <EditButton onClick={toggleEditMode}>
+                    <IoPencil style={{ marginRight: "0.5rem" }} /> Editar Perfil
+                  </EditButton>
+                  <LogoutButton onClick={handleLogout}>
+                    <IoLogOutOutline style={{ marginRight: "0.5rem" }} /> Sair
+                  </LogoutButton>
+                </EditButtonWrapper>
               )}
               {displayProfile.linkedin_profile && (
                 <SocialButton

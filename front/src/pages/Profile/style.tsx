@@ -12,16 +12,14 @@ export const PerfilContainer = styled.div`
 
 export const EditButtonWrapper = styled.div`
   display: flex;
-  
   gap: 1rem;
   order: 2;
-
   @media (max-width: 48rem) {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     margin-top: 1rem;
-    flex-direction: row; /* mantém lado a lado */
+    flex-direction: row;
     width: 100%;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -38,45 +36,56 @@ export const ProfileBanner = styled.header`
   gap: ${pxToRem(40)};
   width: 100%;
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
-
   @media (max-width: 48rem) {
     flex-direction: column;
     padding: ${pxToRem(146)} 1.5rem 0;
     align-items: flex-start;
     gap: ${pxToRem(24)};
-
   }
 `;
 
 export const ProfileImageWrapper = styled.div`
-  width: ${pxToRem(100)};
-  height: ${pxToRem(100)};
-  border-radius: ${pxToRem(4)};
-  overflow: hidden;
-
-  @media (min-width: 48rem) {
-    width: ${pxToRem(200)};
-    height: ${pxToRem(200)};
-    border-radius: ${pxToRem(8)};
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-
-export const ProfileImage = styled.img`
   width: ${pxToRem(200)};
   height: ${pxToRem(200)};
-  object-fit: cover;
-
+  border-radius: ${pxToRem(4)};
+  overflow: hidden;
+  position: relative;
   @media (max-width: 48rem) {
     width: ${pxToRem(100)};
     height: ${pxToRem(100)};
     border-radius: ${pxToRem(4)};
+  }
+`;
+
+export const ProfileImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+`;
+
+export const EditPhotoButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #fff;
+  color: #6c2bd7;
+  border-radius: 50%;
+  border: 2px solid #6c2bd7;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  &:hover {
+    background: #6c2bd7;
+    color: #fff;
   }
 `;
 
@@ -100,7 +109,6 @@ export const UserName = styled.h1`
   line-height: ${pxToRem(61)};
   color: #ffffff;
   margin: 0;
-
   @media (max-width: 48rem) {
     font-size: ${pxToRem(32)};
     line-height: 100%;
@@ -112,7 +120,6 @@ export const ButtonsContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: ${pxToRem(16)};
-
   @media (max-width: 48rem) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -138,18 +145,14 @@ export const SocialButton = styled.a`
   text-transform: uppercase;
   color: #ffffff;
   text-decoration: none;
-
   order: 1;
-
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
-
   &:hover {
     background-color: #ffffff;
     color: #2e2989;
   }
-
   svg {
     width: ${pxToRem(24)};
     height: ${pxToRem(24)};
@@ -163,9 +166,6 @@ export const SocialButtonFake = styled.div`
   box-sizing: border-box;
   display: none;
   flex-direction: row;
-  
-
-  
   @media (max-width: 48rem) {
     order: 1;
   }
@@ -194,10 +194,8 @@ export const InfoCard = styled.div`
   flex-grow: 1;
   background: rgba(193, 208, 248, 0.2);
   border-radius: ${pxToRem(8)};
-  width: ${pxToRem(
-    580,
-  )}; /* Based on Figma, may need adjustment with flex-grow */
-  min-height: ${pxToRem(220)}; /* Minimum height for consistency */
+  width: ${pxToRem(580)};
+  min-height: ${pxToRem(220)};
   @media (max-width: 48rem) {
     flex-grow: 0;
     width: 100%;
@@ -259,12 +257,10 @@ export const TagInput = styled.input`
   border-radius: ${pxToRem(4)};
   font-family: "Nunito Sans", sans-serif;
   font-size: ${pxToRem(16)};
-
   &:focus {
     outline: none;
     border-color: #3161e8;
   }
-
   @media (max-width: 48rem) {
     padding: ${pxToRem(4)} 0.5rem;
     width: 100%;
@@ -278,21 +274,19 @@ export const AddButton = styled.button`
   align-items: center;
   padding: ${pxToRem(8)} ${pxToRem(20)};
   gap: ${pxToRem(8)};
-  height: ${pxToRem(42)}; /* Match TagInput height */
-  border-radius: ${pxToRem(4)}; /* Match TagInput radius */
-  background-color: #3161e8; /* Figma uses solid for action */
+  height: ${pxToRem(42)};
+  border-radius: ${pxToRem(4)};
+  background-color: #3161e8;
   border: none;
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: ${pxToRem(15)};
   text-transform: uppercase;
-  color: #ffffff; /* Text color for solid button */
-
+  color: #ffffff;
   &:hover {
     background-color: #2e2989;
   }
-
   @media (max-width: 48rem) {
     padding: ${pxToRem(8)} ${pxToRem(10)};
   }
@@ -306,7 +300,7 @@ export const TagsContainer = styled.div`
   align-content: flex-start;
   gap: ${pxToRem(16)};
   align-self: stretch;
-  min-height: ${pxToRem(40)}; /* Ensure some space even if no tags */
+  min-height: ${pxToRem(40)};
 `;
 
 export const TagPill = styled.div`
@@ -316,7 +310,7 @@ export const TagPill = styled.div`
   align-items: center;
   padding: ${pxToRem(8)} ${pxToRem(12)};
   gap: ${pxToRem(12)};
-  height: ${pxToRem(38)}; /* Figma uses 38px or 40px */
+  height: ${pxToRem(38)};
   background: #2e2989;
   border-radius: ${pxToRem(4)};
   color: #ffffff;
@@ -335,10 +329,9 @@ export const CloseIcon = styled.button`
   align-items: center;
   justify-content: center;
   color: #ffffff;
-
   svg {
-    width: ${pxToRem(20)}; /* Adjusted for better visual balance */
-    height: ${pxToRem(20)}; /* Adjusted for better visual balance */
+    width: ${pxToRem(20)};
+    height: ${pxToRem(20)};
   }
 `;
 
@@ -346,10 +339,10 @@ export const ConnectionsInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around; /* Or space-between */
+  justify-content: space-around;
   gap: ${pxToRem(40)};
-  width: 100%; /* Take full width of the card content area */
-  margin-top: ${pxToRem(20)}; /* Add some space after text */
+  width: 100%;
+  margin-top: ${pxToRem(20)};
 `;
 
 export const ConnectionStat = styled.div`
@@ -365,6 +358,7 @@ export const ConnectionNumber = styled.span`
   font-size: ${pxToRem(50)};
   line-height: ${pxToRem(61)};
   color: #0f0f21;
+￼CANC
 `;
 
 export const ConnectionLabel = styled.span`
@@ -387,7 +381,7 @@ export const EditButton = styled.button`
   height: ${pxToRem(48)};
   background: #ffffff;
   border-radius: ${pxToRem(2)};
-  border: ${pxToRem(2)} solid #2e2989; /* Or a different border */
+  border: ${pxToRem(2)} solid #2e2989;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: ${pxToRem(15)};
@@ -398,12 +392,10 @@ export const EditButton = styled.button`
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
-
   &:hover {
     background-color: #2e2989;
     color: #ffffff;
   }
-  
   @media (max-width: 48rem) {
     order: 3;
   }
@@ -434,7 +426,6 @@ export const FormInput = styled.input`
   border-radius: ${pxToRem(4)};
   font-family: "Nunito Sans", sans-serif;
   font-size: ${pxToRem(16)};
-
   &:focus {
     outline: none;
     border-color: #3161e8;
@@ -451,7 +442,6 @@ export const FormSelect = styled.select`
   border-radius: ${pxToRem(4)};
   font-family: "Nunito Sans", sans-serif;
   font-size: ${pxToRem(16)};
-
   &:focus {
     outline: none;
     border-color: #3161e8;
@@ -469,7 +459,6 @@ export const FormTextarea = styled.textarea`
   font-family: "Nunito Sans", sans-serif;
   font-size: ${pxToRem(16)};
   resize: vertical;
-
   &:focus {
     outline: none;
     border-color: #3161e8;
@@ -486,28 +475,53 @@ export const FormError = styled.p`
 export const ActionButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* Alinha botões à esquerda */
+  justify-content: flex-start;
   gap: ${pxToRem(16)};
   margin-top: ${pxToRem(24)};
   width: 100%;
 `;
 
-export const SaveButton = styled(AddButton)`
-  /* Reutiliza estilo do AddButton */
+export const SaveButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: ${pxToRem(8)} ${pxToRem(20)};
+  gap: ${pxToRem(8)};
+  height: ${pxToRem(42)};
+  border-radius: ${pxToRem(4)};
   background-color: #3161e8;
+  border: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(15)};
+  text-transform: uppercase;
   color: #ffffff;
   &:hover {
     background-color: #2e2989;
   }
 `;
 
-export const CancelButton = styled(AddButton)`
-  /* Reutiliza estilo do AddButton */
-  background-color: #transparent; /* Ou uma cor cinza clara */
+export const CancelButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: ${pxToRem(8)} ${pxToRem(20)};
+  gap: ${pxToRem(8)};
+  height: ${pxToRem(42)};
+  border-radius: ${pxToRem(4)};
+  background-color: transparent;
   color: #3161e8;
   border: ${pxToRem(1)} solid #3161e8;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: ${pxToRem(15)};
+  text-transform: uppercase;
   &:hover {
-    background-color: #e9ecef; /* Um cinza muito claro para hover */
+    background-color: #e9ecef;
   }
 `;
 
@@ -517,7 +531,6 @@ export const SearchInputContainer = styled.div`
   margin-bottom: 1.5rem;
   align-items: center;
   width: 100%;
-
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: stretch;
@@ -533,11 +546,9 @@ export const SearchField = styled.input`
   flex-grow: 1;
   outline: none;
   transition: border-color 0.2s ease-in-out;
-
   &:focus {
     border-color: #007bff;
   }
-
   &::placeholder {
     color: #a0a0a0;
   }
@@ -558,16 +569,13 @@ export const SearchButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
   &:hover {
     background-color: #0056b3;
     transform: translateY(-1px);
   }
-
   &:active {
     transform: translateY(0);
   }
-
   &:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
@@ -579,28 +587,39 @@ export const UserResultsContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-top: 1.5rem;
-
   width: 100%;
 `;
 
-export const UserCard = styled(InfoCard)`
-  // Reutilizando InfoCard para o estilo base
+export const UserCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
   text-align: center;
-
-  width: 32.25rem; // Contando com paddig que está no InfoCard, este é o tamanho que deve ser para não quebrar
+  background: rgba(193, 208, 248, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  width: 32.25rem;
   @media (max-width: 48rem) {
     width: 100%;
   }
 `;
 
-export const UserAvatar = styled(ProfileImage)`
+export const UserAvatar = styled.img`
   width: 80px;
   height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
   margin-bottom: 1rem;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export const UserDisplayName = styled.h3`
@@ -615,34 +634,31 @@ export const UserDetailText = styled.p`
   margin-bottom: 0.3rem;
 `;
 
-export const UserTagsContainer = styled(TagsContainer)`
+export const UserTagsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 1rem;
+  align-self: stretch;
   justify-content: center;
   margin-top: 0.5rem;
 `;
 
-export const UserTagPill = styled(TagPill)`
+export const UserTagPill = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  gap: 0;
   background-color: #e2f0ff;
   color: #007bff;
   border: 1px solid #007bff;
-  cursor: default;
+  border-radius: 4px;
   font-size: 0.85rem;
-  padding: 0.3rem 0.6rem;
-
-  ${CloseIcon} {
-    display: none; /* Não permite remover tags em perfis de outros usuários */
-  }
-`;
-
-export const FollowButton = styled(AddButton)`
-  // Reutilizando AddButton para o estilo base
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  background-color: ${(props) => (props.isFollowing ? "#dc3545" : "#28a745")};
-
-  &:hover {
-    background-color: ${(props) => (props.isFollowing ? "#c82333" : "#218838")};
-  }
+  cursor: default;
 `;
 
 export const NoResultsMessage = styled.p`
@@ -669,7 +685,7 @@ export const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-export const ModalContent = styled(InfoCard)`
+export const ModalContent = styled.div`
   background: white;
   padding: 2.5rem;
   border-radius: 12px;
@@ -681,8 +697,8 @@ export const ModalContent = styled(InfoCard)`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-height: 90vh; /* Limita a altura do modal */
-  overflow-y: auto; /* Adiciona scroll se o conteúdo for muito grande */
+  max-height: 90vh;
+  overflow-y: auto;
 `;
 
 export const CloseModalButton = styled.button`
@@ -695,23 +711,38 @@ export const CloseModalButton = styled.button`
   color: #555;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
-
   &:hover {
     color: #333;
   }
 `;
 
-export const PublicProfileSocialLink = styled(SocialButton)`
+export const PublicProfileSocialLink = styled.a`
   margin: 0.5rem;
   width: auto;
   min-width: 120px;
-  background-color: #555; /* Cor padrão para links de contato */
+  background-color: #555;
   color: white;
-
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  gap: 8px;
+  height: 48px;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   &:hover {
     background-color: #333;
   }
-
   &.linkedin {
     background-color: #0077b5;
     &:hover {
@@ -779,38 +810,11 @@ export const LogoutButton = styled.button`
   color: #ff4d4f;
   cursor: pointer;
   transition: all 0.2s ease;
-
   &:hover {
     background-color: #ff4d4f;
     color: #ffffff;
   }
-
   @media (max-width: 48rem) {
     order: 3;
-  }
-`;
-
-export const EditPhotoButton = styled.button`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background: #fff;
-  color: #6c2bd7;
-  border-radius: 50%;
-  border: 2px solid #6c2bd7;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  transition:
-    background 0.15s,
-    color 0.15s;
-  cursor: pointer;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-  &:hover {
-    background: #6c2bd7;
-    color: #fff;
   }
 `;
