@@ -21,8 +21,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class BaseUserSerializer(serializers.ModelSerializer):
-    profile_picture_url = serializers.SerializerMethodField()
-
     class Meta:
         model = CustomUser
         fields = [
@@ -30,19 +28,8 @@ class BaseUserSerializer(serializers.ModelSerializer):
             "email",
             "name",
             "profile_picture",
-            "profile_picture_url",
         ]
-        read_only_fields = ["id", "email", "profile_picture_url"]
-
-    def get_profile_picture_url(self, obj):
-        request = self.context.get("request")
-        if not obj.profile_picture:
-            return None
-        if obj.profile_picture.startswith("http"):
-            return obj.profile_picture
-        if request:
-            return f"{request.scheme}://{request.get_host()}{obj.profile_picture}"
-        return obj.profile_picture
+        read_only_fields = ["id", "email", "profile_picture"]
 
 
 class UserDetailSerializer(BaseUserSerializer):
@@ -64,7 +51,6 @@ class UserDetailSerializer(BaseUserSerializer):
     institution = serializers.CharField(
         source="userprofile.institution", read_only=True, allow_null=True
     )
-    google_profile_picture_url = serializers.SerializerMethodField()
 
     class Meta(BaseUserSerializer.Meta):
         fields = BaseUserSerializer.Meta.fields + [
@@ -74,7 +60,6 @@ class UserDetailSerializer(BaseUserSerializer):
             "area_of_expertise",
             "organization",
             "institution",
-            "google_profile_picture_url",
         ]
         read_only_fields = BaseUserSerializer.Meta.read_only_fields + [
             "linkedin_profile",
@@ -83,25 +68,12 @@ class UserDetailSerializer(BaseUserSerializer):
             "area_of_expertise",
             "organization",
             "institution",
-            "google_profile_picture_url",
         ]
-
-    def get_google_profile_picture_url(self, obj):
-        if (
-            obj.profile_picture
-            and obj.profile_picture.startswith("http")
-            and "googleusercontent" in obj.profile_picture
-        ):
-            return obj.profile_picture
-        return None
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(read_only=True)
     user_name = serializers.CharField(required=False, allow_blank=True)
-    user_profile_picture = serializers.URLField(
-        required=False, allow_null=True, allow_blank=True
-    )
     user_profile_picture_url = serializers.SerializerMethodField()
     education_level_display = serializers.CharField(
         source="get_education_level_display", read_only=True
@@ -109,7 +81,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
     user_id = serializers.IntegerField(read_only=True)
-    google_profile_picture_url = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -118,7 +89,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "email",
             "user_name",
             "user_profile_picture_url",
-            "user_profile_picture",
             "full_name",
             "cpf",
             "birth_date",
@@ -139,7 +109,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "tags",
             "followers_count",
             "following_count",
-            "google_profile_picture_url",
         ]
         read_only_fields = [
             "user_id",
@@ -148,7 +117,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "education_level_display",
             "followers_count",
             "following_count",
-            "google_profile_picture_url",
         ]
 
     def get_user_profile_picture_url(self, obj):
@@ -160,15 +128,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 return (
                     f"{request.scheme}://{request.get_host()}{obj.user.profile_picture}"
                 )
-            return obj.user.profile_picture
-        return None
-
-    def get_google_profile_picture_url(self, obj):
-        if (
-            obj.user.profile_picture
-            and obj.user.profile_picture.startswith("http")
-            and "googleusercontent" in obj.user.profile_picture
-        ):
             return obj.user.profile_picture
         return None
 
@@ -188,11 +147,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user = instance.user
         user_name = validated_data.pop("user_name", None)
-        user_profile_picture = validated_data.pop("user_profile_picture", None)
+
         if user_name is not None:
             user.name = user_name
-        if user_profile_picture is not None:
-            user.profile_picture = user_profile_picture
+
         user.save()
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -207,7 +165,6 @@ class PublicProfileDetailSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField()
     organization = serializers.CharField(read_only=True, allow_null=True)
     institution = serializers.CharField(read_only=True, allow_null=True)
-    google_profile_picture_url = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -223,22 +180,12 @@ class PublicProfileDetailSerializer(serializers.ModelSerializer):
             "email",
             "organization",
             "institution",
-            "google_profile_picture_url",
         ]
         read_only_fields = fields
 
     def get_email(self, obj):
         if obj.share_contacts:
             return obj.user.email
-        return None
-
-    def get_google_profile_picture_url(self, obj):
-        if (
-            obj.user.profile_picture
-            and obj.user.profile_picture.startswith("http")
-            and "googleusercontent" in obj.user.profile_picture
-        ):
-            return obj.profile_picture
         return None
 
     def get_user_profile_picture_url(self, obj):
@@ -258,7 +205,6 @@ class UserSearchSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(source="user.id", read_only=True)
     user_name = serializers.CharField(source="user.name", read_only=True)
     profile_picture_url = serializers.SerializerMethodField()
-    google_profile_picture_url = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -266,7 +212,6 @@ class UserSearchSerializer(serializers.ModelSerializer):
             "user_id",
             "user_name",
             "profile_picture_url",
-            "google_profile_picture_url",
             "full_name",
             "organization",
             "institution",
@@ -283,14 +228,5 @@ class UserSearchSerializer(serializers.ModelSerializer):
                 return (
                     f"{request.scheme}://{request.get_host()}{obj.user.profile_picture}"
                 )
-            return obj.user.profile_picture
-        return None
-
-    def get_google_profile_picture_url(self, obj):
-        if (
-            obj.user.profile_picture
-            and obj.user.profile_picture.startswith("http")
-            and "googleusercontent" in obj.user.profile_picture
-        ):
             return obj.user.profile_picture
         return None

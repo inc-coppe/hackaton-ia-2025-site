@@ -53,8 +53,7 @@ interface UserProfileData {
   user_id?: number;
   email: string;
   user_name: string;
-  user_profile_picture_url: string;
-  google_profile_picture_url?: string;
+  user_profile_picture_url?: string;
   full_name: string | null;
   birth_date: string | null;
   linkedin_profile: string | null;
@@ -79,15 +78,14 @@ type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 const ProfileImage: React.FC<{
   src?: string;
-  googleSrc?: string;
   alt: string;
   showEdit?: boolean;
   onEditClick?: () => void;
   uploading?: boolean;
-}> = ({ src, googleSrc, alt, showEdit, onEditClick, uploading }) => {
+}> = ({ src, alt, showEdit, onEditClick, uploading }) => {
   const [error, setError] = useState(false);
   const defaultAvatar = "/default-avatar.png";
-  let imageUrl = src || googleSrc || defaultAvatar;
+  let imageUrl = src || defaultAvatar;
   if (error) imageUrl = defaultAvatar;
   return (
     <ProfileImageWrapper>
@@ -174,9 +172,6 @@ function Profile() {
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState<string | undefined>();
-  const [googleProfileImageUrl, setGoogleProfileImageUrl] = useState<
-    string | undefined
-  >();
   const uploadInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -194,6 +189,7 @@ function Profile() {
     const viewingMyOwnProfile =
       !userId || (myId !== null && Number(userId) === myId);
     setIsMyProfile(viewingMyOwnProfile);
+
     const fetchUserProfile = async () => {
       const token = localStorage.getItem("access_token");
       if (!token) {
@@ -215,9 +211,6 @@ function Profile() {
           setEditableProfile({ ...data });
           setTags(data.tags || []);
           setProfileImageUrl(data.user_profile_picture_url || undefined);
-          setGoogleProfileImageUrl(
-            data.google_profile_picture_url || undefined,
-          );
         } else {
           const errorData = await response.json();
           setError(errorData.detail || "Falha ao buscar dados do perfil.");
@@ -256,14 +249,9 @@ function Profile() {
     if (editableProfile.user_name !== undefined) {
       profileDataToUpdate.user_name = editableProfile.user_name;
     }
-    if (profileImageUrl && !profileImageUrl.startsWith("http")) {
-      profileDataToUpdate.user_profile_picture = profileImageUrl;
-    } else {
-      delete profileDataToUpdate.user_profile_picture;
-    }
+
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
-    delete profileDataToUpdate.google_profile_picture_url;
     try {
       const response = await fetch("http://localhost:8000/api/profile/me/", {
         method: "PATCH",
@@ -279,9 +267,6 @@ function Profile() {
         setEditableProfile({ ...responseData });
         setTags(responseData.tags || []);
         setProfileImageUrl(responseData.user_profile_picture_url || undefined);
-        setGoogleProfileImageUrl(
-          responseData.google_profile_picture_url || undefined,
-        );
         setIsEditing(false);
         message.success("Perfil atualizado com sucesso!");
       } else {
@@ -346,9 +331,6 @@ function Profile() {
     if (isEditing) {
       setEditableProfile({ ...userProfile! });
       setProfileImageUrl(userProfile!.user_profile_picture_url || undefined);
-      setGoogleProfileImageUrl(
-        userProfile!.google_profile_picture_url || undefined,
-      );
     }
     setIsEditing(!isEditing);
     setFormErrors({});
@@ -394,7 +376,6 @@ function Profile() {
             ? {
                 ...prev,
                 user_profile_picture_url: data.profile_picture_url,
-                google_profile_picture_url: undefined,
               }
             : null,
         );
@@ -424,16 +405,7 @@ function Profile() {
       <PerfilContainer>
         <ProfileBanner>
           <ProfileImage
-            src={
-              isMyProfile && isEditing
-                ? profileImageUrl
-                : displayProfile.user_profile_picture_url || undefined
-            }
-            googleSrc={
-              isMyProfile && isEditing
-                ? googleProfileImageUrl
-                : displayProfile.google_profile_picture_url || undefined
-            }
+            src={profileImageUrl}
             alt={
               isMyProfile && isEditing
                 ? "Foto de Perfil"
