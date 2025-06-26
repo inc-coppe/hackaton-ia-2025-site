@@ -60,9 +60,7 @@ interface User {
   id: string;
   name: string;
   email: string;
-  profile_picture?: string;
   profile_picture_url?: string;
-  google_profile_picture_url?: string;
 }
 
 interface SearchUserData {
@@ -70,7 +68,6 @@ interface SearchUserData {
   user_name: string;
   full_name: string | null;
   profile_picture_url: string;
-  google_profile_picture_url?: string;
   area_of_expertise: string | null;
   tags: string[];
   linkedin_profile: string | null;
@@ -79,9 +76,7 @@ interface SearchUserData {
 }
 
 const getAvatarUrl = (user: User | SearchUserData | null): string => {
-  if (!user) return "/default-avatar.png";
-  if (user.google_profile_picture_url) return user.google_profile_picture_url;
-  if (user.profile_picture_url) return user.profile_picture_url;
+  if (user?.profile_picture_url) return user.profile_picture_url;
   return "/default-avatar.png";
 };
 
@@ -148,19 +143,46 @@ const Header = () => {
       const token = localStorage.getItem("access_token");
       if (token) {
         try {
-          const response = await fetch("http://localhost:8000/api/auth/user/", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const response = await fetch(
+            "http://localhost:8000/api/profile/me/",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          );
           if (response.ok) {
             const data = await response.json();
             setUser({
-              ...data,
-              profile_picture_url: data.profile_picture_url,
-              google_profile_picture_url: data.google_profile_picture_url,
+              id: data.user_id,
+              name: data.user_name,
+              email: data.email,
+              profile_picture_url: data.user_profile_picture_url,
             });
+          } else {
+            const userResponse = await fetch(
+              "http://localhost:8000/api/auth/user/",
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              },
+            );
+            if (userResponse.ok) {
+              const userData = await userResponse.json();
+              setUser({
+                id: userData.id,
+                name: userData.name,
+                email: userData.email,
+                profile_picture_url: userData.profile_picture_url,
+              });
+            } else {
+              console.error(
+                "Header: Erro ao buscar dados do usuário (auth/user) após falha em profile/me.",
+              );
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh_token");
+              setUser(null);
+            }
           }
         } catch (error) {
-          console.error("Header: Error fetching user:", error);
+          console.error("Header: Erro ao buscar usuário ou perfil:", error);
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           setUser(null);
