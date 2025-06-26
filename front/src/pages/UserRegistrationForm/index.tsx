@@ -121,7 +121,7 @@ const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
       okText: "Ir para o Discord",
       onOk: () => {
         window.open(
-          "https://discord.gg/rPahUUKW99",
+          "https://discord.gg/8t3AXPae",
           "_blank",
           "noopener,noreferrer",
         );
