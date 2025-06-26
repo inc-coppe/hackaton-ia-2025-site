@@ -80,6 +80,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE, related_name="userprofile"
     )
+    profile_picture = models.URLField(blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True, null=True)
     cpf = models.CharField(max_length=11, unique=True, null=True, blank=True)
     birth_date = models.DateField(blank=True, null=True)
