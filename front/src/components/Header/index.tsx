@@ -389,7 +389,7 @@ const Header = () => {
           <TelaBranca onClick={(e) => e.stopPropagation()}>
             <BuscaContainer>
               <BuscaPrincipalContainer>
-                <PesquisaTitulo>/BUSCAR</PesquisaTitulo>
+                <PesquisaTitulo>/BUSCAR PARTICIPANTES</PesquisaTitulo>
                 <BotaoX onClick={closeDesktopSearch}>
                   <XWrapper src={img2} alt="Fechar" />
                 </BotaoX>
@@ -416,7 +416,7 @@ const Header = () => {
             <ExitSearchButton onClick={closeMobileSearch}>
               <IoArrowBack />
             </ExitSearchButton>
-            <PesquisaTitulo>Buscar Participantes</PesquisaTitulo>
+            <PesquisaTitulo>/BUSCAR CONEXÕES</PesquisaTitulo>
           </MobileSearchHeader>
           <SearchInterface
             searchTerm={searchTerm}

@@ -371,9 +371,17 @@ export const BuscaPrincipalContainer = styled.div`
 export const PesquisaTitulo = styled.h2`
   font-family: "Montserrat", sans-serif;
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #000000;
+  
   margin: 0;
+
+  padding-top: 4rem;
+
+  @media (max-width: 28rem) {
+    padding-top: 0.1rem;
+    font-size: 1.5rem;
+  }
 `;
 
 export const BuscaBodyContainer = styled.div`

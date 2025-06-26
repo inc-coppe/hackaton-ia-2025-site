@@ -15,26 +15,29 @@ import {
 
 } from "./style";
 import SponsorCard from "../../components/SponsorCard";
-import apoio1 from "../../assets/apoio1.png";
-import apoio2 from "../../assets/apoio2.png";
-import apoio3 from "../../assets/apoio3.png";
-import apoio4 from "../../assets/apoio4.png";
-import apoio5 from "../../assets/apoio5.png";
+import apoio1 from "../../assets/Distrito nova logo.png";
+import apoio2 from "../../assets/hub digital nova logo.png";
+import apoio3 from "../../assets/abstartups nova logo.png";
+import apoio4 from "../../assets/nvidia_logo_cortado_transparente.png";
+import apoio5 from "../../assets/LNCC nova logo.png";
 import apoio6 from "../../assets/maravalley p.png";
-import apoio7 from "../../assets/apoio7.png";
-import apoio8 from "../../assets/apoio8.png";
-import apoio9 from "../../assets/apoio9.png";
-import apoio10 from "../../assets/aws logo.png";
-import realizacao1 from "../../assets/realizacao1.png";
-import realizacao2 from "../../assets/cietec preto.png";
+import apoio7 from "../../assets/wow-aceleradora-de-startups-nova-logo.png";
+import apoio8 from "../../assets/elogroup nova logo.png";
+import apoio9 from "../../assets/CA2_marca-nova-logo (1).png";
+import apoio10 from "../../assets/aws logo (1) (1).png";
+import realizacao1 from "../../assets/nova logo incubadora coppe.png";
+import realizacao2 from "../../assets/cietec preto (1).png";
 import realizacao3 from "../../assets/realizacao3.png";
 import realizacao4 from "../../assets/realizacao4.png";
+
+import p_ouro1 from "../../assets/marcafiocruz_horizontal_POSITIVA ouro1.png";
+
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { ButtonWrapper, LinkButton } from "../../components/CustomCarousel/style";
 import { NavLink } from "react-router-dom";
 
 const sponsorsData = {
-  ouro: [],
+  ouro: [ {image: p_ouro1, title: "Fiocruz"} ],
   prata: [],
   bronze: [],
   apoio: [
@@ -96,19 +99,23 @@ const SponsorsSection: React.FC = () => {
       </ButtonWrapper>
 
       <SponsorsContainer>
-        <SponsorsContainerDefinidos>
+        
+          
+
           <TierTitle>OURO</TierTitle>
           <SponsorLogoContainer>
-            {[1, 2, 3].map((index) => (
+            {sponsorsData.ouro.map((sponsor, index) => (
               <SponsorCard
                 key={index}
-                imageUrl=""
-                title={`Patrocinador Ouro ${index}`}
-                isLoading
+                imageUrl={sponsor.image}
+                title={sponsor.title}
+                
               />
             ))}
           </SponsorLogoContainer>
-
+        
+        <SponsorsContainerDefinidos>
+        
           <TierTitle>PRATA</TierTitle>
           <SponsorLogoContainer>
             {[1, 2, 3, 4, 5].map((index) => (
