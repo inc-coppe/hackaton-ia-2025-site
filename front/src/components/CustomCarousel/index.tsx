@@ -41,7 +41,7 @@ const HorizontalCarousel = () => {
       sugerido_por: "",
       titulo: "Desafio Aberto – Explorando Desafios Emergentes",
       descricao:
-        "Explore o Data Lake da Saúde do Rio de Janeiro para descobrir padrões, propor soluções inéditas e inovar além dos desafios propostos. Um convite à criatividade e à investigação de problemas latentes na saúde pública.",
+        "Explore um Data Lake de Saúde para descobrir padrões, propor soluções inéditas e inovar além dos desafios propostos. Um convite à criatividade e à investigação de problemas latentes na saúde pública.",
     },
   ];
 
@@ -57,7 +57,6 @@ const HorizontalCarousel = () => {
     }
   };
 
-
   const handleClickDesafioDesafio = (index: number) => {
     navigate("/desafios", { state: { scrollTo: `scroll-desafio-${index}` } });
   };
@@ -67,31 +66,31 @@ const HorizontalCarousel = () => {
       <CardsWrapper ref={wrapperRef}>
         {cardData.map((item, index) => (
           <button
-              onClick={() => handleClickDesafioDesafio(index)}
-              style={{
-                background: "none",
-                border: "none",
-                display: "block",
-                color: "#ffffff",
-                fontWeight: 700,
-                fontSize: "0.9rem",
-                fontFamily: "Montserrat, sans-serif",
-                textAlign: "left",
-                width: "100%",
-                padding: 0,
-                margin: 0,
-              }}
-            >
-          <CardItem key={item.id}>
-            <CardHeaderSeta>
-              <CardSugerido>{item.sugerido_por}</CardSugerido>
-              <SetaWrapper>
-                <SetaIcon src={setaIcon} alt="Seta" />
-              </SetaWrapper>
-            </CardHeaderSeta>
-            <CardTitulo>{item.titulo}</CardTitulo>
-            <CardDescricao>{item.descricao}</CardDescricao>
-          </CardItem>
+            onClick={() => handleClickDesafioDesafio(index)}
+            style={{
+              background: "none",
+              border: "none",
+              display: "block",
+              color: "#ffffff",
+              fontWeight: 700,
+              fontSize: "0.9rem",
+              fontFamily: "Montserrat, sans-serif",
+              textAlign: "left",
+              width: "100%",
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            <CardItem key={item.id}>
+              <CardHeaderSeta>
+                <CardSugerido>{item.sugerido_por}</CardSugerido>
+                <SetaWrapper>
+                  <SetaIcon src={setaIcon} alt="Seta" />
+                </SetaWrapper>
+              </CardHeaderSeta>
+              <CardTitulo>{item.titulo}</CardTitulo>
+              <CardDescricao>{item.descricao}</CardDescricao>
+            </CardItem>
           </button>
         ))}
       </CardsWrapper>

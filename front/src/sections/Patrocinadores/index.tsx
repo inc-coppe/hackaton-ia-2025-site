@@ -12,7 +12,6 @@ import {
   Resize,
   SponsorsContainerDefinidos,
   Section,
-
 } from "./style";
 import SponsorCard from "../../components/SponsorCard";
 import apoio1 from "../../assets/Distrito nova logo.png";
@@ -33,11 +32,18 @@ import realizacao4 from "../../assets/realizacao4.png";
 import p_ouro1 from "../../assets/marcafiocruz_horizontal_POSITIVA ouro1.png";
 
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { ButtonWrapper, LinkButton } from "../../components/CustomCarousel/style";
+import {
+  ButtonWrapper,
+  LinkButton,
+} from "../../components/CustomCarousel/style";
 import { NavLink } from "react-router-dom";
 
 const sponsorsData = {
-  ouro: [ {image: p_ouro1, title: "Fiocruz"} ],
+  ouro: [
+    { image: p_ouro1, title: "Fiocruz" },
+    { image: realizacao4, title: "Reditus" },
+    { image: realizacao3, title: "FAPERJ" },
+  ],
   prata: [],
   bronze: [],
   apoio: [
@@ -53,7 +59,7 @@ const sponsorsData = {
     { image: apoio7, title: "WOW Aceleradora de Startups" },
     { image: apoio8, title: "EloGroup" },
     { image: apoio9, title: "CA² Consulting" },
-    { image: apoio10, title: "AWS"}
+    { image: apoio10, title: "AWS" },
   ],
   realizacao: [
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
@@ -69,77 +75,71 @@ const sponsorsData = {
 const SponsorsSection: React.FC = () => {
   return (
     <Section id="secao-patrocinadores">
-    <Container>
-      <Resize>
-        <SectionSubtitle>
-          NOSSOS PATROCINADORES E PARCEIROS SÃO PARTE ESSENCIAL DESSA JORNADA.
-        </SectionSubtitle>
+      <Container>
+        <Resize>
+          <SectionSubtitle>
+            NOSSOS PATROCINADORES E PARCEIROS SÃO PARTE ESSENCIAL DESSA JORNADA.
+          </SectionSubtitle>
 
-        <SectionTitle>QUEM APOIA A INOVAÇÃO, MOVE O MUNDO.</SectionTitle>
+          <SectionTitle>QUEM APOIA A INOVAÇÃO, MOVE O MUNDO.</SectionTitle>
 
-        <SectionText>
-          Com o apoio de empresas engajadas, criamos um ambiente onde inovação,
-          tecnologia e impacto social se encontram. Explore quem já está
-          impulsionando o futuro com a gente.
-        </SectionText>
-      </Resize>
+          <SectionText>
+            Com o apoio de empresas engajadas, criamos um ambiente onde
+            inovação, tecnologia e impacto social se encontram. Explore quem já
+            está impulsionando o futuro com a gente.
+          </SectionText>
+        </Resize>
 
-      <ButtonWrapper>
-        <NavLink
-          to="/patrocinador"
-          style={{ inherit: "None", textDecoration: "None" }}
-          state={{ scrollTarget: "top" }}>
-      
-          <LinkButton>        
-            SEJA PATROCINADOR
-            <ArrowRightOutlined />
-          </LinkButton>
+        <ButtonWrapper>
+          <NavLink
+            to="/patrocinador"
+            style={{ inherit: "None", textDecoration: "None" }}
+            state={{ scrollTarget: "top" }}
+          >
+            <LinkButton>
+              SEJA PATROCINADOR
+              <ArrowRightOutlined />
+            </LinkButton>
+          </NavLink>
+        </ButtonWrapper>
 
-        </NavLink>
-      </ButtonWrapper>
-
-      <SponsorsContainer>
-        
-          
-
-          <TierTitle>OURO</TierTitle>
+        <SponsorsContainer>
+          <TierTitle>PATROCINADORES</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.ouro.map((sponsor, index) => (
               <SponsorCard
                 key={index}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
-                
-              />
-            ))}
-          </SponsorLogoContainer>
-        
-        <SponsorsContainerDefinidos>
-        
-          <TierTitle>PRATA</TierTitle>
-          <SponsorLogoContainer>
-            {[1, 2, 3, 4, 5].map((index) => (
-              <SponsorCard
-                key={index}
-                imageUrl=""
-                title={`Patrocinador Prata ${index}`}
-                isLoading
               />
             ))}
           </SponsorLogoContainer>
 
-          <TierTitle>BRONZE</TierTitle>
-          <SponsorLogoContainer>
-            {[1, 2, 3, 4, 5].map((index) => (
-              <SponsorCard
-                key={index}
-                imageUrl=""
-                title={`Patrocinador Bronze ${index}`}
-                isLoading
-              />
-            ))}
-          </SponsorLogoContainer>
-        </SponsorsContainerDefinidos>
+          <SponsorsContainerDefinidos>
+            <TierTitle>PRATA</TierTitle>
+            <SponsorLogoContainer>
+              {[1, 2, 3, 4, 5].map((index) => (
+                <SponsorCard
+                  key={index}
+                  imageUrl=""
+                  title={`Patrocinador Prata ${index}`}
+                  isLoading
+                />
+              ))}
+            </SponsorLogoContainer>
+
+            <TierTitle>BRONZE</TierTitle>
+            <SponsorLogoContainer>
+              {[1, 2, 3, 4, 5].map((index) => (
+                <SponsorCard
+                  key={index}
+                  imageUrl=""
+                  title={`Patrocinador Bronze ${index}`}
+                  isLoading
+                />
+              ))}
+            </SponsorLogoContainer>
+          </SponsorsContainerDefinidos>
           <TierTitle>APOIO</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.apoio.map((sponsor, index) => (
@@ -151,18 +151,18 @@ const SponsorsSection: React.FC = () => {
             ))}
           </SponsorLogoContainer>
 
-        <TierTitle>REALIZAÇÃO</TierTitle>
-        <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
-          {sponsorsData.realizacao.map((sponsor, index) => (
-            <SponsorCard
-              key={index}
-              imageUrl={sponsor.image}
-              title={sponsor.title}
-            />
-          ))}
-        </SponsorLogoContainer>
-      </SponsorsContainer>
-    </Container>
+          <TierTitle>REALIZAÇÃO</TierTitle>
+          <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
+            {sponsorsData.realizacao.map((sponsor, index) => (
+              <SponsorCard
+                key={index}
+                imageUrl={sponsor.image}
+                title={sponsor.title}
+              />
+            ))}
+          </SponsorLogoContainer>
+        </SponsorsContainer>
+      </Container>
     </Section>
   );
 };

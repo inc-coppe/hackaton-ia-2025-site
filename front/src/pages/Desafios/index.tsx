@@ -34,10 +34,10 @@ import Img_desafio_regulacao_IA_RAG from "../../assets/imagem desafio - Automati
 import Img_desafio_triagem_automatica from "../../assets/imagem desafio - Protótipo de Triagem Automática com IA para Regulação em Saúde.png";
 
 const cardData = [
-    { id: 1, image: Img_predicao_faltas },
-    { id: 2, image: Img_desafio_regulacao_IA_RAG },
-    { id: 3, image: Img_desafio_triagem_automatica },
-  ];
+  { id: 1, image: Img_predicao_faltas },
+  { id: 2, image: Img_desafio_regulacao_IA_RAG },
+  { id: 3, image: Img_desafio_triagem_automatica },
+];
 
 // Seus dados mockados (mantidos como no seu exemplo)
 const desafios_menu = [
@@ -67,8 +67,7 @@ const desafios_explicados = [
       "Este desafio visa fornecer ferramentas para uma gestão mais inteligente e eficaz dos recursos de saúde, reduzindo custos e melhorando a qualidade do atendimento.",
     ],
     imagem: false,
-    textoAoLadoDaImagem:
-      "hihihi ha",
+    textoAoLadoDaImagem: "hihihi ha",
   },
   {
     image: Img_desafio_regulacao_IA_RAG,
@@ -98,11 +97,10 @@ const desafios_explicados = [
     titulo: "Explorando Desafios Emergentes",
     sugerido_por: "",
     descricao: [
-      "Além dos desafios propostos, incentivamos os participantes a explorar o Data Lake da Saúde do Rio de Janeiro, identificar padrões ocultos e propor soluções para problemas latentes que não foram explicitamente mencionados nos desafios. O hackathon é um espaço para inovação aberta, onde a criatividade, aliada aos dados, pode revelar novas oportunidades para transformar a saúde pública.",
+      "Além dos desafios propostos, incentivamos os participantes a explorar um Data Lake de Saúde, identificar padrões ocultos e propor soluções para problemas latentes que não foram explicitamente mencionados nos desafios. O hackathon é um espaço para inovação aberta, onde a criatividade, aliada aos dados, pode revelar novas oportunidades para transformar a saúde pública.",
     ],
     imagem: false,
-    textoAoLadoDaImagem:
-      "",
+    textoAoLadoDaImagem: "",
   },
   // ... mais desafios
 ];
@@ -158,8 +156,8 @@ const Desafios = () => {
     }
     if (location.state?.scrollTarget === "top") {
       // Scrolla até o topo da página
-      window.scrollTo({ top: 0});
-  }
+      window.scrollTo({ top: 0 });
+    }
   }, [location]);
 
   const challengesRefs = useRef<(HTMLElement | null)[]>([]);
@@ -185,11 +183,8 @@ const Desafios = () => {
     title: desafios_menu[index] || desafio.titulo,
   }));
 
-
   return (
-    
     <>
-
       <Header />
       <DesafiosPageContainer>
         <DesafiosIntroContainer>
@@ -200,7 +195,7 @@ const Desafios = () => {
                 ENCARANDO O QUE IMPORTA, CRIANDO O QUE TRANSFORMA.
               </IntroTitle>
             </TitleGroup>
-            
+
             <IntroDescription>
               Durante o evento, você pode encarar desafios reais de empresas
               parceiras ou até propor o seu próprio. Lembrando que as ideias não
@@ -211,9 +206,16 @@ const Desafios = () => {
         </DesafiosIntroContainer>
 
         <DesafiosBodyContainer>
-          <PreDivisionContainer>          
-            <PreDivisionText style={{ textAlign:"left"}}>
-              Neste hackathon, os participantes terão acesso ao Data Lake da Saúde do Rio de Janeiro, um vasto repositório de dados sobre atendimentos, unidades, profissionais e   equipamentos do SUS, além de contar com o poder de processamento do supercomputador Santos Dumont, um dos mais avançados da América Latina. Os desafios apresentados visam  utilizar a inteligência artificial para otimizar a gestão de recursos e transformar dados brutos em insights valiosos para a saúde pública.
+          <PreDivisionContainer>
+            <PreDivisionText style={{ textAlign: "left" }}>
+              Neste hackathon, os participantes terão acesso a um Data Lake de
+              Saúde, um vasto repositório de dados sobre atendimentos, unidades,
+              profissionais e equipamentos do SUS, além de contar com o poder de
+              processamento do supercomputador Santos Dumont, um dos mais
+              avançados da América Latina. Os desafios apresentados visam
+              utilizar a inteligência artificial para otimizar a gestão de
+              recursos e transformar dados brutos em insights valiosos para a
+              saúde pública.
             </PreDivisionText>
 
             <PreDivisionText style={{ textAlign: "left" }}>
@@ -221,7 +223,6 @@ const Desafios = () => {
               jornada. Explore, escolha o que mais te motiva e venha construir
               soluções com a gente.
             </PreDivisionText>
-        
           </PreDivisionContainer>
 
           <DesafiosBodyPrincipalContainer>
@@ -239,82 +240,94 @@ const Desafios = () => {
 
             <ConteudoDesafiosContainer>
               {desafios_explicados.map((info, index) => (
-                <Section id={`scroll-desafio-${index}`} key={`section-${index}`}>
-                <ChallengeItemContainer
-                  key={info.id || index}
-                  id={info.id || `desafio-${index}`}
-                  ref={(el) => (challengesRefs.current[index] = el)}
+                <Section
+                  id={`scroll-desafio-${index}`}
+                  key={`section-${index}`}
                 >
-                  <ChallengeTitleGroup>
-                    <ChallengeAuthor>{info.sugerido_por}</ChallengeAuthor>
-                    <ChallengeMainTitle>{info.titulo}</ChallengeMainTitle>
-                  </ChallengeTitleGroup>
+                  <ChallengeItemContainer
+                    key={info.id || index}
+                    id={info.id || `desafio-${index}`}
+                    ref={(el) => (challengesRefs.current[index] = el)}
+                  >
+                    <ChallengeTitleGroup>
+                      <ChallengeAuthor>{info.sugerido_por}</ChallengeAuthor>
+                      <ChallengeMainTitle>{info.titulo}</ChallengeMainTitle>
+                    </ChallengeTitleGroup>
 
-                  {/* PARTE CORRIGIDA ABAIXO */}
-                  {/* Renderiza o primeiro parágrafo da descrição, se existir */}
-                  {Array.isArray(info.descricao) && info.descricao[0] && (
-                    <ChallengeParagraph>{info.descricao[0]}</ChallengeParagraph>
-                  )}
-
-                  {/* Se for um desafio com imagem, renderiza o layout de mídia */}
-                  {info.imagem && (
-                    <ChallengeMediaLayout>
-                      <ImagemWrapper>
-                        <img
-                          src={info.image}
-                          alt={`Imagem para ${info.titulo}`}
-                        />
-                      </ImagemWrapper>
-                      {/* Renderiza o textoAoLadoDaImagem se existir */}
-                      {info.textoAoLadoDaImagem && (
-                        <TextNextToMedia>
-                          <ChallengeParagraph>
-                            {info.textoAoLadoDaImagem}
-                          </ChallengeParagraph>
-                        </TextNextToMedia>
-                      )}
-                    </ChallengeMediaLayout>
-                  )}
-
-                  {/* Se NÃO for um desafio com imagem, renderiza o restante da descrição (se houver) */}
-                  {!info.imagem &&
-                    Array.isArray(info.descricao) && info.descricao.length > 1 &&
-                    info.descricao.slice(info.imagem ? 1 : 1).map(
-                    (
-                      paragrafo,
-                      idx, 
-                    ) => {
-                      if (typeof paragrafo === "string" && paragrafo.trim().startsWith("●")) {
-                        const textoLimpo = paragrafo.replace(/^●\s*/, "");
-                        return <PontoDesafio key={`list-${index}-${idx}`} texto={textoLimpo} />;
-                      }
-
-                      return (
-                        <ChallengeParagraph key={`para-${index}-${idx}`}>
-                          {paragrafo}
-                        </ChallengeParagraph>
-                      );
-                      }                    
-                    )
-                  }
-                  {/* Se a descrição não for um array e não tiver imagem */}
-                  {!info.imagem &&
-                    !Array.isArray(info.descricao) &&
-                    typeof info.descricao === "string" && (
-                      <ChallengeParagraph>{info.descricao}</ChallengeParagraph>
-                    )}
-
-                  {/* Renderiza o segundo parágrafo (ou mais) se for item com imagem e não usou textoAoLadoDaImagem para o segundo parágrafo */}
-                  {info.imagem &&
-                    Array.isArray(info.descricao) &&
-                    info.descricao[1] &&
-                    !info.textoAoLadoDaImagem && (
+                    {/* PARTE CORRIGIDA ABAIXO */}
+                    {/* Renderiza o primeiro parágrafo da descrição, se existir */}
+                    {Array.isArray(info.descricao) && info.descricao[0] && (
                       <ChallengeParagraph>
-                        {info.descricao[1]}
+                        {info.descricao[0]}
                       </ChallengeParagraph>
                     )}
-                  {/* E assim por diante para info.descricao[2], etc., se necessário */}
-                </ChallengeItemContainer>
+
+                    {/* Se for um desafio com imagem, renderiza o layout de mídia */}
+                    {info.imagem && (
+                      <ChallengeMediaLayout>
+                        <ImagemWrapper>
+                          <img
+                            src={info.image}
+                            alt={`Imagem para ${info.titulo}`}
+                          />
+                        </ImagemWrapper>
+                        {/* Renderiza o textoAoLadoDaImagem se existir */}
+                        {info.textoAoLadoDaImagem && (
+                          <TextNextToMedia>
+                            <ChallengeParagraph>
+                              {info.textoAoLadoDaImagem}
+                            </ChallengeParagraph>
+                          </TextNextToMedia>
+                        )}
+                      </ChallengeMediaLayout>
+                    )}
+
+                    {/* Se NÃO for um desafio com imagem, renderiza o restante da descrição (se houver) */}
+                    {!info.imagem &&
+                      Array.isArray(info.descricao) &&
+                      info.descricao.length > 1 &&
+                      info.descricao
+                        .slice(info.imagem ? 1 : 1)
+                        .map((paragrafo, idx) => {
+                          if (
+                            typeof paragrafo === "string" &&
+                            paragrafo.trim().startsWith("●")
+                          ) {
+                            const textoLimpo = paragrafo.replace(/^●\s*/, "");
+                            return (
+                              <PontoDesafio
+                                key={`list-${index}-${idx}`}
+                                texto={textoLimpo}
+                              />
+                            );
+                          }
+
+                          return (
+                            <ChallengeParagraph key={`para-${index}-${idx}`}>
+                              {paragrafo}
+                            </ChallengeParagraph>
+                          );
+                        })}
+                    {/* Se a descrição não for um array e não tiver imagem */}
+                    {!info.imagem &&
+                      !Array.isArray(info.descricao) &&
+                      typeof info.descricao === "string" && (
+                        <ChallengeParagraph>
+                          {info.descricao}
+                        </ChallengeParagraph>
+                      )}
+
+                    {/* Renderiza o segundo parágrafo (ou mais) se for item com imagem e não usou textoAoLadoDaImagem para o segundo parágrafo */}
+                    {info.imagem &&
+                      Array.isArray(info.descricao) &&
+                      info.descricao[1] &&
+                      !info.textoAoLadoDaImagem && (
+                        <ChallengeParagraph>
+                          {info.descricao[1]}
+                        </ChallengeParagraph>
+                      )}
+                    {/* E assim por diante para info.descricao[2], etc., se necessário */}
+                  </ChallengeItemContainer>
                 </Section>
               ))}
             </ConteudoDesafiosContainer>
@@ -327,7 +340,6 @@ const Desafios = () => {
       </DesafiosPageContainer>
       <Footer />
     </>
-
   );
 };
 

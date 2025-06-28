@@ -26,7 +26,7 @@ const regulamentoData = [
     titulo: "1. APRESENTAÇÃO",
     subtitulo: "",
     body: [
-      "O presente regulamento estabelece as normas para o Hackathon de inteligência artificial aplicado à saúde pública, promovido pela Incubadora de Empresas da Coppe/UFRJ e pelo Cietec (Incubadora da USP), em parceria com NVIDIA, o Laboratório Nacional de Computação Científica (LNCC) e a Secretaria Municipal de Saúde do Rio de Janeiro (SMS-RJ).",
+      "O presente regulamento estabelece as normas para o Hackathon de inteligência artificial aplicado à saúde pública, promovido pela Incubadora de Empresas da Coppe/UFRJ e pelo Cietec (Incubadora da USP), em parceria com NVIDIA, o Laboratório Nacional de Computação Científica (LNCC).",
     ],
   },
   {
@@ -36,7 +36,7 @@ const regulamentoData = [
       "O principal objetivo deste projeto é fomentar o desenvolvimento de soluções inovadoras para os desafios da regulação ambulatorial. Através do Hackathon de IA, buscamos criar ferramentas inteligentes que aprimorem a qualidade da regulação, otimizem o uso dos recursos de saúde e melhorem a experiência do usuário no sistema de saúde pública. O projeto visa:",
       "● Desenvolver soluções baseadas em IA para automatizar processos de regulação.",
       "● Melhorar a alocação de recursos e o agendamento de atendimentos.",
-      "● Criar modelos preditivos para a gestão de demanda e otimização de escalas."
+      "● Criar modelos preditivos para a gestão de demanda e otimização de escalas.",
     ],
   },
   {
@@ -64,7 +64,7 @@ const regulamentoData = [
     titulo: "5. DESAFIOS",
     subtitulo: "",
     body: [
-      "Os desafios do Hackathon serão definidos com o apoio da Secretaria Municipal de Saúde do Rio de Janeiro (SMS-RJ) e estarão centrados na melhoria da regulação do sistema público de saúde, com foco em eficiência, automação, inteligência artificial e previsão de demandas.",
+      "Os desafios do Hackathon serão definidos com o apoio de organizações de saúde e estarão centrados na melhoria da regulação do sistema público de saúde, com foco em eficiência, automação, inteligência artificial e previsão de demandas.",
       "As propostas deverão ser desenvolvidas a partir de três trilhas temáticas técnicas.",
       "Trilha 1 – Análise de Séries Temporais",
       "Objetivo: Utilizar dados históricos para gerar previsões que contribuam para o planejamento e gestão do SUS.",
@@ -91,7 +91,7 @@ const regulamentoData = [
       "● Escalabilidade (15%): A capacidade da solução em ser expandida e aplicada em outros contextos ou regiões.",
       "● Apresentação (10%): Clareza e organização da apresentação da solução e seu impacto potencial.",
 
-      "A banca avaliadora será composta por especialistas indicados pelas instituições parceiras e apoiadoras do evento, incluindo profissionais com notório saber nas áreas de Inteligência Artificial e saúde pública, patrocinadores nível Ouro, gestores da Secretaria Municipal de Saúde do Rio de Janeiro (SMS-RJ), bem como representantes da Coppe/UFRJ, da Universidade Federal do Rio de Janeiro (UFRJ) e da Universidade de São Paulo (USP).",
+      "A banca avaliadora será composta por especialistas indicados pelas instituições parceiras e apoiadoras do evento, incluindo profissionais com saber nas áreas de Inteligência Artificial e saúde pública, patrocinadores nível Ouro, gestores de Saúde Pública, bem como representantes da Coppe/UFRJ, da Universidade Federal do Rio de Janeiro (UFRJ) e da Universidade de São Paulo (USP).",
       "A composição final da banca será divulgada posteriormente, observando critérios de competência técnica, diversidade institucional e alinhamento aos objetivos do hackathon.",
     ],
   },
@@ -115,13 +115,13 @@ const regulamentoData = [
     titulo: "9. REGRAS DE CONDUTA",
     subtitulo: "",
     body: [
-      "● Organização: Fornecer dados anonimizados da SMS-RJ, infraestrutura técnica (ex: acesso ao supercomputador Santos Dumont) e mentores.",
-      "● Participantes: Ceder direitos de uso não exclusivo das soluções para a SMS- RJ (se aplicável).",
+      "● Organização: Fornecer dados anonimizados de um portal de saúde, infraestrutura técnica (ex: acesso ao supercomputador Santos Dumont) e mentores.",
+      "● Participantes: Ceder direitos de uso não exclusivo das soluções para o portal de saúde (se aplicável).",
       "● LGPD: Todos os dados utilizados devem seguir a Lei Geral de Proteção de Dados.",
       "O Hackathon de IA: Regulação do Sistema Público de Saúde visa criar um ambiente criativo, colaborativo e inovador. Para garantir uma experiência positiva para todos, é fundamental que todos os participantes ajam com respeito e civilidade.",
-      
+
       "Ética e Respeito à Diversidade: O evento promove a inclusão e o respeito a todas as pessoas, independentemente de raça, etnia, gênero, orientação sexual, religião, deficiência ou qualquer outra característica pessoal. Qualquer forma de discriminação, racismo, intolerância ou assédio será severamente penalizada, incluindo a desqualificação imediata do participante ou equipe. Os participantes devem tratar uns aos outros com dignidade e promover um ambiente seguro e acolhedor.",
-      
+
       "Comportamento Inadequado: A inobservância das instruções fornecidas pela equipe organizadora poderá resultar no cancelamento da inscrição do participante, sem possibilidade de nova inscrição. É absolutamente proibido o consumo de bebidas alcoólicas e a utilização indevida de drogas ou medicamentos durante o evento.",
       "Denúncias e Segurança: Caso qualquer atividade ou comportamento suspeito ocorra, ou se algo for identificado como violação dos princípios de ética e respeito, deve ser imediatamente reportado à equipe organizadora ou ao pessoal de segurança designado.",
       "Uso da Infraestrutura: Os participantes terão acesso gratuito à internet e a recursos de rede. A rede será monitorada por motivos de segurança, sendo permitida sua utilização exclusivamente para finalidades relacionadas ao Hackathon. Qualquer uso indevido dos recursos será passível de penalização.",
@@ -152,20 +152,18 @@ const regulamentoData = [
       "A organização não se responsabiliza pelo uso de bases de dados públicos e/ou privados pelos participantes do Hackathon em Saúde, exceto aquelas que serão fornecidas pelo comitê executivo para o desenvolvimento das soluções.",
     ],
   },
-  
 ];
 
 const Regulamento = () => {
   const location = useLocation();
 
   useEffect(() => {
-
     if (location.state?.scrollTarget === "top") {
-        // Scrolla até o topo da página
-        window.scrollTo({ top: 0});
+      // Scrolla até o topo da página
+      window.scrollTo({ top: 0 });
     }
   }, [location]);
-  
+
   return (
     <>
       <Header />
@@ -185,17 +183,16 @@ const Regulamento = () => {
             direcionamento de toda realização do evento. Portanto, os
             candidatos/participantes, no ato de seu cadastro e inscrição aderem
             integralmente a todas as suas disposições, declarando que aceitam
-            todos os termos deste regulamento. O presente evento é promovido por
-            [completar]. Mantendo a relação de transparência entre organizador e
-            participantes, ressaltamos que essa é uma versão atualizada do
-            regulamento disponibilizado no dia DD de MM de 2025.
+            todos os termos deste regulamento.{" "}
           </IntroParagraph>
 
           {regulamentoData.map((info, index) => (
             <ArticleSection key={index}>
               <ArticleTitle>{info.titulo}</ArticleTitle>
-              {info.subtitulo && <ArticleSubtitle>{info.subtitulo}</ArticleSubtitle>}
-                            
+              {info.subtitulo && (
+                <ArticleSubtitle>{info.subtitulo}</ArticleSubtitle>
+              )}
+
               {Array.isArray(info.body) ? (
                 info.body.map((paragrafo, idx) => (
                   <ArticleParagraph key={idx}>{paragrafo}</ArticleParagraph>
@@ -203,9 +200,8 @@ const Regulamento = () => {
               ) : (
                 <ArticleParagraph>{info.body}</ArticleParagraph>
               )}
-              
-              
-              {index === 6 && <StyledImage src={Img} alt="imagem cronograma"/>}
+
+              {index === 6 && <StyledImage src={Img} alt="imagem cronograma" />}
             </ArticleSection>
           ))}
         </ContentContainer>
