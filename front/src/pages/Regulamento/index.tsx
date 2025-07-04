@@ -139,6 +139,43 @@ const regulamentoData = [
     subtitulo: "",
     body: [
       "O Hackathon de Inteligência Artificial será conduzido conforme o cronograma de fases a seguir, elaborado em parceria com a EloGroup.",
+
+      "Pré-evento (Mês anterior)",
+      "Treinamento e Seleção",
+
+      "● Treinamento NVIDIA online para todos os inscritos, fornecendo base técnica sobre os desafios.",
+      "● Seleção de candidatos baseada em currículo e desempenho no treinamento.",
+      "● Escolha da trilha temática pelos candidatos.",
+
+      "Dia 1 - Tarde",
+      "● Abertura oficial com parceiros e objetivos do evento.",
+      "● Sessão de disseminação de conhecimento.",
+      "● Formação de equipes multidisciplinares.",
+
+      "Dia 1 - Noite",
+      "● Ideação com encontro das equipes.",
+
+      "Dia 2 - Manhã",
+      "● Discussão de abordagens e estratégias com suporte de mentores especializados.",
+      "● Desenvolvimento inicial das soluções com IA.",
+
+      "Dia 2 - Tarde",
+      "● Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios.",
+      "● Desenvolvimento das soluções com IA.",
+
+      "Dia 2 - Noite",
+      "● Continuação do desenvolvimento com IA.",
+      "● Checkpoint do desenvolvimento da solução.",
+
+      "Dia 3 - Manhã",
+      "● Desenvolvimento das soluções com IA (finalização das soluções).",
+
+      "Dia 3 - Tarde",
+      "● Apresentação das soluções para banca de jurados composta por parceiros.",
+      "● Avaliação das soluções.",
+
+      "Dia 3 - Noite",
+      "● Cerimônia de encerramento e premiação.",
     ],
   },
   {
@@ -255,8 +292,6 @@ const Regulamento = () => {
               ) : (
                 <ArticleParagraph>{info.body}</ArticleParagraph>
               )}
-
-              {index === 6 && <StyledImage src={Img} alt="imagem cronograma" />}
             </ArticleSection>
           ))}
         </ContentContainer>
