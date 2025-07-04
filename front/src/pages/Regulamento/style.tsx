@@ -160,6 +160,22 @@ export const ArticleParagraph = styled.p`
   }
 `;
 
+export const ListItem = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  color: rgba(15, 15, 33, 0.6);
+  margin: 0;
+  text-indent: 2em; /* Toda a primeira linha começa com 2em */
+  padding-left: 0; /* Sem margem extra */
+
+  @media (max-width: 30rem) {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+`;
+
 export const StyledImage = styled.img`
   display: block;
   margin: 0 auto;
