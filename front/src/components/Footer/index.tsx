@@ -44,7 +44,7 @@ const Footer = () => {
 
         <ContactSection>
           <Subtitle>Dúvidas? Fale conosco:</Subtitle>
-          <BodyText>contato@contato.com.br</BodyText>
+          <BodyText>hackathon@incubadora.coppe.ufrj.br</BodyText>
         </ContactSection>
       </MapSection>
 

@@ -67,8 +67,6 @@ const sponsorsData = {
       image: realizacao2,
       title: "Centro de Inovação, Empreendedorismo e Tecnologia",
     },
-    { image: realizacao3, title: "FAPERJ" },
-    { image: realizacao4, title: "Instituto Reditus" },
   ],
 };
 
