@@ -144,7 +144,6 @@ const regulamentoData = [
       { tipo: "paragrafo", texto:"O Hackathon de Inteligência Artificial será conduzido conforme o cronograma de fases a seguir, elaborado em parceria com a EloGroup."},
 
       { tipo: "destaque", texto:"Pré-evento (Mês anterior)"},
-      { tipo: "paragrafo", texto:"Treinamento e Seleção"},
 
       { tipo: "ponto", texto:"● Treinamento NVIDIA online para todos os inscritos, fornecendo base técnica sobre os desafios."},
       { tipo: "ponto", texto:"● Seleção de candidatos baseada em currículo e desempenho no treinamento."},

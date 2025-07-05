@@ -188,6 +188,7 @@ export const DestaqueParagraph = styled.p`
   color: rgba(15, 15, 33, 0.8);
   margin: 0;
   text-indent: 2em;
+  padding-top: 1.5rem;
 
   @media (max-width: 30rem) {
     font-size: 1.15rem;
