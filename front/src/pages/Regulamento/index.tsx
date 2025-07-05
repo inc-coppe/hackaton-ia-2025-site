@@ -20,6 +20,7 @@ import {
   StyledImage,
   ListParagraph,
   ListWrapper,
+  DestaqueParagraph,
 } from "./style";
 
 const regulamentoData = [
@@ -36,9 +37,9 @@ const regulamentoData = [
     subtitulo: "",
     body: [
        { tipo: "paragrafo", texto: "O principal objetivo deste projeto é fomentar o desenvolvimento de soluções inovadoras para os desafios da regulação ambulatorial. Através do Hackathon de IA, buscamos criar ferramentas inteligentes que aprimorem a qualidade da regulação, otimizem o uso dos recursos de saúde e melhorem a experiência do usuário no sistema de saúde pública. Para um maior impacto positivo na saúde pública, as soluções desenvolvidas no evento serão publicadas em código aberto com licença Linux. O projeto visa:"},
-       { tipo: "paragrafo", texto: "● Desenvolver soluções baseadas em IA para automatizar processos de regulação."},
-       { tipo: "paragrafo", texto: "● Melhorar a alocação de recursos e o agendamento de atendimentos."},
-       { tipo: "paragrafo", texto:"● Criar modelos preditivos para a gestão de demanda e otimização de escalas."},
+       { tipo: "ponto", texto: "● Desenvolver soluções baseadas em IA para automatizar processos de regulação."},
+       { tipo: "ponto", texto: "● Melhorar a alocação de recursos e o agendamento de atendimentos."},
+       { tipo: "ponto", texto:"● Criar modelos preditivos para a gestão de demanda e otimização de escalas."},
     ],
   },
   {
@@ -52,10 +53,10 @@ const regulamentoData = [
     titulo: "4. DA INSCRIÇÃO",
     subtitulo: "",
     body: [
-       { tipo: "paragrafo", texto: "● Perfil: Estudantes, profissionais, startups ou pesquisadores das áreas de saúde, TI, dados e gestão pública."},
-       { tipo: "paragrafo", texto:"● Inscrição gratuita via formulário online de 21/05/2025 à 13/08/2025."},
-       { tipo: "paragrafo", texto:"● Critérios de elegibilidade: Idade mínima de 18 anos."},
-       { tipo: "paragrafo", texto:"● Documentação obrigatória: CPF e currículo."},
+       { tipo: "ponto", texto: "● Perfil: Estudantes, profissionais, startups ou pesquisadores das áreas de saúde, TI, dados e gestão pública."},
+       { tipo: "ponto", texto:"● Inscrição gratuita via formulário online de 21/05/2025 à 13/08/2025."},
+       { tipo: "ponto", texto:"● Critérios de elegibilidade: Idade mínima de 18 anos."},
+       { tipo: "ponto", texto:"● Documentação obrigatória: CPF e currículo."},
       
        { tipo: "paragrafo", texto:"A participação no Hackathon está condicionada ao fornecimento obrigatório de dados pessoais solicitados no formulário de inscrição. Ao se inscrever, o participante autoriza expressamente o tratamento e o compartilhamento de seus dados com a equipe organizadora, única e exclusivamente para fins relacionados à organização, logística, comunicação, composição de equipes, avaliação dos projetos e divulgação de resultados do evento."},
 
@@ -74,7 +75,7 @@ const regulamentoData = [
     body: [
        { tipo: "paragrafo", texto:"Neste hackathon, os participantes terão acesso ao Data Lake da Saúde do Rio de Janeiro, um vasto repositório de dados sobre atendimentos, unidades, profissionais e equipamentos do SUS, além de contar com o poder de processamento do supercomputador Santos Dumont, um dos mais avançados da América Latina. Os desafios apresentados visam utilizar a inteligência artificial para otimizar a gestão de recursos e transformar dados brutos em insights valiosos para a saúde pública."},
 
-       { tipo: "paragrafo", texto:"Desafio 1 – Análise Preditiva e Gestão de Recursos em Saúde"},
+       { tipo: "destaque", texto:"Desafio 1 – Análise Preditiva e Gestão de Recursos em Saúde"},
 
        { tipo: "paragrafo", texto:"O sistema de saúde pública enfrenta desafios contínuos de alocação eficiente de recursos, superlotação e longas filas de espera. A análise preditiva é uma ferramenta poderosa para ajudar a antecipar demandas e melhorar a gestão."},
       
@@ -94,7 +95,7 @@ const regulamentoData = [
 
       { tipo: "paragrafo", texto: "Este desafio visa fornecer ferramentas para uma gestão mais inteligente e eficaz dos recursos de saúde, reduzindo custos e melhorando a qualidade do atendimento."},
 
-      { tipo: "paragrafo", texto: "Desafio 2 – RAG e Diálogo com Dados em Linguagem Natural"},
+      { tipo: "destaque", texto: "Desafio 2 – RAG e Diálogo com Dados em Linguagem Natural"},
 
       { tipo: "paragrafo", texto: "O grande volume de dados gerados pelo sistema de saúde só é útil quando transformado em insights acionáveis. Este desafio convida os participantes a desenvolver soluções que utilizem RAG (Retrieval-Augmented Generation) e interfaces de linguagem natural para facilitar a interação com os dados e gerar informações valiosas."},
 
@@ -126,11 +127,11 @@ const regulamentoData = [
     subtitulo: "",
     body: [
       { tipo: "paragrafo", texto:"As soluções desenvolvidas pelos participantes durante o Hackathon serão avaliadas seguindo os seguintes critérios:"},
-      { tipo: "paragrafo", texto:"● Impacto na saúde pública (30%): A solução deve demonstrar como pode melhorar a eficiência e qualidade dos serviços de saúde pública, especialmente no processo de regulação."},
-      { tipo: "paragrafo", texto:"● Viabilidade técnica (25%): Avaliação da capacidade da solução em ser implementada tecnicamente dentro do sistema de saúde público."},
-      { tipo: "paragrafo", texto:"● Inovação (20%): A originalidade e a utilização de novas tecnologias para resolver o desafio proposto."},
-      { tipo: "paragrafo", texto:"● Escalabilidade (15%): A capacidade da solução em ser expandida e aplicada em outros contextos ou regiões."},
-      { tipo: "paragrafo", texto:"● Apresentação (10%): Clareza e organização da apresentação da solução e seu impacto potencial."},
+      { tipo: "ponto", texto:"● Impacto na saúde pública (30%): A solução deve demonstrar como pode melhorar a eficiência e qualidade dos serviços de saúde pública, especialmente no processo de regulação."},
+      { tipo: "ponto", texto:"● Viabilidade técnica (25%): Avaliação da capacidade da solução em ser implementada tecnicamente dentro do sistema de saúde público."},
+      { tipo: "ponto", texto:"● Inovação (20%): A originalidade e a utilização de novas tecnologias para resolver o desafio proposto."},
+      { tipo: "ponto", texto:"● Escalabilidade (15%): A capacidade da solução em ser expandida e aplicada em outros contextos ou regiões."},
+      { tipo: "ponto", texto:"● Apresentação (10%): Clareza e organização da apresentação da solução e seu impacto potencial."},
 
       { tipo: "paragrafo", texto:"A banca avaliadora será composta por especialistas indicados pelas instituições parceiras e apoiadoras do evento, incluindo profissionais com saber nas áreas de Inteligência} Artificial e saúde pública, patrocinadores nível Ouro, gestores de Saúde Pública, bem como representantes da Coppe/UFRJ, da Universidade Federal do Rio de Janeiro (UFRJ) e da} Universidade de São Paulo (USP)."},
       { tipo: "paragrafo", texto:"A composição final da banca será divulgada posteriormente, observando critérios de competência técnica, diversidade institucional e alinhamento aos objetivos do Hackathon."},
@@ -142,42 +143,42 @@ const regulamentoData = [
     body: [
       { tipo: "paragrafo", texto:"O Hackathon de Inteligência Artificial será conduzido conforme o cronograma de fases a seguir, elaborado em parceria com a EloGroup."},
 
-      { tipo: "paragrafo", texto:"Pré-evento (Mês anterior)"},
+      { tipo: "destaque", texto:"Pré-evento (Mês anterior)"},
       { tipo: "paragrafo", texto:"Treinamento e Seleção"},
 
-      { tipo: "paragrafo", texto:"● Treinamento NVIDIA online para todos os inscritos, fornecendo base técnica sobre os desafios."},
-      { tipo: "paragrafo", texto:"● Seleção de candidatos baseada em currículo e desempenho no treinamento."},
-      { tipo: "paragrafo", texto:"● Escolha da trilha temática pelos candidatos."},
+      { tipo: "ponto", texto:"● Treinamento NVIDIA online para todos os inscritos, fornecendo base técnica sobre os desafios."},
+      { tipo: "ponto", texto:"● Seleção de candidatos baseada em currículo e desempenho no treinamento."},
+      { tipo: "ponto", texto:"● Escolha da trilha temática pelos candidatos."},
 
-      { tipo: "paragrafo", texto:"Dia 1 - Tarde"},
-      { tipo: "paragrafo", texto:"● Abertura oficial com parceiros e objetivos do evento."},
-      { tipo: "paragrafo", texto:"● Sessão de disseminação de conhecimento."},
-      { tipo: "paragrafo", texto:"● Formação de equipes multidisciplinares."},
+      { tipo: "destaque", texto:"Dia 1 - Tarde"},
+      { tipo: "ponto", texto:"● Abertura oficial com parceiros e objetivos do evento."},
+      { tipo: "ponto", texto:"● Sessão de disseminação de conhecimento."},
+      { tipo: "ponto", texto:"● Formação de equipes multidisciplinares."},
 
-      { tipo: "paragrafo", texto:"Dia 1 - Noite"},
-      { tipo: "paragrafo", texto:"● Ideação com encontro das equipes."},
+      { tipo: "destaque", texto:"Dia 1 - Noite"},
+      { tipo: "ponto", texto:"● Ideação com encontro das equipes."},
 
-      { tipo: "paragrafo", texto:"Dia 2 - Manhã"},
-      { tipo: "paragrafo", texto:"● Discussão de abordagens e estratégias com suporte de mentores especializados."},
-      { tipo: "paragrafo", texto:"● Desenvolvimento inicial das soluções com IA."},
+      { tipo: "destaque", texto:"Dia 2 - Manhã"},
+      { tipo: "ponto", texto:"● Discussão de abordagens e estratégias com suporte de mentores especializados."},
+      { tipo: "ponto", texto:"● Desenvolvimento inicial das soluções com IA."},
 
-      { tipo: "paragrafo", texto:"Dia 2 - Tarde"},
-      { tipo: "paragrafo", texto:"● Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios."},
-      { tipo: "paragrafo", texto:"● Desenvolvimento das soluções com IA."},
+      { tipo: "destaque", texto:"Dia 2 - Tarde"},
+      { tipo: "ponto", texto:"● Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios."},
+      { tipo: "ponto", texto:"● Desenvolvimento das soluções com IA."},
 
-      { tipo: "paragrafo", texto:"Dia 2 - Noite"},
-      { tipo: "paragrafo", texto:"● Continuação do desenvolvimento com IA."},
-      { tipo: "paragrafo", texto:"● Checkpoint do desenvolvimento da solução."},
+      { tipo: "destaque", texto:"Dia 2 - Noite"},
+      { tipo: "ponto", texto:"● Continuação do desenvolvimento com IA."},
+      { tipo: "ponto", texto:"● Checkpoint do desenvolvimento da solução."},
 
-      { tipo: "paragrafo", texto:"Dia 3 - Manhã"},
-      { tipo: "paragrafo", texto:"● Desenvolvimento das soluções com IA (finalização das soluções)."},
+      { tipo: "destaque", texto:"Dia 3 - Manhã"},
+      { tipo: "ponto", texto:"● Desenvolvimento das soluções com IA (finalização das soluções)."},
 
-      { tipo: "paragrafo", texto:"Dia 3 - Tarde"},
-      { tipo: "paragrafo", texto:"● Apresentação das soluções para banca de jurados composta por parceiros."},
-      { tipo: "paragrafo", texto:"● Avaliação das soluções."},
+      { tipo: "destaque", texto:"Dia 3 - Tarde"},
+      { tipo: "ponto", texto:"● Apresentação das soluções para banca de jurados composta por parceiros."},
+      { tipo: "ponto", texto:"● Avaliação das soluções."},
 
-      { tipo: "paragrafo", texto:"Dia 3 - Noite"},
-      { tipo: "paragrafo", texto:"● Cerimônia de encerramento e premiação."},
+      { tipo: "destaque", texto:"Dia 3 - Noite"},
+      { tipo: "ponto", texto:"● Cerimônia de encerramento e premiação."},
     ],
   },
   {
@@ -195,11 +196,11 @@ const regulamentoData = [
     titulo: "9. REGRAS DE CONDUTA",
     subtitulo: "",
     body: [
-      { tipo: "paragrafo", texto: "● Organização: Fornecer dados anonimizados da SMS-RJ, infraestrutura técnica e mentores."},
+      { tipo: "ponto", texto: "● Organização: Fornecer dados anonimizados da SMS-RJ, infraestrutura técnica e mentores."},
 
-      { tipo: "paragrafo", texto: "● Participantes: Ceder direitos de uso não exclusivo das soluções para a SMS- RJ (se aplicável)."},
+      { tipo: "ponto", texto: "● Participantes: Ceder direitos de uso não exclusivo das soluções para a SMS- RJ (se aplicável)."},
       
-      { tipo: "paragrafo", texto: "● LGPD: Todos os dados utilizados devem seguir a Lei Geral de Proteção de Dados."},
+      { tipo: "ponto", texto: "● LGPD: Todos os dados utilizados devem seguir a Lei Geral de Proteção de Dados."},
       
       { tipo: "paragrafo", texto: "O Hackathon de IA: Regulação do Sistema Público de Saúde visa criar um ambiente criativo, colaborativo e inovador. Para garantir uma experiência positiva para todos, é fundamental que todos os participantes ajam com respeito e civilidade."},
 
@@ -291,7 +292,9 @@ const Regulamento = () => {
                 switch (item.tipo) {
                   case "paragrafo":
                     return <ArticleParagraph key={idx}>{item.texto}</ArticleParagraph>;                        
-                
+                  
+                  case "destaque":
+                      return <DestaqueParagraph key={idx}> {item.texto} </DestaqueParagraph>
                   case "ponto":
                     return (
                       <ListWrapper>
