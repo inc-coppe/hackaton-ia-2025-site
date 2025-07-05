@@ -180,6 +180,22 @@ export const ListParagraph = styled.p`
   }
 `;
 
+export const DataParagraph = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.30rem;
+  line-height: 100%;
+  color: rgba(15, 15, 33, 0.75);
+  margin: 0;
+  text-indent: 2em;
+  padding-top: 1.5rem;
+
+  @media (max-width: 30rem) {
+    font-size: 1.15rem;
+    line-height: 100%;
+  }
+`;
+
 export const DestaqueParagraph = styled.p`
   font-family: "Nunito Sans", sans-serif;
   font-weight: 500;
@@ -188,7 +204,7 @@ export const DestaqueParagraph = styled.p`
   color: rgba(15, 15, 33, 0.8);
   margin: 0;
   text-indent: 2em;
-  padding-top: 1.5rem;
+  padding-top: 2rem;
 
   @media (max-width: 30rem) {
     font-size: 1.15rem;

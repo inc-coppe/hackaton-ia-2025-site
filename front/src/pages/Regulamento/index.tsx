@@ -21,6 +21,7 @@ import {
   ListParagraph,
   ListWrapper,
   DestaqueParagraph,
+  DataParagraph,
 } from "./style";
 
 const regulamentoData = [
@@ -143,40 +144,40 @@ const regulamentoData = [
     body: [
       { tipo: "paragrafo", texto:"O Hackathon de Inteligência Artificial será conduzido conforme o cronograma de fases a seguir, elaborado em parceria com a EloGroup."},
 
-      { tipo: "destaque", texto:"Pré-evento (Mês anterior)"},
+      { tipo: "data", texto:"Pré-evento (Mês anterior)"},
 
       { tipo: "ponto", texto:"● Treinamento NVIDIA online para todos os inscritos, fornecendo base técnica sobre os desafios."},
       { tipo: "ponto", texto:"● Seleção de candidatos baseada em currículo e desempenho no treinamento."},
       { tipo: "ponto", texto:"● Escolha da trilha temática pelos candidatos."},
 
-      { tipo: "destaque", texto:"Dia 1 - Tarde"},
+      { tipo: "data", texto:"Dia 1 - Tarde"},
       { tipo: "ponto", texto:"● Abertura oficial com parceiros e objetivos do evento."},
       { tipo: "ponto", texto:"● Sessão de disseminação de conhecimento."},
       { tipo: "ponto", texto:"● Formação de equipes multidisciplinares."},
 
-      { tipo: "destaque", texto:"Dia 1 - Noite"},
+      { tipo: "data", texto:"Dia 1 - Noite"},
       { tipo: "ponto", texto:"● Ideação com encontro das equipes."},
 
-      { tipo: "destaque", texto:"Dia 2 - Manhã"},
+      { tipo: "data", texto:"Dia 2 - Manhã"},
       { tipo: "ponto", texto:"● Discussão de abordagens e estratégias com suporte de mentores especializados."},
       { tipo: "ponto", texto:"● Desenvolvimento inicial das soluções com IA."},
 
-      { tipo: "destaque", texto:"Dia 2 - Tarde"},
+      { tipo: "data", texto:"Dia 2 - Tarde"},
       { tipo: "ponto", texto:"● Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios."},
       { tipo: "ponto", texto:"● Desenvolvimento das soluções com IA."},
 
-      { tipo: "destaque", texto:"Dia 2 - Noite"},
+      { tipo: "data", texto:"Dia 2 - Noite"},
       { tipo: "ponto", texto:"● Continuação do desenvolvimento com IA."},
       { tipo: "ponto", texto:"● Checkpoint do desenvolvimento da solução."},
 
-      { tipo: "destaque", texto:"Dia 3 - Manhã"},
+      { tipo: "data", texto:"Dia 3 - Manhã"},
       { tipo: "ponto", texto:"● Desenvolvimento das soluções com IA (finalização das soluções)."},
 
-      { tipo: "destaque", texto:"Dia 3 - Tarde"},
+      { tipo: "data", texto:"Dia 3 - Tarde"},
       { tipo: "ponto", texto:"● Apresentação das soluções para banca de jurados composta por parceiros."},
       { tipo: "ponto", texto:"● Avaliação das soluções."},
 
-      { tipo: "destaque", texto:"Dia 3 - Noite"},
+      { tipo: "data", texto:"Dia 3 - Noite"},
       { tipo: "ponto", texto:"● Cerimônia de encerramento e premiação."},
     ],
   },
@@ -294,6 +295,11 @@ const Regulamento = () => {
                   
                   case "destaque":
                       return <DestaqueParagraph key={idx}> {item.texto} </DestaqueParagraph>
+
+                  case "data":
+                      return <DataParagraph key={idx}> {item.texto} </DataParagraph>
+
+
                   case "ponto":
                     return (
                       <ListWrapper>
