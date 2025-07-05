@@ -18,7 +18,8 @@ import {
   ArticleSubtitle,
   ArticleParagraph,
   StyledImage,
-  ListItem,
+  ListParagraph,
+  ListWrapper,
 } from "./style";
 
 const regulamentoData = [
@@ -293,9 +294,11 @@ const Regulamento = () => {
                 
                   case "ponto":
                     return (
-                      <ListItem key={idx}>
-                        {item.texto}
-                      </ListItem>
+                      <ListWrapper>
+                        <ListParagraph key={idx}>
+                          {item.texto}
+                        </ListParagraph>
+                      </ListWrapper>
                     );
                   
                   default:

@@ -160,15 +160,19 @@ export const ArticleParagraph = styled.p`
   }
 `;
 
-export const ListItem = styled.p`
+export const ListWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding-left: 2em;
+`;
+
+export const ListParagraph = styled.p`
   font-family: "Nunito Sans", sans-serif;
   font-weight: 500;
   font-size: 1.25rem;
   line-height: 1.5rem;
   color: rgba(15, 15, 33, 0.6);
   margin: 0;
-  text-indent: 2em; /* Toda a primeira linha começa com 2em */
-  padding-left: 0; /* Sem margem extra */
 
   @media (max-width: 30rem) {
     font-size: 1rem;
