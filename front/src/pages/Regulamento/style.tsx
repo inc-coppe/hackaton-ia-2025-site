@@ -185,7 +185,7 @@ export const DestaqueParagraph = styled.p`
   font-weight: 500;
   font-size: 1.35rem;
   line-height: 100%;
-  color: rgba(15, 15, 33, 1);
+  color: rgba(15, 15, 33, 0.8);
   margin: 0;
   text-indent: 2em;
 
