@@ -20,7 +20,9 @@ load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 if not GOOGLE_CLIENT_ID:
     ValueError("GOOGLE_CLIENT_ID not set in environment variables")
-SECRET_KEY = os.getenv("SECRET_KEY")
+
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,7 +38,8 @@ SECRET_KEY = os.getenv("SECRET_KEY_DJANGO")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
