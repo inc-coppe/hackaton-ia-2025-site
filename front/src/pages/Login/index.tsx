@@ -19,9 +19,12 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import AnimatedBlobs from "../../components/AnimatedBlobs";
 import GoogleIconSvg from "../../assets/google.svg";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const handleGoogleSuccess = async (credentialResponse: any) => {
     try {
@@ -42,7 +45,7 @@ function Login() {
       if (response.ok) {
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
-        window.location.href = "/complete-profile";
+        navigate("/complete-profile");
       } else {
         console.error("Authentication error:", data.detail);
         setError(data.detail || "Error during authentication");
