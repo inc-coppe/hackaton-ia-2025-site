@@ -38,7 +38,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/api/profile/check/", {
+      const response = await fetch("/api/profile/check/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
