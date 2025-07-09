@@ -75,7 +75,7 @@ const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
       }
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8000/api/profile/me/", {
+        const response = await fetch("/api/profile/me/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -153,8 +153,8 @@ const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
     };
 
     const url = isUpdate
-      ? "http://localhost:8000/api/profile/me/"
-      : "http://localhost:8000/api/profile/create/";
+      ? "/api/profile/me/"
+      : "/api/profile/create/";
     const method = isUpdate ? "PATCH" : "POST";
 
     try {
