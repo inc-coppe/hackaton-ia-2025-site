@@ -39,7 +39,7 @@ SECRET_KEY = os.getenv("SECRET_KEY_DJANGO")
 DEBUG = True
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
-CSRF_TRUSTED_ORIGINS = ["www.hackathon-ia.coppe.ufrj.br", "hackathon-ia.coppe.ufrj.br"]
+CSRF_TRUSTED_ORIGINS = ["https://www.hackathon-ia.coppe.ufrj.br", "https://hackathon-ia.coppe.ufrj.br"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
