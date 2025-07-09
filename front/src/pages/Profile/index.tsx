@@ -199,8 +199,8 @@ function Profile() {
       setLoading(true);
       setError(null);
       const endpoint = viewingMyOwnProfile
-        ? "http://localhost:8000/api/profile/me/"
-        : `http://localhost:8000/api/users/${userId}/profile/`;
+        ? "/api/profile/me/"
+        : `/api/users/${userId}/profile/`;
       try {
         const response = await fetch(endpoint, {
           headers: { Authorization: `Bearer ${token}` },
@@ -253,7 +253,7 @@ function Profile() {
     delete profileDataToUpdate.email;
     delete profileDataToUpdate.user_profile_picture_url;
     try {
-      const response = await fetch("http://localhost:8000/api/profile/me/", {
+      const response = await fetch("/api/profile/me/", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -285,7 +285,7 @@ function Profile() {
     const originalTags = [...tags];
     setTags(newTagsList);
     try {
-      const response = await fetch("http://localhost:8000/api/profile/me/", {
+      const response = await fetch("/api/profile/me/", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -359,7 +359,7 @@ function Profile() {
       const formData = new FormData();
       formData.append("profile_picture", file);
       const response = await fetch(
-        "http://localhost:8000/api/profile/upload-picture/",
+        "/api/profile/upload-picture/",
         {
           method: "POST",
           headers: {
