@@ -527,6 +527,7 @@ const SearchInterface = (props: {
               </UserTagsContainer>
             )}
             <AddButton
+              type="button"
               style={{ marginTop: "1rem", width: "auto" }}
               onClick={(e) => {
                 e.stopPropagation();
