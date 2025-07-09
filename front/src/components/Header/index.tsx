@@ -144,7 +144,7 @@ const Header = () => {
       if (token) {
         try {
           const response = await fetch(
-            "http://localhost:8000/api/profile/me/",
+            "/api/profile/me/",
             {
               headers: { Authorization: `Bearer ${token}` },
             },
@@ -159,7 +159,7 @@ const Header = () => {
             });
           } else {
             const userResponse = await fetch(
-              "http://localhost:8000/api/auth/user/",
+              "/api/auth/user/",
               {
                 headers: { Authorization: `Bearer ${token}` },
               },
@@ -228,7 +228,7 @@ const Header = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/users/search/?search=${encodeURIComponent(searchTerm)}`,
+        `/api/users/search/?search=${encodeURIComponent(searchTerm)}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
       if (response.ok) {
