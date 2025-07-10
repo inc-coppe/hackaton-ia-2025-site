@@ -15,7 +15,12 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Aponte diretamente para o arquivo .env que você quer usar
+env_path = BASE_DIR / ".env.local"   # ou ".env.development", etc
+load_dotenv(dotenv_path=env_path)
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 if not GOOGLE_CLIENT_ID:
@@ -24,9 +29,6 @@ if not GOOGLE_CLIENT_ID:
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production

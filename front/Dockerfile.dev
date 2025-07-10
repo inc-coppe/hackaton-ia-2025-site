@@ -1,0 +1,18 @@
+# front/Dockerfile.dev
+FROM node:18-alpine
+
+# Diretório de trabalho
+WORKDIR /app
+
+# Copia package.json e package-lock.json (ou yarn.lock) e instala deps
+COPY package*.json ./
+RUN npm install
+
+# Copia todo o código
+COPY . .
+
+# Expõe a porta do Vite
+EXPOSE 3000
+
+# Comando para rodar o dev server do Vite no host 0.0.0.0
+CMD ["npm", "run", "dev", "--", "--host"]

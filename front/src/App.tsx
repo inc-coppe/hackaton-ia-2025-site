@@ -38,12 +38,12 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     }
 
     try {
-      const response = await fetch("/api/profile/check/", {
+      const response = await fetch("http://localhost:8000/api/profile/check/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("ProtectedRoute: /api/profile/check/ response:", data);
+        console.log("ProtectedRoute: http://localhost:8000/api/profile/check/ response:", data);
         setIsProfileComplete(data.form_completed);
       } else {
         console.error(

@@ -37,14 +37,18 @@ import c7 from "../../assets/c7.png";
 import c8 from "../../assets/c8.png";
 import c9 from "../../assets/ca2_logo_resized (1).png";
 import c10 from "../../assets/logo_carousel_gray_60px.png";
-import c11 from "../../assets/marcafiocruz_horizontal_POSITIVA home sem fundo (1).png";
+
+import c11 from "../../assets/MOSO logo cinza.png";
+import c12 from "../../assets/inova HC logo cinza (1).png";
+
+import c13 from "../../assets/marcafiocruz_horizontal_POSITIVA home sem fundo (1).png";
 
 import { Flex } from "antd";
 import { Link } from "react-router-dom";
 import AnimatedBlobs from "../../components/AnimatedBlobs";
 
 const HomePage = () => {
-  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11];
+  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13];
   const allImages = [...carouselImages, ...carouselImages];
 
   const [isMobile, setIsMobile] = useState(false);
@@ -125,7 +129,7 @@ const HomePage = () => {
             {allImages.map((image, index) => (
               <CarouselItem key={index}>
                 <img src={image} alt={`Carousel item ${index + 1}`} style={{
-          filter: image === c6 || image === c11 ? "invert(100%)" : "none"}}/>
+          filter: image === c6 || image === c13 ? "invert(100%)" : "none"}}/>
               </CarouselItem>
             ))}
           </CarouselTrack>

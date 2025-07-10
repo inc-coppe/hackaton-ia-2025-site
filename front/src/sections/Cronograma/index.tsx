@@ -8,7 +8,7 @@ const Cronograma = () => {
     <Container>
       <WhiteOverlay /> {/* White overlay at the bottom */}
       <Margin>
-        <Title>PREPARE-SE PARA CADA MOMENTO.</Title>
+        <Title>PREPARE-SE PARA CADA MOMENTO HAHAHAHA.</Title>
       </Margin>
       <ContainerCarousel>
         <TimelineCarousel />

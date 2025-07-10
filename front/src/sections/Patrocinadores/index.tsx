@@ -24,6 +24,10 @@ import apoio7 from "../../assets/wow-aceleradora-de-startups-nova-logo.png";
 import apoio8 from "../../assets/elogroup nova logo.png";
 import apoio9 from "../../assets/CA2_marca-nova-logo (1).png";
 import apoio10 from "../../assets/aws logo (1) (1).png";
+
+import apoio11 from "../../assets/MOSO logo centralizada.png";
+import apoio12 from "../../assets/inova HC logo (2).png";
+
 import realizacao1 from "../../assets/nova logo incubadora coppe.png";
 import realizacao2 from "../../assets/cietec preto (1).png";
 import realizacao3 from "../../assets/realizacao3.png";
@@ -60,6 +64,8 @@ const sponsorsData = {
     { image: apoio8, title: "EloGroup" },
     { image: apoio9, title: "CA² Consulting" },
     { image: apoio10, title: "AWS" },
+    { image: apoio11, title: "MOSO"},
+    { image: apoio12, title: "Inova HC"},
   ],
   realizacao: [
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
