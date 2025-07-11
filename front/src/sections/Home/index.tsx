@@ -79,7 +79,7 @@ const HomePage = () => {
         <AnimatedBlobs />
         <LeftContainer>
           <TextContainer>
-            <Text>20 E 21 DE SETEMBRO</Text>
+            <Text>10 A 12 DE OUTUBRO</Text>
             <Title>HACKATHON</Title>
             <div
               style={{
