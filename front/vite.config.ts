@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     // permite que o Vite aceite requisições vindas desse host
-    allowedHosts: ["www.hackathon-ia.coppe.ufrj.br"],
+    allowedHosts: ["www.hackathon-ia.coppe.ufrj.br", "hackathon-ia.coppe.ufrj.br"],
   },
 });
