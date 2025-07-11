@@ -463,9 +463,12 @@ function Profile() {
               )}
               {displayProfile.email && (
                 <SocialButton 
-                  href={`mailto:${displayProfile.email}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  as="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(`mailto:${displayProfile.email}`);
+                  }}                  
                 >
                   <FaEnvelope /> <span>Email</span>
                 </SocialButton>
