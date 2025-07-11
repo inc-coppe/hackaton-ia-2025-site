@@ -463,7 +463,11 @@ function Profile() {
               )}
               {displayProfile.email && (
                 <SocialButton 
-                  href={`mailto:${displayProfile.email}`}>
+                as="a"
+                  href={`https://mail.google.com/mail/?view=cm&to=${displayProfile.email}`}
+                  target="_blank"  
+                  rel="noopener noreferrer"
+                >
                   <FaEnvelope /> <span>Email</span>
                 </SocialButton>
               )}
