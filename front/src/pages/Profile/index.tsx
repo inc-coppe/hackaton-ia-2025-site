@@ -462,7 +462,11 @@ function Profile() {
                 </SocialButton>
               )}
               {displayProfile.email && (
-                <SocialButton href={`mailto:${displayProfile.email}`}>
+                <SocialButton 
+                  href={`mailto:${displayProfile.email}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaEnvelope /> <span>Email</span>
                 </SocialButton>
               )}
