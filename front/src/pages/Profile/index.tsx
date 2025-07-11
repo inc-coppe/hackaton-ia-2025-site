@@ -462,15 +462,8 @@ function Profile() {
                 </SocialButton>
               )}
               {displayProfile.email && (
-                <SocialButton
-                  as="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.location.href = `mailto:${displayProfile.email}`;
-                  }}
-                  >
-                
+                <SocialButton 
+                  href={`mailto:${displayProfile.email}`}>
                   <FaEnvelope /> <span>Email</span>
                 </SocialButton>
               )}
