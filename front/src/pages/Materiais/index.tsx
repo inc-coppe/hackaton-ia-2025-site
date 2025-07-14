@@ -70,7 +70,7 @@ const materialChapters = [
     description2: "Nesta trilha, os participantes terão acesso a materiais que abordam os fundamentos da inteligência artificial agentiva, frameworks modernos para criação de agentes e exemplos práticos de como utilizar essas tecnologias para resolver desafios do mundo real. A ideia é mostrar como a combinação entre modelos de linguagem e raciocínio programável pode abrir novas possibilidades para a automação inteligente e adaptativa.",
     subsections: [
       {
-        title: "Webminar de Agentic AI",
+        title: "Webinar de Agentic AI",
         text: ["Neste webinar, os participantes serão apresentados aos princípios práticos da inteligência artificial baseada em agentes, com foco no desenvolvimento de sistemas que combinam modelos de linguagem com capacidade de raciocínio, tomada de decisão e execução autônoma de tarefas. A sessão abordará as diferenças entre aplicações tradicionais de IA e abordagens agentivas, destacando os cenários em que agentes inteligentes se tornam mais eficazes do que simples chamadas a modelos.",
         
         "Será demonstrado como utilizar frameworks modernos para orquestrar fluxos de interação entre agentes e fontes de dados externas, permitindo que os sistemas aprendam, se adaptem e colaborem com humanos e outros agentes. Além dos conceitos, o webinar trará exemplos práticos e arquiteturas que servem como base para o desenvolvimento de soluções avançadas no contexto do hackathon."
