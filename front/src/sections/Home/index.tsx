@@ -43,12 +43,16 @@ import c12 from "../../assets/inova HC logo cinza (1).png";
 
 import c13 from "../../assets/marcafiocruz_horizontal_POSITIVA home sem fundo (1).png";
 
+import c14 from "../../assets/Logo_PCRJ (3).png";
+import c15 from "../../assets/Logo MCTI sem fundo branco 120x120.png";
+import c16 from "../../assets/Logo Prefeitura sem fundo 120x120 branco.png";
+
 import { Flex } from "antd";
 import { Link } from "react-router-dom";
 import AnimatedBlobs from "../../components/AnimatedBlobs";
 
 const HomePage = () => {
-  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13];
+  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16];
   const allImages = [...carouselImages, ...carouselImages];
 
   const [isMobile, setIsMobile] = useState(false);
