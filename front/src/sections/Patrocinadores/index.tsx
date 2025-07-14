@@ -27,6 +27,10 @@ import apoio10 from "../../assets/aws logo (1) (1).png";
 
 import apoio11 from "../../assets/MOSO logo centralizada.png";
 import apoio12 from "../../assets/inova HC logo (2).png";
+import apoio13 from "../../assets/Logo MCTI.png";
+import apoio14 from "../../assets/Logo Prefeitura sem fundo.png";
+import apoio15 from "../../assets/secretaria de saúde 3.png";
+
 
 import realizacao1 from "../../assets/nova logo incubadora coppe.png";
 import realizacao2 from "../../assets/cietec preto (1).png";
@@ -66,6 +70,9 @@ const sponsorsData = {
     { image: apoio10, title: "AWS" },
     { image: apoio11, title: "MOSO"},
     { image: apoio12, title: "Inova HC"},
+    { image: apoio13, title: "MCTI"},
+    { image: apoio14, title: "Prefeitura do Rio"},
+    { image: apoio15, title: "Secretaria de Estado de Saúde do Rio de Janeiro"},
   ],
   realizacao: [
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
