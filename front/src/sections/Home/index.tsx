@@ -42,17 +42,17 @@ import c11 from "../../assets/MOSO logo cinza.png";
 import c12 from "../../assets/inova HC logo cinza (1).png";
 
 import c13 from "../../assets/marcafiocruz_horizontal_POSITIVA home sem fundo (1).png";
-
 import c14 from "../../assets/Logo_PCRJ (3).png";
 import c15 from "../../assets/Logo MCTI sem fundo branco 120x120.png";
 import c16 from "../../assets/Logo Prefeitura sem fundo 120x120 branco.png";
+import c17 from "../../assets/Logo Lemobs Melhorada Cinza 120x64 Sem Fundo.png";
 
 import { Flex } from "antd";
 import { Link } from "react-router-dom";
 import AnimatedBlobs from "../../components/AnimatedBlobs";
 
 const HomePage = () => {
-  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16];
+  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c17, c10, c11, c9, c12, c13, c14, c15, c16];
   const allImages = [...carouselImages, ...carouselImages];
 
   const [isMobile, setIsMobile] = useState(false);
@@ -83,7 +83,7 @@ const HomePage = () => {
         <AnimatedBlobs />
         <LeftContainer>
           <TextContainer>
-            <Text>10 A 12 DE OUTUBRO</Text>
+            <Text>20 E 21 DE SETEMBRO</Text>
             <Title>HACKATHON</Title>
             <div
               style={{
@@ -132,7 +132,7 @@ const HomePage = () => {
           <CarouselTrack>
             {allImages.map((image, index) => (
               <CarouselItem key={index}>
-                <img src={image} alt={`Carousel item ${index + 1}`} style={{
+                <img src={image} alt={Carousel item ${index + 1}} style={{
           filter: image === c6 || image === c13 ? "invert(100%)" : "none"}}/>
               </CarouselItem>
             ))}
