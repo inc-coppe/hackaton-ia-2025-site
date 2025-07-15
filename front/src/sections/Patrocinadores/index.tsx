@@ -61,12 +61,15 @@ const sponsorsData = {
     { image: apoio4, title: "NVIDIA" },
     { image: apoio5, title: "LNCC – Laboratório Nacional de Computação Científica" },
     { image: apoio10, title: "AWS" },
+    { image: apoio16, title: "Lemobs"},
 
     { image: apoio12, title: "Inova HC"},
+    
     { image: apoio11, title: "MOSO"},
     { image: apoio8, title: "EloGroup" },
 
     { image: apoio15, title: "Secretaria de Estado de Saúde do Rio de Janeiro"},
+    { image: apoio14, title: "Prefeitura do Rio"},
 
     { image: apoio1, title: "Distrito" },
     { image: apoio3, title: "Abstartups – Associação Brasileira de Startups" },
@@ -75,8 +78,6 @@ const sponsorsData = {
 
     { image: apoio13, title: "MCTI"},
     
-    { image: apoio14, title: "Prefeitura do Rio"},
-    { image: apoio16, title: "Lemobs"},
   ],
   realizacao: [
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
