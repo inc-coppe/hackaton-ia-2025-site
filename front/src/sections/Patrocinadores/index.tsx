@@ -73,8 +73,9 @@ const sponsorsData = {
     { image: apoio2, title: "Hub Digital da COPPE/UFRJ" },
     { image: apoio7, title: "WOW Aceleradora de Startups" },
 
-    { image: apoio14, title: "Prefeitura do Rio"},
     { image: apoio13, title: "MCTI"},
+    
+    { image: apoio14, title: "Prefeitura do Rio"},
     { image: apoio16, title: "Lemobs"},
   ],
   realizacao: [

@@ -132,7 +132,7 @@ const HomePage = () => {
           <CarouselTrack>
             {allImages.map((image, index) => (
               <CarouselItem key={index}>
-                <img src={image} alt={Carousel item ${index + 1}} style={{
+                <img src={image} alt={`Carousel item ${index + 1}`} style={{
           filter: image === c6 || image === c13 ? "invert(100%)" : "none"}}/>
               </CarouselItem>
             ))}
