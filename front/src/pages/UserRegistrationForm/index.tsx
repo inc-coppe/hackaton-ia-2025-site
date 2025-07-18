@@ -432,13 +432,7 @@ const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
 
           <Form.Item
             name="motivation"
-            label="O que mais te motiva a participar do nosso Hackathon?"
-            rules={[
-              {
-                required: true,
-                message: "Por favor, selecione pelo menos uma motivação",
-              },
-            ]}
+            label="O que mais te motiva a participar do nosso Hackathon?"            
           >
             <Input.TextArea
               placeholder="Escreva aqui o que mais te motiva"
