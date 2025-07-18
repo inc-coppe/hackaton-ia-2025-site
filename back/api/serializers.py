@@ -217,6 +217,7 @@ class UserSearchSerializer(serializers.ModelSerializer):
             "institution",
             "area_of_expertise",
             "tags",
+            'motivation',
         ]
 
     def get_profile_picture_url(self, obj):

@@ -440,11 +440,10 @@ const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
               },
             ]}
           >
-            <Select
-              mode="multiple"
-              placeholder="Selecione suas motivações"
-              style={{ width: "100%" }}
-              options={MOTIVATION_OPTIONS}
+            <Input.TextArea
+              placeholder="Escreva aqui o que mais te motiva"
+              rows={3}
+              maxLength={500}
             />
           </Form.Item>
 

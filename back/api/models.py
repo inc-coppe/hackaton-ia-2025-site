@@ -95,7 +95,7 @@ class UserProfile(models.Model):
     area_of_expertise = models.CharField(max_length=255, blank=True, null=True)
     portfolio_url = models.URLField(max_length=255, blank=True, null=True)
     special_needs = models.TextField(blank=True, null=True)
-    motivation = models.JSONField(default=list, blank=True)
+    motivation = models.TextField(blank=True, null=True)
     accepted_terms = models.BooleanField(default=False)
     share_contacts = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
