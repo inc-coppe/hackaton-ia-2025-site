@@ -223,3 +223,19 @@ export const StyledImage = styled.img`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   
 `;
+
+export const Negrito = styled.span`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  color: rgba(15, 15, 33, 0.95);
+  margin: 0;
+  text-indent: 2em;
+
+  @media (max-width: 30rem) {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+
+`;
