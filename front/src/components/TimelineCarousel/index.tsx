@@ -15,10 +15,10 @@ import Img2 from "../../assets/Sexta 17.png";
 import Img3 from "../../assets/Sábado 18.png";
 import Img4 from "../../assets/Domingo 19.png";
 
-import Img5 from "../../assets/Pré-evento mobile.png";
-import Img6 from "../../assets/Sexta 17 mobile.png";
-import Img7 from "../../assets/Sábado 18 mobile.png";
-import Img8 from "../../assets/Domingo 19 mobile.png";
+import Img5 from "../../assets/Pré-evento mobile (1).png";
+import Img6 from "../../assets/Sexta 17 mobile (1).png";
+import Img7 from "../../assets/Sábado 18 mobile (2).png";
+import Img8 from "../../assets/Domingo 19 mobile (1).png";
 import { NavLink } from "react-router-dom";
 
 const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
