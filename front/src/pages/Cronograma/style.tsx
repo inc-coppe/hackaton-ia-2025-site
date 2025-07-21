@@ -150,8 +150,8 @@ export const InfoBodyContainer = styled.div`
 export const CronogramaIntroContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centraliza o TextWrapper */
-  justify-content: center;
+  align-items: left; /* Centraliza o TextWrapper */
+  justify-content: left;
   width: 100%;
   padding: 9.125rem 7.5rem 5rem; /* Desktop: 146px 120px 80px */
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
