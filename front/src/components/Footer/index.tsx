@@ -49,7 +49,7 @@ const Footer = () => {
       </MapSection>
 
       <FooterNote>
-        © 2025 HackathonIA. Todos os direitos reservados.
+        © 2025 Coppe-UFRJ. Todos os direitos reservados.
       </FooterNote>
     </Container>
   );
