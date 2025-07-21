@@ -153,7 +153,7 @@ export const CronogramaIntroContainer = styled.div`
   padding-left: 7.5rem;
   padding-right: 7.5rem;
   padding-top: 10rem;
-  padding-bottom: 12.5rem;
+  padding-bottom: 13.5rem;
 
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
 

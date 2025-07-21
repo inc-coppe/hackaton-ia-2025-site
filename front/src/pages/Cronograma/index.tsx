@@ -21,103 +21,134 @@ import { Title } from "./style";
 
 const eventos_pre = [
   {
-    dataLugar: "01/09 a 29/09 • Online",
-    titulo: "_Treinamento NVIDIA",
+    dataLugar: "Mês anterior • Online",
+    titulo: "_Treinamento",
     descricao:
-      "Online para todos os inscritos lhes fornecendo uma base técnica sobre os desfios a serem solucionados.",
+      "Treinamento online da NVIDIA para todos os inscritos com Webinar de Rapids, Webinar de Agentic AI e materiais gravados.",
   },
   {
     dataLugar: "",
     titulo: "_Seleção de candidatos",
-    descricao: "Baseada na análise de currículos e desempenho no treinamento. ",
+    descricao: "Com base nos critérios definidos no regulamento.",
   },
   {
     dataLugar: "",
     titulo: "_Escolha da trilha",
     descricao:
-      "Pelos candidatos de forma a selecionarem os desafios que irão resolver. ",
+      "Realizada pelos candidatos de forma a selecionarem os desafios que irão resolver. ",
+  },
+  {
+    dataLugar: "",
+    titulo: "_Curso preparatório",
+    descricao:
+      "Curso obrigatório de introdução ao Santos Dumont oferecido pelo LNCC. ",
   },
 ];
 
 const eventos_sex = [
   {
-    dataLugar: "16H00 às 17H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "PORTO MARAVALLEY (RJ)",
     titulo: "_Credenciamento e recepção.",
     descricao: "",
   },
   {
-    dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "Tarde • PORTO MARAVALLEY (RJ)",
     titulo: "_Abertura oficial",
     descricao:
-      "Apresentação inicial com os principais parceiros do objetivo do evento.",
+      "Apresentação inicial com principais parceiros e objetivos do evento.",
   },
+  
   {
-    dataLugar: "19H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "",
+    titulo: "_Sessão de conhecimento",
+    descricao:
+      "Sessão de disseminação de conhecimento. ",
+  },
+
+  
+  {
+    dataLugar: "",
     titulo: "_Formação de equipes",
     descricao:
       "Organização de equipes multidisciplinares e espaço destinado para networking. ",
   },
+
   {
-    dataLugar: "21H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "Noite • PORTO MARAVALLEY (RJ)",
     titulo: "_Ideação",
-    descricao: "Encontro das equipes para o começo do processo de ideação. ",
+    descricao: "Primeiro encontro das equipes para dar início ao processo de ideação. ",
   },
 ];
 
 const eventos_sab = [
   {
-    dataLugar: "Manhã • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "_ Discussão de abordagens",
+    dataLugar: "Manhã • PORTO MARAVALLEY (RJ)",
+    titulo: "_Planejamento estratégico com mentoria",
     descricao:
-      "Exploração de estratégias e abordagens com o suporte de mentores especializados.",
+      "Discussão de abordagens e estratégias com suporte de mentores especializados.",
   },
   {
     dataLugar: "",
-    titulo: "_Desenvolvimento",
-    descricao: "Avanço no desenvolvimento das soluções. ",
-  },
-  {
-    dataLugar: "Tarde • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "_Sessões de mentoria sob demanda",
-    descricao:
-      "Sessões específicas para revisão e refinamento das soluções, especialmente na modelagem de negócios. ",
-  },
-  {
-    dataLugar: "",
-    titulo: "_Desenvolvimento",
-    descricao: "Avanço no desenvolvimento das soluções. ",
-  },
-  {
-    dataLugar: "Noite • PORTO MARAVALLEY (RJ), DISCORD (SP)",
     titulo: "_Desenvolvimento",
     descricao: "Avanço no desenvolvimento das soluções. ",
   },
   {
     dataLugar: "",
     titulo: "_Checkpoint",
-    descricao: "Checkpoint para avaliação do progesso e ajustes necessários. ",
+    descricao: "Avaliação parcial do progresso das equipes, com feedback sobre os primeiros resultados. ",
+  },
+
+  {
+    dataLugar: "Tarde • PORTO MARAVALLEY (RJ)",
+    titulo: "_Mentorias de modelagem de negócios",
+    descricao:
+      "Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios. ",
+  },
+  {
+    dataLugar: "",
+    titulo: "_Desenvolvimento",
+    descricao: "Avanço no desenvolvimento técnico das soluções com IA. ",
+  },
+
+  {
+    dataLugar: "Noite • PORTO MARAVALLEY (RJ)",
+    titulo: "_Desenvolvimento",
+    descricao: "Continuação do desenvolvimento das soluções. ",
+  },
+  {
+    dataLugar: "",
+    titulo: "_Checkpoint",
+    descricao: "Avaliação parcial do progresso das equipes, com feedback sobre os primeiros resultados. ",
   },
 ];
 
 const eventos_dom = [
   {
-    dataLugar: "Manhã • PORTO MARAVALLEY (RJ), DISCORD (SP)",
-    titulo: "_ Desenvolvimento",
-    descricao: "Avanço no desenvolvimento das soluções. ",
+    dataLugar: "Manhã • PORTO MARAVALLEY (RJ)",
+    titulo: "_Finalização técnica das soluções",
+    descricao: "Últimos ajustes e finalização das soluções com IA.",
   },
+
   {
-    dataLugar: "16H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "",
+    titulo: "_Checkpoint",
+    descricao: "Checkpoint final para revisão e validação das soluções antes da apresentação.",
+  },
+
+
+  {
+    dataLugar: "Tarde • PORTO MARAVALLEY (RJ)",
     titulo: "_Apresentação",
     descricao:
       "Exposição das soluções para um painel de jurados composto por parceiros. ",
   },
   {
-    dataLugar: "17H30 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "",
     titulo: "_Avaliação",
-    descricao: "Processo de avaliação das soluções apresentadas ",
+    descricao: "Processo de avaliação das soluções apresentadas pela banca, considerando os critérios expostos no regulamento.",
   },
   {
-    dataLugar: "18H00 • PORTO MARAVALLEY (RJ), DISCORD (SP)",
+    dataLugar: "Noite • PORTO MARAVALLEY (RJ)",
     titulo: "_Cerimônia de encerramento e premiação",
     descricao:
       "Encerramento oficial do evento e premiação das melhores soluções. ",
