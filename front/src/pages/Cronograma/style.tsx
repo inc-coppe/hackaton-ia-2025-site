@@ -148,21 +148,17 @@ export const InfoBodyContainer = styled.div`
 `;
 
 export const CronogramaIntroContainer = styled.div`
-  position: relative;
-  height: 24.75rem;
-  padding-left: 7.5rem;
-  padding-right: 7.5rem;
-  padding-top: 10rem;
-  padding-bottom: 13.5rem;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza o TextWrapper */
+  justify-content: center;
+  width: 100%;
+  padding: 9.125rem 7.5rem 5rem; /* Desktop: 146px 120px 80px */
   background: linear-gradient(252.74deg, #2e2989 38.15%, #53167f 100%);
 
-  @media (max-width: 28rem) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 7.875rem;
-
-    height: 25rem;
+  @media (max-width: 48rem) {
+    margin-top: 4rem;
+    padding: 3.75rem 1.5rem; /* Mobile: 60px 24px */
   }
 `;
 
