@@ -10,15 +10,15 @@ import {
   ContainerButton,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import Img1 from "../../assets/Pré-cronograma.png";
-import Img2 from "../../assets/Dia 1-cronograma.png";
-import Img3 from "../../assets/Dia 2-cronograma.png";
-import Img4 from "../../assets/Dia 3-cronograma.png";
+import Img1 from "../../assets/Pré-evento.png";
+import Img2 from "../../assets/Sexta 17.png";
+import Img3 from "../../assets/Sábado 18.png";
+import Img4 from "../../assets/Domingo 19.png";
 
-import Img5 from "../../assets/Pré-cronograma-mobile (1).png";
-import Img6 from "../../assets/Dia 1-cronograma-mobile (1).png";
-import Img7 from "../../assets/Dia 2-cronograma-mobile (1).png";
-import Img8 from "../../assets/Dia 3-cronograma-mobile (1).png";
+import Img5 from "../../assets/Pré-evento.png";
+import Img6 from "../../assets/Sexta 17.png";
+import Img7 from "../../assets/Sábado 18.png";
+import Img8 from "../../assets/Domingo 19.png";
 import { NavLink } from "react-router-dom";
 
 const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
