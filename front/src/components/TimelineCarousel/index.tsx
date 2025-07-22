@@ -17,7 +17,7 @@ import Img4 from "../../assets/Domingo novo (1).png";
 
 import Img5 from "../../assets/Pré novo mobile (1).png";
 import Img6 from "../../assets/Sexta novo mobile (1).png";
-import Img7 from "../../assets/Sabado novo mobile (2).png";
+import Img7 from "../../assets/Sabado novo mobile (1).png";
 import Img8 from "../../assets/Domingo novo mobile (1).png";
 import { NavLink } from "react-router-dom";
 
