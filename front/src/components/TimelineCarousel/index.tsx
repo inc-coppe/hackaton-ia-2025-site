@@ -15,7 +15,7 @@ import Img2 from "../../assets/Sexta.png";
 import Img3 from "../../assets/Sabado.png";
 import Img4 from "../../assets/Domingo.png";
 
-import Img5 from "../../assets/Pré mobile.png";
+import Img5 from "../../assets/Pré mobile (1).png";
 import Img6 from "../../assets/Sexta mobile.png";
 import Img7 from "../../assets/Sabado mobile.png";
 import Img8 from "../../assets/Domingo mobile.png";
