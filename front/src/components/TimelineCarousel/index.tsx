@@ -10,15 +10,15 @@ import {
   ContainerButton,
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import Img1 from "../../assets/Pré novo (1).png";
-import Img2 from "../../assets/Sexta novo (1).png";
-import Img3 from "../../assets/Sabado novo (1).png";
-import Img4 from "../../assets/Domingo novo (1).png";
+import Img1 from "../../assets/Pré novo.png";
+import Img2 from "../../assets/Sexta novo.png";
+import Img3 from "../../assets/Sabado novo.png";
+import Img4 from "../../assets/Domingo novo.png";
 
-import Img5 from "../../assets/Pré novo mobile (1).png";
-import Img6 from "../../assets/Sexta novo mobile (1).png";
-import Img7 from "../../assets/Sabado novo mobile (1).png";
-import Img8 from "../../assets/Domingo novo mobile (1).png";
+import Img5 from "../../assets/Pré novo mobile.png";
+import Img6 from "../../assets/Sexta novo mobile.png";
+import Img7 from "../../assets/Sabado novo mobile.png";
+import Img8 from "../../assets/Domingo novo mobile.png";
 import { NavLink } from "react-router-dom";
 
 const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
