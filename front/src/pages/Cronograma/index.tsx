@@ -24,7 +24,7 @@ const eventos_pre = [
     dataLugar: "Mês anterior • Online",
     titulo: "_Treinamento",
     descricao:
-      "Treinamento online da NVIDIA para todos os inscritos com Webinar de Rapids, Webinar de Agentic AI e materiais gravados.",
+      "Treinamento online da NVIDIA para todos os inscritos, com webinars sobre Rapids e Agentic AI, materiais gravados e conteúdos complementares. Os participantes terão acesso ao Discord para suporte e troca de experiências, e receberão certificado de conclusão.",
   },
   {
     dataLugar: "",
@@ -35,7 +35,7 @@ const eventos_pre = [
     dataLugar: "",
     titulo: "_Escolha da trilha",
     descricao:
-      "Realizada pelos candidatos de forma a selecionarem os desafios que irão resolver. ",
+      "Realizada pelos candidatos de forma a selecionarem os desafios que irão resolver. Neste momento, os inscritos também escolhem a trilha temática que desejam seguir no Hackathon.",
   },
   {
     dataLugar: "",
@@ -47,108 +47,100 @@ const eventos_pre = [
 
 const eventos_sex = [
   {
-    dataLugar: "PORTO MARAVALLEY (RJ)",
+    dataLugar: "17:00 - 18:00 • PORTO MARAVALLEY (RJ)",
     titulo: "_Credenciamento e recepção.",
-    descricao: "",
+    descricao: "Recepção dos participantes e credenciamento no local do evento, com um momento inicial de integração e acolhimento.",
   },
   {
-    dataLugar: "Tarde • PORTO MARAVALLEY (RJ)",
+    dataLugar: "18:00 - 19:00",
     titulo: "_Abertura oficial",
     descricao:
-      "Apresentação inicial com principais parceiros e objetivos do evento.",
+      "Abertura oficial com representantes de instituições parceiras e apresentação dos objetivos e orientações iniciais sobre o Hackathon.",
   },
   
   {
-    dataLugar: "",
-    titulo: "_Sessão de conhecimento",
-    descricao:
-      "Sessão de disseminação de conhecimento. ",
-  },
-
-  
-  {
-    dataLugar: "",
+    dataLugar: "19:00 - 20:00",
     titulo: "_Formação de equipes",
     descricao:
-      "Organização de equipes multidisciplinares e espaço destinado para networking. ",
+      "Dinâmica de integração entre os participantes e formação das equipes faltantes.",
   },
 
   {
-    dataLugar: "Noite • PORTO MARAVALLEY (RJ)",
-    titulo: "_Ideação",
-    descricao: "Primeiro encontro das equipes para dar início ao processo de ideação. ",
+    dataLugar: "20:00 - 21:00",
+    titulo: "_Início das Atividades",
+    descricao: "Encontro das equipes com apoio de mentores para condução de uma sessão de brainstorming e definição das primeiras ideias. Haverá um intervalo para coffee break durante a atividade.",
   },
 ];
 
 const eventos_sab = [
   {
-    dataLugar: "Manhã • PORTO MARAVALLEY (RJ)",
-    titulo: "_Planejamento estratégico com mentoria",
+    dataLugar: "08:00 - 10:00 • PORTO MARAVALLEY (RJ)",
+    titulo: "_Mentoria técnica",
     descricao:
-      "Discussão de abordagens e estratégias com suporte de mentores especializados.",
+      "Sessões de mentoria com especialistas em desafios de saúde e tecnologia para esclarecer dúvidas e orientar o desenvolvimento das soluções.",
   },
   {
-    dataLugar: "",
+    dataLugar: "08:00 - 12:00",
     titulo: "_Desenvolvimento",
-    descricao: "Avanço no desenvolvimento das soluções. ",
+    descricao: "Avanço no desenvolvimento das soluções com apoio contínuo dos mentores.",
   },
   {
-    dataLugar: "",
-    titulo: "_Checkpoint",
-    descricao: "Avaliação parcial do progresso das equipes, com feedback sobre os primeiros resultados. ",
+    dataLugar: "12:00",
+    titulo: "_Checkpoint de definição das ideias",
+    descricao: "Este é o prazo limite para que as equipes definam as ideias principais das suas soluções, sendo um ponto de verificação da evolução do desenvolvimento.",
   },
 
   {
-    dataLugar: "Tarde • PORTO MARAVALLEY (RJ)",
-    titulo: "_Mentorias de modelagem de negócios",
+    dataLugar: "14:00 - 17:00",
+    titulo: "_Desenvolvimento livre",
     descricao:
-      "Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios. ",
+      "Período dedicado ao avanço livre no desenvolvimento das soluções.",
   },
   {
-    dataLugar: "",
-    titulo: "_Desenvolvimento",
-    descricao: "Avanço no desenvolvimento técnico das soluções com IA. ",
+    dataLugar: "17:00",
+    titulo: "_Checkpoint de programação",
+    descricao: "Prazo limite para equipes apresentarem as ideias já postas em prática.",
   },
 
   {
-    dataLugar: "Noite • PORTO MARAVALLEY (RJ)",
-    titulo: "_Desenvolvimento",
-    descricao: "Continuação do desenvolvimento das soluções. ",
-  },
-  {
-    dataLugar: "",
-    titulo: "_Checkpoint",
-    descricao: "Avaliação parcial do progresso das equipes, com feedback sobre os primeiros resultados. ",
+    dataLugar: "17:30 - 18:30",
+    titulo: "_Mentoria de pitch",
+    descricao: "Workshop de pitch para capacitar os participantes a apresentarem suas soluções de maneira eficaz, seguido por sessões de mentoria de negócios.",
   },
 ];
 
 const eventos_dom = [
   {
-    dataLugar: "Manhã • PORTO MARAVALLEY (RJ)",
-    titulo: "_Finalização técnica das soluções",
-    descricao: "Últimos ajustes e finalização das soluções com IA.",
+    dataLugar: "08:00 - 14:00 • PORTO MARAVALLEY (RJ)",
+    titulo: "_Desenvolvimento e mentorias",
+    descricao: "As equipes continuarão o desenvolvimento de suas soluções, com todas as mentorias disponíveis para tirar dúvidas pontuais.",
   },
 
   {
-    dataLugar: "",
-    titulo: "_Checkpoint",
-    descricao: "Checkpoint final para revisão e validação das soluções antes da apresentação.",
+    dataLugar: "14:00",
+    titulo: "_Checkpoint de apresentação",
+    descricao: "Última oportunidade para revisão e validação das soluções antes da apresentação.",
   },
 
+  {
+    dataLugar: "15:45",
+    titulo: "_Submissão das soluções",
+    descricao: "Prazo limite para a submissão das soluções desenvolvidas pelas equipes. As apresentações finais ocorrerão logo após o encerramento da submissão.",
+  },
 
   {
-    dataLugar: "Tarde • PORTO MARAVALLEY (RJ)",
-    titulo: "_Apresentação",
+    dataLugar: "16:00 - 17:30",
+    titulo: "_Apresentações",
     descricao:
-      "Exposição das soluções para um painel de jurados composto por parceiros. ",
+      "Cada equipe fará uma apresentação de 5 minutos das soluções desenvolvidas. ",
   },
   {
-    dataLugar: "",
-    titulo: "_Avaliação",
+    dataLugar: "17:30 - 18:00",
+    titulo: "_Avaliação dos projetos",
     descricao: "Processo de avaliação das soluções apresentadas pela banca, considerando os critérios expostos no regulamento.",
   },
   {
-    dataLugar: "Noite • PORTO MARAVALLEY (RJ)",
+    dataLugar: "18:00 - 19:00",
     titulo: "_Cerimônia de encerramento e premiação",
     descricao:
       "Encerramento oficial do evento e premiação das melhores soluções. ",
