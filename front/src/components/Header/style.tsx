@@ -198,6 +198,10 @@ export const LoginButton = styled.button<{ $isMobile?: boolean }>`
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+
+  @media (max-width: 28rem) {
+   margin-left: 0rem;
+  }
 `;
 
 export const SignUpButton = styled(LoginButton)`
