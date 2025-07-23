@@ -155,6 +155,7 @@ export const NavButton = styled.button<{ $isMobile?: boolean }>`
 export const AuthContainer = styled.div<{ $isMobile?: boolean }>`
   display: flex;
   align-items: center;
+
   gap: 1rem;
 
   ${({ $isMobile }) =>
@@ -177,6 +178,8 @@ export const LoginButton = styled.button<{ $isMobile?: boolean }>`
   font-weight: 700;
   font-size: 0.9rem;
   color: #ffffff;
+  margin-left: 1rem;
+  height: 38px;
   background: transparent;
   border: 2px solid #ffffff;
   border-radius: 0.2rem;
@@ -200,6 +203,10 @@ export const LoginButton = styled.button<{ $isMobile?: boolean }>`
 export const SignUpButton = styled(LoginButton)`
   background: #ffffff;
   color: #3161e8;
+  border: 2px solid #ffffff;
+  min-width: 8rem;
+  text-align: center;
+  white-space: nowrap;
 
   &:hover {
     background: #f0f0f0;
