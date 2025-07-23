@@ -208,8 +208,14 @@ export const SignUpButton = styled(LoginButton)`
   background: #ffffff;
   color: #3161e8;
   border: 2px solid #ffffff;
-  min-width: 8rem;
   text-align: center;
+  
+  $@media (max-width: 28rem) {
+    
+    min-width: 8rem;
+    white-space: nowrap;
+  }
+    
   white-space: nowrap;
 
   &:hover {
