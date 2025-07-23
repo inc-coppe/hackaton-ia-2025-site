@@ -199,7 +199,7 @@ const Cronograma = () => {
           ))}
         </CronogramaDayContainer>
 
-        <CronogramaTitle>/sexta, 17/10</CronogramaTitle>
+        <CronogramaTitle>/sexta, 10/10</CronogramaTitle>
 
         <CronogramaDayContainer>
           {eventos_sex.map((evento, index) => (
@@ -216,7 +216,7 @@ const Cronograma = () => {
           ))}
         </CronogramaDayContainer>
 
-        <CronogramaTitle>/sábado, 18/10</CronogramaTitle>
+        <CronogramaTitle>/sábado, 11/10</CronogramaTitle>
 
         <CronogramaDayContainer>
           {eventos_sab.map((evento, index) => (
@@ -233,7 +233,7 @@ const Cronograma = () => {
           ))}
         </CronogramaDayContainer>
 
-        <CronogramaTitle>/domingo, 19/10</CronogramaTitle>
+        <CronogramaTitle>/domingo, 12/10</CronogramaTitle>
 
         <CronogramaDayContainer>
           {eventos_dom.map((evento, index) => (
