@@ -7,7 +7,6 @@ services:
 
     volumes:
       - ./back:/app
-      - ./credentials.json:/app/credentials.json:ro
 
     env_file:
       - ./back/.env
