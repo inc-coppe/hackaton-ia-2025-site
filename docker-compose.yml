@@ -7,7 +7,6 @@ services:
 
     volumes:
       - ./back:/app
-      - ./back/planilha-inscritos-e54203243565.json:/app/credentials.json
 
     env_file:
       - ./back/.env
