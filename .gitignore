@@ -20,5 +20,5 @@ venv/
 *.swo
 
 
-back/credentials.json
+credentials.json
 
