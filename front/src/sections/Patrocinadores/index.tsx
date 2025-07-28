@@ -28,9 +28,11 @@ import apoio10 from "../../assets/aws logo (1) (1).png";
 import apoio11 from "../../assets/MOSO logo centralizada.png";
 import apoio12 from "../../assets/inova HC logo (2).png";
 import apoio13 from "../../assets/Logo MCTI.png";
-import apoio14 from "../../assets/Logo Prefeitura sem fundo.png";
+import apoio14 from "../../assets/Logo Secretaria de Estado sem fundo (2).png";
 import apoio15 from "../../assets/secretaria de saúde 3.png";
 import apoio16 from "../../assets/Logo Lemobs Melhorada.png";
+import apoio17 from "../../assets/iplan_simples_preta.png";
+
 
 import realizacao1 from "../../assets/nova logo incubadora coppe.png";
 import realizacao2 from "../../assets/cietec preto (1).png";
@@ -68,8 +70,8 @@ const sponsorsData = {
     { image: apoio11, title: "MOSO"},
     { image: apoio8, title: "EloGroup" },
 
-    { image: apoio15, title: "Secretaria de Estado de Saúde do Rio de Janeiro"},
-    { image: apoio14, title: "Prefeitura do Rio"},
+    { image: apoio15, title: "Secretaria Municipal de Saúde do Rio de Janeiro"},
+    { image: apoio14, title: "Secretaria de Estado de Saúde do Rio de Janeiro"},
 
     { image: apoio1, title: "Distrito" },
     { image: apoio3, title: "Abstartups – Associação Brasileira de Startups" },
@@ -77,6 +79,7 @@ const sponsorsData = {
     { image: apoio7, title: "WOW Aceleradora de Startups" },
 
     { image: apoio13, title: "MCTI"},
+    { image: apoio17, title: "IplanRio"},
     
   ],
   realizacao: [
