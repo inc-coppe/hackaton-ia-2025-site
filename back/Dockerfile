@@ -2,6 +2,9 @@ FROM python:3.9-slim-buster
 
 WORKDIR /app
 
+
+COPY credentials.json /app/credentials.json
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade pip && \
