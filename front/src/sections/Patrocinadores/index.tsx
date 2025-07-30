@@ -32,10 +32,10 @@ import apoio14 from "../../assets/Logo Secretaria de Estado sem fundo (2).png";
 import apoio15 from "../../assets/secretaria de saúde 3.png";
 import apoio16 from "../../assets/Logo Lemobs Melhorada.png";
 import apoio17 from "../../assets/iplan_simples_preta.png";
-
+import apoio18 from "../../assets/cietec preto (1).png";
 
 import realizacao1 from "../../assets/nova logo incubadora coppe.png";
-import realizacao2 from "../../assets/cietec preto (1).png";
+import realizacao2 from "../../assets/Logo Coppe (2).png";
 import realizacao3 from "../../assets/realizacao3.png";
 import realizacao4 from "../../assets/realizacao4.png";
 
@@ -80,14 +80,12 @@ const sponsorsData = {
 
     { image: apoio13, title: "MCTI"},
     { image: apoio17, title: "IplanRio"},
+    { image: apoio18, title: "CIETEC"}
     
   ],
   realizacao: [
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
-    {
-      image: realizacao2,
-      title: "Centro de Inovação, Empreendedorismo e Tecnologia",
-    },
+    { image: realizacao2, title: "Coppe" },    
   ],
 };
 
