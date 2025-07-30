@@ -97,18 +97,18 @@ const materialChapters = [
         "Nesta seção, disponibilizamos links para cursos da NVIDIA que exploram os fundamentos e aplicações práticas do RAG, proporcionando uma base sólida para quem deseja entender como integrar essa técnica em projetos de IA avançada. Os conteúdos são ideais para quem quer aprofundar o conhecimento e aplicar RAG em desafios reais, incluindo os do hackathon.",
         
         <>
-            <a href="https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-FX-15+V1" target="_blank" rel="noopener noreferrer" style={{color: "#3161E8", textDecoration: "none", fontWeight: "bold" }}>
-               Building RAG Agents with LLMs
+            <a href="https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-FX-16+V1" target="_blank" rel="noopener noreferrer" style={{color: "#3161E8", textDecoration: "none", fontWeight: "bold" }}>
+               Augment your LLM Using Retrieval Augmented Generation
             </a>.
             
         </>,
 
         <>
-            <a href="https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-FX-16+V1" target="_blank" rel="noopener noreferrer" style={{color: "#3161E8", textDecoration: "none", fontWeight: "bold" }}>
-               Augment your LLM Using Retrieval Augmented Generation
+            <a href="https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-FX-15+V1" target="_blank" rel="noopener noreferrer" style={{color: "#3161E8", textDecoration: "none", fontWeight: "bold" }}>
+               Building RAG Agents with LLMs
             </a>.
             
-        </>
+        </>,
         ]
       },
     ],
