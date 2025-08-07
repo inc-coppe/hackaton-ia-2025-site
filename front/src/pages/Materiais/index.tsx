@@ -42,13 +42,13 @@ const materialChapters = [
     description2: "A proposta é capacitar os participantes a aplicar técnicas de alto desempenho em seus projetos durante o hackathon, explorando desde conceitos básicos de paralelização até o uso prático de bibliotecas otimizadas para GPU. Essa trilha é ideal para quem busca elevar o nível técnico das soluções com recursos computacionais de ponta.",
     subsections: [
       {
-        title: "Webinar de Rapids",
-        text: ["Neste webinário, os participantes serão introduzidos ao Rapids, um conjunto de bibliotecas open source desenvolvidas pela NVIDIA que permite a execução de pipelines completos de Data Science e Analytics diretamente em GPUs, utilizando Python. A proposta é demonstrar como essa tecnologia pode acelerar significativamente o processamento de dados e o treinamento de modelos, aproveitando ao máximo o poder computacional das GPUs.",
+        title: "Webinar de Rapids com a NVIDIA - 17/09 às 18h",
+        text: ["Neste webinar, os participantes serão introduzidos ao Rapids, um conjunto de bibliotecas open source desenvolvidas pela NVIDIA que permite a execução de pipelines completos de Data Science e Analytics diretamente em GPUs, utilizando Python. A proposta é demonstrar como essa tecnologia pode acelerar significativamente o processamento de dados e o treinamento de modelos, aproveitando ao máximo o poder computacional das GPUs.",
         "Durante a apresentação, será explorada a arquitetura do Rapids, com destaque para suas principais bibliotecas — compatíveis com ferramentas amplamente utilizadas como Pandas, Scikit-learn e NumPy/SciPy. Além disso, os participantes aprenderão como realizar a instalação e dar os primeiros passos com a plataforma, preparando-se para desenvolver soluções de alto desempenho em ambientes com múltiplas GPUs.",
         ]
       },
       {
-        title: "Material da NVIDIA",
+        title: "Material complementar",
         text: ["Para aprofundar seus conhecimentos e explorar as possibilidades do uso de GPUs em Data Science, recomendamos a leitura do material oficial da NVIDIA sobre o ecossistema Rapids. No site, você encontrará tutoriais, exemplos práticos e documentações completas sobre as bibliotecas que compõem essa poderosa plataforma de aceleração de dados.",
           <>
             <a href="https://rapids.ai/" target="_blank" rel="noopener noreferrer" style={{color: "#3161E8", textDecoration: "none", fontWeight: "bold" }}>
@@ -70,7 +70,7 @@ const materialChapters = [
     description2: "Nesta trilha, os participantes terão acesso a materiais que abordam os fundamentos da inteligência artificial agentiva, frameworks modernos para criação de agentes e exemplos práticos de como utilizar essas tecnologias para resolver desafios do mundo real. A ideia é mostrar como a combinação entre modelos de linguagem e raciocínio programável pode abrir novas possibilidades para a automação inteligente e adaptativa.",
     subsections: [
       {
-        title: "Webinar de Agentic AI",
+        title: "Webinar de Agentic AI - 02/10 às 18h",
         text: ["Neste webinar, os participantes serão apresentados aos princípios práticos da inteligência artificial baseada em agentes, com foco no desenvolvimento de sistemas que combinam modelos de linguagem com capacidade de raciocínio, tomada de decisão e execução autônoma de tarefas. A sessão abordará as diferenças entre aplicações tradicionais de IA e abordagens agentivas, destacando os cenários em que agentes inteligentes se tornam mais eficazes do que simples chamadas a modelos.",
         
         "Será demonstrado como utilizar frameworks modernos para orquestrar fluxos de interação entre agentes e fontes de dados externas, permitindo que os sistemas aprendam, se adaptem e colaborem com humanos e outros agentes. Além dos conceitos, o webinar trará exemplos práticos e arquiteturas que servem como base para o desenvolvimento de soluções avançadas no contexto do hackathon."
@@ -92,7 +92,7 @@ const materialChapters = [
       },
       {
         title: "RAG",
-        text: ['A técnica de Retrieval-Augmented Generation (RAG) representa um avanço importante na inteligência artificial ao combinar modelos de linguagem com mecanismos de recuperação de informações relevantes a partir de grandes bases de dados. Essa abordagem permite que os agentes não apenas gerem respostas baseadas no que "sabem" internamente, mas também consultem dados externos atualizados e específicos, ampliando sua capacidade de oferecer respostas precisas e contextualizadas.',
+        text: ['A técnica de Retrieval-Augmented Generation (RAG) representa um avanço importante na inteligência artificial ao combinar modelos de linguagem com mecanismos de recuperação de informações relevantes a partir de grandes bases de dados. Trata-se de uma tecnologia cada vez mais explorada em IA generativa, justamente por permitir que os agentes não apenas gerem respostas baseadas no que "sabem" internamente, mas também consultem dados externos atualizados e específicos, ampliando sua capacidade de oferecer respostas precisas e contextualizadas.',
 
         "Nesta seção, disponibilizamos links para cursos da NVIDIA que exploram os fundamentos e aplicações práticas do RAG, proporcionando uma base sólida para quem deseja entender como integrar essa técnica em projetos de IA avançada. Os conteúdos são ideais para quem quer aprofundar o conhecimento e aplicar RAG em desafios reais, incluindo os do hackathon.",
         
