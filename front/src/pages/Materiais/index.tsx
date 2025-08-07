@@ -237,17 +237,14 @@ function Materials() {
               </HighlightTitle>
             </HighlightTitleGroup>
             <HighlightDescription>
-              Antes do hackathon começar, você tem acesso a uma seleção de
-              materiais exclusivos — webinars, trilhas de estudo e guias
-              práticos — desenvolvidos com o apoio de grandes empresas.
+              Antes do hackathon começar, você tem acesso a uma seleção de materiais exclusivos — webinars, trilhas de estudo e guias práticos — pensados para que você chegue preparado.
             </HighlightDescription>
           </HighlightTextWrapper>
         </HighlightSection>
 
         <MainContentWrapper>
           <IntroText style={{ textAlign: "left" }}>
-            Escolha por onde começar, aprenda no seu ritmo e aproveite cada
-            recurso para chegar com mais preparo — e mais inspiração.
+            Escolha por onde começar, aprenda no seu ritmo e aproveite cada recurso para desenvolver suas habilidades.
           </IntroText>
 
           <MaterialsLayoutContainer>
