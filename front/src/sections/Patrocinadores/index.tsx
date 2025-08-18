@@ -33,6 +33,7 @@ import apoio15 from "../../assets/secretaria de saúde 3.png";
 import apoio16 from "../../assets/Logo Lemobs Melhorada.png";
 import apoio17 from "../../assets/iplan_simples_preta.png";
 import apoio18 from "../../assets/cietec preto (1).png";
+import apoio19 from "../../assets/Logo IIA vertical maior (1) (1) (1).jpg";
 
 import realizacao1 from "../../assets/nova logo incubadora coppe.png";
 import realizacao2 from "../../assets/Logo Coppe (3).png";
@@ -62,6 +63,7 @@ const sponsorsData = {
     { image: apoio9, title: "CA² Consulting" },
     { image: apoio4, title: "NVIDIA" },
     { image: apoio5, title: "LNCC – Laboratório Nacional de Computação Científica" },
+    { image: apoio19, title: "Instituto de Inteligência Artificial" },
     { image: apoio10, title: "AWS" },
     { image: apoio16, title: "Lemobs"},
 

@@ -47,13 +47,14 @@ import c15 from "../../assets/Logo MCTI sem fundo branco 120x120.png";
 import c16 from "../../assets/logo-secretaria-rj redimensionada (1).png";
 import c17 from "../../assets/Logo Lemobs Melhorada Cinza 120x64 Sem Fundo.png";
 import c18 from "../../assets/iplan_simples_branca (1).png";
+import c19 from "../../assets/Logo IIA vertical maior branca redimensionada (1).png";
 
 import { Flex } from "antd";
 import { Link } from "react-router-dom";
 import AnimatedBlobs from "../../components/AnimatedBlobs";
 
 const HomePage = () => {
-  const carouselImages = [c1, c2, c3, c4, c5, c6, c7, c8, c17, c10, c11, c9, c12, c13, c14, c15, c16, c18];
+  const carouselImages = [c1, c2, c3, c4, c5, c19, c6, c7, c8, c17, c10, c11, c9, c12, c13, c14, c15, c16, c18];
   const allImages = [...carouselImages, ...carouselImages];
 
   const [isMobile, setIsMobile] = useState(false);
