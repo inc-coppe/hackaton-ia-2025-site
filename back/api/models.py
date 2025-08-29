@@ -107,4 +107,23 @@ class UserProfile(models.Model):
         db_table = "user_profiles"
 
     def __str__(self):
+
         return f"Profile of {self.user.email}"
+
+
+
+class PendingEmail(models.Model):
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name="pending_emails"
+    )
+    full_name = models.CharField(max_length=255, blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+    status = models.IntegerField(default=0)  # 0 = pendente, 1 = enviado, 2 = erro
+    created_at = models.DateTimeField(auto_now_add=True)
+    sent_at = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = "pending_emails"
+
+    def __str__(self):
+        return f"Pending email for {self.user.email}"
