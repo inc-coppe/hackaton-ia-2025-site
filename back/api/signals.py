@@ -10,7 +10,7 @@ def create_pending_email(sender, instance, created, **kwargs):
             PendingEmail.objects.create(
                 user=instance.user,
                 full_name=instance.full_name,
-                message=f"""Olá, {full_name}! 
+                message=f"""Olá, {instance.full_name}! 
 Obrigado por se inscrever no Hackathon IA 2025!
 
 Para acompanhar todas as atualizações do evento, entre agora no nosso servidor do Discord: Hackathon IA Coppe / UFRJ
