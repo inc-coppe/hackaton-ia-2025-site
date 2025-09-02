@@ -36,6 +36,4 @@ Não perca nada! Nos vemos lá.
 """
             )
             
-    except Exception as e:
-        # evita derrubar a request caso algo dê errado
-        
+    
