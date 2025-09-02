@@ -35,7 +35,7 @@ Divulgação de novidades e materiais do evento
 Não perca nada! Nos vemos lá.
 """
             )
-            print(f"[TESTE] PendingEmail criado para {nome}")
+            
     except Exception as e:
         # evita derrubar a request caso algo dê errado
-        print(f"[TESTE][ERRO] create_pending_email: {e}")
+        
