@@ -5,6 +5,7 @@ from .models import UserProfile, PendingEmail
 @receiver(post_save, sender=UserProfile)
 def create_pending_email(sender, instance, created, **kwargs):
     # Se foi criado agora
+    print(f"Signal chamado! created={created}, user={instance.email}")
     if created:
         if instance.full_name:
             PendingEmail.objects.get_or_create(
