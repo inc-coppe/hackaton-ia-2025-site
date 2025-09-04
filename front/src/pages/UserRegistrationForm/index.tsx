@@ -367,7 +367,7 @@ const UserRegistrationForm: React.FC<UserRegistrationFormProps> = ({
                 },
                 { type: "url", message: "Por favor insira uma URL válida" },
                 {
-                  pattern: /^https?:\/\/(www\.)?linkedin\.com\/in\/[\w-]+\/?$/,
+                  pattern: /^https?:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9À-ÖØ-öø-ÿ%\-]+\/?$/,
                   message:
                     "URL inválida (ex: https://linkedin.com/in/username)",
                 },
