@@ -52,7 +52,7 @@ import { NavLink } from "react-router-dom";
 
 const sponsorsData = {
   ouro: [
-    { image: p_ouro2, title: "FAPERJ" },
+    { image: p_ouro2, title: "Visagio" },
     { image: p_ouro1, title: "Fiocruz" },
     { image: realizacao3, title: "FAPERJ" },
     { image: realizacao4, title: "Reditus" },
