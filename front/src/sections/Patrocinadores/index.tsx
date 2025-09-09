@@ -41,6 +41,7 @@ import realizacao3 from "../../assets/realizacao3.png";
 import realizacao4 from "../../assets/realizacao4.png";
 
 import p_ouro1 from "../../assets/marcafiocruz_horizontal_POSITIVA ouro1.png";
+import p_ouro2 from "../../assets/Logo_visagio_padrao.png"
 
 import { ArrowRightOutlined } from "@ant-design/icons";
 import {
@@ -51,9 +52,10 @@ import { NavLink } from "react-router-dom";
 
 const sponsorsData = {
   ouro: [
+    { image: p_ouro2, title: "FAPERJ" },
+    { image: p_ouro1, title: "Fiocruz" },
     { image: realizacao3, title: "FAPERJ" },
     { image: realizacao4, title: "Reditus" },
-    { image: p_ouro1, title: "Fiocruz" },
   ],
   prata: [],
   bronze: [],
