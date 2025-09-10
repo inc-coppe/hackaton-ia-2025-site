@@ -52,45 +52,45 @@ import { NavLink } from "react-router-dom";
 
 const sponsorsData = {
   ouro: [
-    { image: p_ouro2, title: "Visagio" },
-    { image: p_ouro1, title: "Fiocruz" },
-    { image: realizacao3, title: "FAPERJ" },
-    { image: realizacao4, title: "Reditus" },
+    { image: p_ouro2, title: "Visagio", website: "https://www.visagio.com/"},
+    { image: p_ouro1, title: "Fiocruz", website: "https://fiocruz.br/"},
+    { image: realizacao3, title: "FAPERJ", website: "https://www.faperj.br/" },
+    { image: realizacao4, title: "Reditus", website: "https://www.reditus.org.br/" },
   ],
   prata: [],
   bronze: [],
   apoio: [
-    { image: apoio6, title: "Porto Maravalley" },
+    { image: apoio6, title: "Porto Maravalley", website: "https://www.maravalley.rio/" },
     
-    { image: apoio9, title: "CA² Consulting" },
-    { image: apoio4, title: "NVIDIA" },
-    { image: apoio5, title: "LNCC – Laboratório Nacional de Computação Científica" },
-    { image: apoio19, title: "Instituto de Inteligência Artificial" },
-    { image: apoio10, title: "AWS" },
-    { image: apoio16, title: "Lemobs"},
+    { image: apoio9, title: "CA² Consulting", website: "https://ca2consulting.com.br/" },
+    { image: apoio4, title: "NVIDIA", website: "https://www.nvidia.com/pt-br/"},
+    { image: apoio5, title: "LNCC – Laboratório Nacional de Computação Científica", website: "https://www.gov.br/lncc/pt-br" },
+    { image: apoio19, title: "Instituto de Inteligência Artificial", website: "https://instituto.ia.lncc.br/pt" },
+    { image: apoio10, title: "AWS", website: "https://aws.amazon.com/pt/" },
+    { image: apoio16, title: "Lemobs", website: "https://lemobs.com.br/"},
 
-    { image: apoio12, title: "Inova HC"},
+    { image: apoio12, title: "Inova HC", website: "https://inovahc.com.br/"},
     
-    { image: apoio11, title: "MOSO"},
-    { image: apoio8, title: "EloGroup" },
+    { image: apoio11, title: "MOSO", website: "https://www.moso.ac/"},
+    { image: apoio8, title: "EloGroup", website: "https://elogroup.com/" },
 
-    { image: apoio15, title: "Secretaria Municipal de Saúde do Rio de Janeiro"},
-    { image: apoio14, title: "Secretaria de Estado de Saúde do Rio de Janeiro"},
+    { image: apoio15, title: "Secretaria Municipal de Saúde do Rio de Janeiro", website: "https://saude.prefeitura.rio/"},
+    { image: apoio14, title: "Secretaria de Estado de Saúde do Rio de Janeiro", website: "https://www.rj.gov.br/saude/"},
 
-    { image: apoio1, title: "Distrito" },
-    { image: apoio3, title: "Abstartups – Associação Brasileira de Startups" },
-    { image: apoio2, title: "Hub Digital da COPPE/UFRJ" },
-    { image: apoio7, title: "WOW Aceleradora de Startups" },
+    { image: apoio1, title: "Distrito", website: "https://distrito.me/" },
+    { image: apoio3, title: "Abstartups – Associação Brasileira de Startups" , website: "https://abstartups.com.br/"},
+    { image: apoio2, title: "Hub Digital da COPPE/UFRJ", website: "https://hub-digital.coppe.ufrj.br/" },
+    { image: apoio7, title: "WOW Aceleradora de Startups", website: "https://www.wow.ac/" },
 
-    { image: apoio13, title: "MCTI"},
-    { image: apoio17, title: "IplanRio"},
+    { image: apoio13, title: "MCTI", website: "https://www.gov.br/mcti/pt-br"},
+    { image: apoio17, title: "IplanRio", website: "https://iplanrio.prefeitura.rio/"},
     
     
   ],
   realizacao: [
-    { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ" },
-    { image: realizacao2, title: "Coppe" },
-    { image: apoio18, title: "CIETEC" },   
+    { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ", website: "https://incubadora.coppe.ufrj.br/index.php/pt/" },
+    { image: realizacao2, title: "Coppe", website: "https://coppe.ufrj.br/" },
+    { image: apoio18, title: "CIETEC", website: "https://cietec.org.br/" },   
   ],
 };
 
@@ -129,11 +129,23 @@ const SponsorsSection: React.FC = () => {
           <TierTitle>PATROCINADORES</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.ouro.map((sponsor, index) => (
+              <a
+                key={index}
+                href={sponsor.website} 
+                target="_blank"        
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none" }} 
+              
+              >
+              
+              
               <SponsorCard
                 key={index}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
               />
+
+              </a>
             ))}
           </SponsorLogoContainer>
 
@@ -165,22 +177,46 @@ const SponsorsSection: React.FC = () => {
           <TierTitle>APOIO</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.apoio.map((sponsor, index) => (
+              <a
+                key={index}
+                href={sponsor.website} 
+                target="_blank"        
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none" }} 
+              
+              >
+              
+              
               <SponsorCard
                 key={index}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
               />
+
+              </a>
             ))}
           </SponsorLogoContainer>
 
           <TierTitle>REALIZAÇÃO</TierTitle>
           <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
             {sponsorsData.realizacao.map((sponsor, index) => (
+              <a
+                key={index}
+                href={sponsor.website} 
+                target="_blank"        
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none" }} 
+              
+              >
+              
+              
               <SponsorCard
                 key={index}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
               />
+
+              </a>
             ))}
           </SponsorLogoContainer>
         </SponsorsContainer>
