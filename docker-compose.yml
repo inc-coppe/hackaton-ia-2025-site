@@ -12,7 +12,7 @@ services:
       - ./back/.env
     environment:
       PYTHONUNBUFFERED: "1"
-      ALLOWED_HOSTS: "www.hackathon-ia.coppe.ufrj.br"
+      ALLOWED_HOSTS: "*"
       CSRF_TRUSTED_ORIGINS: "https://www.hackathon-ia.coppe.ufrj.br"
 
   frontend:
