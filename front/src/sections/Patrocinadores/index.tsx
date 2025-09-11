@@ -129,24 +129,14 @@ const SponsorsSection: React.FC = () => {
           <TierTitle>PATROCINADORES</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.ouro.map((sponsor, index) => (
-              <a
-                key={index}
-                href={sponsor.website} 
-                target="_blank"        
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none" }} 
-              
-              >
-              
-              
               <SponsorCard
-                key={index}
+                key={sponsor.title}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
-              />
-
-              </a>
-            ))}
+                link={sponsor.website} 
+                lazyLoad
+         />
+  ))}
           </SponsorLogoContainer>
 
           <SponsorsContainerDefinidos>
@@ -177,47 +167,27 @@ const SponsorsSection: React.FC = () => {
           <TierTitle>APOIO</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.apoio.map((sponsor, index) => (
-              <a
-                key={index}
-                href={sponsor.website} 
-                target="_blank"        
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none" }} 
-              
-              >
-              
-              
               <SponsorCard
-                key={index}
+                key={sponsor.title}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
+                link={sponsor.website}  
+                lazyLoad
               />
-
-              </a>
             ))}
           </SponsorLogoContainer>
 
           <TierTitle>REALIZAÇÃO</TierTitle>
           <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
             {sponsorsData.realizacao.map((sponsor, index) => (
-              <a
-                key={index}
-                href={sponsor.website} 
-                target="_blank"        
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none" }} 
-              
-              >
-              
-              
               <SponsorCard
-                key={index}
+                key={sponsor.title}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
+                link={sponsor.website}  
+                lazyLoad
               />
-
-              </a>
-            ))}
+              ))}
           </SponsorLogoContainer>
         </SponsorsContainer>
       </Container>

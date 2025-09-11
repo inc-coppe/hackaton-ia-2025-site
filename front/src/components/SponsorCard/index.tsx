@@ -25,7 +25,7 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
             }}
           />
         ) : (
-          <img src={imageUrl} alt={title} />
+          <img src={imageUrl} alt={title} loading="lazy" />
         )}
       </LogoContainer>
       <TitleContainer>
