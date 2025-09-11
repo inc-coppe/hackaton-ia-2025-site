@@ -130,12 +130,12 @@ const SponsorsSection: React.FC = () => {
           <SponsorLogoContainer>
             {sponsorsData.ouro.map((sponsor, index) => (
               <SponsorCard
-                key={sponsor.title}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
-                link={sponsor.website} 
-                lazyLoad
-         />
+                isLoading={false}
+                onClick={() => window.open(sponsor.website, "_blank", "noopener")}
+                style={{ cursor: "pointer" }}
+              />
   ))}
           </SponsorLogoContainer>
 
@@ -168,11 +168,11 @@ const SponsorsSection: React.FC = () => {
           <SponsorLogoContainer>
             {sponsorsData.apoio.map((sponsor, index) => (
               <SponsorCard
-                key={sponsor.title}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
-                link={sponsor.website}  
-                lazyLoad
+                isLoading={false}
+                onClick={() => window.open(sponsor.website, "_blank", "noopener")}
+                style={{ cursor: "pointer" }}
               />
             ))}
           </SponsorLogoContainer>
@@ -181,11 +181,11 @@ const SponsorsSection: React.FC = () => {
           <SponsorLogoContainer style={{ marginBottom: "1rem" }}>
             {sponsorsData.realizacao.map((sponsor, index) => (
               <SponsorCard
-                key={sponsor.title}
                 imageUrl={sponsor.image}
                 title={sponsor.title}
-                link={sponsor.website}  
-                lazyLoad
+                isLoading={false}
+                onClick={() => window.open(sponsor.website, "_blank", "noopener")}
+                style={{ cursor: "pointer" }}
               />
               ))}
           </SponsorLogoContainer>

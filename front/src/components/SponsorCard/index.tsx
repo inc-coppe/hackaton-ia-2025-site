@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import { Skeleton } from "antd";
 import { CardContainer, LogoContainer, TitleContainer } from "./style";
 
@@ -6,15 +6,19 @@ interface SponsorCardProps {
   imageUrl: string;
   title: string;
   isLoading?: boolean;
+  onClick?: () => void;
+  style?: CSSProperties;
 }
 
 const SponsorCard: React.FC<SponsorCardProps> = ({
   imageUrl,
   title,
   isLoading,
+  onClick,
+  style,
 }) => {
   return (
-    <CardContainer>
+    <CardContainer onClick={onClick} style={style}>
       <LogoContainer>
         {isLoading ? (
           <Skeleton.Image
