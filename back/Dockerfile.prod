@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 # We'll use gunicorn instead of Django development server
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "your_project_name.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "backend.wsgi:application"]
