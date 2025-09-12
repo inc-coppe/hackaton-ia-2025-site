@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   CarouselContainer,
   CardsWrapper,
@@ -48,6 +48,14 @@ const HorizontalCarousel = () => {
       setCurrentPage(index);
     }
   };
+
+  useEffect(() => {
+    const preloadImages = [Img1, Img2, Img3, Img4, Img5, Img6,  Img7, Img8];
+    preloadImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+}, []);
 
   return (
     <CarouselContainer>

@@ -26,6 +26,7 @@ const SectionCardComponent: React.FC<SectionCardProps> = ({
   description,
   isSecondCard = false,
 }) => {
+  
 
   return (
     <SectionCard $isSecondCard={isSecondCard}>     
