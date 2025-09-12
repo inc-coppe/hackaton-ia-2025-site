@@ -136,34 +136,9 @@ const SponsorsSection: React.FC = () => {
                 onClick={() => window.open(sponsor.website, "_blank", "noopener")}
                 style={{ cursor: "pointer" }}
               />
-  ))}
+            ))}
           </SponsorLogoContainer>
-
-          <SponsorsContainerDefinidos>
-            <TierTitle>PRATA</TierTitle>
-            <SponsorLogoContainer>
-              {[1, 2, 3, 4, 5].map((index) => (
-                <SponsorCard
-                  key={index}
-                  imageUrl=""
-                  title={`Patrocinador Prata ${index}`}
-                  isLoading
-                />
-              ))}
-            </SponsorLogoContainer>
-
-            <TierTitle>BRONZE</TierTitle>
-            <SponsorLogoContainer>
-              {[1, 2, 3, 4, 5].map((index) => (
-                <SponsorCard
-                  key={index}
-                  imageUrl=""
-                  title={`Patrocinador Bronze ${index}`}
-                  isLoading
-                />
-              ))}
-            </SponsorLogoContainer>
-          </SponsorsContainerDefinidos>
+          
           <TierTitle>APOIO</TierTitle>
           <SponsorLogoContainer>
             {sponsorsData.apoio.map((sponsor, index) => (
