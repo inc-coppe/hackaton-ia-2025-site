@@ -10,13 +10,7 @@ interface SponsorCardProps {
   style?: CSSProperties;
 }
 
-const SponsorCard: React.FC<SponsorCardProps> = ({
-  imageUrl,
-  title,
-  isLoading,
-  onClick,
-  style,
-}) => {
+const SponsorCard: React.FC<SponsorCardProps> = ({ imageUrl, title, isLoading, onClick, style }) => {
   return (
     <CardContainer onClick={onClick} style={style}>
       <LogoContainer>
@@ -29,7 +23,13 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
             }}
           />
         ) : (
-          <img src={imageUrl} alt={title} loading="lazy" />
+          <img
+            src={imageUrl}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
         )}
       </LogoContainer>
       <TitleContainer>
