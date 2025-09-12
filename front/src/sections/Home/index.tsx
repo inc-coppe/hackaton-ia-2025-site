@@ -71,14 +71,13 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    const preloadImage = (src: string) => {
-      const img = new Image();
-      img.src = src;
-    };
+  const preloadImages = [LogoHackaton, GradientWpp, GradientWppMobile];
+    preloadImages.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+    });
+    }, []);
 
-    preloadImage(GradientWpp);
-    preloadImage(GradientWppMobile);
-  }, []);
 
   return (
     <>

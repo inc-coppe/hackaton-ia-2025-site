@@ -36,11 +36,13 @@ interface BlobProps {
   top: string;
   left: string;
   size: string;
-  isFirstAnimation: boolean;
+  $isFirstAnimation: boolean; // muda aqui
   duration: number;
 }
 
-const Blob = styled.div<BlobProps>`
+const Blob = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "$isFirstAnimation",
+})<BlobProps>`
   position: absolute;
   width: ${(props) => props.size};
   height: ${(props) => props.size};
@@ -49,9 +51,7 @@ const Blob = styled.div<BlobProps>`
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   animation: ${(props) => css`
-    ${props.isFirstAnimation
-      ? move1
-      : move2} ${props.duration}s infinite ease-in-out
+    ${props.$isFirstAnimation ? move1 : move2} ${props.duration}s infinite ease-in-out
   `};
   mix-blend-mode: screen;
   will-change: transform;
@@ -62,6 +62,7 @@ const Blob = styled.div<BlobProps>`
   }
 `;
 
+
 const AnimatedBlobs = () => {
   return (
     <BlobContainer>
@@ -70,15 +71,15 @@ const AnimatedBlobs = () => {
         top="-30%"
         left="-10%"
         size="900px"
-        isFirstAnimation={true}
-        duration={20} // Faster animation
+        $isFirstAnimation={true}
+        duration={20}
       />
       <Blob
         color="#53167F"
         top="20%"
         left="80%"
         size="800px"
-        isFirstAnimation={false}
+        $isFirstAnimation={false}
         duration={25}
       />
       <Blob
@@ -86,7 +87,7 @@ const AnimatedBlobs = () => {
         top="80%"
         left="-20%"
         size="850px"
-        isFirstAnimation={true}
+        $isFirstAnimation={true}
         duration={22}
       />
       <Blob
@@ -94,11 +95,12 @@ const AnimatedBlobs = () => {
         top="-20%"
         left="40%"
         size="750px"
-        isFirstAnimation={false}
-        duration={18} // Fastest animation
+        $isFirstAnimation={false}
+        duration={18}
       />
     </BlobContainer>
   );
 };
+
 
 export default AnimatedBlobs;
