@@ -60,8 +60,6 @@ const sponsorsData = {
   prata: [],
   bronze: [],
   apoio: [
-    { image: apoio6, title: "Porto Maravalley", website: "https://www.maravalley.rio/" },
-    
     { image: apoio9, title: "CA² Consulting", website: "https://ca2consulting.com.br/" },
     { image: apoio4, title: "NVIDIA", website: "https://www.nvidia.com/pt-br/"},
     { image: apoio5, title: "LNCC – Laboratório Nacional de Computação Científica", website: "https://www.gov.br/lncc/pt-br" },
@@ -91,6 +89,7 @@ const sponsorsData = {
     { image: realizacao1, title: "Incubadora de Empresas COPPE/UFRJ", website: "https://incubadora.coppe.ufrj.br/index.php/pt/" },
     { image: realizacao2, title: "Coppe", website: "https://coppe.ufrj.br/" },
     { image: apoio18, title: "CIETEC", website: "https://cietec.org.br/" },   
+    { image: apoio6, title: "Porto Maravalley", website: "https://www.maravalley.rio/" },
   ],
 };
 
