@@ -21,7 +21,7 @@ import { Title } from "./style";
 
 const eventos_pre = [
   {
-    dataLugar: "Mês anterior • Online",
+    dataLugar: "Pré-evento • Online",
     titulo: "_Treinamento",
     descricao:
       "Treinamento online da NVIDIA para todos os inscritos, com webinars sobre Rapids e Agentic AI, materiais gravados e conteúdos complementares. Os participantes terão acesso ao Discord para suporte e troca de experiências, e receberão certificado de conclusão.",
@@ -47,58 +47,64 @@ const eventos_pre = [
 
 const eventos_sex = [
   {
-    dataLugar: "17:00 - 18:00 • PORTO MARAVALLEY (RJ)",
+    dataLugar: "14:30 - 15:30 • PORTO MARAVALLEY (RJ)",
     titulo: "_Credenciamento e recepção.",
-    descricao: "Recepção dos participantes e credenciamento no local do evento, com um momento inicial de integração e acolhimento.",
+    descricao: "Os participantes serão recepcionados com um café e biscoitos enquanto fazem o credenciamento para o evento. Será fornecido um Welcome Coffee para a recepção. ",
   },
   {
-    dataLugar: "18:00 - 19:00",
+    dataLugar: "16:00 - 17:30",
     titulo: "_Abertura oficial",
     descricao:
-      "Abertura oficial com representantes de instituições parceiras e apresentação dos objetivos e orientações iniciais sobre o Hackathon.",
+      "A cerimônia de abertura contará com a participação da Incubadora COPPE/UFRJ e de representantes de alguns de nossos parceiros, que compartilharão suas expectativas em relação ao evento. Também haverá um momento dedicado a orientações práticas sobre o uso das plataformas e os desafios que serão trabalhados ao longo do Hackathon.",
   },
   
   {
-    dataLugar: "19:00 - 20:00",
-    titulo: "_Formação de equipes",
+    dataLugar: "17:30",
+    titulo: "_Coffee p/ patrocinadores",
     descricao:
-      "Dinâmica de integração entre os participantes e formação das equipes faltantes.",
+      "",
   },
 
   {
-    dataLugar: "20:00 - 21:00",
-    titulo: "_Início das Atividades",
-    descricao: "Encontro das equipes com apoio de mentores para condução de uma sessão de brainstorming e definição das primeiras ideias. Haverá um intervalo para coffee break durante a atividade.",
+    dataLugar: "17:30 - 18:30",
+    titulo: "_Dinâmica de formação das equipes ",
+    descricao: "Dinâmica de integração entre os participantes e formação das equipes faltantes. A ideia é separar os participantes em equipes (para os que não estão formados) e eles começarão a discutir os desafios. Será disponibilizado um coffee para os participantes. ",
+  },
+
+  {
+    dataLugar: "18:30 - 20:00",
+    titulo: "_Início das Atividades ",
+    descricao: "Os participantes terão acesso ao link de entrada e serão guiados por mentores durante uma sessão de brainstorming, para gerar ideias iniciais para as soluções. Um coffee break estará disponível para os participantes que desejarem.",
   },
 ];
 
 const eventos_sab = [
   {
-    dataLugar: "08:00 - 10:00 • PORTO MARAVALLEY (RJ)",
-    titulo: "_Mentoria técnica",
+    dataLugar: "08:00 - 12:00 • PORTO MARAVALLEY (RJ)",
+    titulo: "_Mentoria Técnica e Desenvolvimento das Soluções",
     descricao:
-      "Sessões de mentoria com especialistas em desafios de saúde e tecnologia para esclarecer dúvidas e orientar o desenvolvimento das soluções.",
-  },
-  {
-    dataLugar: "08:00 - 12:00",
-    titulo: "_Desenvolvimento",
-    descricao: "Avanço no desenvolvimento das soluções com apoio contínuo dos mentores.",
+      "Os participantes seguirão no desenvolvimento de suas soluções, contando com o apoio contínuo de mentores especializados em saúde e tecnologia para esclarecer dúvidas e orientar o progresso das equipes ao longo do Hackathon. Será servido um Welcome Coffee no início às 8hrs. Às 10hrs um lanche estará disponível um lanche para os participantes.",
   },
   {
     dataLugar: "12:00",
-    titulo: "_Checkpoint de definição das ideias",
+    titulo: "_Checkpoint de Definição de Ideias",
     descricao: "Este é o prazo limite para que as equipes definam as ideias principais das suas soluções, sendo um ponto de verificação da evolução do desenvolvimento.",
+  },
+  {
+    dataLugar: "13:00",
+    titulo: "_Almoço",
+    descricao: "Período dedicado ao almoço dos participantes.",
   },
 
   {
-    dataLugar: "14:00 - 17:00",
+    dataLugar: "14:00 - 18:00",
     titulo: "_Desenvolvimento livre",
     descricao:
-      "Período dedicado ao avanço livre no desenvolvimento das soluções.",
+      "Durante a tarde, as equipes têm total liberdade para continuar o desenvolvimento das suas soluções, com checkpoint de programação às 17:00, para monitoramento do progresso. Um coffee break será oferecido às 16:30 para os participantes.",
   },
   {
     dataLugar: "17:00",
-    titulo: "_Checkpoint de programação",
+    titulo: "_Checkpoint de Programação",
     descricao: "Prazo limite para equipes apresentarem as ideias já postas em prática.",
   },
 
@@ -107,43 +113,64 @@ const eventos_sab = [
     titulo: "_Mentoria de pitch",
     descricao: "Workshop de pitch para capacitar os participantes a apresentarem suas soluções de maneira eficaz, seguido por sessões de mentoria de negócios.",
   },
+
+  {
+    dataLugar: "18:30 - 20:00",
+    titulo: "_Desenvolvimento Livre",
+    descricao: "Durante o resto do dia, as equipes têm total liberdade para continuar o desenvolvimento das suas soluções.",
+  },
 ];
 
 const eventos_dom = [
   {
     dataLugar: "08:00 - 14:00 • PORTO MARAVALLEY (RJ)",
-    titulo: "_Desenvolvimento e mentorias",
-    descricao: "As equipes continuarão o desenvolvimento de suas soluções, com todas as mentorias disponíveis para tirar dúvidas pontuais.",
+    titulo: "_Desenvolvimento livre",
+    descricao: "As equipes continuarão o desenvolvimento de suas soluções. Será servido um Welcome Coffee no início às 8hrs. Um coffee break será oferecido às 10:00 para os participantes.",
+  },
+
+  {
+    dataLugar: "13:00",
+    titulo: "_Almoço",
+    descricao: "Intervalo para o almoço.",
   },
 
   {
     dataLugar: "14:00",
-    titulo: "_Checkpoint de apresentação",
-    descricao: "Última oportunidade para revisão e validação das soluções antes da apresentação.",
+    titulo: "_Checkpoint de Apresentação",
+    descricao: "As equipes terão uma última oportunidade para revisar e finalizar suas apresentações.",
   },
 
   {
-    dataLugar: "15:45",
-    titulo: "_Submissão das soluções",
-    descricao: "Prazo limite para a submissão das soluções desenvolvidas pelas equipes. As apresentações finais ocorrerão logo após o encerramento da submissão.",
+    dataLugar: "15:30",
+    titulo: "_Submissão das Soluções",
+    descricao:
+      "Prazo limite para a submissão das soluções desenvolvidas pelas equipes. As apresentações finais ocorrerão logo após o encerramento da submissão. Serão entregues: Pitch, github e endpoint da(s) API(s). Enquanto a banca avaliadora irá assistir as apresentações, teremos profissionais verificando o funcionamento da parte de programação.",
   },
 
   {
     dataLugar: "16:00 - 17:30",
     titulo: "_Apresentações",
-    descricao:
-      "Cada equipe fará uma apresentação de 5 minutos das soluções desenvolvidas. ",
+    descricao: "Cada equipe fará uma apresentação de 5 minutos das soluções desenvolvidas. O feedback será dado por meio de formulários/planilhas de avaliação. Um coffee break será fornecido enquanto isso.",
   },
   {
     dataLugar: "17:30 - 18:00",
     titulo: "_Avaliação dos projetos",
-    descricao: "Processo de avaliação das soluções apresentadas pela banca, considerando os critérios expostos no regulamento.",
+    descricao:
+      "Durante a avaliação final, um mini lanche será disponibilizado aos avaliadores. ",
   },
+
   {
     dataLugar: "18:00 - 19:00",
-    titulo: "_Cerimônia de encerramento e premiação",
+    titulo: "_Cerimônia de Encerramento",
     descricao:
-      "Encerramento oficial do evento e premiação das melhores soluções. ",
+      "A cerimônia de encerramento incluirá a premiação das soluções vencedoras e o agradecimento a todos os participantes e colaboradores.",
+  },
+
+  {
+    dataLugar: "19:00",
+    titulo: "_Coffee Break Formal",
+    descricao:
+      "Após a cerimônia, será servido um coffee break formal para encerrar o evento.",
   },
 
 ];

@@ -11,14 +11,14 @@ import {
 } from "./style";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import Img1 from "../../assets/Pré.png";
-import Img2 from "../../assets/Sexta.png";
-import Img3 from "../../assets/Sabado.png";
-import Img4 from "../../assets/Domingo.png";
+import Img2 from "../../assets/sexta-final.png";
+import Img3 from "../../assets/sabado-final.png";
+import Img4 from "../../assets/domingo-final.png";
 
 import Img5 from "../../assets/Pré mobile (1).png";
-import Img6 from "../../assets/Sexta mobile.png";
-import Img7 from "../../assets/Sabado mobile.png";
-import Img8 from "../../assets/Domingo mobile.png";
+import Img6 from "../../assets/sexta-mobile-final.png";
+import Img7 from "../../assets/sabado-mobile-mobile.png";
+import Img8 from "../../assets/domingo-mobile-mobile.png";
 import { NavLink } from "react-router-dom";
 
 const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
