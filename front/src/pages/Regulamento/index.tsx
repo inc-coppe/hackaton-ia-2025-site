@@ -23,6 +23,7 @@ import {
   DestaqueParagraph,
   DataParagraph,
   Negrito,
+  LinkParagraph,
 } from "./style";
 
 const regulamentoData = [
@@ -31,14 +32,14 @@ const regulamentoData = [
     titulo: "1. APRESENTAÇÃO",
     subtitulo: "",
     body: [
-       { tipo: "paragrafo", texto: "O presente regulamento estabelece as normas para o **Hackathon de inteligência artificial aplicado à saúde pública**, promovido pela **Incubadora de Empresas da Coppe/UFRJ** e pelo **Cietec (Incubadora da USP)**, em parceria com **NVIDIA**, o **Laboratório Nacional de Computação Científica (LNCC)** e a **Secretaria Municipal de Saúde do Rio de Janeiro (SMS-RJ)**, entre outros parceiros conforme divulgado no site do evento." },
+       { tipo: "paragrafo", texto: "O presente regulamento estabelece as normas para o **Hackathon de inteligência artificial aplicado à saúde pública**, promovido pela **Incubadora de Empresas da Coppe/UFRJ** e pelo **Cietec (Incubadora da USP)**, em parceria com **NVIDIA**, o **Laboratório Nacional de Computação Científica (LNCC)** e a **Secretaria Municipal de Saúde do Rio de Janeiro (SMS-RJ)**, entre outros parceiros conforme divulgado no site do evento." },
     ],
   },
   {
     titulo: "2. OBJETIVO",
     subtitulo: "",
     body: [
-       { tipo: "paragrafo", texto: "O objetivo deste evento é fomentar o **desenvolvimento de soluções inovadoras** para os **desafios da saúde pública** por meio do uso de tecnologias de **inteligência artificial**. Por meio do Hackathon de IA, busca-se criar ferramentas que aprimorem a **qualidade do sistema de saúde**, otimizem o **uso de recursos** e melhorem a **experiência do usuário no atendimento público**. Para ampliar o impacto positivo na saúde pública, as soluções desenvolvidas durante o evento serão disponibilizadas em **código aberto**, de acordo com os termos da licença Linux. O projeto visa:"},
+       { tipo: "paragrafo", texto: "O objetivo deste evento é fomentar o **desenvolvimento de soluções inovadoras** para os **desafios da saúde pública** por meio do uso de tecnologias de **inteligência artificial**. Por meio do Hackathon de IA, busca-se criar ferramentas que aprimorem a **qualidade do sistema de saúde**, otimizem o **uso de recursos** e melhorem a **experiência do usuário no atendimento público**. Para ampliar o impacto positivo na saúde pública, as soluções desenvolvidas durante o evento serão disponibilizadas em **código aberto**, de acordo com os termos da licença MIT em repositório no GitHub a ser informado pela organização durante a realização do evento. O projeto visa:"},
        { tipo: "ponto", texto: "● Desenvolver soluções baseadas em IA para **automatizar processos de regulação**."},
        { tipo: "ponto", texto: "● Melhorar a **alocação de recursos** e o **agendamento de atendimentos**."},
        { tipo: "ponto", texto:"● Criar modelos preditivos para a **gestão de demanda** e **otimização de escalas**."},
@@ -130,7 +131,7 @@ const regulamentoData = [
     titulo: "⦁	PROPRIEDADE INTELECTUAL",
     subtitulo: "",
     body: [
-      { tipo: "paragrafo", texto:"O **Hackathon de IA da Coppe** tem a intenção de fomentar a comunidade **open source** e, ao mesmo tempo, permitir que as soluções desenvolvidas durante o evento possam ser **estendidas posteriormente**. Assim, os participantes assumem o **compromisso** de publicar, em **código aberto no GitHub** e sob a **licença GPLv3**, **todo e qualquer código desenvolvido durante o evento**. A presença e a organização do repositório serão consideradas pelos avaliadores para fins de premiação."},
+      { tipo: "paragrafo", texto:"O **Hackathon de IA da Coppe** tem a intenção de fomentar a comunidade **open source** e, ao mesmo tempo, permitir que as soluções desenvolvidas durante o evento possam ser **estendidas posteriormente**. Assim, os participantes assumem o **compromisso** de publicar, em **código aberto no GitHub** e sob a **licença MIT**, **todo e qualquer código desenvolvido durante o evento**. A presença e a organização do repositório serão consideradas pelos avaliadores para fins de premiação."},
     ],
   }
   ,
@@ -139,12 +140,18 @@ const regulamentoData = [
     titulo: "6. CRITÉRIOS DE AVALIAÇÃO",
     subtitulo: "",
     body: [
-      { tipo: "paragrafo", texto:"As soluções desenvolvidas pelos participantes durante o Hackathon serão avaliadas seguindo os seguintes critérios:"},
+      { tipo: "paragrafo", texto:"As soluções desenvolvidas pelos participantes durante o Hackathon serão avaliadas por meio de um pitch da solução com 5 minutos de duração, de acordo com os seguintes critérios:"},
       { tipo: "ponto", texto:"**● Impacto na saúde pública (30%)**: A solução deve demonstrar como pode melhorar a eficiência e qualidade dos serviços de saúde pública, especialmente no processo de regulação."},
-      { tipo: "ponto", texto:"**● Viabilidade técnica (20%)**: Avaliação da capacidade da solução em ser implementada tecnicamente dentro do sistema de saúde público."},
-      { tipo: "ponto", texto:"**● Inovação (20%)**: A originalidade e a utilização de novas tecnologias para resolver o desafio proposto."},
+      { tipo: "ponto", texto:"**● Viabilidade técnica (20%)**: Avaliação da capacidade da solução em ser implementada tecnicamente dentro do sistema de saúde público. Em particular, todas as soluções devem ser encapsuladas em uma API ou permitirem requisições via API aos seus principais resultados. A(s) API(s) devem seguir o padrão aqui documentado:"},
+
+      { tipo: "link", texto: "https://doc.clickup.com/9017085914/p/h/8cqbkyu-11457/3ef58e69ca91dde"},
+
+      
+      { tipo: "ponto", texto:"**● Inovação (15%)**: A originalidade e a utilização de novas tecnologias para resolver o desafio proposto."},
       { tipo: "ponto", texto:"**● Escalabilidade (15%)**: A capacidade da solução em ser expandida e aplicada em outros contextos ou regiões."},
       { tipo: "ponto", texto:"**● Apresentação (15%)**: Clareza e organização da apresentação da solução e seu impacto potencial."},
+
+      { tipo: "ponto", texto:"**● Presença (5%)**: Permanência no espaço do Hackathon durante todo o evento. A presença de cada membro da equipe será computada como um percentual do time (exemplo, em um time de 5 pessoas, cada participante contribui com 1 ponto percentual na pontuação total), A equipe de apoio ao Hackathon fará um controle de presença para apurar esta parte da nota."},
 
       { tipo: "paragrafo", texto:"A banca avaliadora será composta por especialistas indicados pelas instituições parceiras e apoiadoras do evento, incluindo profissionais com notório saber nas áreas de Inteligência Artificial e saúde pública, patrocinadores, gestores da Secretaria Municipal e da Secretaria de Estado de Saúde do Rio de Janeiro, bem como representantes da Coppe/UFRJ, da Universidade Federal do Rio de Janeiro (UFRJ)."},
 
@@ -178,7 +185,7 @@ const regulamentoData = [
       { tipo: "ponto", texto:"● Checkpoint do desenvolvimento da solução"},
 
       { tipo: "data", texto:"**Dia 2 - Tarde**"},
-      { tipo: "ponto", texto:"● Sessões intensivas de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios."},
+      { tipo: "ponto", texto:"● Sessões de mentoria para revisão e refinamento das soluções no que diz respeito à modelagem de negócios."},
       { tipo: "ponto", texto:"● Desenvolvimento das soluções com IA."},
 
       { tipo: "data", texto:"**Dia 2 - Noite**"},
@@ -216,7 +223,7 @@ const regulamentoData = [
     titulo: "⦁ PREMIAÇÃO",
     subtitulo: "",
     body: [
-      { tipo: "paragrafo", texto:"O **Hackathon de IA** adotará um **modelo colaborativo**, no qual o prêmio de **R$20.000,00 (vinte mil reais)** será distribuído entre as **5 melhores equipes**. A proposta busca valorizar o talento, a criatividade e o espírito de cooperação entre os participantes. Parceiros poderão oferecer **premiações adicionais**, que serão divulgadas no site oficial e por e-mail aos participantes."},
+      { tipo: "paragrafo", texto:"O **Hackathon de IA** adotará um **modelo colaborativo**, no qual o prêmio de **R$40.000,00 (vinte mil reais)** será distribuído entre as **5 melhores equipes**. A proposta busca valorizar o talento, a criatividade e o espírito de cooperação entre os participantes. Parceiros poderão oferecer **premiações adicionais**, que serão divulgadas no site oficial e por e-mail aos participantes."},
       
       { tipo: "paragrafo", texto:"Todos os participantes receberão **certificados** referentes aos treinamentos oferecidos durante o evento, reconhecendo o engajamento e a qualificação adquirida ao longo da jornada."},
 
@@ -269,13 +276,15 @@ const regulamentoData = [
 
       { tipo: "paragrafo", texto:"**1)** nome, imagem, vídeo e voz dos participantes, que poderão ser gravados durante o período de participação neste evento, a critério da equipe organizadora;"},
 
-      { tipo: "paragrafo", texto:"**2)** divulgação do escopo, conteúdo e funcionalidades do projeto vencedor. Os participantes vencedores ou qualquer dos participantes não terão direito ao recebimento de quaisquer valores, seja a que tempo e/ou a que título for, em virtude de qualquer forma de utilização, divulgação e reprodução do produto desenvolvido."},
+      { tipo: "paragrafo", texto:"**2)** divulgação do escopo, conteúdo e funcionalidades do projeto vencedor. Os participantes vencedores ou qualquer dos participantes não farão jus à participação no evento e publicação da solução durante o mesmo nem ao recebimento de quaisquer valores, seja a que tempo e/ou a que título for, em virtude de qualquer forma de utilização, divulgação e reprodução do produto desenvolvido, respeitadas as condições da licença MIT sob a qual os resultados deverão ser publicados, conforme cláusula segunda deste regulamento. Seguindo esta mesma licença, os participantes terão total autonomia para utilizar as soluções que desenvolverem durante o evento para quaisquer fins."},
 
       { tipo: "paragrafo", texto:"Os participantes declaram, ainda, que qualquer funcionalidade dos respectivos projetos, bem como os próprios projetos desenvolvidos para a participação neste evento, não ofende ou venham a transgredir quaisquer direitos de terceiros, especialmente direitos de propriedade intelectual, e que não são ofensivos, injuriosos, difamadores, nem são de qualquer forma ilegais ou ilícitos."},
       
       { tipo: "paragrafo", texto:"Não serão aceitas soluções tecnológicas copiadas ou reproduzidas, de forma total ou parcial, de outras fontes e/ou competições. A identificação de uma cópia, total ou parcial, será punida com a desclassificação do respectivo participante e/ou equipe."},
       
-      { tipo: "paragrafo", texto:"A organização não se responsabiliza pelo uso de bases de dados públicos e/ou privados pelos participantes do Hackathon em Saúde, exceto aquelas que serão fornecidas pelo comitê executivo para o desenvolvimento das soluções."},
+      { tipo: "paragrafo", texto:"A organização não se responsabiliza pelo uso de bases de dados públicos e/ou privados pelos participantes do Hackathon em Saúde, exceto aquelas que serão fornecidas pelo equipe organizadora para o desenvolvimento das soluções. "},
+
+      { tipo: "paragrafo", texto:"Eventuais alterações no presente regulamento serão comunicadas por email aos participantes. A ausência de manifestação em contrário implicará a aceitação tácita das alterações feitas pela organização. "},
     ],
   },
 ];
@@ -364,6 +373,17 @@ const Regulamento = () => {
                       </ListWrapper>
                     );
                   
+                  case "link":
+                    return (
+                      <LinkParagraph key={idx}>
+                        <>
+                          <a href={item.texto} target="_blank" rel="noopener noreferrer" style={{color:      "rgba(15, 15, 33, 0.8)",   textDecoration: "none", fontWeight: "bold" }}>
+                            Link para documento.
+                          </a>
+                        </>
+                      </LinkParagraph>
+                    );
+
                   default:
                     return null;
                 }

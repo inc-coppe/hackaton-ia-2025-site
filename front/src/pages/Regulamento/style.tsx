@@ -212,6 +212,22 @@ export const DestaqueParagraph = styled.p`
   }
 `;
 
+export const LinkParagraph = styled.p`
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 100%;
+  color: rgba(15, 15, 33, 0.8);
+  margin: 0;
+  text-indent: 4em;
+  padding-top: 0rem;
+
+  @media (max-width: 30rem) {
+    font-size: 1rem;
+    line-height: 100%;
+  }
+`;
+
 
 export const StyledImage = styled.img`
   display: block;
