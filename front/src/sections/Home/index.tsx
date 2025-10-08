@@ -113,7 +113,7 @@ const HomePage = () => {
               style={{ textDecoration: "none", color: "inherit" }}
               to="/register"
             >
-              INSCREVA-SE JÁ!
+              INSCRIÇÕES ENCERRADAS
             </Link>
           </SolidButton>
         </LeftContainer>

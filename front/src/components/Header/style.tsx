@@ -209,8 +209,8 @@ export const SignUpButton = styled(LoginButton)`
   color: #3161e8;
   border: 2px solid #ffffff;
   text-align: center;
-  
-  $@media (max-width: 28rem) {
+  display: none;
+  @media (max-width: 28rem) {
     
     min-width: 8rem;
     white-space: nowrap;
