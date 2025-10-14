@@ -34,11 +34,13 @@ import apoio16 from "../../assets/Logo Lemobs Melhorada.png";
 import apoio17 from "../../assets/iplan_simples_preta.png";
 import apoio18 from "../../assets/cietec preto (1).png";
 import apoio19 from "../../assets/Logo IIA vertical maior (1) (1) (1).jpg";
+import apoio20 from "../../assets/PD7 logo.jpg";
 
 import realizacao1 from "../../assets/nova logo incubadora coppe.png";
 import realizacao2 from "../../assets/Logo Coppe (3).png";
 import realizacao3 from "../../assets/realizacao3.png";
 import realizacao4 from "../../assets/realizacao4.png";
+import realizacao5 from "../../assets/SEBRAE logo.png";
 
 import p_ouro1 from "../../assets/marcafiocruz_horizontal_POSITIVA ouro1.png";
 import p_ouro2 from "../../assets/Logo_visagio_padrao.png"
@@ -56,6 +58,7 @@ const sponsorsData = {
     { image: p_ouro1, title: "Fiocruz", website: "https://fiocruz.br/"},
     { image: realizacao3, title: "FAPERJ", website: "https://www.faperj.br/" },
     { image: realizacao4, title: "Reditus", website: "https://www.reditus.org.br/" },
+    { image: realizacao5, title: "Sebrae", website: "https://sebrae.com.br/sites/PortalSebrae/" },
   ],
   prata: [],
   bronze: [],
@@ -82,6 +85,7 @@ const sponsorsData = {
 
     { image: apoio13, title: "MCTI", website: "https://www.gov.br/mcti/pt-br"},
     { image: apoio17, title: "IplanRio", website: "https://iplanrio.prefeitura.rio/"},
+    { image: apoio20, title: "PD7 Tech", website: "https://www.linkedin.com/company/pd7tech/?originalSubdomain=br"},
     
     
   ],
